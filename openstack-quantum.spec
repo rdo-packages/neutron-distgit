@@ -1,6 +1,6 @@
 Name:		openstack-quantum
 Version:	2011.3
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -175,5 +175,8 @@ fi
 
 
 %changelog
+* Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2011.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Thu Nov  18 2011 Robert Kukura <rkukura@redhat.com> - 2011.3-1
 - Initial package for Fedora
