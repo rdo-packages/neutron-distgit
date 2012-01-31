@@ -1,23 +1,30 @@
+#
+# This is 2012.1 essex-3 milestone
+#
+%global release_name essex
+%global release_letter e
+%global milestone 3
+
 Name:		openstack-quantum
-Version:	2011.3
-Release:	2%{?dist}
+Version:	2012.1
+Release:	0.1.%{release_letter}%{milestone}%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
-Source0:	http://launchpad.net/quantum/diablo/2011.3/+download/quantum-%{version}.tar.gz
+Source0:	http://launchpad.net/quantum/%{release_name}/%{release_name}-%{milestone}/+download/quantum-%{version}~%{release_letter}%{milestone}.tar.gz
 Source1:	openstack-quantum.service
 Source2:	quantum.logrotate
 
 BuildArch:	noarch
 
+BuildRequires:	python2-devel
 BuildRequires:	python-setuptools
 BuildRequires:	systemd-units
-BuildRequires:	dos2unix
+#BuildRequires:	dos2unix
 
 Requires:	python-quantum = %{version}-%{release}
-Requires:	python-cheetah
 
 Requires(pre):	shadow-utils
 Requires(post): systemd-units
@@ -40,6 +47,7 @@ etc.)
 Summary:	Quantum Python libraries
 Group:		Applications/System
 
+Requires:	python-quantumclient
 Requires:	MySQL-python
 Requires:	python-configobj
 Requires:	python-eventlet
@@ -65,16 +73,10 @@ This package contains the quantum Python library.
 
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
-mv quantum/plugins/cisco/README README-cisco
-chmod 644 README-cisco
-dos2unix README-cisco
-mv quantum/plugins/openvswitch/README README-openvswitch
-
-# Relocate top-level packages underneath quantum
-mv extensions quantum/extensions
-find quantum/extensions -name \*.py -exec sed -i 's/from extensions import/from quantum.extensions import/g' {} \;
-mv tests quantum/tests
-find quantum/tests/unit -name \*.py -exec sed -i 's/ tests.unit/ quantum.tests.unit/g' {} \;
+#mv quantum/plugins/cisco/README README-cisco
+#chmod 644 README-cisco
+#dos2unix README-cisco
+#mv quantum/plugins/openvswitch/README README-openvswitch
 
 
 %build
@@ -84,25 +86,20 @@ find quantum/tests/unit -name \*.py -exec sed -i 's/ tests.unit/ quantum.tests.u
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
-# Remove docs since they don't build
+# Remove unused files
+rm -rf %{buildroot}%{python_sitelib}/bin
 rm -rf %{buildroot}%{python_sitelib}/doc
+rm -rf %{buildroot}%{python_sitelib}/tools
+rm %{buildroot}%{_bindir}/quantum
+rm %{buildroot}/usr/etc/quantum/quantum.conf.test
+rm %{buildroot}/usr/etc/init.d/quantum-server
 
-# Install execs with reasonable names
-install -p -D -m 755 bin/quantum %{buildroot}%{_bindir}/quantum-server
-install -p -D -m 755 bin/cli %{buildroot}%{_bindir}/quantum-cli
+# Install execs
+install -p -D -m 755 bin/quantum-server %{buildroot}%{_bindir}/quantum-server
 
-# Install config files, relocating ini files to /etc/quantum
-install -p -D -m 644 etc/quantum.conf %{buildroot}%{_sysconfdir}/quantum/quantum.conf
-sed -i 's|api_extensions_path = extensions|api_extensions_path = %{python_sitelib}/quantum/extensions|' %{buildroot}%{_sysconfdir}/quantum/quantum.conf
-install -p -D -m 644 quantum/plugins.ini %{buildroot}%{_sysconfdir}/quantum/plugins.ini
-ln -s ../../../../..%{_sysconfdir}/quantum/plugins.ini %{buildroot}%{python_sitelib}/quantum/plugins.ini
-mkdir %{buildroot}%{python_sitelib}/quantum/plugins/cisco/conf
-for f in credentials.ini db_conn.ini l2network_plugin.ini nexus.ini plugins.ini ucs.ini ucs_inventory.ini; do
-    install -p -D -m 644 quantum/plugins/cisco/conf/$f %{buildroot}%{_sysconfdir}/quantum/cisco-plugin/$f
-    ln -s ../../../../../../../..%{_sysconfdir}/quantum/cisco-plugin/$f %{buildroot}%{python_sitelib}/quantum/plugins/cisco/conf/$f
-done
-install -p -D -m 644 quantum/plugins/openvswitch/ovs_quantum_plugin.ini %{buildroot}%{_sysconfdir}/quantum/openvswitch-plugin/ovs_quantum_plugin.ini
-ln -s ../../../../../../..%{_sysconfdir}/quantum/openvswitch-plugin/ovs_quantum_plugin.ini %{buildroot}%{python_sitelib}/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+# Move config files to proper location
+install -d -m 755 %{buildroot}%{_sysconfdir}/quantum
+mv %{buildroot}/usr/etc/quantum/* %{buildroot}%{_sysconfdir}/quantum
 
 # Install systemd units
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-quantum.service
@@ -147,34 +144,38 @@ fi
 
 
 %files
-%doc LICENSE
+#%%doc LICENSE
 %doc README
-%doc README-cisco
-%doc README-openvswitch
-%{_bindir}/*
-%{_unitdir}/*
+#%%doc README-cisco
+#%%doc README-openvswitch
+%{_bindir}/quantum-server
+%{_unitdir}/openstack-quantum.service
 %dir %{_sysconfdir}/quantum
-%config(noreplace) %{_sysconfdir}/quantum/*
+%config(noreplace) %{_sysconfdir}/quantum/quantum.conf
+%config(noreplace) %{_sysconfdir}/quantum/plugins.ini
+%dir %{_sysconfdir}/quantum/plugins
+%dir %{_sysconfdir}/quantum/plugins/cisco
+%config(noreplace) %{_sysconfdir}/quantum/plugins/cisco/*.ini
+%dir %{_sysconfdir}/quantum/plugins/openvswitch
+%config(noreplace) %{_sysconfdir}/quantum/plugins/openvswitch/*.ini
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
-%{python_sitelib}/quantum/plugins.ini
-%{python_sitelib}/quantum/plugins/cisco/conf/*.ini
-%{python_sitelib}/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
 %dir %attr(0755, quantum, quantum) %{_sharedstatedir}/quantum
 %dir %attr(0755, quantum, quantum) %{_localstatedir}/log/quantum
 
 
 %files -n python-quantum
-%doc LICENSE
-%{python_sitelib}/quantum
-%exclude %{python_sitelib}/quantum/plugins.ini
-%exclude %{python_sitelib}/quantum/plugins/cisco/conf/*.ini
-%exclude %{python_sitelib}/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
-#should be %%{python_sitelib}/quantum-%%{version}-*.egg-info
-%{python_sitelib}/Quantum-*.egg-info
-%{python_sitelib}/Quantum-*-nspkg.pth
+# note that %%{python_sitelib}/quantum is owned by python-quantumclient
+#%%doc LICENSE
+%doc README
+%{python_sitelib}/quantum/*
+%exclude %{python_sitelib}/quantum/__init__.*
+%{python_sitelib}/quantum-%%{version}-*.egg-info
 
 
 %changelog
+* Mon Jan 31 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.1.e3
+- Update to essex milestone 3 for F17
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2011.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
