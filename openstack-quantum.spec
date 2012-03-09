@@ -7,7 +7,7 @@
 
 Name:		openstack-quantum
 Version:	2012.1
-Release:	0.2.%{release_letter}%{milestone}%{?dist}
+Release:	0.3.%{release_letter}%{milestone}%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -19,6 +19,12 @@ Source2:	quantum-server.service
 Source3:	quantum-linuxbridge-agent.service
 Source4:	quantum-openvswitch-agent.service
 Source5:	quantum-ryu-agent.service
+
+# Merged upstream patch https://review.openstack.org/#change,4235
+Patch1:		quantum.git-82138245694b452341cc41638058adb3972a9926.patch
+
+# Proposed upstream patch for https://bugs.launchpad.net/quantum/+bug/949261
+Patch2:		quantum.git-f614a7ddf57a2a4c30d9410671622caca6f4e434.patch
 
 BuildArch:	noarch
 
@@ -123,7 +129,7 @@ Summary:	Quantum openvswitch plugin
 Group:		Applications/System
 
 Requires:	openstack-quantum = %{version}-%{release}
-#Requires:	openvswitch
+Requires:	openvswitch
 
 
 %description -n openstack-quantum-openvswitch
@@ -152,12 +158,16 @@ networks using the Ryu Network Operating System.
 %prep
 %setup -q -n quantum-%{version}
 
+%patch1 -p1
+%patch2 -p1
+
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
 chmod 644 quantum/plugins/cisco/README
 dos2unix quantum/plugins/cisco/README
 
-sed -i '/pep8>=/d' setup.py
+# patch2 does not remove this for some reason
+rm quantum/plugins/linuxbridge/nova/__init__.py
 
 %build
 %{__python} setup.py build
@@ -366,6 +376,12 @@ fi
 
 
 %changelog
+* Fri Mar  9 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.3.e4
+- Add upstream patch: remove pep8 and strict lxml version from setup.py
+- Remove old fix for pep8 dependency
+- Add upstream patch: Bug #949261 Removing nova drivers for Linux Bridge Plugin
+- Add openvswitch dependency
+
 * Mon Mar  5 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.2.e4
 - Update to essex milestone 4
 - Move plugins to sub-packages
