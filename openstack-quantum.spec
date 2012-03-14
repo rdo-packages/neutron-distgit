@@ -7,24 +7,31 @@
 
 Name:		openstack-quantum
 Version:	2012.1
-Release:	0.3.%{release_letter}%{milestone}%{?dist}
+Release:	0.4.%{release_letter}%{milestone}%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
+
 Source0:	http://launchpad.net/quantum/%{release_name}/%{release_name}-%{milestone}/+download/quantum-%{version}~%{release_letter}%{milestone}.tar.gz
 Source1:	quantum.logrotate
-Source2:	quantum-server.service
-Source3:	quantum-linuxbridge-agent.service
-Source4:	quantum-openvswitch-agent.service
-Source5:	quantum-ryu-agent.service
+Source2:	quantum-sudoers
+
+Source10:	quantum-server.service
+Source11:	quantum-linuxbridge-agent.service
+Source12:	quantum-openvswitch-agent.service
+Source13:	quantum-ryu-agent.service
+
 
 # Merged upstream patch https://review.openstack.org/#change,4235
 Patch1:		quantum.git-82138245694b452341cc41638058adb3972a9926.patch
 
-# Proposed upstream patch for https://bugs.launchpad.net/quantum/+bug/949261
+# Merged upstream patch for https://bugs.launchpad.net/quantum/+bug/949261
 Patch2:		quantum.git-f614a7ddf57a2a4c30d9410671622caca6f4e434.patch
+
+# Proposed upstream patch for https://bugs.launchpad.net/quantum/+bug/948467
+Patch3:		quantum.git-3d3b1c3f78997e08c1f1a876b098d2afb759507b.patch
 
 BuildArch:	noarch
 
@@ -99,6 +106,7 @@ Group:		Applications/System
 
 Requires:	openstack-quantum = %{version}-%{release}
 Requires:	bridge-utils
+Requires:	sudo
 
 
 %description -n openstack-quantum-linuxbridge
@@ -130,6 +138,7 @@ Group:		Applications/System
 
 Requires:	openstack-quantum = %{version}-%{release}
 Requires:	openvswitch
+Requires:	sudo
 
 
 %description -n openstack-quantum-openvswitch
@@ -145,6 +154,7 @@ Summary:	Quantum ryu plugin
 Group:		Applications/System
 
 Requires:	openstack-quantum = %{version}-%{release}
+Requires:	sudo
 
 
 %description -n openstack-quantum-ryu
@@ -160,6 +170,7 @@ networks using the Ryu Network Operating System.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
@@ -185,19 +196,28 @@ rm %{buildroot}/usr/etc/init.d/quantum-server
 
 # Install execs
 install -p -D -m 755 bin/quantum-server %{buildroot}%{_bindir}/quantum-server
+install -p -D -m 755 bin/quantum-rootwrap %{buildroot}%{_bindir}/quantum-rootwrap
 
 # Move config files to proper location
 install -d -m 755 %{buildroot}%{_sysconfdir}/quantum
 mv %{buildroot}/usr/etc/quantum/* %{buildroot}%{_sysconfdir}/quantum
 
+# Configure plugin agents to use quantum-rootwrap
+for f in %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini; do
+    sed -i 's/root_helper = sudo/root_helper = sudo quantum-rootwrap/g' $f
+done
+
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-quantum
 
+# Install sudoers
+install -p -D -m 440 %{SOURCE2} %{buildroot}%{_sysconfdir}/sudoers.d/quantum
+
 # Install systemd units
-install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/quantum-server.service
-install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/quantum-linuxbridge-agent.service
-install -p -D -m 644 %{SOURCE4} %{buildroot}%{_unitdir}/quantum-openvswitch-agent.service
-install -p -D -m 644 %{SOURCE5} %{buildroot}%{_unitdir}/quantum-ryu-agent.service
+install -p -D -m 644 %{SOURCE10} %{buildroot}%{_unitdir}/quantum-server.service
+install -p -D -m 644 %{SOURCE11} %{buildroot}%{_unitdir}/quantum-linuxbridge-agent.service
+install -p -D -m 644 %{SOURCE12} %{buildroot}%{_unitdir}/quantum-openvswitch-agent.service
+install -p -D -m 644 %{SOURCE13} %{buildroot}%{_unitdir}/quantum-ryu-agent.service
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/quantum
@@ -287,12 +307,14 @@ fi
 %doc LICENSE
 %doc README
 %{_bindir}/quantum-server
+%{_bindir}/quantum-rootwrap
 %{_unitdir}/quantum-server.service
 %dir %{_sysconfdir}/quantum
 %config(noreplace) %{_sysconfdir}/quantum/quantum.conf
 %config(noreplace) %{_sysconfdir}/quantum/plugins.ini
 %dir %{_sysconfdir}/quantum/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
+%config(noreplace) %{_sysconfdir}/sudoers.d/quantum
 %dir %attr(0755, quantum, quantum) %{_sharedstatedir}/quantum
 %dir %attr(0755, quantum, quantum) %{_localstatedir}/log/quantum
 
@@ -317,6 +339,7 @@ fi
 %exclude %{python_sitelib}/quantum/plugins/nicira
 %exclude %{python_sitelib}/quantum/plugins/openvswitch
 %exclude %{python_sitelib}/quantum/plugins/ryu
+%exclude %{python_sitelib}/quantum/rootwrap/*-agent.py*
 %{python_sitelib}/quantum-%%{version}-*.egg-info
 
 
@@ -343,6 +366,7 @@ fi
 %{_bindir}/quantum-linuxbridge-agent
 %{_unitdir}/quantum-linuxbridge-agent.service
 %{python_sitelib}/quantum/plugins/linuxbridge
+%{python_sitelib}/quantum/rootwrap/linuxbridge-agent.py*
 %dir %{_sysconfdir}/quantum/plugins/linuxbridge
 %config(noreplace) %{_sysconfdir}/quantum/plugins/linuxbridge/*.ini
 
@@ -361,6 +385,7 @@ fi
 %{_bindir}/quantum-openvswitch-agent
 %{_unitdir}/quantum-openvswitch-agent.service
 %{python_sitelib}/quantum/plugins/openvswitch
+%{python_sitelib}/quantum/rootwrap/openvswitch-agent.py*
 %dir %{_sysconfdir}/quantum/plugins/openvswitch
 %config(noreplace) %{_sysconfdir}/quantum/plugins/openvswitch/*.ini
 
@@ -371,11 +396,18 @@ fi
 %{_bindir}/quantum-ryu-agent
 %{_unitdir}/quantum-ryu-agent.service
 %{python_sitelib}/quantum/plugins/ryu
+%{python_sitelib}/quantum/rootwrap/ryu-agent.py*
 %dir %{_sysconfdir}/quantum/plugins/ryu
 %config(noreplace) %{_sysconfdir}/quantum/plugins/ryu/*.ini
 
 
 %changelog
+* Wed Mar 14 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.4.e4
+- Upstream patch: add root_helper to quantum agents
+- Add sudoers file enabling quantum-rootwrap for quantum user
+- Configure plugin agents to use quantum-rootwrap
+- Run plugin agents as quantum user
+
 * Fri Mar  9 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.3.e4
 - Add upstream patch: remove pep8 and strict lxml version from setup.py
 - Remove old fix for pep8 dependency

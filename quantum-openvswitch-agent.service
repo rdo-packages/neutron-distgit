@@ -4,8 +4,7 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-#User=quantum
-User=root
+User=quantum
 ExecStart=/usr/bin/quantum-openvswitch-agent /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
 
 [Install]

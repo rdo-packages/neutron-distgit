@@ -4,8 +4,7 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-#User=quantum
-User=root
+User=quantum
 ExecStart=/usr/bin/quantum-linuxbridge-agent /etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini
 
 [Install]
