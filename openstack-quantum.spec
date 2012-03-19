@@ -7,14 +7,15 @@
 
 Name:		openstack-quantum
 Version:	2012.1
-Release:	0.4.%{release_letter}%{milestone}%{?dist}
+Release:	0.5.%{release_letter}%{milestone}%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	http://launchpad.net/quantum/%{release_name}/%{release_name}-%{milestone}/+download/quantum-%{version}~%{release_letter}%{milestone}.tar.gz
+#Source0:	http://launchpad.net/quantum/%%{release_name}/%%{release_name}-%%{milestone}/+download/quantum-%%{version}~%%{release_letter}%%{milestone}.tar.gz
+Source0:	http://quantum.openstack.org/tarballs/quantum-2012.1~rc1~20120316.764.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 
@@ -23,15 +24,6 @@ Source11:	quantum-linuxbridge-agent.service
 Source12:	quantum-openvswitch-agent.service
 Source13:	quantum-ryu-agent.service
 
-
-# Merged upstream patch https://review.openstack.org/#change,4235
-Patch1:		quantum.git-82138245694b452341cc41638058adb3972a9926.patch
-
-# Merged upstream patch for https://bugs.launchpad.net/quantum/+bug/949261
-Patch2:		quantum.git-f614a7ddf57a2a4c30d9410671622caca6f4e434.patch
-
-# Proposed upstream patch for https://bugs.launchpad.net/quantum/+bug/948467
-Patch3:		quantum.git-3d3b1c3f78997e08c1f1a876b098d2afb759507b.patch
 
 BuildArch:	noarch
 
@@ -70,12 +62,10 @@ Requires:	python-eventlet
 Requires:	python-lxml
 Requires:	python-gflags
 Requires:	python-anyjson
-Requires:	python-nose
 Requires:	python-paste-deploy
 Requires:	python-routes
 Requires:	python-sqlalchemy
 Requires:	python-webob
-Requires:	python-webtest
 
 
 %description -n python-quantum
@@ -168,17 +158,14 @@ networks using the Ryu Network Operating System.
 %prep
 %setup -q -n quantum-%{version}
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
 chmod 644 quantum/plugins/cisco/README
 dos2unix quantum/plugins/cisco/README
 
-# patch2 does not remove this for some reason
-rm quantum/plugins/linuxbridge/nova/__init__.py
+# remove runtime dependency only needed for tests
+sed -i '/webtest/d' setup.py
+
 
 %build
 %{__python} setup.py build
@@ -191,6 +178,9 @@ rm quantum/plugins/linuxbridge/nova/__init__.py
 rm -rf %{buildroot}%{python_sitelib}/bin
 rm -rf %{buildroot}%{python_sitelib}/doc
 rm -rf %{buildroot}%{python_sitelib}/tools
+rm -rf %{buildroot}%{python_sitelib}/quantum/tests
+rm -rf %{buildroot}%{python_sitelib}/quantum/plugins/*/tests
+rm -f %{buildroot}%{python_sitelib}/quantum/plugins/*/run_tests.*
 rm %{buildroot}/usr/etc/quantum/quantum.conf.test
 rm %{buildroot}/usr/etc/init.d/quantum-server
 
@@ -402,6 +392,12 @@ fi
 
 
 %changelog
+* Mon Mar 19 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.5.e4
+- Update to essex possible RC1 tarball
+- Remove patches incorporated upstream
+- Don't package test code
+- Remove dependencies only needed by test code
+
 * Wed Mar 14 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.4.e4
 - Upstream patch: add root_helper to quantum agents
 - Add sudoers file enabling quantum-rootwrap for quantum user
