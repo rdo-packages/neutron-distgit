@@ -1,23 +1,22 @@
 #
-# This is 2012.1 essex-4 milestone
+# This is 2012.1 essex rc1 milestone
 #
-%global release_name essex
-%global release_letter e
-%global milestone 4
 
 Name:		openstack-quantum
 Version:	2012.1
-Release:	0.5.%{release_letter}%{milestone}%{?dist}
+Release:	0.6.rc1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-#Source0:	http://launchpad.net/quantum/%%{release_name}/%%{release_name}-%%{milestone}/+download/quantum-%%{version}~%%{release_letter}%%{milestone}.tar.gz
-Source0:	http://quantum.openstack.org/tarballs/quantum-2012.1~rc1~20120316.764.tar.gz
+Source0:	http://launchpad.net/quantum/essex/essex-rc1/+download/quantum-2012.1~rc1.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
+Source3:	quantum-config-set
+Source4:	quantum-server-setup
+Source5:	quantum-node-setup
 
 Source10:	quantum-server.service
 Source11:	quantum-linuxbridge-agent.service
@@ -163,9 +162,6 @@ find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 chmod 644 quantum/plugins/cisco/README
 dos2unix quantum/plugins/cisco/README
 
-# remove runtime dependency only needed for tests
-sed -i '/webtest/d' setup.py
-
 
 %build
 %{__python} setup.py build
@@ -184,13 +180,17 @@ rm -f %{buildroot}%{python_sitelib}/quantum/plugins/*/run_tests.*
 rm %{buildroot}/usr/etc/quantum/quantum.conf.test
 rm %{buildroot}/usr/etc/init.d/quantum-server
 
-# Install execs
+# Install execs (using hand-coded rather than generated versions)
 install -p -D -m 755 bin/quantum-server %{buildroot}%{_bindir}/quantum-server
+install -p -D -m 755 bin/quantum-linuxbridge-agent %{buildroot}%{_bindir}/quantum-linuxbridge-agent
+install -p -D -m 755 bin/quantum-openvswitch-agent %{buildroot}%{_bindir}/quantum-openvswitch-agent
+install -p -D -m 755 bin/quantum-ryu-agent %{buildroot}%{_bindir}/quantum-ryu-agent
 install -p -D -m 755 bin/quantum-rootwrap %{buildroot}%{_bindir}/quantum-rootwrap
 
 # Move config files to proper location
 install -d -m 755 %{buildroot}%{_sysconfdir}/quantum
 mv %{buildroot}/usr/etc/quantum/* %{buildroot}%{_sysconfdir}/quantum
+chmod 640  %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini
 
 # Configure plugin agents to use quantum-rootwrap
 for f in %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini; do
@@ -212,6 +212,11 @@ install -p -D -m 644 %{SOURCE13} %{buildroot}%{_unitdir}/quantum-ryu-agent.servi
 # Setup directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/quantum
 install -d -m 755 %{buildroot}%{_localstatedir}/log/quantum
+
+# Install setup helper scripts
+install -p -D -m 755 %{SOURCE3} %{buildroot}%{_bindir}/quantum-config-set
+install -p -D -m 755 %{SOURCE4} %{buildroot}%{_bindir}/quantum-server-setup
+install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/quantum-node-setup
 
 
 %pre
@@ -298,6 +303,9 @@ fi
 %doc README
 %{_bindir}/quantum-server
 %{_bindir}/quantum-rootwrap
+%{_bindir}/quantum-config-set
+%{_bindir}/quantum-server-setup
+%{_bindir}/quantum-node-setup
 %{_unitdir}/quantum-server.service
 %dir %{_sysconfdir}/quantum
 %config(noreplace) %{_sysconfdir}/quantum/quantum.conf
@@ -347,7 +355,7 @@ fi
 %{python_sitelib}/quantum/extensions/_qos_view.py*
 %{python_sitelib}/quantum/plugins/cisco
 %dir %{_sysconfdir}/quantum/plugins/cisco
-%config(noreplace) %{_sysconfdir}/quantum/plugins/cisco/*.ini
+%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/cisco/*.ini
 
 
 %files -n openstack-quantum-linuxbridge
@@ -358,7 +366,7 @@ fi
 %{python_sitelib}/quantum/plugins/linuxbridge
 %{python_sitelib}/quantum/rootwrap/linuxbridge-agent.py*
 %dir %{_sysconfdir}/quantum/plugins/linuxbridge
-%config(noreplace) %{_sysconfdir}/quantum/plugins/linuxbridge/*.ini
+%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/linuxbridge/*.ini
 
 
 %files -n openstack-quantum-nicira
@@ -366,7 +374,7 @@ fi
 %doc quantum/plugins/nicira/nicira_nvp_plugin/README
 %{python_sitelib}/quantum/plugins/nicira
 %dir %{_sysconfdir}/quantum/plugins/nicira
-%config(noreplace) %{_sysconfdir}/quantum/plugins/nicira/*.ini
+%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/nicira/*.ini
 
 
 %files -n openstack-quantum-openvswitch
@@ -377,7 +385,7 @@ fi
 %{python_sitelib}/quantum/plugins/openvswitch
 %{python_sitelib}/quantum/rootwrap/openvswitch-agent.py*
 %dir %{_sysconfdir}/quantum/plugins/openvswitch
-%config(noreplace) %{_sysconfdir}/quantum/plugins/openvswitch/*.ini
+%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/openvswitch/*.ini
 
 
 %files -n openstack-quantum-ryu
@@ -388,10 +396,16 @@ fi
 %{python_sitelib}/quantum/plugins/ryu
 %{python_sitelib}/quantum/rootwrap/ryu-agent.py*
 %dir %{_sysconfdir}/quantum/plugins/ryu
-%config(noreplace) %{_sysconfdir}/quantum/plugins/ryu/*.ini
+%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/ryu/*.ini
 
 
 %changelog
+* Wed Mar 21 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.6.rc1
+- Update to official essex rc1 milestone
+- Add quantum-server-setup and quantum-node-setup scripts
+- Use hand-coded agent executables rather than easy-install scripts
+- Make plugin config files mode 640 and group quantum to protect passwords
+
 * Mon Mar 19 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.5.e4
 - Update to essex possible RC1 tarball
 - Remove patches incorporated upstream
