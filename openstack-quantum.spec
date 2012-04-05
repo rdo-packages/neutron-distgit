@@ -1,17 +1,17 @@
 #
-# This is 2012.1 essex rc1 milestone
+# This is 2012.1 essex rc2 milestone
 #
 
 Name:		openstack-quantum
 Version:	2012.1
-Release:	0.6.rc1%{?dist}
+Release:	0.7.rc2%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	http://launchpad.net/quantum/essex/essex-rc1/+download/quantum-2012.1~rc1.tar.gz
+Source0:	http://launchpad.net/quantum/essex/essex-rc2/+download/quantum-2012.1~rc2.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source3:	quantum-config-set
@@ -400,6 +400,9 @@ fi
 
 
 %changelog
+* Thu Apr  5 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.7.rc2
+- Update to essex rc2 milestone
+
 * Wed Mar 21 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.6.rc1
 - Update to official essex rc1 milestone
 - Add quantum-server-setup and quantum-node-setup scripts

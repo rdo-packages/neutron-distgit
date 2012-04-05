@@ -6,6 +6,7 @@ After=syslog.target network.target
 Type=simple
 User=quantum
 ExecStart=/usr/bin/quantum-openvswitch-agent /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
