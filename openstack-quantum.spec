@@ -402,6 +402,7 @@ fi
 %changelog
 * Thu Apr  5 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.7.rc2
 - Update to essex rc2 milestone
+- Use PrivateTmp for services
 
 * Wed Mar 21 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.6.rc1
 - Update to official essex rc1 milestone
