@@ -152,6 +152,10 @@ case "${QUANTUM_PLUGIN}" in
         LIBVIRT_VIF_TYPE=ethernet
         LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver
         LINUX_INTERFACE_DRIVER=nova.network.linux_net.QuantumLinuxBridgeInterfaceDriver
+
+        echo "Please enter network device for VLAN trunking:"
+        read NETWORK_DEVICE
+        quantum-config-set ${LB_CONF} LINUX_BRIDGE physical_interface ${NETWORK_DEVICE}
 ;;
 
 "nicira")
