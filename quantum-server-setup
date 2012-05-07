@@ -68,7 +68,7 @@ install_mysql_server() {
 }
 
 start_mysql_server() {
-	systemctl start mysqld.service
+	service mysqld start
 }
 
 is_valid_plugin() {
@@ -220,7 +220,7 @@ fi
 
 # Make sure mysqld is running.
 
-if ! systemctl status mysqld.service > /dev/null
+if ! service mysqld status > /dev/null
 then
 	if [ -z "${ASSUME_YES}" ] ; then
 		printf "mysqld is not running.  Would you like to start it now? (y/n): "
