@@ -159,16 +159,16 @@ fi
 case "${QUANTUM_PLUGIN}" in
 "cisco")
 	DB_NAME="quantum_l2network"
-	quantum-config-set ${Q_CONF} PLUGIN provider quantum.plugins.cisco.l2network_plugin.L2Network
+	openstack-config --set ${Q_CONF} PLUGIN provider quantum.plugins.cisco.l2network_plugin.L2Network
 ;;
 
 "linuxbridge")
 	DB_NAME="quantum_linux_bridge"
-	quantum-config-set ${Q_CONF} PLUGIN provider quantum.plugins.linuxbridge.LinuxBridgePlugin.LinuxBridgePlugin
+	openstack-config --set ${Q_CONF} PLUGIN provider quantum.plugins.linuxbridge.LinuxBridgePlugin.LinuxBridgePlugin
 ;;
 
 "nicira")
-	quantum-config-set ${Q_CONF} PLUGIN provider quantum.plugins.nicira.nicira_nvp_plugin.QuantumPlugin.NvpPlugin
+	openstack-config --set ${Q_CONF} PLUGIN provider quantum.plugins.nicira.nicira_nvp_plugin.QuantumPlugin.NvpPlugin
         echo "No database support"
         exit 0;
 ;;
@@ -180,11 +180,11 @@ case "${QUANTUM_PLUGIN}" in
 		exit 0
 	fi
 	DB_NAME="ovs_quantum"
-	quantum-config-set ${Q_CONF} PLUGIN provider quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPlugin
+	openstack-config --set ${Q_CONF} PLUGIN provider quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPlugin
 ;;
 
 "ryu")
-	quantum-config-set ${Q_CONF} PLUGIN provider quantum.plugins.ryu.ryu_quantum_plugin.RyuQuantumPlugin
+	openstack-config --set ${Q_CONF} PLUGIN provider quantum.plugins.ryu.ryu_quantum_plugin.RyuQuantumPlugin
 	echo "No database support required"
         exit 0;
 ;;
@@ -312,9 +312,9 @@ mysql -u root ${MYSQL_ROOT_PW_ARG} -e "create database ${DB_NAME}"
 # Configure database specifics
 case "${QUANTUM_PLUGIN}" in
 "cisco")
-        quantum-config-set ${CISCO_CONF} DATABASE user ${QUANTUM_USER}
-        quantum-config-set ${CISCO_CONF} DATABASE pass ${MYSQL_Q_PW}
-        quantum-config-set ${CISCO_CONF} DATABASE host `hostname`
+        openstack-config --set ${CISCO_CONF} DATABASE user ${QUANTUM_USER}
+        openstack-config --set ${CISCO_CONF} DATABASE pass ${MYSQL_Q_PW}
+        openstack-config --set ${CISCO_CONF} DATABASE host `hostname`
  	SCHEDULER_DRIVER=quantum.plugins.cisco.nova.quantum_port_aware_scheduler.QuantumPortAwareScheduler
 	LIBVIRT_VIF_DRIVER=quantum.plugins.cisco.nova.vifdirect.Libvirt802dot1QbhDriver
 	LIBVIRT_VIF_TYPE=802.1Qbh
@@ -323,14 +323,14 @@ case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
 	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on quantum_linux_bridge.* to '${QUANTUM_USER}'@'%'"
 	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on quantum_linux_bridge.* to '${QUANTUM_USER}'@'localhost'"
-	quantum-config-set ${LB_CONF} DATABASE connection mysql
-        quantum-config-set ${LB_CONF} DATABASE user ${QUANTUM_USER}
-        quantum-config-set ${LB_CONF} DATABASE pass ${MYSQL_Q_PW}
-	quantum-config-set ${LB_CONF} DATABASE host `hostname`
+        openstack-config --set ${LB_CONF} DATABASE connection mysql
+        openstack-config --set ${LB_CONF} DATABASE user ${QUANTUM_USER}
+        openstack-config --set ${LB_CONF} DATABASE pass ${MYSQL_Q_PW}
+        openstack-config --set ${LB_CONF} DATABASE host `hostname`
 	
 	echo "Please enter network device for VLAN trunking:"
 	read NETWORK_DEVICE
-	quantum-config-set ${LB_CONF} LINUX_BRIDGE physical_interface ${NETWORK_DEVICE}
+        openstack-config --set ${LB_CONF} LINUX_BRIDGE physical_interface ${NETWORK_DEVICE}
 
 	LIBVIRT_VIF_TYPE=ethernet
 	LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver
@@ -340,7 +340,7 @@ case "${QUANTUM_PLUGIN}" in
 "openvswitch")
 	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_quantum.* to '${QUANTUM_USER}'@'%'"
 	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_quantum.* to '${QUANTUM_USER}'@'localhost'"
-        quantum-config-set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/ovs_quantum
+        openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/ovs_quantum
 	LIBVIRT_VIF_TYPE=ethernet
 	LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
 	LINUX_INTERFACE_DRIVER=nova.network.linux_net.LinuxOVSInterfaceDriver
@@ -370,21 +370,21 @@ if ! [ -e "${NOVA_CONF}" ]; then
         echo "    libvirt_vif_type=${LIBVIRT_VIF_TYPE}"
         echo "    linuxnet_interface_driver=${LINUX_INTERFACE_DRIVER}"
 else
-	openstack-config-set ${NOVA_CONF} DEFAULT network_manager nova.network.quantum.manager.QuantumManager
-        openstack-config-set ${NOVA_CONF} DEFAULT quantum_connection_host `hostname`
-        openstack-config-set ${NOVA_CONF} DEFAULT quantum_connection_port 9696
-        openstack-config-set ${NOVA_CONF} DEFAULT quantum_use_dhcp True
+        openstack-config --set ${NOVA_CONF} DEFAULT network_manager nova.network.quantum.manager.QuantumManager
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_connection_host `hostname`
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_connection_port 9696
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_use_dhcp True
         if [ ${SCHEDULER_DRIVER} ]; then
-                openstack-config-set ${NOVA_CONF} DEFAULT scheduler_driver ${SCHEDULER_DRIVER}
+                openstack-config --set ${NOVA_CONF} DEFAULT scheduler_driver ${SCHEDULER_DRIVER}
         fi
         if [ ${LIBVIRT_VIF_DRIVER} ]; then
-                openstack-config-set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
+                openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
         fi
         if [ ${LIBVIRT_VIF_TYPE} ]; then
-                openstack-config-set ${NOVA_CONF} DEFAULT libvirt_vif_type ${LIBVIRT_VIF_TYPE}
+                openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_type ${LIBVIRT_VIF_TYPE}
         fi
         if [ ${LINUX_INTERFACE_DRIVER} ]; then
-                openstack-config-set ${NOVA_CONF} DEFAULT linuxnet_interface_driver ${LINUX_INTERFACE_DRIVER}
+                openstack-config --set ${NOVA_CONF} DEFAULT linuxnet_interface_driver ${LINUX_INTERFACE_DRIVER}
         fi
 fi
 

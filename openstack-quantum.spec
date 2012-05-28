@@ -4,7 +4,7 @@
 
 Name:		openstack-quantum
 Version:	2012.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -14,7 +14,6 @@ URL:		http://launchpad.net/quantum/
 Source0:	https://launchpad.net/quantum/essex/2012.1/+download/quantum-2012.1.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
-Source3:	quantum-config-set
 Source4:	quantum-server-setup
 Source5:	quantum-node-setup
 
@@ -32,6 +31,7 @@ BuildRequires:	systemd-units
 BuildRequires:	dos2unix
 
 Requires:	python-quantum = %{version}-%{release}
+Requires:	openstack-utils
 
 Requires(pre):	shadow-utils
 Requires(post): systemd-units
@@ -214,7 +214,6 @@ install -d -m 755 %{buildroot}%{_sharedstatedir}/quantum
 install -d -m 755 %{buildroot}%{_localstatedir}/log/quantum
 
 # Install setup helper scripts
-install -p -D -m 755 %{SOURCE3} %{buildroot}%{_bindir}/quantum-config-set
 install -p -D -m 755 %{SOURCE4} %{buildroot}%{_bindir}/quantum-server-setup
 install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/quantum-node-setup
 
@@ -303,7 +302,6 @@ fi
 %doc README
 %{_bindir}/quantum-server
 %{_bindir}/quantum-rootwrap
-%{_bindir}/quantum-config-set
 %{_bindir}/quantum-server-setup
 %{_bindir}/quantum-node-setup
 %{_unitdir}/quantum-server.service
@@ -400,6 +398,9 @@ fi
 
 
 %changelog
+* Mon May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-2
+- Fix helper scripts to use the always available openstack-config util
+
 * Mon Apr  9 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-1
 - Update to essex release
 

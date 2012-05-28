@@ -136,26 +136,26 @@ fi
 
 case "${QUANTUM_PLUGIN}" in
 "cisco")
-        quantum-config-set ${CISCO_CONF} DATABASE user ${QUANTUM_USER}
-        quantum-config-set ${CISCO_CONF} DATABASE pass ${MYSQL_Q_PW}
-        quantum-config-set ${CISCO_CONF} DATABASE host ${QUANTUM_HOST}
+        openstack-config --set ${CISCO_CONF} DATABASE user ${QUANTUM_USER}
+        openstack-config --set ${CISCO_CONF} DATABASE pass ${MYSQL_Q_PW}
+        openstack-config --set ${CISCO_CONF} DATABASE host ${QUANTUM_HOST}
         SCHEDULER_DRIVER=quantum.plugins.cisco.nova.quantum_port_aware_scheduler.QuantumPortAwareScheduler
         LIBVIRT_VIF_DRIVER=quantum.plugins.cisco.nova.vifdirect.Libvirt802dot1QbhDriver
         LIBVIRT_VIF_TYPE=802.1Qbh
 ;;
 
 "linuxbridge")
-	quantum-config-set ${LB_CONF} DATABASE connection mysql
-        quantum-config-set ${LB_CONF} DATABASE user ${QUANTUM_USER}
-        quantum-config-set ${LB_CONF} DATABASE pass ${MYSQL_Q_PW}
-	quantum-config-set ${LB_CONF} DATABASE host ${QUANTUM_HOST}
+	openstack-config --set ${LB_CONF} DATABASE connection mysql
+        openstack-config --set ${LB_CONF} DATABASE user ${QUANTUM_USER}
+        openstack-config --set ${LB_CONF} DATABASE pass ${MYSQL_Q_PW}
+	openstack-config --set ${LB_CONF} DATABASE host ${QUANTUM_HOST}
         LIBVIRT_VIF_TYPE=ethernet
         LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver
         LINUX_INTERFACE_DRIVER=nova.network.linux_net.QuantumLinuxBridgeInterfaceDriver
 
         echo "Please enter network device for VLAN trunking:"
         read NETWORK_DEVICE
-        quantum-config-set ${LB_CONF} LINUX_BRIDGE physical_interface ${NETWORK_DEVICE}
+        openstack-config --set ${LB_CONF} LINUX_BRIDGE physical_interface ${NETWORK_DEVICE}
 ;;
 
 "nicira")
@@ -169,7 +169,7 @@ case "${QUANTUM_PLUGIN}" in
                 echo "Please install openvswitch"
                 exit 0
         fi
-        quantum-config-set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@${QUANTUM_HOST}/ovs_quantum
+        openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@${QUANTUM_HOST}/ovs_quantum
         LIBVIRT_VIF_TYPE=ethernet
         LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
         LINUX_INTERFACE_DRIVER=nova.network.linux_net.LinuxOVSInterfaceDriver
@@ -204,21 +204,21 @@ if ! [ -e "${NOVA_CONF}" ]; then
         echo "libvirt_vif_type ${LIBVIRT_VIF_TYPE}"
         echo "linuxnet_interface_driver ${LINUX_INTERFACE_DRIVER}"
 else
-        openstack-config-set ${NOVA_CONF} DEFAULT network_manager nova.network.quantum.manager.QuantumManager
-        openstack-config-set ${NOVA_CONF} DEFAULT quantum_connection_host ${QUANTUM_HOST}
-        openstack-config-set ${NOVA_CONF} DEFAULT quantum_connection_port 9696
-        openstack-config-set ${NOVA_CONF} DEFAULT quantum_use_dhcp True
+        openstack-config --set ${NOVA_CONF} DEFAULT network_manager nova.network.quantum.manager.QuantumManager
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_connection_host ${QUANTUM_HOST}
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_connection_port 9696
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_use_dhcp True
 	if [ ${SCHEDULER_DRIVER} ]; then
-	        openstack-config-set ${NOVA_CONF} DEFAULT scheduler_driver ${SCHEDULER_DRIVER}
+	        openstack-config --set ${NOVA_CONF} DEFAULT scheduler_driver ${SCHEDULER_DRIVER}
 	fi
         if [ ${LIBVIRT_VIF_DRIVER} ]; then
-	        openstack-config-set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
+	        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
 	fi
         if [ ${LIBVIRT_VIF_TYPE} ]; then
-        	openstack-config-set ${NOVA_CONF} DEFAULT libvirt_vif_type ${LIBVIRT_VIF_TYPE}
+	        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_type ${LIBVIRT_VIF_TYPE}
 	fi
         if [ ${LINUX_INTERFACE_DRIVER} ]; then
-	        openstack-config-set ${NOVA_CONF} DEFAULT linuxnet_interface_driver ${LINUX_INTERFACE_DRIVER}
+	        openstack-config --set ${NOVA_CONF} DEFAULT linuxnet_interface_driver ${LINUX_INTERFACE_DRIVER}
 	fi
 fi
 
