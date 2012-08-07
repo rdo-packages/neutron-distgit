@@ -4,7 +4,7 @@
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.1.f2%{?dist}
+Release:	0.2.f2%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -40,14 +40,13 @@ Requires(postun): systemd-units
 
 
 %description
-Quantum is a virtual network service for Openstack, and a part of
-Netstack. Just like OpenStack Nova provides an API to dynamically
-request and configure virtual servers, Quantum provides an API to
-dynamically request and configure virtual networks. These networks
-connect "interfaces" from other OpenStack services (e.g., virtual NICs
-from Nova VMs). The Quantum API supports extensions to provide
-advanced network capabilities (e.g., QoS, ACLs, network monitoring,
-etc.)
+Quantum is a virtual network service for Openstack. Just like
+OpenStack Nova provides an API to dynamically request and configure
+virtual servers, Quantum provides an API to dynamically request and
+configure virtual networks. These networks connect "interfaces" from
+other OpenStack services (e.g., virtual NICs from Nova VMs). The
+Quantum API supports extensions to provide advanced network
+capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 
 %package -n python-quantum
@@ -160,6 +159,9 @@ find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
 chmod 644 quantum/plugins/cisco/README
 dos2unix quantum/plugins/cisco/README
+
+# Remove unneeded dependency
+sed -i '/setuptools_git/d' setup.py
 
 # Remove broken files (REVISIT)
 rm quantum/plugins/nicira/nicira_nvp_plugin/cli.py
@@ -319,11 +321,9 @@ fi
 
 
 %files -n python-quantum
-# note that %%{python_sitelib}/quantum is owned by python-quantumclient
 %doc LICENSE
 %doc README
-%{python_sitelib}/quantum/*
-%exclude %{python_sitelib}/quantum/__init__.*
+%{python_sitelib}/quantum
 %exclude %{python_sitelib}/quantum/extensions/_credential_view.py*
 %exclude %{python_sitelib}/quantum/extensions/portprofile.py*
 %exclude %{python_sitelib}/quantum/extensions/novatenant.py*
@@ -401,6 +401,11 @@ fi
 
 
 %changelog
+* Tue Aug  7 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.2.f2
+- Include quantum module no longer provided by python-quantumclient
+- Update description text
+- Disable setuptools_git dependency
+
 * Tue Aug  7 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.1.f2
 - Update to folsom milestone 2
 
