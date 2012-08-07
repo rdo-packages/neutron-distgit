@@ -1,17 +1,17 @@
 #
-# This is 2012.1 essex release
+# This is 2012.2 folsom milestone 2
 #
 
 Name:		openstack-quantum
-Version:	2012.1
-Release:	3%{?dist}
+Version:	2012.2
+Release:	0.1.f2%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	https://launchpad.net/quantum/essex/2012.1/+download/quantum-2012.1.tar.gz
+Source0:	https://launchpad.net/quantum/folsom/folsom-2/+download/quantum-2012.2~f2.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -54,9 +54,7 @@ etc.)
 Summary:	Quantum Python libraries
 Group:		Applications/System
 
-Requires:	python-quantumclient >= %{version}
 Requires:	MySQL-python
-Requires:	python-configobj
 Requires:	python-eventlet
 Requires:	python-lxml
 Requires:	python-gflags
@@ -79,6 +77,7 @@ Summary:	Quantum Cisco plugin
 Group:		Applications/System
 
 Requires:	openstack-quantum = %{version}-%{release}
+Requires:	python-configobj
 
 
 %description -n openstack-quantum-cisco
@@ -162,6 +161,9 @@ find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 chmod 644 quantum/plugins/cisco/README
 dos2unix quantum/plugins/cisco/README
 
+# Remove broken files (REVISIT)
+rm quantum/plugins/nicira/nicira_nvp_plugin/cli.py
+
 
 %build
 %{__python} setup.py build
@@ -177,7 +179,7 @@ rm -rf %{buildroot}%{python_sitelib}/tools
 rm -rf %{buildroot}%{python_sitelib}/quantum/tests
 rm -rf %{buildroot}%{python_sitelib}/quantum/plugins/*/tests
 rm -f %{buildroot}%{python_sitelib}/quantum/plugins/*/run_tests.*
-rm %{buildroot}/usr/etc/quantum/quantum.conf.test
+#rm %%{buildroot}/usr/etc/quantum/quantum.conf.test
 rm %{buildroot}/usr/etc/init.d/quantum-server
 
 # Install execs (using hand-coded rather than generated versions)
@@ -307,7 +309,8 @@ fi
 %{_unitdir}/quantum-server.service
 %dir %{_sysconfdir}/quantum
 %config(noreplace) %{_sysconfdir}/quantum/quantum.conf
-%config(noreplace) %{_sysconfdir}/quantum/plugins.ini
+%config(noreplace) %{_sysconfdir}/quantum/api-paste.ini
+%config(noreplace) %{_sysconfdir}/quantum/policy.json
 %dir %{_sysconfdir}/quantum/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
 %config(noreplace) %{_sysconfdir}/sudoers.d/quantum
@@ -398,6 +401,9 @@ fi
 
 
 %changelog
+* Tue Aug  7 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.1.f2
+- Update to folsom milestone 2
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2012.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
