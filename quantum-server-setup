@@ -323,10 +323,7 @@ case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
 	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on quantum_linux_bridge.* to '${QUANTUM_USER}'@'%'"
 	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on quantum_linux_bridge.* to '${QUANTUM_USER}'@'localhost'"
-        openstack-config --set ${LB_CONF} DATABASE connection mysql
-        openstack-config --set ${LB_CONF} DATABASE user ${QUANTUM_USER}
-        openstack-config --set ${LB_CONF} DATABASE pass ${MYSQL_Q_PW}
-        openstack-config --set ${LB_CONF} DATABASE host `hostname`
+	openstack-config --set ${LB_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/quantum_linux_bridge
 	
 	echo "Please enter network device for VLAN trunking:"
 	read NETWORK_DEVICE

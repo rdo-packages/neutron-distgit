@@ -4,7 +4,7 @@
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.2.f2%{?dist}
+Release:	0.3.f2%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -401,6 +401,9 @@ fi
 
 
 %changelog
+* Wed Aug 22 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-0.3.f2
+- Fix helper scripts to setup the database config correctly (#847785)
+
 * Tue Aug  7 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.2.f2
 - Include quantum module no longer provided by python-quantumclient
 - Update description text
