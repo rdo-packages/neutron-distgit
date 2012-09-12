@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenStack Quantum Layer 3 Agent
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=quantum
+ExecStart=/usr/bin/quantum-l3-agent /etc/quantum/l3_agent.ini
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

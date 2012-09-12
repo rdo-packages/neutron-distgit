@@ -16,7 +16,7 @@
 #
 
 # The script supports the plugins below
-declare -a SUPPORTED_PLUGINS=(cisco linuxbridge nicira openvswitch ryu)
+declare -a SUPPORTED_PLUGINS=(linuxbridge openvswitch)
 
 #
 # Print --help output and exit.
@@ -30,22 +30,11 @@ Usage: quantum-node-setup [options]
 Options:
 	--help        | -h
 		Print usage information.
-        --qpw <pw>    | -q <pw>
-                Specify the password for the 'quantum' MySQL user that quantum will
-                use to connect to the 'quantum' MySQL database.  By default,
-                the password 'quantum' will be used.
-	--yes         | -y
-		In cases where the script would normally ask for confirmation
-		before doing something, such as installing mysql-server,
-		just assume yes.  This is useful if you want to run the script
-		non-interactively.
-        --user        | -u
-		The quantum user. 
         --plugin      | -p
                 The quantum plugin. Supported plugins:-
                     ${SUPPORTED_PLUGINS[*]}
-        --dbhost        | -d
-		The quantum database host. 
+        --qhost       | -q
+		The Quantum hostname (assumes that this is also the QPID host).
 EOF
 
 	exit 0
@@ -62,10 +51,9 @@ is_valid_plugin() {
 }
 
 QUANTUM_USER=quantum
-MYSQL_Q_PW=quantum
-CISCO_CONF=/etc/quantum/plugins/cisco/db_conn.ini
 LB_CONF=/etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini
 OVS_CONF=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+
 # Nova specific
 NOVA_CONF=/etc/nova/nova.conf
 
@@ -75,24 +63,13 @@ do
 		-h|--help)
 			usage
 			;;
-		-q|--qpw)
-			shift
-			MYSQL_Q_PW==${1}
-			;;
-		-y|--yes)
-			ASSUME_YES="yes"
-			;;
-                -u|--user)
-                        shift
-                        QUANTUM_USER=${1}
-                        ;;
                 -p|--plugin)
                         shift
                         QUANTUM_PLUGIN=${1}
                         ;;
-                -d|--dbhost)
+                -q|--qhost)
                         shift
-                        QUANTUM_HOST=${1}
+                        Q_HOST=${1}
                         ;;
 		*)
 			# ignore
@@ -125,39 +102,21 @@ if ! [ -e "/etc/quantum/plugins/${QUANTUM_PLUGIN}" ]; then
 fi
 
 #if the database hostname and is not defined and is required
-if [ -z ${QUANTUM_HOST} ] ; then
-	case "${QUANTUM_PLUGIN}" in
-	"cisco"|"linuxbridge"|"openvswitch")
-		echo "Please enter the Quantum database hostname:"
-		read QUANTUM_HOST
-		;;
-	esac
+if [ -z ${Q_HOST} ] ; then
+    echo "Please enter the Quantum hostname:"
+    read Q_HOST
 fi
 
-case "${QUANTUM_PLUGIN}" in
-"cisco")
-        openstack-config --set ${CISCO_CONF} DATABASE user ${QUANTUM_USER}
-        openstack-config --set ${CISCO_CONF} DATABASE pass ${MYSQL_Q_PW}
-        openstack-config --set ${CISCO_CONF} DATABASE host ${QUANTUM_HOST}
-        SCHEDULER_DRIVER=quantum.plugins.cisco.nova.quantum_port_aware_scheduler.QuantumPortAwareScheduler
-        LIBVIRT_VIF_DRIVER=quantum.plugins.cisco.nova.vifdirect.Libvirt802dot1QbhDriver
-        LIBVIRT_VIF_TYPE=802.1Qbh
-;;
+Q_PORT=9696
+Q_CONF=/etc/quantum/quantum.conf
+# QPID
+openstack-config --set ${Q_CONF} DEFAULT rpc_backend quantum.openstack.common.rpc.impl_qpid
+openstack-config --set ${Q_CONF} DEFAULT qpid_hostname ${Q_HOST}
 
+case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
-	openstack-config --set ${LB_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@${QUANTUM_HOST}/quantum_linux_bridge
-        LIBVIRT_VIF_TYPE=ethernet
         LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver
         LINUX_INTERFACE_DRIVER=nova.network.linux_net.QuantumLinuxBridgeInterfaceDriver
-
-        echo "Please enter network device for VLAN trunking:"
-        read NETWORK_DEVICE
-        openstack-config --set ${LB_CONF} LINUX_BRIDGE physical_interface ${NETWORK_DEVICE}
-;;
-
-"nicira")
-	echo "Complete!"
-        exit 0;
 ;;
 
 "openvswitch")
@@ -166,15 +125,8 @@ case "${QUANTUM_PLUGIN}" in
                 echo "Please install openvswitch"
                 exit 0
         fi
-        openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@${QUANTUM_HOST}/ovs_quantum
-        LIBVIRT_VIF_TYPE=ethernet
         LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
         LINUX_INTERFACE_DRIVER=nova.network.linux_net.LinuxOVSInterfaceDriver
-;;
-
-"ryu")
-	echo "Complete!"
-        exit 0;
 ;;
 
 esac
@@ -189,34 +141,35 @@ y|Y)
         exit 0
 esac
 
+# Keystone specific
+OS_USERNAME=${OS_USERNAME:-admin}
+OS_PASSWORD=${OS_PASSWORD:-verybadpass}
+OS_AUTH_URL=${OS_AUTH_URL:-http://127.0.0.1:35357/v2.0/}
+OS_TENANT_NAME=${OS_TENANT_NAME:-admin}
+
 # If OpenStack is installed then configure nova.conf
 if ! [ -e "${NOVA_CONF}" ]; then
-        echo "Please install OpenStack compute and then set the value in /etc/nova/nova.conf DEFAULT section"
-        echo "network_manager=nova.network.quantum.manager.QuantumManager"
-        echo "quantum_connection_host=${QUANTUM_HOST}"
-        echo "quantum_connection_port 9696"
-        echo "quantum_use_dhcp True"
-        echo "scheduler_driver ${SCHEDULER_DRIVER}"
-        echo "libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}"
-        echo "libvirt_vif_type ${LIBVIRT_VIF_TYPE}"
-        echo "linuxnet_interface_driver ${LINUX_INTERFACE_DRIVER}"
+        echo "Please install OpenStack compute and then set the values"
+        echo "in /etc/nova/nova.conf DEFAULT section"
+        echo "    network_api_class=nova.network.quantumv2.api.API"
+        echo "    quantum_admin_username=${OS_USERNAME}"
+        echo "    quantum_admin_password=${OS_PASSWORD}"
+        echo "    quantum_admin_auth_url=${OS_AUTH_URL}"
+        echo "    quantum_auth_strategy=keystone"
+        echo "    quantum_admin_tenant_name=${OS_TENANT_NAME}"
+        echo "    quantum_url=http://${Q_HOST}:${Q_PORT}"
+        echo "    libvirt_vif_type=ethernet"
+        echo "    libvirt_vif_driver=${LIBVIRT_VIF_DRIVER}"
 else
-        openstack-config --set ${NOVA_CONF} DEFAULT network_manager nova.network.quantum.manager.QuantumManager
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_connection_host ${QUANTUM_HOST}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_connection_port 9696
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_use_dhcp True
-	if [ ${SCHEDULER_DRIVER} ]; then
-	        openstack-config --set ${NOVA_CONF} DEFAULT scheduler_driver ${SCHEDULER_DRIVER}
-	fi
-        if [ ${LIBVIRT_VIF_DRIVER} ]; then
-	        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
-	fi
-        if [ ${LIBVIRT_VIF_TYPE} ]; then
-	        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_type ${LIBVIRT_VIF_TYPE}
-	fi
-        if [ ${LINUX_INTERFACE_DRIVER} ]; then
-	        openstack-config --set ${NOVA_CONF} DEFAULT linuxnet_interface_driver ${LINUX_INTERFACE_DRIVER}
-	fi
+        openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.quantumv2.api.API
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_username ${OS_USERNAME}
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_password ${OS_PASSWORD}
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_auth_url ${OS_AUTH_URL}
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_auth_strategy keystone 
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_tenant_name ${OS_TENANT_NAME}
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_url=http://${Q_HOST}:${Q_PORT}
+        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_type ethernet 
+        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
 fi
 
 echo "Configuration updates complete!"
