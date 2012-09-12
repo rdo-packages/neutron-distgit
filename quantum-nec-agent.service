@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 User=quantum
-ExecStart=/usr/bin/quantum-nec-agent /etc/quantum/plugins/nec/nec.ini
+ExecStart=/usr/bin/quantum-nec-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/plugins/nec/nec.ini --log-file /var/log/quantum/nec.log
 PrivateTmp=true
 
 [Install]

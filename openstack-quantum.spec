@@ -1,17 +1,17 @@
 #
-# This is 2012.2 folsom pre-rc1 snapshot
+# This is 2012.2 folsom rc1
 #
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.4.rc1.20120911.1224%{?dist}
+Release:	0.5.rc1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	http://tarballs.openstack.org/quantum/quantum-2012.2~rc1~20120911.1224.tar.gz
+Source0:	https://launchpad.net/quantum/folsom/folsom-rc1/+download/quantum-2012.2~rc1.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -202,6 +202,10 @@ find quantum/debug -name \*.py -exec sed -i '/\/bin\/python/d' {} \;
 
 chmod 644 quantum/plugins/cisco/README
 
+# Adjust configuration file content
+sed -i 's/debug = True/debug = False/' etc/quantum.conf
+sed -i 's/\# auth_strategy = keystone/auth_strategy = noauth/' etc/quantum.conf
+
 # Remove unneeded dependency
 sed -i '/setuptools_git/d' setup.py
 
@@ -252,7 +256,7 @@ install -p -D -m 640 etc/l3_agent.ini %{buildroot}%{_sysconfdir}/quantum/l3_agen
 
 # Configure agents to use quantum-rootwrap
 for f in %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini %{buildroot}%{_sysconfdir}/quantum/*_agent.ini; do
-    sed -i 's/root_helper = sudo/root_helper = sudo quantum-rootwrap/g' $f
+    sed -i 's/^root_helper.*/root_helper = sudo quantum-rootwrap \/etc\/quantum\/rootwrap.conf/g' $f
 done
 
 # Install logrotate
@@ -517,6 +521,15 @@ fi
 
 
 %changelog
+* Wed Sep 12 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.5.rc1
+- Update to folsom rc1
+- Fix command lines in agent systemd units
+- Fix setup scripts
+- Fix configuration of agents to use quantum-rootwrap
+- Set "debug = False" and "auth_strategy = noauth" in quantum.conf
+- Symlink /etc/quantum/plugin.ini to plugin's config file
+- Add "--config-file /etc/quantum/plugin.ini" to ExecStart in quantum-server.service
+
 * Tue Sep 11 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.4.rc1.20120911.1224
 - Update to folsom rc1 snapshot
 - Add support for new agents, plugins and rootwrap

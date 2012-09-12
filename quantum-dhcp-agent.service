@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 User=quantum
-ExecStart=/usr/bin/quantum-dhcp-agent /etc/quantum/dhcp_agent.ini
+ExecStart=/usr/bin/quantum-dhcp-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/dhcp_agent.ini --log-file /var/log/quantum/dhcp_agent.log
 PrivateTmp=true
 
 [Install]

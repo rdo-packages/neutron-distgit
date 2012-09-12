@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 User=quantum
-ExecStart=/usr/bin/quantum-ryu-agent /etc/quantum/plugins/ryu/ryu.ini
+ExecStart=/usr/bin/quantum-ryu-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/plugins/ryu/ryu.ini --log-file /var/log/quantum/ryu.log
 PrivateTmp=true
 
 [Install]

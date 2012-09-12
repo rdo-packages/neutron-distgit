@@ -166,7 +166,7 @@ fi
 case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
 	DB_NAME="quantum_linux_bridge"
-        Q_PLUGIN_CLASS="quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2"
+        Q_PLUGIN_CLASS="quantum.plugins.linuxbridge.lb_quantum_plugin.LinuxBridgePluginV2"
 ;;
 
 "openvswitch")
@@ -176,7 +176,7 @@ case "${QUANTUM_PLUGIN}" in
 		exit 0
 	fi
 	DB_NAME="ovs_quantum"
-        Q_PLUGIN_CLASS="quantum.plugins.linuxbridge.lb_quantum_plugin.LinuxBridgePluginV2"
+        Q_PLUGIN_CLASS="quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2"
 ;;
 esac
 
@@ -319,6 +319,7 @@ case "${QUANTUM_PLUGIN}" in
 
 	LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver
 	LINUX_INTERFACE_DRIVER=nova.network.linux_net.QuantumLinuxBridgeInterfaceDriver
+	ln -s ${LB_CONF} /etc/quantum/plugin.ini
 ;;
 
 "openvswitch")
@@ -327,6 +328,7 @@ case "${QUANTUM_PLUGIN}" in
         openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/ovs_quantum
 	LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
 	LINUX_INTERFACE_DRIVER=nova.network.linux_net.LinuxOVSInterfaceDriver
+	ln -s ${OVS_CONF} /etc/quantum/plugin.ini
 ;;
 esac
 
@@ -351,9 +353,7 @@ if ! [ -e "${NOVA_CONF}" ]; then
         echo "    quantum_auth_strategy keystone"
         echo "    quantum_admin_tenant_name ${OS_TENANT_NAME}"
         echo "    quantum_url=http://${Q_HOST}:${Q_PORT}"
-        echo "    libvirt_vif_type ethernet"
-        echo "    libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}"
-        echo "    libvirt_vif_type ${LIBVIRT_VIF_TYPE}"
+        echo "    libvirt_vif_driver=${LIBVIRT_VIF_DRIVER}"
 else
         openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.quantumv2.api.API
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_username ${OS_USERNAME}
@@ -362,9 +362,7 @@ else
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_auth_strategy keystone 
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_tenant_name ${OS_TENANT_NAME}
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_url=http://${Q_HOST}:${Q_PORT}
-        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_type ethernet 
         openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
-        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_type ${LIBVIRT_VIF_TYPE}
 fi
 
 echo "Configuration updates complete!"

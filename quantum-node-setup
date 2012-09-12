@@ -158,7 +158,6 @@ if ! [ -e "${NOVA_CONF}" ]; then
         echo "    quantum_auth_strategy=keystone"
         echo "    quantum_admin_tenant_name=${OS_TENANT_NAME}"
         echo "    quantum_url=http://${Q_HOST}:${Q_PORT}"
-        echo "    libvirt_vif_type=ethernet"
         echo "    libvirt_vif_driver=${LIBVIRT_VIF_DRIVER}"
 else
         openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.quantumv2.api.API
@@ -168,7 +167,6 @@ else
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_auth_strategy keystone 
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_tenant_name ${OS_TENANT_NAME}
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_url=http://${Q_HOST}:${Q_PORT}
-        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_type ethernet 
         openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
 fi
 
