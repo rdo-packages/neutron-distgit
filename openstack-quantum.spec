@@ -4,7 +4,7 @@
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.5.rc1%{?dist}
+Release:	0.6.rc1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -69,7 +69,7 @@ Requires:	python-lxml
 Requires:	python-netaddr
 Requires:	python-paste-deploy
 Requires:	python-qpid
-Requires:	python-quantumclient >= 2.0.21
+Requires:	python-quantumclient >= 2.0.22
 Requires:	python-routes
 Requires:	python-sqlalchemy
 Requires:	python-webob
@@ -198,6 +198,7 @@ networks using multiple other quantum plugins.
 
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
+# Remove interpreter (https://bugs.launchpad.net/quantum/+bug/1050053)
 find quantum/debug -name \*.py -exec sed -i '/\/bin\/python/d' {} \;
 
 chmod 644 quantum/plugins/cisco/README
@@ -209,9 +210,12 @@ sed -i 's/\# auth_strategy = keystone/auth_strategy = noauth/' etc/quantum.conf
 # Remove unneeded dependency
 sed -i '/setuptools_git/d' setup.py
 
-# Create missing executable
+# Create missing executable (https://bugs.launchpad.net/quantum/+bug/1050047)
 cp bin/quantum-ryu-agent bin/quantum-nec-agent
 sed -i 's/ryu/nec/g' bin/quantum-nec-agent
+
+# Fix filters_path (https://bugs.launchpad.net/quantum/+bug/1050062)
+sed -i 's/\/usr\/share\/quantum\/filters/\/usr\/share\/quantum\/rootwrap/' etc/rootwrap.conf
 
 %build
 %{__python} setup.py build
@@ -242,16 +246,16 @@ install -p -D -m 755 bin/quantum-rootwrap %{buildroot}%{_bindir}/quantum-rootwra
 install -p -D -m 755 bin/quantum-ryu-agent %{buildroot}%{_bindir}/quantum-ryu-agent
 install -p -D -m 755 bin/quantum-server %{buildroot}%{_bindir}/quantum-server
 
-# Install rootwrap files in /usr/share/quantum/filters
-mkdir -p %{buildroot}%{_datarootdir}/quantum/filters/
-install -p -D -m 644 etc/quantum/rootwrap.d/*.filters %{buildroot}%{_datarootdir}/quantum/filters/
+# Install rootwrap files (https://bugs.launchpad.net/quantum/+bug/1050045)
+mkdir -p %{buildroot}%{_datarootdir}/quantum/rootwrap
+install -p -D -m 644 etc/quantum/rootwrap.d/*.filters %{buildroot}%{_datarootdir}/quantum/rootwrap
 
 # Move config files to proper location
 install -d -m 755 %{buildroot}%{_sysconfdir}/quantum
 mv %{buildroot}/usr/etc/quantum/* %{buildroot}%{_sysconfdir}/quantum
 chmod 640  %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini
 
-# Install files missing from setup.py
+# Install files missing from setup.py (https://bugs.launchpad.net/quantum/+bug/1050045)
 install -p -D -m 640 etc/l3_agent.ini %{buildroot}%{_sysconfdir}/quantum/l3_agent.ini
 
 # Configure agents to use quantum-rootwrap
@@ -415,9 +419,11 @@ fi
 %config(noreplace) %{_sysconfdir}/sudoers.d/quantum
 %dir %attr(0755, quantum, quantum) %{_sharedstatedir}/quantum
 %dir %attr(0755, quantum, quantum) %{_localstatedir}/log/quantum
-%{_datarootdir}/quantum/filters/dhcp.filters
-%{_datarootdir}/quantum/filters/iptables-firewall.filters
-%{_datarootdir}/quantum/filters/l3.filters
+%dir %{_datarootdir}/quantum
+%dir %{_datarootdir}/quantum/rootwrap
+%{_datarootdir}/quantum/rootwrap/dhcp.filters
+%{_datarootdir}/quantum/rootwrap/iptables-firewall.filters
+%{_datarootdir}/quantum/rootwrap/l3.filters
 
 
 %files -n python-quantum
@@ -466,7 +472,7 @@ fi
 %{_bindir}/quantum-linuxbridge-agent
 %{_unitdir}/quantum-linuxbridge-agent.service
 %{python_sitelib}/quantum/plugins/linuxbridge
-%{_datarootdir}/quantum/filters/linuxbridge-plugin.filters
+%{_datarootdir}/quantum/rootwrap/linuxbridge-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/linuxbridge
 %config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/linuxbridge/*.ini
 
@@ -485,7 +491,7 @@ fi
 %{_bindir}/quantum-openvswitch-agent
 %{_unitdir}/quantum-openvswitch-agent.service
 %{python_sitelib}/quantum/plugins/openvswitch
-%{_datarootdir}/quantum/filters/openvswitch-plugin.filters
+%{_datarootdir}/quantum/rootwrap/openvswitch-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/openvswitch
 %config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/openvswitch/*.ini
 
@@ -496,7 +502,7 @@ fi
 %{_bindir}/quantum-ryu-agent
 %{_unitdir}/quantum-ryu-agent.service
 %{python_sitelib}/quantum/plugins/ryu
-%{_datarootdir}/quantum/filters/ryu-plugin.filters
+%{_datarootdir}/quantum/rootwrap/ryu-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/ryu
 %config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/ryu/*.ini
 
@@ -507,7 +513,7 @@ fi
 %{_bindir}/quantum-nec-agent
 %{_unitdir}/quantum-nec-agent.service
 %{python_sitelib}/quantum/plugins/nec
-%{_datarootdir}/quantum/filters/nec-plugin.filters
+%{_datarootdir}/quantum/rootwrap/nec-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/nec
 %config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/nec/*.ini
 
@@ -521,6 +527,11 @@ fi
 
 
 %changelog
+* Wed Sep 12 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.6.rc1
+- Require python-quantumclient >= 2.0.22
+- Add bug references for work-arounds
+- Use /usr/share/quantum/rootwrap instead of /usr/share/quantum/filters
+
 * Wed Sep 12 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.5.rc1
 - Update to folsom rc1
 - Fix command lines in agent systemd units
