@@ -125,10 +125,10 @@ OS_AUTH_URL=${OS_AUTH_URL:-http://localhost:35357/v2.0/}
 OS_TENANT_NAME=${OS_TENANT_NAME:-service}
 
 # Update Keystone
-openstack-config --set ${L3_CONF} DEFAULT auth_url ${OS_AUTH_URL}
-openstack-config --set ${L3_CONF} DEFAULT admin_username ${OS_USERNAME}
-openstack-config --set ${L3_CONF} DEFAULT admin_password ${OS_PASSWORD}
-openstack-config --set ${L3_CONF} DEFAULT admin_tenant_name ${OS_TENANT_NAME}
+openstack-config --set ${DHCP_CONF} DEFAULT auth_url ${OS_AUTH_URL}
+openstack-config --set ${DHCP_CONF} DEFAULT admin_username ${OS_USERNAME}
+openstack-config --set ${DHCP_CONF} DEFAULT admin_password ${OS_PASSWORD}
+openstack-config --set ${DHCP_CONF} DEFAULT admin_tenant_name ${OS_TENANT_NAME}
 
 # Update interface driver
 openstack-config --set ${DHCP_CONF} DEFAULT interface_driver ${LINUX_INTERFACE_DRIVER}

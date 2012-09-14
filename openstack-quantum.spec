@@ -4,7 +4,7 @@
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.7.rc1%{?dist}
+Release:	0.8.rc1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -539,6 +539,11 @@ fi
 
 
 %changelog
+* Fri Sep 14 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.8.rc1
+- Setup script fixes from garyk
+- Fix openvswitch service config file path
+- Make log file names consistent with service names
+
 * Thu Sep 13 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.7.rc1
 - Fix various issues in setup scripts
 - Configure quantum-dhcp-agent to store files under /var/lib/quantum
