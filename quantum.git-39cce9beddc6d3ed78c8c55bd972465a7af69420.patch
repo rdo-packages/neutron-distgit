@@ -1,0 +1,49 @@
+From 39cce9beddc6d3ed78c8c55bd972465a7af69420 Mon Sep 17 00:00:00 2001
+From: Jiajun Liu <iamljj@gmail.com>
+Date: Thu, 13 Sep 2012 11:43:54 +0800
+Subject: [PATCH] add missing files from setup.py
+
+Fixes bug 1050045.
+
+Currently, setup.py will not copy l3_agent.ini and rootwrap filters
+into directory /etc/quantum. Add copy operation in setup.py for those
+config files so that those files will be copied into proper directory.
+
+Change-Id: I7052d6c07ffd4d03cafa93187d8072053ee0a832
+---
+ setup.py | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index a40a929..41aec25 100644
+--- a/setup.py
++++ b/setup.py
+@@ -44,6 +44,7 @@ ProjectScripts = [
+ 
+ config_path = 'etc/quantum/'
+ init_path = 'etc/init.d'
++rootwrap_path = 'etc/quantum/rootwrap.d'
+ ovs_plugin_config_path = 'etc/quantum/plugins/openvswitch'
+ cisco_plugin_config_path = 'etc/quantum/plugins/cisco'
+ linuxbridge_plugin_config_path = 'etc/quantum/plugins/linuxbridge'
+@@ -58,7 +59,16 @@ DataFiles = [
+          'etc/rootwrap.conf',
+          'etc/api-paste.ini',
+          'etc/policy.json',
+-         'etc/dhcp_agent.ini']),
++         'etc/dhcp_agent.ini',
++         'etc/l3_agent.ini']),
++    (rootwrap_path,
++        ['etc/quantum/rootwrap.d/dhcp.filters',
++         'etc/quantum/rootwrap.d/iptables-firewall.filters',
++         'etc/quantum/rootwrap.d/l3.filters',
++         'etc/quantum/rootwrap.d/linuxbridge-plugin.filters',
++         'etc/quantum/rootwrap.d/nec-plugin.filters',
++         'etc/quantum/rootwrap.d/openvswitch-plugin.filters',
++         'etc/quantum/rootwrap.d/ryu-plugin.filters']),
+     (init_path, ['etc/init.d/quantum-server']),
+     (ovs_plugin_config_path,
+         ['etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini']),
+-- 
+1.7.11.3
+

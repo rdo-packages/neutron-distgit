@@ -4,7 +4,7 @@
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.6.rc1%{?dist}
+Release:	0.7.rc1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -26,6 +26,19 @@ Source13:	quantum-ryu-agent.service
 Source14:	quantum-nec-agent.service
 Source15:	quantum-dhcp-agent.service
 Source16:	quantum-l3-agent.service
+
+
+# Remove #!/bin/python (https://bugs.launchpad.net/quantum/+bug/1050053)
+Patch0001: quantum.git-12e2afc113add0150f3f6f5d2975929367854880.patch
+
+# Fix filters_path (https://bugs.launchpad.net/quantum/+bug/1050062)
+Patch0002: quantum.git-713d92e7b1397386be8fbca3a29eaa492e28f2b6.patch
+
+# Missing quantum-nec-agent executable (https://bugs.launchpad.net/quantum/+bug/1050047)
+Patch0003: quantum.git-7e2db08e6f4ed5f0d640b4c07189a8edd0b28b28.patch
+
+# Install rootwrap files (https://bugs.launchpad.net/quantum/+bug/1050045)
+Patch0004: quantum.git-39cce9beddc6d3ed78c8c55bd972465a7af69420.patch
 
 
 BuildArch:	noarch
@@ -196,10 +209,12 @@ networks using multiple other quantum plugins.
 %prep
 %setup -q -n quantum-%{version}
 
-find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
 
-# Remove interpreter (https://bugs.launchpad.net/quantum/+bug/1050053)
-find quantum/debug -name \*.py -exec sed -i '/\/bin\/python/d' {} \;
+find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
 chmod 644 quantum/plugins/cisco/README
 
@@ -210,12 +225,6 @@ sed -i 's/\# auth_strategy = keystone/auth_strategy = noauth/' etc/quantum.conf
 # Remove unneeded dependency
 sed -i '/setuptools_git/d' setup.py
 
-# Create missing executable (https://bugs.launchpad.net/quantum/+bug/1050047)
-cp bin/quantum-ryu-agent bin/quantum-nec-agent
-sed -i 's/ryu/nec/g' bin/quantum-nec-agent
-
-# Fix filters_path (https://bugs.launchpad.net/quantum/+bug/1050062)
-sed -i 's/\/usr\/share\/quantum\/filters/\/usr\/share\/quantum\/rootwrap/' etc/rootwrap.conf
 
 %build
 %{__python} setup.py build
@@ -246,9 +255,9 @@ install -p -D -m 755 bin/quantum-rootwrap %{buildroot}%{_bindir}/quantum-rootwra
 install -p -D -m 755 bin/quantum-ryu-agent %{buildroot}%{_bindir}/quantum-ryu-agent
 install -p -D -m 755 bin/quantum-server %{buildroot}%{_bindir}/quantum-server
 
-# Install rootwrap files (https://bugs.launchpad.net/quantum/+bug/1050045)
-mkdir -p %{buildroot}%{_datarootdir}/quantum/rootwrap
-install -p -D -m 644 etc/quantum/rootwrap.d/*.filters %{buildroot}%{_datarootdir}/quantum/rootwrap
+# Move rootwrap files to proper location
+install -d -m 755 %{buildroot}%{_datarootdir}/quantum/rootwrap
+mv %{buildroot}/usr/etc/quantum/rootwrap.d/*.filters %{buildroot}%{_datarootdir}/quantum/rootwrap
 
 # Move config files to proper location
 install -d -m 755 %{buildroot}%{_sysconfdir}/quantum
@@ -262,6 +271,9 @@ install -p -D -m 640 etc/l3_agent.ini %{buildroot}%{_sysconfdir}/quantum/l3_agen
 for f in %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini %{buildroot}%{_sysconfdir}/quantum/*_agent.ini; do
     sed -i 's/^root_helper.*/root_helper = sudo quantum-rootwrap \/etc\/quantum\/rootwrap.conf/g' $f
 done
+
+# Configure quantum-dhcp-agent state_path
+sed -i 's/state_path = \/opt\/stack\/data/state_path = \/var\/lib\/quantum/' %{buildroot}%{_sysconfdir}/quantum/dhcp_agent.ini
 
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-quantum
@@ -408,11 +420,11 @@ fi
 %{_unitdir}/quantum-l3-agent.service
 %{_unitdir}/quantum-server.service
 %dir %{_sysconfdir}/quantum
-%config(noreplace) %{_sysconfdir}/quantum/api-paste.ini
-%config(noreplace) %{_sysconfdir}/quantum/dhcp_agent.ini
-%config(noreplace) %{_sysconfdir}/quantum/l3_agent.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/api-paste.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/dhcp_agent.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/l3_agent.ini
 %config(noreplace) %{_sysconfdir}/quantum/policy.json
-%config(noreplace) %{_sysconfdir}/quantum/quantum.conf
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/quantum.conf
 %config(noreplace) %{_sysconfdir}/quantum/rootwrap.conf
 %dir %{_sysconfdir}/quantum/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
@@ -463,7 +475,7 @@ fi
 %{python_sitelib}/quantum/extensions/_qos_view.py*
 %{python_sitelib}/quantum/plugins/cisco
 %dir %{_sysconfdir}/quantum/plugins/cisco
-%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/cisco/*.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/cisco/*.ini
 
 
 %files -n openstack-quantum-linuxbridge
@@ -474,7 +486,7 @@ fi
 %{python_sitelib}/quantum/plugins/linuxbridge
 %{_datarootdir}/quantum/rootwrap/linuxbridge-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/linuxbridge
-%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/linuxbridge/*.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/linuxbridge/*.ini
 
 
 %files -n openstack-quantum-nicira
@@ -482,7 +494,7 @@ fi
 %doc quantum/plugins/nicira/nicira_nvp_plugin/README
 %{python_sitelib}/quantum/plugins/nicira
 %dir %{_sysconfdir}/quantum/plugins/nicira
-%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/nicira/*.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/nicira/*.ini
 
 
 %files -n openstack-quantum-openvswitch
@@ -493,7 +505,7 @@ fi
 %{python_sitelib}/quantum/plugins/openvswitch
 %{_datarootdir}/quantum/rootwrap/openvswitch-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/openvswitch
-%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/openvswitch/*.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/openvswitch/*.ini
 
 
 %files -n openstack-quantum-ryu
@@ -504,7 +516,7 @@ fi
 %{python_sitelib}/quantum/plugins/ryu
 %{_datarootdir}/quantum/rootwrap/ryu-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/ryu
-%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/ryu/*.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/ryu/*.ini
 
 
 %files -n openstack-quantum-nec
@@ -515,7 +527,7 @@ fi
 %{python_sitelib}/quantum/plugins/nec
 %{_datarootdir}/quantum/rootwrap/nec-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/nec
-%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/nec/*.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/nec/*.ini
 
 
 %files -n openstack-quantum-metaplugin
@@ -523,10 +535,16 @@ fi
 %doc quantum/plugins/metaplugin/README
 %{python_sitelib}/quantum/plugins/metaplugin
 %dir %{_sysconfdir}/quantum/plugins/metaplugin
-%config(noreplace) %attr(-, root, quantum) %{_sysconfdir}/quantum/plugins/metaplugin/*.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/metaplugin/*.ini
 
 
 %changelog
+* Thu Sep 13 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.7.rc1
+- Fix various issues in setup scripts
+- Configure quantum-dhcp-agent to store files under /var/lib/quantum
+- Make config files with passwords world-unreadable
+- Replace bug workarounds with upstream patches
+
 * Wed Sep 12 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.6.rc1
 - Require python-quantumclient >= 2.0.22
 - Add bug references for work-arounds

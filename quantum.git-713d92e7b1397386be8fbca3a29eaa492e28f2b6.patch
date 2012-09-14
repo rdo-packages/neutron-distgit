@@ -1,0 +1,26 @@
+From 713d92e7b1397386be8fbca3a29eaa492e28f2b6 Mon Sep 17 00:00:00 2001
+From: Jiajun Liu <iamljj@gmail.com>
+Date: Thu, 13 Sep 2012 10:09:30 +0800
+Subject: [PATCH] make rootwrap filters path consistent with other openstack
+ project
+
+Fixes bug 1050062.
+
+Change-Id: I0c3fc84af8ed9bca2e0bd2f11cbc3b737b6a4001
+---
+ etc/rootwrap.conf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/etc/rootwrap.conf b/etc/rootwrap.conf
+index 0a1048e..5f88a6a 100644
+--- a/etc/rootwrap.conf
++++ b/etc/rootwrap.conf
+@@ -1,4 +1,4 @@
+ [DEFAULT]
+ # List of directories to load filter definitions from (separated by ',').
+ # These directories MUST all be only writeable by root !
+-filters_path=/etc/quantum/rootwrap.d,/usr/share/quantum/filters
++filters_path=/etc/quantum/rootwrap.d,/usr/share/quantum/rootwrap
+-- 
+1.7.11.3
+

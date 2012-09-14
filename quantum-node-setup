@@ -116,7 +116,6 @@ openstack-config --set ${Q_CONF} DEFAULT qpid_hostname ${Q_HOST}
 case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
         LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver
-        LINUX_INTERFACE_DRIVER=nova.network.linux_net.QuantumLinuxBridgeInterfaceDriver
 ;;
 
 "openvswitch")
@@ -125,8 +124,6 @@ case "${QUANTUM_PLUGIN}" in
                 echo "Please install openvswitch"
                 exit 0
         fi
-        LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
-        LINUX_INTERFACE_DRIVER=nova.network.linux_net.LinuxOVSInterfaceDriver
 ;;
 
 esac
@@ -142,10 +139,10 @@ y|Y)
 esac
 
 # Keystone specific
-OS_USERNAME=${OS_USERNAME:-admin}
-OS_PASSWORD=${OS_PASSWORD:-verybadpass}
+OS_USERNAME=${OS_USERNAME:-quantum}
+OS_PASSWORD=${OS_PASSWORD:-servicepass}
 OS_AUTH_URL=${OS_AUTH_URL:-http://127.0.0.1:35357/v2.0/}
-OS_TENANT_NAME=${OS_TENANT_NAME:-admin}
+OS_TENANT_NAME=${OS_TENANT_NAME:-service}
 
 # If OpenStack is installed then configure nova.conf
 if ! [ -e "${NOVA_CONF}" ]; then
@@ -157,7 +154,7 @@ if ! [ -e "${NOVA_CONF}" ]; then
         echo "    quantum_admin_auth_url=${OS_AUTH_URL}"
         echo "    quantum_auth_strategy=keystone"
         echo "    quantum_admin_tenant_name=${OS_TENANT_NAME}"
-        echo "    quantum_url=http://${Q_HOST}:${Q_PORT}"
+        echo "    quantum_url=http://${Q_HOST}:${Q_PORT}/"
         echo "    libvirt_vif_driver=${LIBVIRT_VIF_DRIVER}"
 else
         openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.quantumv2.api.API
@@ -166,7 +163,7 @@ else
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_auth_url ${OS_AUTH_URL}
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_auth_strategy keystone 
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_tenant_name ${OS_TENANT_NAME}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_url=http://${Q_HOST}:${Q_PORT}
+        openstack-config --set ${NOVA_CONF} DEFAULT quantum_url http://${Q_HOST}:${Q_PORT}/
         openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
 fi
 
