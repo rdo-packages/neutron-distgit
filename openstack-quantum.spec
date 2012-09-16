@@ -4,7 +4,7 @@
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.8.rc1%{?dist}
+Release:	0.9.rc1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -539,6 +539,9 @@ fi
 
 
 %changelog
+* Sun Sep 16 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.9.rc1
+- Fix setting admin_user in quantum_l3_setup
+
 * Fri Sep 14 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.8.rc1
 - Setup script fixes from garyk
 - Fix openvswitch service config file path

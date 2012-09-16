@@ -110,7 +110,7 @@ OS_TENANT_NAME=${OS_TENANT_NAME:-service}
 
 # Update Keystone
 openstack-config --set ${L3_CONF} DEFAULT auth_url ${OS_AUTH_URL}
-openstack-config --set ${L3_CONF} DEFAULT admin_username ${OS_USERNAME}
+openstack-config --set ${L3_CONF} DEFAULT admin_user ${OS_USERNAME} 
 openstack-config --set ${L3_CONF} DEFAULT admin_password ${OS_PASSWORD}
 openstack-config --set ${L3_CONF} DEFAULT admin_tenant_name ${OS_TENANT_NAME}
 
