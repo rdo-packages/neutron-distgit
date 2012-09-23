@@ -1,17 +1,17 @@
 #
-# This is 2012.2 folsom rc1
+# This is 2012.2 folsom rc2
 #
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.9.rc1%{?dist}
+Release:	0.10.rc2%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	https://launchpad.net/quantum/folsom/folsom-rc1/+download/quantum-2012.2~rc1.tar.gz
+Source0:	https://launchpad.net/quantum/folsom/folsom-rc2/+download/quantum-2012.2~rc2.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -26,20 +26,6 @@ Source13:	quantum-ryu-agent.service
 Source14:	quantum-nec-agent.service
 Source15:	quantum-dhcp-agent.service
 Source16:	quantum-l3-agent.service
-
-
-# Remove #!/bin/python (https://bugs.launchpad.net/quantum/+bug/1050053)
-Patch0001: quantum.git-12e2afc113add0150f3f6f5d2975929367854880.patch
-
-# Fix filters_path (https://bugs.launchpad.net/quantum/+bug/1050062)
-Patch0002: quantum.git-713d92e7b1397386be8fbca3a29eaa492e28f2b6.patch
-
-# Missing quantum-nec-agent executable (https://bugs.launchpad.net/quantum/+bug/1050047)
-Patch0003: quantum.git-7e2db08e6f4ed5f0d640b4c07189a8edd0b28b28.patch
-
-# Install rootwrap files (https://bugs.launchpad.net/quantum/+bug/1050045)
-Patch0004: quantum.git-39cce9beddc6d3ed78c8c55bd972465a7af69420.patch
-
 
 BuildArch:	noarch
 
@@ -208,11 +194,6 @@ networks using multiple other quantum plugins.
 
 %prep
 %setup -q -n quantum-%{version}
-
-%patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
 
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
@@ -539,6 +520,9 @@ fi
 
 
 %changelog
+* Sun Sep 23 2012 Gary Kotton <gkotton@redhat.com> - 2012.2-0.9.rc2
+- Update to folsom rc2
+
 * Sun Sep 16 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-0.9.rc1
 - Fix setting admin_user in quantum_l3_setup
 
