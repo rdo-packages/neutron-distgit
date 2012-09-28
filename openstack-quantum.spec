@@ -1,17 +1,17 @@
 #
-# This is 2012.2 folsom rc2
+# This is 2012.2 folsom final
 #
 
 Name:		openstack-quantum
 Version:	2012.2
-Release:	0.10.rc2%{?dist}
+Release:	1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	https://launchpad.net/quantum/folsom/folsom-rc2/+download/quantum-2012.2~rc2.tar.gz
+Source0:	https://launchpad.net/quantum/folsom/%{version}/+download/quantum-%{version}.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -68,7 +68,7 @@ Requires:	python-lxml
 Requires:	python-netaddr
 Requires:	python-paste-deploy
 Requires:	python-qpid
-Requires:	python-quantumclient >= 2.0.22
+Requires:	python-quantumclient >= 1:2.1.1
 Requires:	python-routes
 Requires:	python-sqlalchemy
 Requires:	python-webob
@@ -520,6 +520,10 @@ fi
 
 
 %changelog
+* Fri Sep 28 2012 Robert Kukura <rkukura@redhat.com> - 2012.2-1
+- Update to folsom final
+- Require python-quantumclient >= 1:2.1.1
+
 * Sun Sep 23 2012 Gary Kotton <gkotton@redhat.com> - 2012.2-0.9.rc2
 - Update to folsom rc2
 
