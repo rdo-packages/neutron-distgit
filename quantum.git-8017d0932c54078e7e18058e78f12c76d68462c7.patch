@@ -1,0 +1,37 @@
+From 8017d0932c54078e7e18058e78f12c76d68462c7 Mon Sep 17 00:00:00 2001
+From: Russell Bryant <rbryant@redhat.com>
+Date: Fri, 30 Nov 2012 16:15:18 -0500
+Subject: [PATCH] Fix rpc control_exchange regression.
+
+A change was made in rpc that requires project's to define the
+control_exchange option themselves.  This was so the project's could
+set their own default value.  This change has made it in to quantum without
+adding the control_exchange option, meaning that it is using the default
+of 'openstack', potentially conflicting with other projects.
+
+See https://review.openstack.org/#/c/12518/
+
+Change-Id: Ia551a3e83de5de17ca7a8ce2b41d64d512983c42
+---
+ quantum/common/config.py |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/quantum/common/config.py b/quantum/common/config.py
+index 5db4ddb..b0b2632 100644
+--- a/quantum/common/config.py
++++ b/quantum/common/config.py
+@@ -50,7 +50,10 @@ core_opts = [
+     cfg.IntOpt('max_subnet_host_routes', default=20),
+     cfg.StrOpt('state_path', default='.'),
+     cfg.IntOpt('dhcp_lease_duration', default=120),
+-    cfg.BoolOpt('allow_overlapping_ips', default=False)
++    cfg.BoolOpt('allow_overlapping_ips', default=False),
++    cfg.StrOpt('control_exchange',
++               default='quantum',
++               help='AMQP exchange to connect to if using RabbitMQ or Qpid')
+ ]
+ 
+ # Register the configuration options
+-- 
+1.7.9.5
+
