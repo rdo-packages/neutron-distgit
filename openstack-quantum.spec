@@ -1,17 +1,17 @@
 #
-# This is 2012.2.1 folsom stable
+# This is 2013.1 grizzly milestone 1
 #
 
 Name:		openstack-quantum
-Version:	2012.2.1
-Release:	1%{?dist}
+Version:	2013.1
+Release:	0.1.g1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	https://launchpad.net/quantum/folsom/%{version}/+download/quantum-%{version}.tar.gz
+Source0:	http://launchpad.net/quantum/grizzly/grizzly-1/+download/quantum-2013.1~g1.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -26,9 +26,6 @@ Source13:	quantum-ryu-agent.service
 Source14:	quantum-nec-agent.service
 Source15:	quantum-dhcp-agent.service
 Source16:	quantum-l3-agent.service
-
-# Upstream stable branch patch https://review.openstack.org/17236
-Patch1:		quantum.git-8017d0932c54078e7e18058e78f12c76d68462c7.patch
 
 BuildArch:	noarch
 
@@ -71,7 +68,7 @@ Requires:	python-lxml
 Requires:	python-netaddr
 Requires:	python-paste-deploy
 Requires:	python-qpid
-Requires:	python-quantumclient >= 1:2.1.1
+Requires:	python-quantumclient >= 1:2.1.10
 Requires:	python-routes
 Requires:	python-sqlalchemy
 Requires:	python-webob
@@ -84,6 +81,22 @@ Quantum provides an API to dynamically request and configure virtual
 networks.
 
 This package contains the quantum Python library.
+
+
+%package -n openstack-quantum-bigswitch
+Summary:	Quantum Big Switch plugin
+Group:		Applications/System
+
+Requires:	openstack-quantum = %{version}-%{release}
+
+
+%description -n openstack-quantum-bigswitch
+Quantum provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the quantum plugin that implements virtual
+networks using the FloodLight Openflow Controller or the Big Switch
+Networks Controller.
 
 
 %package -n openstack-quantum-cisco
@@ -198,8 +211,6 @@ networks using multiple other quantum plugins.
 %prep
 %setup -q -n quantum-%{version}
 
-%patch1 -p1
-
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
 chmod 644 quantum/plugins/cisco/README
@@ -249,6 +260,9 @@ mv %{buildroot}/usr/etc/quantum/rootwrap.d/*.filters %{buildroot}%{_datarootdir}
 install -d -m 755 %{buildroot}%{_sysconfdir}/quantum
 mv %{buildroot}/usr/etc/quantum/* %{buildroot}%{_sysconfdir}/quantum
 chmod 640  %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini
+
+# Install bigswitch plugin conf file missing from setup.py
+install -p -D -m 640 etc/quantum/plugins/bigswitch/restproxy.ini %{buildroot}%{_sysconfdir}/quantum/plugins/bigswitch/restproxy.ini
 
 # Configure agents to use quantum-rootwrap
 for f in %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini %{buildroot}%{_sysconfdir}/quantum/*_agent.ini; do
@@ -434,6 +448,7 @@ fi
 %exclude %{python_sitelib}/quantum/extensions/_pprofiles.py*
 %exclude %{python_sitelib}/quantum/extensions/qos.py*
 %exclude %{python_sitelib}/quantum/extensions/_qos_view.py*
+%exclude %{python_sitelib}/quantum/plugins/bigswitch
 %exclude %{python_sitelib}/quantum/plugins/cisco
 %exclude %{python_sitelib}/quantum/plugins/linuxbridge
 %exclude %{python_sitelib}/quantum/plugins/metaplugin
@@ -442,6 +457,14 @@ fi
 %exclude %{python_sitelib}/quantum/plugins/openvswitch
 %exclude %{python_sitelib}/quantum/plugins/ryu
 %{python_sitelib}/quantum-%%{version}-*.egg-info
+
+
+%files -n openstack-quantum-bigswitch
+%doc LICENSE
+%doc quantum/plugins/bigswitch/README
+%{python_sitelib}/quantum/plugins/bigswitch
+%dir %{_sysconfdir}/quantum/plugins/bigswitch
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/bigswitch/*.ini
 
 
 %files -n openstack-quantum-cisco
@@ -522,6 +545,13 @@ fi
 
 
 %changelog
+* Wed Dec  5 2012 Robert Kukura <rkukura@redhat.com> - 2013.1-0.1.g1
+- Update to grizzly milestone 1
+- Require python-quantumclient >= 1:2.1.10
+- Remove unneeded rpc control_exchange patch
+- Add bigswitch plugin as sub-package
+- Work around bigswitch conf file missing from setup.py
+
 * Mon Dec  3 2012 Robert Kukura <rkukura@redhat.com> - 2012.2.1-1
 - Update to folsom stable 2012.2.1
 - Turn off PrivateTmp for dhcp_agent and l3_agent (bug 872689)
