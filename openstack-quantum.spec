@@ -4,7 +4,7 @@
 
 Name:		openstack-quantum
 Version:	2013.1
-Release:	0.1.g1%{?dist}
+Release:	0.2.g1%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
@@ -545,6 +545,9 @@ fi
 
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.1-0.2.g1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Wed Dec  5 2012 Robert Kukura <rkukura@redhat.com> - 2013.1-0.1.g1
 - Update to grizzly milestone 1
 - Require python-quantumclient >= 1:2.1.10
