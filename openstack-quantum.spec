@@ -1,17 +1,17 @@
 #
-# This is 2013.1 grizzly milestone 1
+# This is 2013.1 grizzly milestone 2
 #
 
 Name:		openstack-quantum
 Version:	2013.1
-Release:	0.2.g1%{?dist}
+Release:	0.3.g2%{?dist}
 Summary:	Virtual network service for OpenStack (quantum)
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	http://launchpad.net/quantum/grizzly/grizzly-1/+download/quantum-2013.1~g1.tar.gz
+Source0:	http://launchpad.net/quantum/grizzly/grizzly-2/+download/quantum-2013.1~g2.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -26,6 +26,8 @@ Source13:	quantum-ryu-agent.service
 Source14:	quantum-nec-agent.service
 Source15:	quantum-dhcp-agent.service
 Source16:	quantum-l3-agent.service
+Source17:	quantum-metadata-agent.service
+Source18:	quantum-ovs-cleanup.service
 
 BuildArch:	noarch
 
@@ -35,6 +37,10 @@ BuildRequires:	systemd-units
 
 Requires:	python-quantum = %{version}-%{release}
 Requires:	openstack-utils
+
+# dnsmasq is not a hard requirement, but is currently the only option
+# when quantum-dhcp-agent is deployed.
+Requires:	dnsmasq
 
 Requires(pre):	shadow-utils
 Requires(post): systemd-units
@@ -57,6 +63,7 @@ Summary:	Quantum Python libraries
 Group:		Applications/System
 
 Requires:	MySQL-python
+Requires:	python-alembic
 Requires:	python-amqplib
 Requires:	python-anyjson
 Requires:	python-eventlet
@@ -64,7 +71,6 @@ Requires:	python-greenlet
 Requires:	python-httplib2
 Requires:	python-iso8601
 Requires:	python-kombu
-Requires:	python-lxml
 Requires:	python-netaddr
 Requires:	python-paste-deploy
 Requires:	python-qpid
@@ -240,17 +246,22 @@ rm -f %{buildroot}%{python_sitelib}/quantum/plugins/*/run_tests.*
 rm %{buildroot}/usr/etc/init.d/quantum-server
 
 # Install execs (using hand-coded rather than generated versions)
+install -p -D -m 755 bin/quantum-db-manage %{buildroot}%{_bindir}/quantum-db-manage
 install -p -D -m 755 bin/quantum-debug %{buildroot}%{_bindir}/quantum-debug
 install -p -D -m 755 bin/quantum-dhcp-agent %{buildroot}%{_bindir}/quantum-dhcp-agent
 install -p -D -m 755 bin/quantum-dhcp-agent-dnsmasq-lease-update %{buildroot}%{_bindir}/quantum-dhcp-agent-dnsmasq-lease-update
 install -p -D -m 755 bin/quantum-l3-agent %{buildroot}%{_bindir}/quantum-l3-agent
 install -p -D -m 755 bin/quantum-linuxbridge-agent %{buildroot}%{_bindir}/quantum-linuxbridge-agent
+install -p -D -m 755 bin/quantum-metadata-agent %{buildroot}%{_bindir}/quantum-metadata-agent
 install -p -D -m 755 bin/quantum-nec-agent %{buildroot}%{_bindir}/quantum-nec-agent
 install -p -D -m 755 bin/quantum-netns-cleanup %{buildroot}%{_bindir}/quantum-netns-cleanup
+install -p -D -m 755 bin/quantum-ns-metadata-proxy %{buildroot}%{_bindir}/quantum-ns-metadata-proxy
 install -p -D -m 755 bin/quantum-openvswitch-agent %{buildroot}%{_bindir}/quantum-openvswitch-agent
+install -p -D -m 755 bin/quantum-ovs-cleanup %{buildroot}%{_bindir}/quantum-ovs-cleanup
 install -p -D -m 755 bin/quantum-rootwrap %{buildroot}%{_bindir}/quantum-rootwrap
 install -p -D -m 755 bin/quantum-ryu-agent %{buildroot}%{_bindir}/quantum-ryu-agent
 install -p -D -m 755 bin/quantum-server %{buildroot}%{_bindir}/quantum-server
+install -p -D -m 755 bin/quantum-usage-audit %{buildroot}%{_bindir}/quantum-usage-audit
 
 # Move rootwrap files to proper location
 install -d -m 755 %{buildroot}%{_datarootdir}/quantum/rootwrap
@@ -286,6 +297,8 @@ install -p -D -m 644 %{SOURCE13} %{buildroot}%{_unitdir}/quantum-ryu-agent.servi
 install -p -D -m 644 %{SOURCE14} %{buildroot}%{_unitdir}/quantum-nec-agent.service
 install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/quantum-dhcp-agent.service
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/quantum-l3-agent.service
+install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/quantum-metadata-agent.service
+install -p -D -m 644 %{SOURCE18} %{buildroot}%{_unitdir}/quantum-ovs-cleanup.service
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/quantum
@@ -297,6 +310,13 @@ install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/quantum-node-setup
 install -p -D -m 755 %{SOURCE6} %{buildroot}%{_bindir}/quantum-dhcp-setup
 install -p -D -m 755 %{SOURCE7} %{buildroot}%{_bindir}/quantum-l3-setup
 
+# Install version info file
+cat > %{buildroot}%{_sysconfdir}/quantum/release <<EOF
+[Quantum]
+vendor = Fedora Project
+product = OpenStack Quantum
+package = %{release}
+EOF
 
 %pre
 getent group quantum >/dev/null || groupadd -r quantum --gid 164
@@ -322,6 +342,8 @@ if [ $1 -eq 0 ] ; then
     /bin/systemctl stop quantum-dhcp-agent.service > /dev/null 2>&1 || :
     /bin/systemctl --no-reload disable quantum-l3-agent.service > /dev/null 2>&1 || :
     /bin/systemctl stop quantum-l3-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl --no-reload disable quantum-metadata-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl stop quantum-metadata-agent.service > /dev/null 2>&1 || :
 fi
 
 
@@ -332,6 +354,7 @@ if [ $1 -ge 1 ] ; then
     /bin/systemctl try-restart quantum-server.service >/dev/null 2>&1 || :
     /bin/systemctl try-restart quantum-dhcp-agent.service >/dev/null 2>&1 || :
     /bin/systemctl try-restart quantum-l3-agent.service >/dev/null 2>&1 || :
+    /bin/systemctl try-restart quantum-metadata-agent.service >/dev/null 2>&1 || :
 fi
 
 
@@ -402,25 +425,32 @@ fi
 %files
 %doc LICENSE
 %doc README
+%{_bindir}/quantum-db-manage
 %{_bindir}/quantum-debug
 %{_bindir}/quantum-dhcp-agent
 %{_bindir}/quantum-dhcp-agent-dnsmasq-lease-update
 %{_bindir}/quantum-dhcp-setup
 %{_bindir}/quantum-l3-agent
 %{_bindir}/quantum-l3-setup
+%{_bindir}/quantum-metadata-agent
 %{_bindir}/quantum-netns-cleanup
 %{_bindir}/quantum-node-setup
+%{_bindir}/quantum-ns-metadata-proxy
 %{_bindir}/quantum-rootwrap
 %{_bindir}/quantum-server
 %{_bindir}/quantum-server-setup
+%{_bindir}/quantum-usage-audit
 %{_unitdir}/quantum-dhcp-agent.service
 %{_unitdir}/quantum-l3-agent.service
+%{_unitdir}/quantum-metadata-agent.service
 %{_unitdir}/quantum-server.service
 %dir %{_sysconfdir}/quantum
+%{_sysconfdir}/quantum/release
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/api-paste.ini
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/l3_agent.ini
-%config(noreplace) %{_sysconfdir}/quantum/policy.json
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/metadata_agent.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/policy.json
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/quantum.conf
 %config(noreplace) %{_sysconfdir}/quantum/rootwrap.conf
 %dir %{_sysconfdir}/quantum/plugins
@@ -507,7 +537,9 @@ fi
 %doc LICENSE
 %doc quantum/plugins/openvswitch/README
 %{_bindir}/quantum-openvswitch-agent
+%{_bindir}/quantum-ovs-cleanup
 %{_unitdir}/quantum-openvswitch-agent.service
+%{_unitdir}/quantum-ovs-cleanup.service
 %{python_sitelib}/quantum/plugins/openvswitch
 %{_datarootdir}/quantum/rootwrap/openvswitch-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/openvswitch
@@ -545,6 +577,18 @@ fi
 
 
 %changelog
+* Thu Feb 15 2013 Robert Kukura <rkukura@redhat.com> - 2013.1-0.3.g2
+- Update to grizzly milestone 2
+- Add quantum-db-manage, quantum-metadata-agent,
+  quantum-ns-metadata-proxy, quantum-ovs-cleanup, and
+  quantum-usage-audit executables
+- Add systemd units for quantum-metadata-agent and quantum-ovs-cleanup
+- Fix /etc/quantum/policy.json permissions (bug 877600)
+- Require dnsmasq (bug 890041)
+- Add the version info file
+- Remove python-lxml dependency
+- Add python-alembic dependency
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.1-0.2.g1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
