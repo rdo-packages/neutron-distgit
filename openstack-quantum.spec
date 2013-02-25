@@ -1,17 +1,21 @@
 #
-# This is 2013.1 grizzly milestone 2
+# This is 2013.1 grizzly milestone 3
 #
+%global release_name grizzly
+%global release_letter g
+%global milestone 3
 
 Name:		openstack-quantum
 Version:	2013.1
-Release:	0.3.g2%{?dist}
-Summary:	Virtual network service for OpenStack (quantum)
+Release:	0.4.%{release_letter}%{milestone}%{?dist}
+Summary:	OpenStack Networking Service
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	http://launchpad.net/quantum/grizzly/grizzly-2/+download/quantum-2013.1~g2.tar.gz
+#Source0:	http://launchpad.net/quantum/%%{release_name}/%%{version}/+download/quantum-%%{version}.tar.gz
+Source0:	http://launchpad.net/quantum/%{release_name}/%{release_name}-%{milestone}/+download/quantum-%{version}.%{release_letter}%{milestone}.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -28,6 +32,8 @@ Source15:	quantum-dhcp-agent.service
 Source16:	quantum-l3-agent.service
 Source17:	quantum-metadata-agent.service
 Source18:	quantum-ovs-cleanup.service
+
+Patch01:	quantum.git-2379669383d08e128bbc18bbe082c6e2eadd710a.patch
 
 BuildArch:	noarch
 
@@ -72,11 +78,12 @@ Requires:	python-httplib2
 Requires:	python-iso8601
 Requires:	python-kombu
 Requires:	python-netaddr
+Requires:	python-oslo-config
 Requires:	python-paste-deploy
 Requires:	python-qpid
 Requires:	python-quantumclient >= 1:2.1.10
 Requires:	python-routes
-Requires:	python-sqlalchemy
+Requires:	python-sqlalchemy < 0.8.0
 Requires:	python-webob
 Requires:	sudo
 
@@ -105,6 +112,21 @@ networks using the FloodLight Openflow Controller or the Big Switch
 Networks Controller.
 
 
+%package -n openstack-quantum-brocade
+Summary:	Quantum Brocade plugin
+Group:		Applications/System
+
+Requires:	openstack-quantum = %{version}-%{release}
+
+
+%description -n openstack-quantum-brocade
+Quantum provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the quantum plugin that implements virtual
+networks using Brocade VCS switches running NOS.
+
+
 %package -n openstack-quantum-cisco
 Summary:	Quantum Cisco plugin
 Group:		Applications/System
@@ -119,6 +141,21 @@ networks.
 
 This package contains the quantum plugin that implements virtual
 networks using Cisco UCS and Nexus.
+
+
+%package -n openstack-quantum-hyperv
+Summary:	Quantum Hyper-V plugin
+Group:		Applications/System
+
+Requires:	openstack-quantum = %{version}-%{release}
+
+
+%description -n openstack-quantum-hyperv
+Quantum provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the quantum plugin that implements virtual
+networks using Microsoft Hyper-V.
 
 
 %package -n openstack-quantum-linuxbridge
@@ -136,6 +173,21 @@ networks.
 
 This package contains the quantum plugin that implements virtual
 networks as VLANs using Linux bridging.
+
+
+%package -n openstack-quantum-midonet
+Summary:	Quantum MidoNet plugin
+Group:		Applications/System
+
+Requires:	openstack-quantum = %{version}-%{release}
+
+
+%description -n openstack-quantum-midonet
+Quantum provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the quantum plugin that implements virtual
+networks using MidoNet from Midokura.
 
 
 %package -n openstack-quantum-nicira
@@ -167,6 +219,21 @@ networks.
 
 This package contains the quantum plugin that implements virtual
 networks using Open vSwitch.
+
+
+%package -n openstack-quantum-plumgrid
+Summary:	Quantum PLUMgrid plugin
+Group:		Applications/System
+
+Requires:	openstack-quantum = %{version}-%{release}
+
+
+%description -n openstack-quantum-plumgrid
+Quantum provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the quantum plugin that implements virtual
+networks using the PLUMgrid platform.
 
 
 %package -n openstack-quantum-ryu
@@ -215,18 +282,25 @@ networks using multiple other quantum plugins.
 
 
 %prep
-%setup -q -n quantum-%{version}
+%setup -q -n quantum-%{version}.%{release_letter}%{milestone}
+
+%patch01 -p1
+
+sed -i 's/%{version}.%{release_letter}%{milestone}/%{version}/' PKG-INFO
 
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
+
+# Remove bundled egg-info
+rm -rf quantum.egg-info
+
+# let RPM handle deps
+sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 chmod 644 quantum/plugins/cisco/README
 
 # Adjust configuration file content
 sed -i 's/debug = True/debug = False/' etc/quantum.conf
 sed -i 's/\# auth_strategy = keystone/auth_strategy = noauth/' etc/quantum.conf
-
-# Remove unneeded dependency
-sed -i '/setuptools_git/d' setup.py
 
 
 %build
@@ -246,6 +320,7 @@ rm -f %{buildroot}%{python_sitelib}/quantum/plugins/*/run_tests.*
 rm %{buildroot}/usr/etc/init.d/quantum-server
 
 # Install execs (using hand-coded rather than generated versions)
+install -p -D -m 755 bin/quantum-check-nvp-config %{buildroot}%{_bindir}/quantum-check-nvp-config
 install -p -D -m 755 bin/quantum-db-manage %{buildroot}%{_bindir}/quantum-db-manage
 install -p -D -m 755 bin/quantum-debug %{buildroot}%{_bindir}/quantum-debug
 install -p -D -m 755 bin/quantum-dhcp-agent %{buildroot}%{_bindir}/quantum-dhcp-agent
@@ -271,9 +346,6 @@ mv %{buildroot}/usr/etc/quantum/rootwrap.d/*.filters %{buildroot}%{_datarootdir}
 install -d -m 755 %{buildroot}%{_sysconfdir}/quantum
 mv %{buildroot}/usr/etc/quantum/* %{buildroot}%{_sysconfdir}/quantum
 chmod 640  %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini
-
-# Install bigswitch plugin conf file missing from setup.py
-install -p -D -m 640 etc/quantum/plugins/bigswitch/restproxy.ini %{buildroot}%{_sysconfdir}/quantum/plugins/bigswitch/restproxy.ini
 
 # Configure agents to use quantum-rootwrap
 for f in %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini %{buildroot}%{_sysconfdir}/quantum/*_agent.ini; do
@@ -470,21 +542,20 @@ fi
 %doc README
 %{python_sitelib}/quantum
 %exclude %{python_sitelib}/quantum/extensions/_credential_view.py*
-%exclude %{python_sitelib}/quantum/extensions/portprofile.py*
-%exclude %{python_sitelib}/quantum/extensions/novatenant.py*
 %exclude %{python_sitelib}/quantum/extensions/credential.py*
-%exclude %{python_sitelib}/quantum/extensions/_novatenant_view.py*
-%exclude %{python_sitelib}/quantum/extensions/multiport.py*
-%exclude %{python_sitelib}/quantum/extensions/_pprofiles.py*
 %exclude %{python_sitelib}/quantum/extensions/qos.py*
 %exclude %{python_sitelib}/quantum/extensions/_qos_view.py*
 %exclude %{python_sitelib}/quantum/plugins/bigswitch
+%exclude %{python_sitelib}/quantum/plugins/brocade
 %exclude %{python_sitelib}/quantum/plugins/cisco
+%exclude %{python_sitelib}/quantum/plugins/hyperv
 %exclude %{python_sitelib}/quantum/plugins/linuxbridge
 %exclude %{python_sitelib}/quantum/plugins/metaplugin
+%exclude %{python_sitelib}/quantum/plugins/midonet
 %exclude %{python_sitelib}/quantum/plugins/nec
 %exclude %{python_sitelib}/quantum/plugins/nicira
 %exclude %{python_sitelib}/quantum/plugins/openvswitch
+%exclude %{python_sitelib}/quantum/plugins/plumgrid
 %exclude %{python_sitelib}/quantum/plugins/ryu
 %{python_sitelib}/quantum-%%{version}-*.egg-info
 
@@ -497,21 +568,33 @@ fi
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/bigswitch/*.ini
 
 
+%files -n openstack-quantum-brocade
+%doc LICENSE
+%doc quantum/plugins/brocade/README.md
+%{python_sitelib}/quantum/plugins/brocade
+%dir %{_sysconfdir}/quantum/plugins/brocade
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/brocade/*.ini
+
+
 %files -n openstack-quantum-cisco
 %doc LICENSE
 %doc quantum/plugins/cisco/README
 %{python_sitelib}/quantum/extensions/_credential_view.py*
-%{python_sitelib}/quantum/extensions/portprofile.py*
-%{python_sitelib}/quantum/extensions/novatenant.py*
 %{python_sitelib}/quantum/extensions/credential.py*
-%{python_sitelib}/quantum/extensions/_novatenant_view.py*
-%{python_sitelib}/quantum/extensions/multiport.py*
-%{python_sitelib}/quantum/extensions/_pprofiles.py*
 %{python_sitelib}/quantum/extensions/qos.py*
 %{python_sitelib}/quantum/extensions/_qos_view.py*
 %{python_sitelib}/quantum/plugins/cisco
 %dir %{_sysconfdir}/quantum/plugins/cisco
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/cisco/*.ini
+
+
+%files -n openstack-quantum-hyperv
+%doc LICENSE
+#%%doc quantum/plugins/hyperv/README
+%{python_sitelib}/quantum/plugins/hyperv
+%dir %{_sysconfdir}/quantum/plugins/hyperv
+%exclude %{python_sitelib}/quantum/plugins/hyperv/agent
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/hyperv/*.ini
 
 
 %files -n openstack-quantum-linuxbridge
@@ -525,9 +608,18 @@ fi
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/linuxbridge/*.ini
 
 
+%files -n openstack-quantum-midonet
+%doc LICENSE
+#%%doc quantum/plugins/midonet/README
+%{python_sitelib}/quantum/plugins/midonet
+%dir %{_sysconfdir}/quantum/plugins/midonet
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/midonet/*.ini
+
+
 %files -n openstack-quantum-nicira
 %doc LICENSE
 %doc quantum/plugins/nicira/nicira_nvp_plugin/README
+%{_bindir}/quantum-check-nvp-config
 %{python_sitelib}/quantum/plugins/nicira
 %dir %{_sysconfdir}/quantum/plugins/nicira
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/nicira/*.ini
@@ -544,6 +636,14 @@ fi
 %{_datarootdir}/quantum/rootwrap/openvswitch-plugin.filters
 %dir %{_sysconfdir}/quantum/plugins/openvswitch
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/openvswitch/*.ini
+
+
+%files -n openstack-quantum-plumgrid
+%doc LICENSE
+%doc quantum/plugins/plumgrid/README
+%{python_sitelib}/quantum/plugins/plumgrid
+%dir %{_sysconfdir}/quantum/plugins/plumgrid
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/plumgrid/*.ini
 
 
 %files -n openstack-quantum-ryu
@@ -577,6 +677,16 @@ fi
 
 
 %changelog
+* Mon Feb 25 2013 Robert Kukura <rkukura@redhat.com> - 2013.1-0.4.g3
+- Update to grizzly milestone 3
+- Add brocade, hyperv, midonet, and plumgrid plugins as sub-packages
+- Remove cisco files that were eliminated
+- Add quantum-check-nvp-config
+- Include patch for https://code.launchpad.net/bugs/1132889
+- Require python-oslo-config
+- Require compatible version of python-sqlalchemy
+- Various spec file improvements
+
 * Thu Feb 15 2013 Robert Kukura <rkukura@redhat.com> - 2013.1-0.3.g2
 - Update to grizzly milestone 2
 - Add quantum-db-manage, quantum-metadata-agent,

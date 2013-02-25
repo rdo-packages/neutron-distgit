@@ -1,0 +1,36 @@
+From 2379669383d08e128bbc18bbe082c6e2eadd710a Mon Sep 17 00:00:00 2001
+From: Gary Kotton <gkotton@redhat.com>
+Date: Mon, 25 Feb 2013 17:10:15 +0000
+Subject: [PATCH] Add midonet to setup.py
+
+Fixes bug 1132889
+
+Change-Id: I3334f515d85ea165b07b3ef576a043243c3c1bc0
+---
+ setup.py |    3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/setup.py b/setup.py
+index 7fcafd8..e265ab2 100644
+--- a/setup.py
++++ b/setup.py
+@@ -54,6 +54,7 @@ meta_plugin_config_path = 'etc/quantum/plugins/metaplugin'
+ nec_plugin_config_path = 'etc/quantum/plugins/nec'
+ hyperv_plugin_config_path = 'etc/quantum/plugins/hyperv'
+ plumgrid_plugin_config_path = 'etc/quantum/plugins/plumgrid'
++midonet_plugin_config_path = 'etc/quantum/plugins/midonet'
+ 
+ if sys.platform == 'win32':
+     # Windows doesn't have an "/etc" directory equivalent
+@@ -110,6 +111,8 @@ else:
+             ['etc/quantum/plugins/hyperv/hyperv_quantum_plugin.ini']),
+         (plumgrid_plugin_config_path,
+             ['etc/quantum/plugins/plumgrid/plumgrid.ini']),
++        (midonet_plugin_config_path,
++            ['etc/quantum/plugins/midonet/midonet.ini']),
+     ]
+ 
+     ConsoleScripts = [
+-- 
+1.7.9.5
+
