@@ -33,7 +33,11 @@ Source16:	quantum-l3-agent.service
 Source17:	quantum-metadata-agent.service
 Source18:	quantum-ovs-cleanup.service
 
-Patch01:	quantum.git-2379669383d08e128bbc18bbe082c6e2eadd710a.patch
+#
+# patches_base=2013.1.g3
+#
+Patch0001: 0001-Add-midonet-to-setup.py.patch
+
 
 BuildArch:	noarch
 
@@ -284,7 +288,7 @@ networks using multiple other quantum plugins.
 %prep
 %setup -q -n quantum-%{version}.%{release_letter}%{milestone}
 
-%patch01 -p1
+%patch0001 -p1
 
 sed -i 's/%{version}.%{release_letter}%{milestone}/%{version}/' PKG-INFO
 

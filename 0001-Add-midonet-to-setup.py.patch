@@ -1,4 +1,4 @@
-From 2379669383d08e128bbc18bbe082c6e2eadd710a Mon Sep 17 00:00:00 2001
+From ae2630679fcd527d2f3da652cc9c0428b4ac61b9 Mon Sep 17 00:00:00 2001
 From: Gary Kotton <gkotton@redhat.com>
 Date: Mon, 25 Feb 2013 17:10:15 +0000
 Subject: [PATCH] Add midonet to setup.py
@@ -8,7 +8,7 @@ Fixes bug 1132889
 Change-Id: I3334f515d85ea165b07b3ef576a043243c3c1bc0
 ---
  setup.py |    3 +++
- 1 file changed, 3 insertions(+)
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
 diff --git a/setup.py b/setup.py
 index 7fcafd8..e265ab2 100644
@@ -31,6 +31,3 @@ index 7fcafd8..e265ab2 100644
      ]
  
      ConsoleScripts = [
--- 
-1.7.9.5
-
