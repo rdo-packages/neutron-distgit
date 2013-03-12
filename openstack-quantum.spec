@@ -7,7 +7,7 @@
 
 Name:		openstack-quantum
 Version:	2013.1
-Release:	0.4.%{release_letter}%{milestone}%{?dist}
+Release:	0.5.%{release_letter}%{milestone}%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -87,7 +87,7 @@ Requires:	python-paste-deploy
 Requires:	python-qpid
 Requires:	python-quantumclient >= 1:2.1.10
 Requires:	python-routes
-Requires:	python-sqlalchemy < 0.8.0
+Requires:	python-sqlalchemy
 Requires:	python-webob
 Requires:	sudo
 
@@ -681,6 +681,9 @@ fi
 
 
 %changelog
+* Tue Mar 12 2013 Pádraig Brady <P@draigBrady.Com> - 2013.1-0.5.g3
+- Relax the dependency requirements on sqlalchemy
+
 * Mon Feb 25 2013 Robert Kukura <rkukura@redhat.com> - 2013.1-0.4.g3
 - Update to grizzly milestone 3
 - Add brocade, hyperv, midonet, and plumgrid plugins as sub-packages
