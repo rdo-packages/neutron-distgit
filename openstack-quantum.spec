@@ -2,12 +2,11 @@
 # This is 2013.1 grizzly milestone 3
 #
 %global release_name grizzly
-%global release_letter g
-%global milestone 3
+%global milestone rc2
 
 Name:		openstack-quantum
 Version:	2013.1
-Release:	0.5.%{release_letter}%{milestone}%{?dist}
+Release:	0.6.%{milestone}%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -15,7 +14,7 @@ License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
 #Source0:	http://launchpad.net/quantum/%%{release_name}/%%{version}/+download/quantum-%%{version}.tar.gz
-Source0:	http://launchpad.net/quantum/%{release_name}/%{release_name}-%{milestone}/+download/quantum-%{version}.%{release_letter}%{milestone}.tar.gz
+Source0:	http://launchpad.net/quantum/%{release_name}/%{release_name}-%{milestone}/+download/quantum-%{version}.%{milestone}.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -29,14 +28,15 @@ Source12:	quantum-openvswitch-agent.service
 Source13:	quantum-ryu-agent.service
 Source14:	quantum-nec-agent.service
 Source15:	quantum-dhcp-agent.service
-Source16:	quantum-l3-agent.service
+Source16:	quantum-lbaas-agent.service
 Source17:	quantum-metadata-agent.service
 Source18:	quantum-ovs-cleanup.service
+Source19:	quantum-l3-agent.service
 
 #
-# patches_base=2013.1.g3
+# patches_base=2013.1.rc2
 #
-Patch0001: 0001-Add-midonet-to-setup.py.patch
+Patch0001: 0001-Add-lbaas_agent-files-to-setup.py.patch
 
 
 BuildArch:	noarch
@@ -286,11 +286,11 @@ networks using multiple other quantum plugins.
 
 
 %prep
-%setup -q -n quantum-%{version}.%{release_letter}%{milestone}
+%setup -q -n quantum-%{version}.%{milestone}
 
 %patch0001 -p1
 
-sed -i 's/%{version}.%{release_letter}%{milestone}/%{version}/' PKG-INFO
+sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
 
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
@@ -330,6 +330,7 @@ install -p -D -m 755 bin/quantum-debug %{buildroot}%{_bindir}/quantum-debug
 install -p -D -m 755 bin/quantum-dhcp-agent %{buildroot}%{_bindir}/quantum-dhcp-agent
 install -p -D -m 755 bin/quantum-dhcp-agent-dnsmasq-lease-update %{buildroot}%{_bindir}/quantum-dhcp-agent-dnsmasq-lease-update
 install -p -D -m 755 bin/quantum-l3-agent %{buildroot}%{_bindir}/quantum-l3-agent
+install -p -D -m 755 bin/quantum-lbaas-agent %{buildroot}%{_bindir}/quantum-lbaas-agent
 install -p -D -m 755 bin/quantum-linuxbridge-agent %{buildroot}%{_bindir}/quantum-linuxbridge-agent
 install -p -D -m 755 bin/quantum-metadata-agent %{buildroot}%{_bindir}/quantum-metadata-agent
 install -p -D -m 755 bin/quantum-nec-agent %{buildroot}%{_bindir}/quantum-nec-agent
@@ -375,6 +376,7 @@ install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/quantum-dhcp-agent.serv
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/quantum-l3-agent.service
 install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/quantum-metadata-agent.service
 install -p -D -m 644 %{SOURCE18} %{buildroot}%{_unitdir}/quantum-ovs-cleanup.service
+install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/quantum-lbaas-agent.service
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/quantum
@@ -420,6 +422,8 @@ if [ $1 -eq 0 ] ; then
     /bin/systemctl stop quantum-l3-agent.service > /dev/null 2>&1 || :
     /bin/systemctl --no-reload disable quantum-metadata-agent.service > /dev/null 2>&1 || :
     /bin/systemctl stop quantum-metadata-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl --no-reload disable quantum-lbaas-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl stop quantum-lbaas-agent.service > /dev/null 2>&1 || :
 fi
 
 
@@ -431,6 +435,7 @@ if [ $1 -ge 1 ] ; then
     /bin/systemctl try-restart quantum-dhcp-agent.service >/dev/null 2>&1 || :
     /bin/systemctl try-restart quantum-l3-agent.service >/dev/null 2>&1 || :
     /bin/systemctl try-restart quantum-metadata-agent.service >/dev/null 2>&1 || :
+    /bin/systemctl try-restart quantum-lbaas-agent.service >/dev/null 2>&1 || :
 fi
 
 
@@ -508,6 +513,7 @@ fi
 %{_bindir}/quantum-dhcp-setup
 %{_bindir}/quantum-l3-agent
 %{_bindir}/quantum-l3-setup
+%{_bindir}/quantum-lbaas-agent
 %{_bindir}/quantum-metadata-agent
 %{_bindir}/quantum-netns-cleanup
 %{_bindir}/quantum-node-setup
@@ -518,6 +524,7 @@ fi
 %{_bindir}/quantum-usage-audit
 %{_unitdir}/quantum-dhcp-agent.service
 %{_unitdir}/quantum-l3-agent.service
+%{_unitdir}/quantum-lbaas-agent.service
 %{_unitdir}/quantum-metadata-agent.service
 %{_unitdir}/quantum-server.service
 %dir %{_sysconfdir}/quantum
@@ -526,6 +533,7 @@ fi
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/l3_agent.ini
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/metadata_agent.ini
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/lbaas_agent.ini
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/policy.json
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/quantum.conf
 %config(noreplace) %{_sysconfdir}/quantum/rootwrap.conf
@@ -539,16 +547,17 @@ fi
 %{_datarootdir}/quantum/rootwrap/dhcp.filters
 %{_datarootdir}/quantum/rootwrap/iptables-firewall.filters
 %{_datarootdir}/quantum/rootwrap/l3.filters
+%{_datarootdir}/quantum/rootwrap/lbaas-haproxy.filters
 
 
 %files -n python-quantum
 %doc LICENSE
 %doc README
 %{python_sitelib}/quantum
-%exclude %{python_sitelib}/quantum/extensions/_credential_view.py*
-%exclude %{python_sitelib}/quantum/extensions/credential.py*
-%exclude %{python_sitelib}/quantum/extensions/qos.py*
-%exclude %{python_sitelib}/quantum/extensions/_qos_view.py*
+%exclude %{python_sitelib}/quantum/plugins/cisco/extensions/_credential_view.py*
+%exclude %{python_sitelib}/quantum/plugins/cisco/extensions/credential.py*
+%exclude %{python_sitelib}/quantum/plugins/cisco/extensions/qos.py*
+%exclude %{python_sitelib}/quantum/plugins/cisco/extensions/_qos_view.py*
 %exclude %{python_sitelib}/quantum/plugins/bigswitch
 %exclude %{python_sitelib}/quantum/plugins/brocade
 %exclude %{python_sitelib}/quantum/plugins/cisco
@@ -583,10 +592,10 @@ fi
 %files -n openstack-quantum-cisco
 %doc LICENSE
 %doc quantum/plugins/cisco/README
-%{python_sitelib}/quantum/extensions/_credential_view.py*
-%{python_sitelib}/quantum/extensions/credential.py*
-%{python_sitelib}/quantum/extensions/qos.py*
-%{python_sitelib}/quantum/extensions/_qos_view.py*
+%{python_sitelib}/quantum/plugins/cisco/extensions/_credential_view.py*
+%{python_sitelib}/quantum/plugins/cisco/extensions/credential.py*
+%{python_sitelib}/quantum/plugins/cisco/extensions/qos.py*
+%{python_sitelib}/quantum/plugins/cisco/extensions/_qos_view.py*
 %{python_sitelib}/quantum/plugins/cisco
 %dir %{_sysconfdir}/quantum/plugins/cisco
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/cisco/*.ini
@@ -681,6 +690,9 @@ fi
 
 
 %changelog
+* Tue Mar 26 2013 Terry Wilson <twilson@redhat.com> - 2013.1-0.6.rc2
+- Update to grizzly rc2
+
 * Tue Mar 12 2013 Pádraig Brady <P@draigBrady.Com> - 2013.1-0.5.g3
 - Relax the dependency requirements on sqlalchemy
 
@@ -694,7 +706,7 @@ fi
 - Require compatible version of python-sqlalchemy
 - Various spec file improvements
 
-* Thu Feb 15 2013 Robert Kukura <rkukura@redhat.com> - 2013.1-0.3.g2
+* Thu Feb 14 2013 Robert Kukura <rkukura@redhat.com> - 2013.1-0.3.g2
 - Update to grizzly milestone 2
 - Add quantum-db-manage, quantum-metadata-agent,
   quantum-ns-metadata-proxy, quantum-ovs-cleanup, and
@@ -814,11 +826,11 @@ fi
 - Move plugins to sub-packages
 - Systemd units for agents
 
-* Mon Jan 31 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.1.e3
+* Mon Jan 30 2012 Robert Kukura <rkukura@redhat.com> - 2012.1-0.1.e3
 - Update to essex milestone 3 for F17
 
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2011.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
-* Thu Nov  18 2011 Robert Kukura <rkukura@redhat.com> - 2011.3-1
+* Thu Nov  17 2011 Robert Kukura <rkukura@redhat.com> - 2011.3-1
 - Initial package for Fedora
