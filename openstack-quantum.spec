@@ -1,20 +1,18 @@
 #
-# This is 2013.1 grizzly milestone 3
+# This is 2013.1 release
 #
 %global release_name grizzly
-%global milestone rc2
 
 Name:		openstack-quantum
 Version:	2013.1
-Release:	0.6.%{milestone}%{?dist}
+Release:	1%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-#Source0:	http://launchpad.net/quantum/%%{release_name}/%%{version}/+download/quantum-%%{version}.tar.gz
-Source0:	http://launchpad.net/quantum/%{release_name}/%{release_name}-%{milestone}/+download/quantum-%{version}.%{milestone}.tar.gz
+Source0:	http://launchpad.net/quantum/%{release_name}/%{version}/+download/quantum-%{version}.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -32,12 +30,6 @@ Source16:	quantum-lbaas-agent.service
 Source17:	quantum-metadata-agent.service
 Source18:	quantum-ovs-cleanup.service
 Source19:	quantum-l3-agent.service
-
-#
-# patches_base=2013.1.rc2
-#
-Patch0001: 0001-Add-lbaas_agent-files-to-setup.py.patch
-
 
 BuildArch:	noarch
 
@@ -286,11 +278,9 @@ networks using multiple other quantum plugins.
 
 
 %prep
-%setup -q -n quantum-%{version}.%{milestone}
+%setup -q -n quantum-%{version}
 
-%patch0001 -p1
-
-sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
+sed -i 's/%{version}/%{version}/' PKG-INFO
 
 find quantum -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
@@ -353,9 +343,7 @@ mv %{buildroot}/usr/etc/quantum/* %{buildroot}%{_sysconfdir}/quantum
 chmod 640  %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini
 
 # Configure agents to use quantum-rootwrap
-for f in %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini %{buildroot}%{_sysconfdir}/quantum/*_agent.ini; do
-    sed -i 's/^root_helper.*/root_helper = sudo quantum-rootwrap \/etc\/quantum\/rootwrap.conf/g' $f
-done
+sed -i 's/^root_helper.*/root_helper = sudo quantum-rootwrap \/etc\/quantum\/rootwrap.conf/g' %{buildroot}%{_sysconfdir}/quantum/quantum.conf
 
 # Configure quantum-dhcp-agent state_path
 sed -i 's/state_path = \/opt\/stack\/data/state_path = \/var\/lib\/quantum/' %{buildroot}%{_sysconfdir}/quantum/dhcp_agent.ini
@@ -690,6 +678,16 @@ fi
 
 
 %changelog
+* Wed Apr  4 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-1
+- Update to grizzly release
+
+* Wed Apr  4 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-0.7.rc3
+- Update to grizzly rc3
+- Update rootwrap (bug 947793)
+- Update l3-agent-setup to support qpid (bug 947532)
+- Update l3-agent-setup to support metadata-agent credentials
+- Update keystone authentication details (bug 947776)
+
 * Tue Mar 26 2013 Terry Wilson <twilson@redhat.com> - 2013.1-0.6.rc2
 - Update to grizzly rc2
 

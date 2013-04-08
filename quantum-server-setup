@@ -85,7 +85,6 @@ ASSUME_YES=""
 QUANTUM_USER=quantum
 MYSQL_Q_PW=quantum
 Q_CONF=/etc/quantum/quantum.conf
-Q_API_PASTE=/etc/quantum/api-paste.ini
 LB_CONF=/etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini
 OVS_CONF=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
 Q_HOST='localhost'
@@ -189,13 +188,13 @@ openstack-config --set ${Q_CONF} DEFAULT qpid_hostname localhost
 # Authentication
 openstack-config --set ${Q_CONF} DEFAULT auth_strategy keystone
 
-openstack-config --del ${Q_API_PASTE} filter:authtoken admin_tenant_name
-openstack-config --del ${Q_API_PASTE} filter:authtoken admin_user
-openstack-config --del ${Q_API_PASTE} filter:authtoken admin_password
+openstack-config --del ${Q_CONF} keystone_authtoken admin_tenant_name
+openstack-config --del ${Q_CONF} keystone_authtoken admin_user
+openstack-config --del ${Q_CONF} keystone_authtoken admin_password
 
-openstack-config --set ${Q_API_PASTE} filter:authtoken admin_tenant_name ${OS_TENANT_NAME}
-openstack-config --set ${Q_API_PASTE} filter:authtoken admin_user ${OS_USERNAME}
-openstack-config --set ${Q_API_PASTE} filter:authtoken admin_password ${OS_PASSWORD}
+openstack-config --set ${Q_CONF} keystone_authtoken admin_tenant_name ${OS_TENANT_NAME}
+openstack-config --set ${Q_CONF} keystone_authtoken admin_user ${OS_USERNAME}
+openstack-config --set ${Q_CONF} keystone_authtoken admin_password ${OS_PASSWORD}
 
 echo "Plugin: ${QUANTUM_PLUGIN} => Database: ${DB_NAME}"
 
