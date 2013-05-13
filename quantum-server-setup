@@ -99,8 +99,6 @@ OS_TENANT_NAME=${OS_TENANT_NAME:-service}
 # Nova specific
 NOVA_CONF=/etc/nova/nova.conf
 SCHEDULER_DRIVER=""
-LIBVIRT_VIF_DRIVER=""
-LIBVIRT_VIF_TYPE=""
 
 while [ $# -gt 0 ]
 do
@@ -326,7 +324,6 @@ case "${QUANTUM_PLUGIN}" in
 	read NETWORK_DEVICE
         openstack-config --set ${LB_CONF} LINUX_BRIDGE physical_interface ${NETWORK_DEVICE}
 
-	LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver
 	ln -s ${LB_CONF} /etc/quantum/plugin.ini
 ;;
 
@@ -334,7 +331,7 @@ case "${QUANTUM_PLUGIN}" in
 	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_quantum.* to '${QUANTUM_USER}'@'%'"
 	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_quantum.* to '${QUANTUM_USER}'@'localhost'"
         openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/ovs_quantum
-	LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+        openstack-config --set ${OVS_CONF} SECURITYGROUP firewall_driver quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
 	ln -s ${OVS_CONF} /etc/quantum/plugin.ini
 ;;
 esac
@@ -362,7 +359,8 @@ if ! [ -e "${NOVA_CONF}" ]; then
         echo "    quantum_auth_strategy=keystone"
         echo "    quantum_admin_tenant_name=${OS_TENANT_NAME}"
         echo "    quantum_url=http://${Q_HOST}:${Q_PORT}/"
-        echo "    libvirt_vif_driver=${LIBVIRT_VIF_DRIVER}"
+        echo "    firewall_driver=nova.virt.firewall.NoopFirewallDriver"
+        echo "    security_group_api=quantum"
 else
         openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.quantumv2.api.API
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_username ${OS_USERNAME}
@@ -371,7 +369,8 @@ else
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_auth_strategy keystone 
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_tenant_name ${OS_TENANT_NAME}
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_url http://${Q_HOST}:${Q_PORT}/
-        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
+        openstack-config --set ${NOVA_CONF} DEFAULT firewall_driver nova.virt.firewall.NoopFirewallDriver
+        openstack-config --set ${NOVA_CONF} DEFAULT security_group_api quantum
 fi
 
 echo "Configuration updates complete!"

@@ -115,7 +115,6 @@ openstack-config --set ${Q_CONF} DEFAULT qpid_hostname ${Q_HOST}
 
 case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
-        LIBVIRT_VIF_DRIVER=nova.virt.libvirt.vif.QuantumLinuxBridgeVIFDriver
 ;;
 
 "openvswitch")
@@ -124,6 +123,8 @@ case "${QUANTUM_PLUGIN}" in
                 echo "Please install openvswitch"
                 exit 0
         fi
+        OVS_CONF=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+        openstack-config --set ${OVS_CONF} SECURITYGROUP firewall_driver quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
 ;;
 
 esac
@@ -155,7 +156,8 @@ if ! [ -e "${NOVA_CONF}" ]; then
         echo "    quantum_auth_strategy=keystone"
         echo "    quantum_admin_tenant_name=${OS_TENANT_NAME}"
         echo "    quantum_url=http://${Q_HOST}:${Q_PORT}/"
-        echo "    libvirt_vif_driver=${LIBVIRT_VIF_DRIVER}"
+        echo "    firewall_driver=nova.virt.firewall.NoopFirewallDriver"
+        echo "    security_group_api=quantum"
 else
         openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.quantumv2.api.API
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_username ${OS_USERNAME}
@@ -164,7 +166,8 @@ else
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_auth_strategy keystone 
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_tenant_name ${OS_TENANT_NAME}
         openstack-config --set ${NOVA_CONF} DEFAULT quantum_url http://${Q_HOST}:${Q_PORT}/
-        openstack-config --set ${NOVA_CONF} DEFAULT libvirt_vif_driver ${LIBVIRT_VIF_DRIVER}
+        openstack-config --set ${NOVA_CONF} DEFAULT firewall_driver nova.virt.firewall.NoopFirewallDriver
+        openstack-config --set ${NOVA_CONF} DEFAULT security_group_api quantum
 fi
 
 echo "Configuration updates complete!"

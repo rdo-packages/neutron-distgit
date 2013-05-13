@@ -4,8 +4,8 @@
 %global release_name grizzly
 
 Name:		openstack-quantum
-Version:	2013.1
-Release:	1%{?dist}
+Version:	2013.1.1
+Release:	2%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -678,6 +678,11 @@ fi
 
 
 %changelog
+* Mon May 13 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-2
+- Update to grizzly release
+- Update install scripts to configure security groups
+- Update install scripts to remove virtual interface configurations
+
 * Wed Apr  4 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-1
 - Update to grizzly release
 
