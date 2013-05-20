@@ -5,7 +5,7 @@
 
 Name:		openstack-quantum
 Version:	2013.1.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -26,10 +26,10 @@ Source12:	quantum-openvswitch-agent.service
 Source13:	quantum-ryu-agent.service
 Source14:	quantum-nec-agent.service
 Source15:	quantum-dhcp-agent.service
-Source16:	quantum-lbaas-agent.service
+Source16:	quantum-l3-agent.service
 Source17:	quantum-metadata-agent.service
 Source18:	quantum-ovs-cleanup.service
-Source19:	quantum-l3-agent.service
+Source19:	quantum-lbaas-agent.service
 
 BuildArch:	noarch
 
@@ -678,6 +678,9 @@ fi
 
 
 %changelog
+* Mon May 20 2013 Terry Wilson <twilson@redhat.com> - 2013.1-3
+- Fix swapped l3-agent and lbaas-agent service definitions
+
 * Mon May 13 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-2
 - Update to grizzly release
 - Update install scripts to configure security groups
