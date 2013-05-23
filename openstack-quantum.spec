@@ -678,7 +678,7 @@ fi
 
 
 %changelog
-* Thu May 232013 Gary Kotton <gkotton@redhat.com> - 2013.1-4
+* Thu May 23 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-4
 - Fix rootwrap (bug 947793)
 
 * Mon May 20 2013 Terry Wilson <twilson@redhat.com> - 2013.1-3
