@@ -1,6 +1,3 @@
-#
-# This is 2013.1 release
-#
 %global release_name grizzly
 
 Name:		openstack-quantum
@@ -678,13 +675,13 @@ fi
 
 
 %changelog
-* Thu May 23 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-4
+* Thu May 23 2013 Gary Kotton <gkotton@redhat.com> - 2013.1.1-4
 - Fix rootwrap (bug 947793)
 
-* Mon May 20 2013 Terry Wilson <twilson@redhat.com> - 2013.1-3
+* Mon May 20 2013 Terry Wilson <twilson@redhat.com> - 2013.1.1-3
 - Fix swapped l3-agent and lbaas-agent service definitions
 
-* Mon May 13 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-2
+* Mon May 13 2013 Gary Kotton <gkotton@redhat.com> - 2013.1.1-2
 - Update to grizzly release
 - Update install scripts to configure security groups
 - Update install scripts to remove virtual interface configurations
