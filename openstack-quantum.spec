@@ -5,7 +5,7 @@
 
 Name:		openstack-quantum
 Version:	2013.1.1
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -343,7 +343,7 @@ mv %{buildroot}/usr/etc/quantum/* %{buildroot}%{_sysconfdir}/quantum
 chmod 640  %{buildroot}%{_sysconfdir}/quantum/plugins/*/*.ini
 
 # Configure agents to use quantum-rootwrap
-sed -i 's/^root_helper.*/root_helper = sudo quantum-rootwrap \/etc\/quantum\/rootwrap.conf/g' %{buildroot}%{_sysconfdir}/quantum/quantum.conf
+sed -i 's/^# root_helper.*/root_helper = sudo quantum-rootwrap \/etc\/quantum\/rootwrap.conf/g' %{buildroot}%{_sysconfdir}/quantum/quantum.conf
 
 # Configure quantum-dhcp-agent state_path
 sed -i 's/state_path = \/opt\/stack\/data/state_path = \/var\/lib\/quantum/' %{buildroot}%{_sysconfdir}/quantum/dhcp_agent.ini
@@ -678,6 +678,9 @@ fi
 
 
 %changelog
+* Thu May 232013 Gary Kotton <gkotton@redhat.com> - 2013.1-4
+- Fix rootwrap (bug 947793)
+
 * Mon May 20 2013 Terry Wilson <twilson@redhat.com> - 2013.1-3
 - Fix swapped l3-agent and lbaas-agent service definitions
 
