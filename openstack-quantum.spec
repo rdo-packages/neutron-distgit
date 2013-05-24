@@ -28,6 +28,10 @@ Source17:	quantum-metadata-agent.service
 Source18:	quantum-ovs-cleanup.service
 Source19:	quantum-lbaas-agent.service
 
+#
+# patches_base=2013.1.1
+#
+
 BuildArch:	noarch
 
 BuildRequires:	python2-devel
