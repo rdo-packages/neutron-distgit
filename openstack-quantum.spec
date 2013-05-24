@@ -548,10 +548,6 @@ fi
 %doc LICENSE
 %doc README
 %{python_sitelib}/quantum
-%exclude %{python_sitelib}/quantum/plugins/cisco/extensions/_credential_view.py*
-%exclude %{python_sitelib}/quantum/plugins/cisco/extensions/credential.py*
-%exclude %{python_sitelib}/quantum/plugins/cisco/extensions/qos.py*
-%exclude %{python_sitelib}/quantum/plugins/cisco/extensions/_qos_view.py*
 %exclude %{python_sitelib}/quantum/plugins/bigswitch
 %exclude %{python_sitelib}/quantum/plugins/brocade
 %exclude %{python_sitelib}/quantum/plugins/cisco
@@ -586,10 +582,6 @@ fi
 %files -n openstack-quantum-cisco
 %doc LICENSE
 %doc quantum/plugins/cisco/README
-%{python_sitelib}/quantum/plugins/cisco/extensions/_credential_view.py*
-%{python_sitelib}/quantum/plugins/cisco/extensions/credential.py*
-%{python_sitelib}/quantum/plugins/cisco/extensions/qos.py*
-%{python_sitelib}/quantum/plugins/cisco/extensions/_qos_view.py*
 %{python_sitelib}/quantum/plugins/cisco
 %dir %{_sysconfdir}/quantum/plugins/cisco
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/cisco/*.ini
