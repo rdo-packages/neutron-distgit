@@ -1,0 +1,39 @@
+From fb2ab3da398f39ea6a44801d88655fd9936ca2cb Mon Sep 17 00:00:00 2001
+From: Maru Newby <marun@redhat.com>
+Date: Thu, 9 May 2013 21:04:44 +0000
+Subject: [PATCH] Add kill-metadata rootwrap filter to support RHEL.
+
+ * Fixes bug 1178419
+
+Change-Id: I9c1cf0d19d1134ec3b85c905c6c8bb7145847ce7
+---
+ etc/quantum/rootwrap.d/dhcp.filters |    2 ++
+ etc/quantum/rootwrap.d/l3.filters   |    2 ++
+ 2 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/etc/quantum/rootwrap.d/dhcp.filters b/etc/quantum/rootwrap.d/dhcp.filters
+index 89abb02..4a4635a 100644
+--- a/etc/quantum/rootwrap.d/dhcp.filters
++++ b/etc/quantum/rootwrap.d/dhcp.filters
+@@ -30,6 +30,8 @@ metadata_proxy: CommandFilter, /usr/bin/quantum-ns-metadata-proxy, root
+ # If installed from source (say, by devstack), the prefix will be
+ # /usr/local instead of /usr/bin.
+ metadata_proxy_local: CommandFilter, /usr/local/bin/quantum-ns-metadata-proxy, root
++# RHEL invocation of the metadata proxy will report /usr/bin/python
++kill_metadata: KillFilter, root, /usr/bin/python, -9
+ kill_metadata7: KillFilter, root, /usr/bin/python2.7, -9
+ kill_metadata6: KillFilter, root, /usr/bin/python2.6, -9
+ 
+diff --git a/etc/quantum/rootwrap.d/l3.filters b/etc/quantum/rootwrap.d/l3.filters
+index ec08d59..480a77b 100644
+--- a/etc/quantum/rootwrap.d/l3.filters
++++ b/etc/quantum/rootwrap.d/l3.filters
+@@ -21,6 +21,8 @@ metadata_proxy: CommandFilter, /usr/bin/quantum-ns-metadata-proxy, root
+ # If installed from source (say, by devstack), the prefix will be
+ # /usr/local instead of /usr/bin.
+ metadata_proxy_local: CommandFilter, /usr/local/bin/quantum-ns-metadata-proxy, root
++# RHEL invocation of the metadata proxy will report /usr/bin/python
++kill_metadata: KillFilter, root, /usr/bin/python, -9
+ kill_metadata7: KillFilter, root, /usr/bin/python2.7, -9
+ kill_metadata6: KillFilter, root, /usr/bin/python2.6, -9
+ 

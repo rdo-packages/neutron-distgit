@@ -1,0 +1,174 @@
+From 16e994a5377097273e8bfad82bbb0209272407c0 Mon Sep 17 00:00:00 2001
+From: Maru Newby <marun@redhat.com>
+Date: Tue, 2 Apr 2013 22:43:37 +0000
+Subject: [PATCH] Create veth peer in namespace.
+
+ * Update veth pair creation to set the namespace of the peer
+   device on creation rather than subsequently adding it to the
+   namespace.
+ * This change supports kernels with limited namespace support
+   (e.g. RHEL 6.5) so long as ovs_use_veth is set to True.
+ * Addresses bug 1171727
+
+Change-Id: I1885acc9934e7627bb9872703df7f5edf2980722
+---
+ quantum/agent/linux/interface.py           |   19 +++++++++++--------
+ quantum/agent/linux/ip_lib.py              |   15 +++++++++++----
+ quantum/tests/unit/test_linux_interface.py |   22 ++++++----------------
+ quantum/tests/unit/test_linux_ip_lib.py    |   11 +++++++++++
+ 4 files changed, 39 insertions(+), 28 deletions(-)
+
+diff --git a/quantum/agent/linux/interface.py b/quantum/agent/linux/interface.py
+index e057b24..c0305a2 100644
+--- a/quantum/agent/linux/interface.py
++++ b/quantum/agent/linux/interface.py
+@@ -167,13 +167,17 @@ class OVSInterfaceDriver(LinuxInterfaceDriver):
+             tap_name = self._get_tap_name(device_name, prefix)
+ 
+             if self.conf.ovs_use_veth:
+-                root_dev, ns_dev = ip.add_veth(tap_name, device_name)
++                # Create ns_dev in a namespace if one is configured.
++                root_dev, ns_dev = ip.add_veth(tap_name,
++                                               device_name,
++                                               namespace2=namespace)
++            else:
++                ns_dev = ip.device(device_name)
+ 
+             internal = not self.conf.ovs_use_veth
+             self._ovs_add_port(bridge, tap_name, port_id, mac_address,
+                                internal=internal)
+ 
+-            ns_dev = ip.device(device_name)
+             ns_dev.link.set_address(mac_address)
+ 
+             if self.conf.network_device_mtu:
+@@ -181,7 +185,8 @@ class OVSInterfaceDriver(LinuxInterfaceDriver):
+                 if self.conf.ovs_use_veth:
+                     root_dev.link.set_mtu(self.conf.network_device_mtu)
+ 
+-            if namespace:
++            # Add an interface created by ovs to the namespace.
++            if not self.conf.ovs_use_veth and namespace:
+                 namespace_obj = ip.ensure_namespace(namespace)
+                 namespace_obj.add_device_to_namespace(ns_dev)
+ 
+@@ -231,17 +236,15 @@ class BridgeInterfaceDriver(LinuxInterfaceDriver):
+                 tap_name = device_name.replace(prefix, 'tap')
+             else:
+                 tap_name = device_name.replace(self.DEV_NAME_PREFIX, 'tap')
+-            root_veth, ns_veth = ip.add_veth(tap_name, device_name)
++            # Create ns_veth in a namespace if one is configured.
++            root_veth, ns_veth = ip.add_veth(tap_name, device_name,
++                                             namespace2=namespace)
+             ns_veth.link.set_address(mac_address)
+ 
+             if self.conf.network_device_mtu:
+                 root_veth.link.set_mtu(self.conf.network_device_mtu)
+                 ns_veth.link.set_mtu(self.conf.network_device_mtu)
+ 
+-            if namespace:
+-                namespace_obj = ip.ensure_namespace(namespace)
+-                namespace_obj.add_device_to_namespace(ns_veth)
+-
+             root_veth.link.set_up()
+             ns_veth.link.set_up()
+ 
+diff --git a/quantum/agent/linux/ip_lib.py b/quantum/agent/linux/ip_lib.py
+index 5207c23..2f56672 100644
+--- a/quantum/agent/linux/ip_lib.py
++++ b/quantum/agent/linux/ip_lib.py
+@@ -90,12 +90,19 @@ class IPWrapper(SubProcessBase):
+         self._as_root('', 'tuntap', ('add', name, 'mode', mode))
+         return IPDevice(name, self.root_helper, self.namespace)
+ 
+-    def add_veth(self, name1, name2):
+-        self._as_root('', 'link',
+-                      ('add', name1, 'type', 'veth', 'peer', 'name', name2))
++    def add_veth(self, name1, name2, namespace2=None):
++        args = ['add', name1, 'type', 'veth', 'peer', 'name', name2]
++
++        if namespace2 is None:
++            namespace2 = self.namespace
++        else:
++            self.ensure_namespace(namespace2)
++            args += ['netns', namespace2]
++
++        self._as_root('', 'link', tuple(args))
+ 
+         return (IPDevice(name1, self.root_helper, self.namespace),
+-                IPDevice(name2, self.root_helper, self.namespace))
++                IPDevice(name2, self.root_helper, namespace2))
+ 
+     def ensure_namespace(self, name):
+         if not self.netns.exists(name):
+diff --git a/quantum/tests/unit/test_linux_interface.py b/quantum/tests/unit/test_linux_interface.py
+index a386f93..dc1e464 100644
+--- a/quantum/tests/unit/test_linux_interface.py
++++ b/quantum/tests/unit/test_linux_interface.py
+@@ -199,12 +199,11 @@ class TestOVSInterfaceDriverWithVeth(TestOVSInterfaceDriver):
+         self.device_exists.side_effect = device_exists
+ 
+         root_dev = mock.Mock()
+-        _ns_dev = mock.Mock()
+         ns_dev = mock.Mock()
+-        self.ip().add_veth = mock.Mock(return_value=(root_dev, _ns_dev))
+-        self.ip().device = mock.Mock(return_value=(ns_dev))
+-        expected = [mock.call('sudo'), mock.call().add_veth('tap0', devname),
+-                    mock.call().device(devname)]
++        self.ip().add_veth = mock.Mock(return_value=(root_dev, ns_dev))
++        expected = [mock.call('sudo'),
++                    mock.call().add_veth('tap0', devname,
++                                         namespace2=namespace)]
+ 
+         vsctl_cmd = ['ovs-vsctl', '--', '--may-exist', 'add-port',
+                      bridge, 'tap0', '--', 'set', 'Interface', 'tap0',
+@@ -228,11 +227,6 @@ class TestOVSInterfaceDriverWithVeth(TestOVSInterfaceDriver):
+         if mtu:
+             ns_dev.assert_has_calls([mock.call.link.set_mtu(mtu)])
+             root_dev.assert_has_calls([mock.call.link.set_mtu(mtu)])
+-        if namespace:
+-            expected.extend(
+-                [mock.call().ensure_namespace(namespace),
+-                 mock.call().ensure_namespace().add_device_to_namespace(
+-                     mock.ANY)])
+ 
+         self.ip.assert_has_calls(expected)
+         root_dev.assert_has_calls([mock.call.link.set_up()])
+@@ -284,13 +278,9 @@ class TestBridgeInterfaceDriver(TestBase):
+                 mac_address,
+                 namespace=namespace)
+ 
+-        ip_calls = [mock.call('sudo'), mock.call().add_veth('tap0', 'ns-0')]
++        ip_calls = [mock.call('sudo'),
++                    mock.call().add_veth('tap0', 'ns-0', namespace2=namespace)]
+         ns_veth.assert_has_calls([mock.call.link.set_address(mac_address)])
+-        if namespace:
+-            ip_calls.extend([
+-                mock.call().ensure_namespace('01234567-1234-1234-99'),
+-                mock.call().ensure_namespace().add_device_to_namespace(
+-                    ns_veth)])
+         if mtu:
+             ns_veth.assert_has_calls([mock.call.link.set_mtu(mtu)])
+             root_veth.assert_has_calls([mock.call.link.set_mtu(mtu)])
+diff --git a/quantum/tests/unit/test_linux_ip_lib.py b/quantum/tests/unit/test_linux_ip_lib.py
+index 47b4063..e477f2f 100644
+--- a/quantum/tests/unit/test_linux_ip_lib.py
++++ b/quantum/tests/unit/test_linux_ip_lib.py
+@@ -205,6 +205,17 @@ class TestIpWrapper(base.BaseTestCase):
+                                              'peer', 'name', 'tap1'),
+                                              'sudo', None)
+ 
++    def test_add_veth_with_namespaces(self):
++        ns2 = 'ns2'
++        with mock.patch.object(ip_lib.IPWrapper, 'ensure_namespace') as en:
++            ip_lib.IPWrapper('sudo').add_veth('tap0', 'tap1', namespace2=ns2)
++            en.assert_has_calls([mock.call(ns2)])
++        self.execute.assert_called_once_with('', 'link',
++                                             ('add', 'tap0', 'type', 'veth',
++                                              'peer', 'name', 'tap1',
++                                              'netns', ns2),
++                                             'sudo', None)
++
+     def test_get_device(self):
+         dev = ip_lib.IPWrapper('sudo', 'ns').device('eth0')
+         self.assertEqual(dev.root_helper, 'sudo')
