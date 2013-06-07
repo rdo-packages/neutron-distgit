@@ -1,8 +1,8 @@
 %global release_name grizzly
 
 Name:		openstack-quantum
-Version:	2013.1.1
-Release:	5%{?dist}
+Version:	2013.1.2
+Release:	1%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -29,7 +29,7 @@ Source18:	quantum-ovs-cleanup.service
 Source19:	quantum-lbaas-agent.service
 
 #
-# patches_base=2013.1.1
+# patches_base=2013.1.2
 #
 Patch0001: 0001-Create-veth-peer-in-namespace.patch
 Patch0002: 0002-Add-kill-metadata-rootwrap-filter-to-support-RHEL.patch
@@ -673,6 +673,9 @@ fi
 
 
 %changelog
+* Fri Jun 07 2013 Terry Wilson <twilson@redhat.com> - 2013.1.2-1
+- Update to grizzly 2013.1.2 release
+
 * Fri May 24 2013 Pádraig Brady <P@draigBrady.com> - 2013.1.1-5
 - Fix inclusion of db migrations
 
