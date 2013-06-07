@@ -31,8 +31,6 @@ Source19:	quantum-lbaas-agent.service
 #
 # patches_base=2013.1.2
 #
-Patch0001: 0001-Create-veth-peer-in-namespace.patch
-Patch0002: 0002-Add-kill-metadata-rootwrap-filter-to-support-RHEL.patch
 
 BuildArch:	noarch
 
@@ -283,8 +281,6 @@ networks using multiple other quantum plugins.
 %prep
 %setup -q -n quantum-%{version}
 
-%patch0001 -p1
-%patch0002 -p1
 
 sed -i 's/%{version}/%{version}/' PKG-INFO
 
