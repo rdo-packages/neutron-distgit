@@ -1,15 +1,16 @@
-%global release_name grizzly
+%global release_name havana
 
 Name:		openstack-quantum
-Version:	2013.1.2
-Release:	1%{?dist}
+Version:	2013.2
+Release:	0.1.h1%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/quantum/
 
-Source0:	http://launchpad.net/quantum/%{release_name}/%{version}/+download/quantum-%{version}.tar.gz
+#Source0:	http://launchpad.net/quantum/%{release_name}/%{version}/+download/quantum-%{version}.tar.gz
+Source0:    http://launchpad.net/quantum/%{release_name}/%{release_name}-1/+download/quantum-%{version}.b1.tar.gz
 Source1:	quantum.logrotate
 Source2:	quantum-sudoers
 Source4:	quantum-server-setup
@@ -27,9 +28,10 @@ Source16:	quantum-l3-agent.service
 Source17:	quantum-metadata-agent.service
 Source18:	quantum-ovs-cleanup.service
 Source19:	quantum-lbaas-agent.service
+Source20:   quantum-mlnx-agent.service
 
 #
-# patches_base=2013.1.2
+# patches_base=2013.2.b1
 #
 
 BuildArch:	noarch
@@ -37,6 +39,8 @@ BuildArch:	noarch
 BuildRequires:	python2-devel
 BuildRequires:	python-setuptools
 BuildRequires:	systemd-units
+BuildRequires:  python-pbr
+BuildRequires:  python-d2to1
 
 Requires:	python-quantum = %{version}-%{release}
 Requires:	openstack-utils
@@ -187,6 +191,34 @@ This package contains the quantum plugin that implements virtual
 networks using MidoNet from Midokura.
 
 
+%package -n openstack-quantum-ml2
+Summary:    Quantum ML2 plugin
+Group:      Applications/System
+
+Requires:   openstack-quantum = %{version}-%{release}
+
+
+%description -n openstack-quantum-ml2
+Quantum provides an API to dynamically request and configure virtual
+networks.
+
+This package contains a quantum plugin that allows the use of drivers
+to support separately extensible sets of network types and the mechanisms
+for accessing those types.
+
+
+%package -n openstack-quantum-mellanox
+Summary:    Quantum Mellanox plugin
+Group:      Applications/System
+
+Requires:      openstack-quantum = %{version}-%{release}
+
+
+%description -n openstack-quantum-mellanox
+This plugin implements Quantum v2 APIs with support for Mellanox embedded
+switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
+
+
 %package -n openstack-quantum-nicira
 Summary:	Quantum Nicira plugin
 Group:		Applications/System
@@ -279,7 +311,7 @@ networks using multiple other quantum plugins.
 
 
 %prep
-%setup -q -n quantum-%{version}
+%setup -q -n quantum-%{version}.b1
 
 
 sed -i 's/%{version}/%{version}/' PKG-INFO
@@ -364,6 +396,7 @@ install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/quantum-l3-agent.servic
 install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/quantum-metadata-agent.service
 install -p -D -m 644 %{SOURCE18} %{buildroot}%{_unitdir}/quantum-ovs-cleanup.service
 install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/quantum-lbaas-agent.service
+install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/quantum-mlnx-agent.service
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/quantum
@@ -439,6 +472,21 @@ fi
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
     /bin/systemctl try-restart quantum-linuxbridge-agent.service >/dev/null 2>&1 || :
+fi
+
+
+%preun -n openstack-quantum-mellanox
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable quantum-mlnx-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl stop quantum-mlnx-agent.service > /dev/null 2>&1 || :
+fi
+
+
+%postun -n openstack-quantum-mellanox
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart quantum-mlnx-agent.service >/dev/null 2>&1 || :
 fi
 
 
@@ -548,12 +596,14 @@ fi
 %exclude %{python_sitelib}/quantum/plugins/linuxbridge
 %exclude %{python_sitelib}/quantum/plugins/metaplugin
 %exclude %{python_sitelib}/quantum/plugins/midonet
+%exclude %{python_sitelib}/quantum/plugins/ml2
+%exclude %{python_sitelib}/quantum/plugins/mlnx
 %exclude %{python_sitelib}/quantum/plugins/nec
 %exclude %{python_sitelib}/quantum/plugins/nicira
 %exclude %{python_sitelib}/quantum/plugins/openvswitch
 %exclude %{python_sitelib}/quantum/plugins/plumgrid
 %exclude %{python_sitelib}/quantum/plugins/ryu
-%{python_sitelib}/quantum-%%{version}-*.egg-info
+%{python_sitelib}/quantum-%%{version}*.egg-info
 
 
 %files -n openstack-quantum-bigswitch
@@ -583,6 +633,7 @@ fi
 %files -n openstack-quantum-hyperv
 %doc LICENSE
 #%%doc quantum/plugins/hyperv/README
+%{_bindir}/quantum-hyperv-agent
 %{python_sitelib}/quantum/plugins/hyperv
 %dir %{_sysconfdir}/quantum/plugins/hyperv
 %exclude %{python_sitelib}/quantum/plugins/hyperv/agent
@@ -608,9 +659,25 @@ fi
 %config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/midonet/*.ini
 
 
+%files -n openstack-quantum-ml2
+%doc quantum/plugins/ml2/README
+%{python_sitelib}/quantum/plugins/ml2
+%dir %{_sysconfdir}/quantum/plugins/ml2
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/ml2/*.ini
+
+
+%files -n openstack-quantum-mellanox
+%doc quantum/plugins/mlnx/README
+%{_bindir}/quantum-mlnx-agent
+%{_unitdir}/quantum-mlnx-agent.service
+%{python_sitelib}/quantum/plugins/mlnx
+%dir %{_sysconfdir}/quantum/plugins/mlnx
+%config(noreplace) %attr(0640, root, quantum) %{_sysconfdir}/quantum/plugins/mlnx/*.ini
+
+
 %files -n openstack-quantum-nicira
 %doc LICENSE
-%doc quantum/plugins/nicira/nicira_nvp_plugin/README
+%doc quantum/plugins/nicira/README
 %{_bindir}/quantum-check-nvp-config
 %{python_sitelib}/quantum/plugins/nicira
 %dir %{_sysconfdir}/quantum/plugins/nicira
@@ -669,6 +736,9 @@ fi
 
 
 %changelog
+* Fri Jun 21 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.1.h1
+- Update to havana milestone 1 release
+
 * Fri Jun 07 2013 Terry Wilson <twilson@redhat.com> - 2013.1.2-1
 - Update to grizzly 2013.1.2 release
 
@@ -686,10 +756,10 @@ fi
 - Update install scripts to configure security groups
 - Update install scripts to remove virtual interface configurations
 
-* Wed Apr  4 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-1
+* Wed Apr  3 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-1
 - Update to grizzly release
 
-* Wed Apr  4 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-0.7.rc3
+* Wed Apr  3 2013 Gary Kotton <gkotton@redhat.com> - 2013.1-0.7.rc3
 - Update to grizzly rc3
 - Update rootwrap (bug 947793)
 - Update l3-agent-setup to support qpid (bug 947532)
