@@ -2,7 +2,7 @@
 
 Name:		openstack-quantum
 Version:	2013.2
-Release:	0.1.h1%{?dist}
+Release:	0.2.b1%{?dist}
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -736,7 +736,7 @@ fi
 
 
 %changelog
-* Fri Jun 21 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.1.h1
+* Fri Jun 21 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.2.b1
 - Update to havana milestone 1 release
 
 * Fri Jun 07 2013 Terry Wilson <twilson@redhat.com> - 2013.1.2-1
