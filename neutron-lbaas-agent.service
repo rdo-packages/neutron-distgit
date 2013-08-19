@@ -4,8 +4,8 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-User=quantum
-ExecStart=/usr/bin/quantum-lbaas-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/l3_agent.ini --log-file /var/log/quantum/lbaas-agent.log
+User=neutron
+ExecStart=/usr/bin/neutron-lbaas-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/l3_agent.ini --log-file /var/log/neutron/lbaas-agent.log
 PrivateTmp=false
 
 [Install]

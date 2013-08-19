@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenStack Quantum Layer 3 Agent
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=neutron
+ExecStart=/usr/bin/neutron-l3-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/l3_agent.ini --log-file /var/log/neutron/l3-agent.log
+PrivateTmp=false
+
+[Install]
+WantedBy=multi-user.target

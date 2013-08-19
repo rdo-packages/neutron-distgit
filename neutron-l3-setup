@@ -24,14 +24,14 @@ declare -a SUPPORTED_PLUGINS=(linuxbridge openvswitch)
 usage() {
 
 cat << EOF
-The helper script will install the necessary support for the DHCP agent.
+The helper script will install the necessary support for the L3 agent.
 
-Usage: quantum-dhcp-setup [options]
+Usage: neutron-l3-setup [options]
 Options:
 	--help        | -h
 		Print usage information.
         --plugin      | -p
-                The quantum plugin. Supported plugins:-
+                The neutron plugin. Supported plugins:-
                     ${SUPPORTED_PLUGINS[*]}
         --qhost       | -q
                 The Quantum hostname (assumes that this is also the QPID host).
@@ -50,7 +50,8 @@ is_valid_plugin() {
 	return 1
 }
 
-DHCP_CONF=/etc/quantum/dhcp_agent.ini
+L3_CONF=/etc/neutron/l3_agent.ini
+L3_META_CONF=/etc/neutron/metadata_agent.ini
 
 while [ $# -gt 0 ]
 do
@@ -97,14 +98,15 @@ if [ -z ${Q_HOST} ] ; then
 fi
 
 Q_PORT=9696
-Q_CONF=/etc/quantum/quantum.conf
+Q_CONF=/etc/neutron/neutron.conf
 # QPID
-openstack-config --set ${Q_CONF} DEFAULT rpc_backend quantum.openstack.common.rpc.impl_qpid
+openstack-config --set ${Q_CONF} DEFAULT rpc_backend neutron.openstack.common.rpc.impl_qpid
 openstack-config --set ${Q_CONF} DEFAULT qpid_hostname ${Q_HOST}
 
 case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
-        LINUX_INTERFACE_DRIVER=quantum.agent.linux.interface.BridgeInterfaceDriver
+        LINUX_INTERFACE_DRIVER=neutron.agent.linux.interface.BridgeInterfaceDriver
+        openstack-config --set ${L3_CONF} DEFAULT external_network_bridge ''
 ;;
 
 "openvswitch")
@@ -113,24 +115,24 @@ case "${QUANTUM_PLUGIN}" in
                 echo "Please install openvswitch"
                 exit 0
         fi
-        LINUX_INTERFACE_DRIVER=quantum.agent.linux.interface.OVSInterfaceDriver
+        LINUX_INTERFACE_DRIVER=neutron.agent.linux.interface.OVSInterfaceDriver
 ;;
 
 esac
 
 # Keystone specific
-OS_USERNAME=${OS_USERNAME:-quantum}
+OS_USERNAME=${OS_USERNAME:-neutron}
 OS_PASSWORD=${OS_PASSWORD:-servicepass}
 OS_AUTH_URL=${OS_AUTH_URL:-http://localhost:35357/v2.0/}
 OS_TENANT_NAME=${OS_TENANT_NAME:-service}
 
 # Update Keystone
-openstack-config --set ${DHCP_CONF} DEFAULT auth_url ${OS_AUTH_URL}
-openstack-config --set ${DHCP_CONF} DEFAULT admin_username ${OS_USERNAME}
-openstack-config --set ${DHCP_CONF} DEFAULT admin_password ${OS_PASSWORD}
-openstack-config --set ${DHCP_CONF} DEFAULT admin_tenant_name ${OS_TENANT_NAME}
+openstack-config --set ${L3_META_CONF} DEFAULT auth_url ${OS_AUTH_URL}
+openstack-config --set ${L3_META_CONF} DEFAULT admin_user ${OS_USERNAME}
+openstack-config --set ${L3_META_CONF} DEFAULT admin_password ${OS_PASSWORD}
+openstack-config --set ${L3_META_CONF} DEFAULT admin_tenant_name ${OS_TENANT_NAME}
 
 # Update interface driver
-openstack-config --set ${DHCP_CONF} DEFAULT interface_driver ${LINUX_INTERFACE_DRIVER}
+openstack-config --set ${L3_CONF} DEFAULT interface_driver ${LINUX_INTERFACE_DRIVER}
 
 echo "Configuration updates complete!"

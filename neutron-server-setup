@@ -29,14 +29,14 @@ Please note that some plugins do not require database support. These are address
 The setup of MySQL with a multi-server OpenStack installation is outside of the scope of 
 this simple helper script.
 
-Usage: quantum-server-setup [options]
+Usage: neutron-server-setup [options]
 Options:
 	--help        | -h
 		Print usage information.
         --qpw <pw>    | -q <pw>
-                Specify the password for the 'quantum' MySQL user that quantum will
-                use to connect to the 'quantum' MySQL database.  By default,
-                the password 'quantum' will be used.
+                Specify the password for the 'neutron' MySQL user that neutron will
+                use to connect to the 'neutron' MySQL database.  By default,
+                the password 'neutron' will be used.
 
 	--rootpw <pw> | -r <pw>
 		Specify the root MySQL password.  If the script installs
@@ -50,9 +50,9 @@ Options:
 		just assume yes.  This is useful if you want to run the script
 		non-interactively.
         --user        | -u
-		The quantum user. 
+		The neutron user. 
         --plugin      | -p
-                The quantum plugin. Supported plugins:-
+                The neutron plugin. Supported plugins:-
                     ${SUPPORTED_PLUGINS[*]}
 EOF
 
@@ -82,16 +82,16 @@ is_valid_plugin() {
 }
 
 ASSUME_YES=""
-QUANTUM_USER=quantum
-MYSQL_Q_PW=quantum
-Q_CONF=/etc/quantum/quantum.conf
-LB_CONF=/etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini
-OVS_CONF=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+QUANTUM_USER=neutron
+MYSQL_Q_PW=neutron
+Q_CONF=/etc/neutron/neutron.conf
+LB_CONF=/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini
+OVS_CONF=/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
 Q_HOST='localhost'
 Q_PORT=9696
 
 # Keystone specific
-OS_USERNAME=${OS_USERNAME:-quantum}
+OS_USERNAME=${OS_USERNAME:-neutron}
 OS_PASSWORD=${OS_PASSWORD:-servicepass}
 OS_AUTH_URL=${OS_AUTH_URL:-http://127.0.0.1:35357/v2.0/}
 OS_TENANT_NAME=${OS_TENANT_NAME:-service}
@@ -151,19 +151,19 @@ fi
 echo "Quantum plugin: ${QUANTUM_PLUGIN}"
 
 if ! [ -e "${Q_CONF}" ]; then
-	echo "Please install the quantum package"
+	echo "Please install the neutron package"
 	exit 0
 fi
 
-if ! [ -e "/etc/quantum/plugins/${QUANTUM_PLUGIN}" ]; then
-	echo "Please install the ${QUANTUM_PLUGIN} quantum plugin"
+if ! [ -e "/etc/neutron/plugins/${QUANTUM_PLUGIN}" ]; then
+	echo "Please install the ${QUANTUM_PLUGIN} neutron plugin"
         exit 0
 fi
 
 case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
-	DB_NAME="quantum_linux_bridge"
-        Q_PLUGIN_CLASS="quantum.plugins.linuxbridge.lb_quantum_plugin.LinuxBridgePluginV2"
+	DB_NAME="neutron_linux_bridge"
+        Q_PLUGIN_CLASS="neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2"
 ;;
 
 "openvswitch")
@@ -172,16 +172,16 @@ case "${QUANTUM_PLUGIN}" in
 		echo "Please install openvswitch"
 		exit 0
 	fi
-	DB_NAME="ovs_quantum"
-        Q_PLUGIN_CLASS="quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2"
+	DB_NAME="ovs_neutron"
+        Q_PLUGIN_CLASS="neutron.plugins.openvswitch.ovs_neutron_plugin.OVSQuantumPluginV2"
 ;;
 esac
 
-# Update quantum.conf
+# Update neutron.conf
 # Plugin
 openstack-config --set ${Q_CONF} DEFAULT core_plugin $Q_PLUGIN_CLASS
 # QPID
-openstack-config --set ${Q_CONF} DEFAULT rpc_backend quantum.openstack.common.rpc.impl_qpid
+openstack-config --set ${Q_CONF} DEFAULT rpc_backend neutron.openstack.common.rpc.impl_qpid
 openstack-config --set ${Q_CONF} DEFAULT qpid_hostname localhost
 # Authentication
 openstack-config --set ${Q_CONF} DEFAULT auth_strategy keystone
@@ -316,23 +316,23 @@ mysql -u root ${MYSQL_ROOT_PW_ARG} -e "create database ${DB_NAME}"
 # Configure database specifics
 case "${QUANTUM_PLUGIN}" in
 "linuxbridge")
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on quantum_linux_bridge.* to '${QUANTUM_USER}'@'%'"
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on quantum_linux_bridge.* to '${QUANTUM_USER}'@'localhost'"
-	openstack-config --set ${LB_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/quantum_linux_bridge
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on neutron_linux_bridge.* to '${QUANTUM_USER}'@'%'"
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on neutron_linux_bridge.* to '${QUANTUM_USER}'@'localhost'"
+	openstack-config --set ${LB_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/neutron_linux_bridge
 	
 	echo "Please enter network device for VLAN trunking:"
 	read NETWORK_DEVICE
         openstack-config --set ${LB_CONF} LINUX_BRIDGE physical_interface ${NETWORK_DEVICE}
 
-	ln -s ${LB_CONF} /etc/quantum/plugin.ini
+	ln -s ${LB_CONF} /etc/neutron/plugin.ini
 ;;
 
 "openvswitch")
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_quantum.* to '${QUANTUM_USER}'@'%'"
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_quantum.* to '${QUANTUM_USER}'@'localhost'"
-        openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/ovs_quantum
-        openstack-config --set ${OVS_CONF} SECURITYGROUP firewall_driver quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
-	ln -s ${OVS_CONF} /etc/quantum/plugin.ini
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_neutron.* to '${QUANTUM_USER}'@'%'"
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_neutron.* to '${QUANTUM_USER}'@'localhost'"
+        openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/ovs_neutron
+        openstack-config --set ${OVS_CONF} SECURITYGROUP firewall_driver neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+	ln -s ${OVS_CONF} /etc/neutron/plugin.ini
 ;;
 esac
 
@@ -352,25 +352,25 @@ fi
 if ! [ -e "${NOVA_CONF}" ]; then
         echo "Please install OpenStack compute and then set the values"
 	echo "in /etc/nova/nova.conf DEFAULT section"
-        echo "    network_api_classi=nova.network.quantumv2.api.API"
-        echo "    quantum_admin_username=${OS_USERNAME}"
-        echo "    quantum_admin_password=${OS_PASSWORD}"
-        echo "    quantum_admin_auth_url=${OS_AUTH_URL}"
-        echo "    quantum_auth_strategy=keystone"
-        echo "    quantum_admin_tenant_name=${OS_TENANT_NAME}"
-        echo "    quantum_url=http://${Q_HOST}:${Q_PORT}/"
+        echo "    network_api_classi=nova.network.neutronv2.api.API"
+        echo "    neutron_admin_username=${OS_USERNAME}"
+        echo "    neutron_admin_password=${OS_PASSWORD}"
+        echo "    neutron_admin_auth_url=${OS_AUTH_URL}"
+        echo "    neutron_auth_strategy=keystone"
+        echo "    neutron_admin_tenant_name=${OS_TENANT_NAME}"
+        echo "    neutron_url=http://${Q_HOST}:${Q_PORT}/"
         echo "    firewall_driver=nova.virt.firewall.NoopFirewallDriver"
-        echo "    security_group_api=quantum"
+        echo "    security_group_api=neutron"
 else
-        openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.quantumv2.api.API
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_username ${OS_USERNAME}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_password ${OS_PASSWORD}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_auth_url ${OS_AUTH_URL}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_auth_strategy keystone 
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_tenant_name ${OS_TENANT_NAME}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_url http://${Q_HOST}:${Q_PORT}/
+        openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.neutronv2.api.API
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_admin_username ${OS_USERNAME}
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_admin_password ${OS_PASSWORD}
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_admin_auth_url ${OS_AUTH_URL}
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_auth_strategy keystone 
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_admin_tenant_name ${OS_TENANT_NAME}
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_url http://${Q_HOST}:${Q_PORT}/
         openstack-config --set ${NOVA_CONF} DEFAULT firewall_driver nova.virt.firewall.NoopFirewallDriver
-        openstack-config --set ${NOVA_CONF} DEFAULT security_group_api quantum
+        openstack-config --set ${NOVA_CONF} DEFAULT security_group_api neutron
 fi
 
 echo "Configuration updates complete!"

@@ -26,12 +26,12 @@ usage() {
 cat << EOF
 The helper script will install the necessary support for the selected plugin.
 
-Usage: quantum-node-setup [options]
+Usage: neutron-node-setup [options]
 Options:
 	--help        | -h
 		Print usage information.
         --plugin      | -p
-                The quantum plugin. Supported plugins:-
+                The neutron plugin. Supported plugins:-
                     ${SUPPORTED_PLUGINS[*]}
         --qhost       | -q
 		The Quantum hostname (assumes that this is also the QPID host).
@@ -50,9 +50,9 @@ is_valid_plugin() {
 	return 1
 }
 
-QUANTUM_USER=quantum
-LB_CONF=/etc/quantum/plugins/linuxbridge/linuxbridge_conf.ini
-OVS_CONF=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+QUANTUM_USER=neutron
+LB_CONF=/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini
+OVS_CONF=/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
 
 # Nova specific
 NOVA_CONF=/etc/nova/nova.conf
@@ -96,8 +96,8 @@ fi
 
 echo "Quantum plugin: ${QUANTUM_PLUGIN}"
 
-if ! [ -e "/etc/quantum/plugins/${QUANTUM_PLUGIN}" ]; then
-	echo "Please install the ${QUANTUM_PLUGIN} quantum plugin"
+if ! [ -e "/etc/neutron/plugins/${QUANTUM_PLUGIN}" ]; then
+	echo "Please install the ${QUANTUM_PLUGIN} neutron plugin"
         exit 0
 fi
 
@@ -108,9 +108,9 @@ if [ -z ${Q_HOST} ] ; then
 fi
 
 Q_PORT=9696
-Q_CONF=/etc/quantum/quantum.conf
+Q_CONF=/etc/neutron/neutron.conf
 # QPID
-openstack-config --set ${Q_CONF} DEFAULT rpc_backend quantum.openstack.common.rpc.impl_qpid
+openstack-config --set ${Q_CONF} DEFAULT rpc_backend neutron.openstack.common.rpc.impl_qpid
 openstack-config --set ${Q_CONF} DEFAULT qpid_hostname ${Q_HOST}
 
 case "${QUANTUM_PLUGIN}" in
@@ -123,8 +123,8 @@ case "${QUANTUM_PLUGIN}" in
                 echo "Please install openvswitch"
                 exit 0
         fi
-        OVS_CONF=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
-        openstack-config --set ${OVS_CONF} SECURITYGROUP firewall_driver quantum.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+        OVS_CONF=/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
+        openstack-config --set ${OVS_CONF} SECURITYGROUP firewall_driver neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
 ;;
 
 esac
@@ -140,7 +140,7 @@ y|Y)
 esac
 
 # Keystone specific
-OS_USERNAME=${OS_USERNAME:-quantum}
+OS_USERNAME=${OS_USERNAME:-neutron}
 OS_PASSWORD=${OS_PASSWORD:-servicepass}
 OS_AUTH_URL=${OS_AUTH_URL:-http://127.0.0.1:35357/v2.0/}
 OS_TENANT_NAME=${OS_TENANT_NAME:-service}
@@ -149,25 +149,25 @@ OS_TENANT_NAME=${OS_TENANT_NAME:-service}
 if ! [ -e "${NOVA_CONF}" ]; then
         echo "Please install OpenStack compute and then set the values"
         echo "in /etc/nova/nova.conf DEFAULT section"
-        echo "    network_api_class=nova.network.quantumv2.api.API"
-        echo "    quantum_admin_username=${OS_USERNAME}"
-        echo "    quantum_admin_password=${OS_PASSWORD}"
-        echo "    quantum_admin_auth_url=${OS_AUTH_URL}"
-        echo "    quantum_auth_strategy=keystone"
-        echo "    quantum_admin_tenant_name=${OS_TENANT_NAME}"
-        echo "    quantum_url=http://${Q_HOST}:${Q_PORT}/"
+        echo "    network_api_class=nova.network.neutronv2.api.API"
+        echo "    neutron_admin_username=${OS_USERNAME}"
+        echo "    neutron_admin_password=${OS_PASSWORD}"
+        echo "    neutron_admin_auth_url=${OS_AUTH_URL}"
+        echo "    neutron_auth_strategy=keystone"
+        echo "    neutron_admin_tenant_name=${OS_TENANT_NAME}"
+        echo "    neutron_url=http://${Q_HOST}:${Q_PORT}/"
         echo "    firewall_driver=nova.virt.firewall.NoopFirewallDriver"
-        echo "    security_group_api=quantum"
+        echo "    security_group_api=neutron"
 else
-        openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.quantumv2.api.API
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_username ${OS_USERNAME}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_password ${OS_PASSWORD}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_auth_url ${OS_AUTH_URL}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_auth_strategy keystone 
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_admin_tenant_name ${OS_TENANT_NAME}
-        openstack-config --set ${NOVA_CONF} DEFAULT quantum_url http://${Q_HOST}:${Q_PORT}/
+        openstack-config --set ${NOVA_CONF} DEFAULT network_api_class nova.network.neutronv2.api.API
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_admin_username ${OS_USERNAME}
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_admin_password ${OS_PASSWORD}
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_admin_auth_url ${OS_AUTH_URL}
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_auth_strategy keystone 
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_admin_tenant_name ${OS_TENANT_NAME}
+        openstack-config --set ${NOVA_CONF} DEFAULT neutron_url http://${Q_HOST}:${Q_PORT}/
         openstack-config --set ${NOVA_CONF} DEFAULT firewall_driver nova.virt.firewall.NoopFirewallDriver
-        openstack-config --set ${NOVA_CONF} DEFAULT security_group_api quantum
+        openstack-config --set ${NOVA_CONF} DEFAULT security_group_api neutron
 fi
 
 echo "Configuration updates complete!"

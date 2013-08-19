@@ -4,8 +4,8 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-User=quantum
-ExecStart=/usr/bin/quantum-ryu-agent --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/plugins/ryu/ryu.ini --log-file /var/log/quantum/ryu-agent.log
+User=neutron
+ExecStart=/usr/bin/neutron-ryu-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ryu/ryu.ini --log-file /var/log/neutron/ryu-agent.log
 PrivateTmp=true
 
 [Install]
