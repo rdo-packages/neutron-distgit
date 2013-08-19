@@ -35,6 +35,7 @@ Source20:   neutron-mlnx-agent.service
 #
 # patches_base=2013.2.b2
 #
+Patch0001: 0001-rename-quantum-into-neutron.patch
 
 BuildArch:	noarch
 
@@ -315,6 +316,7 @@ networks using multiple other neutron plugins.
 %prep
 %setup -q -n neutron-%{version}.b2
 
+%patch0001 -p1
 
 sed -i 's/%{version}/%{version}/' PKG-INFO
 
