@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenStack Quantum Server
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=quantum
+ExecStart=/usr/bin/quantum-server --config-file /etc/quantum/quantum.conf --config-file /etc/quantum/plugin.ini --log-file /var/log/quantum/server.log
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
