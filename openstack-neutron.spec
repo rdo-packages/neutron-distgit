@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	0.4.b2%{?dist}
+Release:	0.5.b2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b2
 Summary:	OpenStack Networking Service
@@ -72,6 +72,9 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 Summary:	Quantum Python libraries
 Group:		Applications/System
 
+Provides:	python-quantum = %{version}-%{release}
+Obsoletes:	python-quantum < 2013.2-0.4.b2
+
 Requires:	MySQL-python
 Requires:	python-alembic
 Requires:	python-amqplib
@@ -104,6 +107,9 @@ This package contains the neutron Python library.
 Summary:	Quantum Big Switch plugin
 Group:		Applications/System
 
+Provides:	openstack-quantum-bigswitch = %{version}-%{release}
+Obsoletes:	openstack-quantum-bigswitch < 2013.2-0.4.b2
+
 Requires:	openstack-neutron = %{version}-%{release}
 
 
@@ -120,6 +126,9 @@ Networks Controller.
 Summary:	Quantum Brocade plugin
 Group:		Applications/System
 
+Provides:	openstack-quantum-brocade = %{version}-%{release}
+Obsoletes:	openstack-quantum-brocade < 2013.2-0.4.b2
+
 Requires:	openstack-neutron = %{version}-%{release}
 
 
@@ -134,6 +143,9 @@ networks using Brocade VCS switches running NOS.
 %package -n openstack-neutron-cisco
 Summary:	Quantum Cisco plugin
 Group:		Applications/System
+
+Provides:	openstack-quantum-cisco = %{version}-%{release}
+Obsoletes:	openstack-quantum-cisco < 2013.2-0.4.b2
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	python-configobj
@@ -151,6 +163,9 @@ networks using Cisco UCS and Nexus.
 Summary:	Quantum Hyper-V plugin
 Group:		Applications/System
 
+Provides:	openstack-quantum-hyperv = %{version}-%{release}
+Obsoletes:	openstack-quantum-hyperv < 2013.2-0.4.b2
+
 Requires:	openstack-neutron = %{version}-%{release}
 
 
@@ -165,6 +180,9 @@ networks using Microsoft Hyper-V.
 %package -n openstack-neutron-linuxbridge
 Summary:	Quantum linuxbridge plugin
 Group:		Applications/System
+
+Provides:	openstack-quantum-linuxbridge = %{version}-%{release}
+Obsoletes:	openstack-quantum-linuxbridge < 2013.2-0.4.b2
 
 Requires:	bridge-utils
 Requires:	openstack-neutron = %{version}-%{release}
@@ -183,6 +201,9 @@ networks as VLANs using Linux bridging.
 Summary:	Quantum MidoNet plugin
 Group:		Applications/System
 
+Provides:	openstack-quantum-midonet = %{version}-%{release}
+Obsoletes:	openstack-quantum-midonet < 2013.2-0.4.b2
+
 Requires:	openstack-neutron = %{version}-%{release}
 
 
@@ -197,6 +218,9 @@ networks using MidoNet from Midokura.
 %package -n openstack-neutron-ml2
 Summary:    Quantum ML2 plugin
 Group:      Applications/System
+
+Provides:	openstack-quantum-ml2 = %{version}-%{release}
+Obsoletes:	openstack-quantum-ml2 < 2013.2-0.4.b2
 
 Requires:   openstack-neutron = %{version}-%{release}
 
@@ -214,6 +238,9 @@ for accessing those types.
 Summary:    Quantum Mellanox plugin
 Group:      Applications/System
 
+Provides:	openstack-quantum-mellanox = %{version}-%{release}
+Obsoletes:	openstack-quantum-mellanox < 2013.2-0.4.b2
+
 Requires:      openstack-neutron = %{version}-%{release}
 
 
@@ -225,6 +252,9 @@ switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 %package -n openstack-neutron-nicira
 Summary:	Quantum Nicira plugin
 Group:		Applications/System
+
+Provides:	openstack-quantum-nicira = %{version}-%{release}
+Obsoletes:	openstack-quantum-nicira < 2013.2-0.4.b2
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -240,6 +270,9 @@ networks using Nicira NVP.
 %package -n openstack-neutron-openvswitch
 Summary:	Quantum openvswitch plugin
 Group:		Applications/System
+
+Provides:	openstack-quantum-openvswitch = %{version}-%{release}
+Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b2
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	openvswitch
@@ -257,6 +290,9 @@ networks using Open vSwitch.
 Summary:	Quantum PLUMgrid plugin
 Group:		Applications/System
 
+Provides:	openstack-quantum-plumgrid = %{version}-%{release}
+Obsoletes:	openstack-quantum-plumgrid < 2013.2-0.4.b2
+
 Requires:	openstack-neutron = %{version}-%{release}
 
 
@@ -271,6 +307,9 @@ networks using the PLUMgrid platform.
 %package -n openstack-neutron-ryu
 Summary:	Quantum Ryu plugin
 Group:		Applications/System
+
+Provides:	openstack-quantum-ryu = %{version}-%{release}
+Obsoletes:	openstack-quantum-ryu < 2013.2-0.4.b2
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -287,6 +326,9 @@ networks using the Ryu Network Operating System.
 Summary:	Quantum NEC plugin
 Group:		Applications/System
 
+Provides:	openstack-quantum-nec = %{version}-%{release}
+Obsoletes:	openstack-quantum-nec < 2013.2-0.4.b2
+
 Requires:	openstack-neutron = %{version}-%{release}
 
 
@@ -301,6 +343,9 @@ networks using the NEC OpenFlow controller.
 %package -n openstack-neutron-metaplugin
 Summary:	Quantum meta plugin
 Group:		Applications/System
+
+Provides:	openstack-quantum-metaplugin = %{version}-%{release}
+Obsoletes:	openstack-quantum-metaplugin < 2013.2-0.4.b2
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -764,6 +809,9 @@ fi
 
 
 %changelog
+* Mon Aug 26 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.5.b2
+- Add provides/obsoletes for subpackages
+
 * Mon Aug 19 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.4.b2
 - Updated to havana milestone 2 release
 - Renamed quantum to neutron
