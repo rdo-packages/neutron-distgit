@@ -361,6 +361,8 @@ networks using multiple other neutron plugins.
 Summary:	Neutron bandwidth metering agent
 Group:		Applications/System
 
+Requires:   openstack-neutron = %{version}-%{release}
+
 %description -n openstack-neutron-meetering-agent
 Neutron provides an API to measure bandwidth utilization
 
@@ -370,6 +372,8 @@ utilization notifications.
 %package -n openstack-neutron-vpn-agent
 Summary:	Neutron VPNaaS agent
 Group:		Applications/System
+
+Requires:   openstack-neutron = %{version}-%{release}
 
 %description -n openstack-neutron-vpn-agent
 Neutron provides an API to implement VPN as a service
