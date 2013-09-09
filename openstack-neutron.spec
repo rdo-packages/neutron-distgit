@@ -2,9 +2,9 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	0.5.b2%{?dist}
+Release:	0.6.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
-Obsoletes:	openstack-quantum < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -12,7 +12,7 @@ License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
 #Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
-Source0:    http://launchpad.net/neutron/%{release_name}/%{release_name}-1/+download/neutron-%{version}.b2.tar.gz
+Source0:    http://launchpad.net/neutron/%{release_name}/%{release_name}-1/+download/neutron-%{version}.b3.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -33,9 +33,8 @@ Source19:	neutron-lbaas-agent.service
 Source20:   neutron-mlnx-agent.service
 
 #
-# patches_base=2013.2.b2
+# patches_base=2013.2.b3
 #
-Patch0001: 0001-rename-quantum-into-neutron.patch
 
 BuildArch:	noarch
 
@@ -73,7 +72,7 @@ Summary:	Quantum Python libraries
 Group:		Applications/System
 
 Provides:	python-quantum = %{version}-%{release}
-Obsoletes:	python-quantum < 2013.2-0.4.b2
+Obsoletes:	python-quantum < 2013.2-0.4.b3
 
 Requires:	MySQL-python
 Requires:	python-alembic
@@ -108,7 +107,7 @@ Summary:	Quantum Big Switch plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-bigswitch = %{version}-%{release}
-Obsoletes:	openstack-quantum-bigswitch < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-bigswitch < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -127,7 +126,7 @@ Summary:	Quantum Brocade plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-brocade = %{version}-%{release}
-Obsoletes:	openstack-quantum-brocade < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-brocade < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -145,7 +144,7 @@ Summary:	Quantum Cisco plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-cisco = %{version}-%{release}
-Obsoletes:	openstack-quantum-cisco < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-cisco < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	python-configobj
@@ -164,7 +163,7 @@ Summary:	Quantum Hyper-V plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-hyperv = %{version}-%{release}
-Obsoletes:	openstack-quantum-hyperv < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-hyperv < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -182,7 +181,7 @@ Summary:	Quantum linuxbridge plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-linuxbridge = %{version}-%{release}
-Obsoletes:	openstack-quantum-linuxbridge < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-linuxbridge < 2013.2-0.4.b3
 
 Requires:	bridge-utils
 Requires:	openstack-neutron = %{version}-%{release}
@@ -202,7 +201,7 @@ Summary:	Quantum MidoNet plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-midonet = %{version}-%{release}
-Obsoletes:	openstack-quantum-midonet < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-midonet < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -220,7 +219,7 @@ Summary:    Quantum ML2 plugin
 Group:      Applications/System
 
 Provides:	openstack-quantum-ml2 = %{version}-%{release}
-Obsoletes:	openstack-quantum-ml2 < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-ml2 < 2013.2-0.4.b3
 
 Requires:   openstack-neutron = %{version}-%{release}
 
@@ -239,7 +238,7 @@ Summary:    Quantum Mellanox plugin
 Group:      Applications/System
 
 Provides:	openstack-quantum-mellanox = %{version}-%{release}
-Obsoletes:	openstack-quantum-mellanox < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-mellanox < 2013.2-0.4.b3
 
 Requires:      openstack-neutron = %{version}-%{release}
 
@@ -254,7 +253,7 @@ Summary:	Quantum Nicira plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-nicira = %{version}-%{release}
-Obsoletes:	openstack-quantum-nicira < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-nicira < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -272,7 +271,7 @@ Summary:	Quantum openvswitch plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-openvswitch = %{version}-%{release}
-Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	openvswitch
@@ -291,7 +290,7 @@ Summary:	Quantum PLUMgrid plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-plumgrid = %{version}-%{release}
-Obsoletes:	openstack-quantum-plumgrid < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-plumgrid < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -309,7 +308,7 @@ Summary:	Quantum Ryu plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-ryu = %{version}-%{release}
-Obsoletes:	openstack-quantum-ryu < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-ryu < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -327,7 +326,7 @@ Summary:	Quantum NEC plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-nec = %{version}-%{release}
-Obsoletes:	openstack-quantum-nec < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-nec < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -345,7 +344,7 @@ Summary:	Quantum meta plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-metaplugin = %{version}-%{release}
-Obsoletes:	openstack-quantum-metaplugin < 2013.2-0.4.b2
+Obsoletes:	openstack-quantum-metaplugin < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 
@@ -358,10 +357,30 @@ This package contains the neutron plugin that implements virtual
 networks using multiple other neutron plugins.
 
 
-%prep
-%setup -q -n neutron-%{version}.b2
+%package -n openstack-neutron-meetering-agent
+Summary:	Neutron bandwidth metering agent
+Group:		Applications/System
 
-%patch0001 -p1
+%description -n openstack-neutron-meetering-agent
+Neutron provides an API to measure bandwidth utilization
+
+This package contains the neutron agent responsible for generating bandwidth
+utilization notifications.
+
+%package -n openstack-neutron-vpn-agent
+Summary:	Neutron VPNaaS agent
+Group:		Applications/System
+
+%description -n openstack-neutron-vpn-agent
+Neutron provides an API to implement VPN as a service
+
+This package contains the neutron agent responsible for implenting VPNaaS with
+IPSec.
+
+
+%prep
+%setup -q -n neutron-%{version}.b3
+
 
 sed -i 's/%{version}/%{version}/' PKG-INFO
 
@@ -392,26 +411,6 @@ rm -rf %{buildroot}%{python_sitelib}/neutron/tests
 rm -rf %{buildroot}%{python_sitelib}/neutron/plugins/*/tests
 rm -f %{buildroot}%{python_sitelib}/neutron/plugins/*/run_tests.*
 rm %{buildroot}/usr/etc/init.d/neutron-server
-
-# Install execs (using hand-coded rather than generated versions)
-install -p -D -m 755 bin/quantum-check-nvp-config %{buildroot}%{_bindir}/quantum-check-nvp-config
-install -p -D -m 755 bin/quantum-db-manage %{buildroot}%{_bindir}/quantum-db-manage
-install -p -D -m 755 bin/quantum-debug %{buildroot}%{_bindir}/quantum-debug
-install -p -D -m 755 bin/quantum-dhcp-agent %{buildroot}%{_bindir}/quantum-dhcp-agent
-install -p -D -m 755 bin/quantum-dhcp-agent-dnsmasq-lease-update %{buildroot}%{_bindir}/quantum-dhcp-agent-dnsmasq-lease-update
-install -p -D -m 755 bin/quantum-l3-agent %{buildroot}%{_bindir}/quantum-l3-agent
-install -p -D -m 755 bin/quantum-lbaas-agent %{buildroot}%{_bindir}/quantum-lbaas-agent
-install -p -D -m 755 bin/quantum-linuxbridge-agent %{buildroot}%{_bindir}/quantum-linuxbridge-agent
-install -p -D -m 755 bin/quantum-metadata-agent %{buildroot}%{_bindir}/quantum-metadata-agent
-install -p -D -m 755 bin/quantum-nec-agent %{buildroot}%{_bindir}/quantum-nec-agent
-install -p -D -m 755 bin/quantum-netns-cleanup %{buildroot}%{_bindir}/quantum-netns-cleanup
-install -p -D -m 755 bin/quantum-ns-metadata-proxy %{buildroot}%{_bindir}/quantum-ns-metadata-proxy
-install -p -D -m 755 bin/quantum-openvswitch-agent %{buildroot}%{_bindir}/quantum-openvswitch-agent
-install -p -D -m 755 bin/quantum-ovs-cleanup %{buildroot}%{_bindir}/quantum-ovs-cleanup
-install -p -D -m 755 bin/quantum-rootwrap %{buildroot}%{_bindir}/quantum-rootwrap
-install -p -D -m 755 bin/quantum-ryu-agent %{buildroot}%{_bindir}/quantum-ryu-agent
-install -p -D -m 755 bin/quantum-server %{buildroot}%{_bindir}/quantum-server
-install -p -D -m 755 bin/quantum-usage-audit %{buildroot}%{_bindir}/quantum-usage-audit
 
 # Move rootwrap files to proper location
 install -d -m 755 %{buildroot}%{_datarootdir}/neutron/rootwrap
@@ -593,7 +592,6 @@ fi
 %{_bindir}/quantum-db-manage
 %{_bindir}/quantum-debug
 %{_bindir}/quantum-dhcp-agent
-%{_bindir}/quantum-dhcp-agent-dnsmasq-lease-update
 %{_bindir}/quantum-l3-agent
 %{_bindir}/quantum-lbaas-agent
 %{_bindir}/quantum-metadata-agent
@@ -607,7 +605,6 @@ fi
 %{_bindir}/neutron-db-manage
 %{_bindir}/neutron-debug
 %{_bindir}/neutron-dhcp-agent
-%{_bindir}/neutron-dhcp-agent-dnsmasq-lease-update
 %{_bindir}/neutron-dhcp-setup
 %{_bindir}/neutron-l3-agent
 %{_bindir}/neutron-l3-setup
@@ -620,6 +617,7 @@ fi
 %{_bindir}/neutron-rootwrap-xen-dom0
 %{_bindir}/neutron-server
 %{_bindir}/neutron-server-setup
+%{_bindir}/neutron-usage-audit
 
 %{_unitdir}/neutron-dhcp-agent.service
 %{_unitdir}/neutron-l3-agent.service
@@ -807,8 +805,20 @@ fi
 %dir %{_sysconfdir}/neutron/plugins/metaplugin
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/metaplugin/*.ini
 
+%files -n openstack-neutron-meetering-agent
+%doc LICENSE
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metering_agent.ini
+%{_bindir}/neutron-metering-agent
+
+%files -n openstack-neutron-vpn-agent
+%doc LICENSE
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/vpn_agent.ini
+%{_bindir}/neutron-vpn-agent
 
 %changelog
+* Mon Sep 09 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.6.b3
+- Update to havana milestone 3 release
+
 * Mon Aug 26 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.5.b2
 - Add provides/obsoletes for subpackages
 
