@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	0.7.b3%{?dist}
+Release:	0.8.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -821,6 +821,9 @@ fi
 %{_bindir}/neutron-vpn-agent
 
 %changelog
+* Tue Sep 10 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.8.b3
+- Add python-pbr dependency (for now)
+
 * Mon Sep 09 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.6.b3
 - Update to havana milestone 3 release
 
