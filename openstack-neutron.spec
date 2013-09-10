@@ -46,6 +46,7 @@ BuildRequires:  python-d2to1
 
 Requires:	python-neutron = %{version}-%{release}
 Requires:	openstack-utils
+Requires:	python-pbr
 
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
