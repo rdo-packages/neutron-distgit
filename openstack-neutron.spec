@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	0.9.b3%{?dist}
+Release:	0.10.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -19,7 +19,6 @@ Source4:	neutron-server-setup
 Source5:	neutron-node-setup
 Source6:	neutron-dhcp-setup
 Source7:	neutron-l3-setup
-
 Source10:	neutron-server.service
 Source11:	neutron-linuxbridge-agent.service
 Source12:	neutron-openvswitch-agent.service
@@ -32,6 +31,7 @@ Source18:	neutron-ovs-cleanup.service
 Source19:	neutron-lbaas-agent.service
 Source20:   neutron-mlnx-agent.service
 
+Source30:	neutron-dist.conf
 #
 # patches_base=2013.2.b3
 #
@@ -386,24 +386,29 @@ IPSec.
 %prep
 %setup -q -n neutron-%{version}.b3
 
-
-sed -i 's/%{version}/%{version}/' PKG-INFO
-
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
-# let RPM handle deps
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-
 chmod 644 neutron/plugins/cisco/README
-
-# Adjust configuration file content
-sed -i 's/debug = True/debug = False/' etc/neutron.conf
-sed -i 's/\# auth_strategy = keystone/auth_strategy = noauth/' etc/neutron.conf
 
 
 %build
 %{__python} setup.py build
 
+# Loop through values in neutron-dist.conf and make sure that the values
+# are substituted into the neutron.conf as comments. Some of these values
+# will have been uncommented as a way of upstream setting defaults outside
+# of the code. For service_provider and notification-driver, there are
+# commented examples above uncommented settings, so this specifically
+# skips those comments and instead comments out the actual settings and
+# substitutes the correct default values.
+while read name eq value; do
+  test "$name" && test "$value" || continue
+  if [ "$name" = "service_provider" -o "$name" = "notification_driver" ]; then
+    sed -ri "0,/^$name *=/{s!^$name *=.*!# $name = $value!}" etc/neutron.conf
+  else
+    sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/neutron.conf
+  fi
+done < %{SOURCE30}
 
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
@@ -425,12 +430,6 @@ mv %{buildroot}/usr/etc/neutron/rootwrap.d/*.filters %{buildroot}%{_datarootdir}
 install -d -m 755 %{buildroot}%{_sysconfdir}/neutron
 mv %{buildroot}/usr/etc/neutron/* %{buildroot}%{_sysconfdir}/neutron
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/plugins/*/*.ini
-
-# Configure agents to use neutron-rootwrap
-sed -i 's/^# root_helper.*/root_helper = sudo neutron-rootwrap \/etc\/neutron\/rootwrap.conf/g' %{buildroot}%{_sysconfdir}/neutron/neutron.conf
-
-# Configure neutron-dhcp-agent state_path
-sed -i 's/state_path = \/opt\/stack\/data/state_path = \/var\/lib\/neutron/' %{buildroot}%{_sysconfdir}/neutron/dhcp_agent.ini
 
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-neutron
@@ -460,6 +459,9 @@ install -p -D -m 755 %{SOURCE4} %{buildroot}%{_bindir}/neutron-server-setup
 install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/neutron-node-setup
 install -p -D -m 755 %{SOURCE6} %{buildroot}%{_bindir}/neutron-dhcp-setup
 install -p -D -m 755 %{SOURCE7} %{buildroot}%{_bindir}/neutron-l3-setup
+
+# Install dist conf
+install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
 
 # Install version info file
 cat > %{buildroot}%{_sysconfdir}/neutron/release <<EOF
@@ -631,6 +633,7 @@ fi
 %{_unitdir}/neutron-server.service
 %dir %{_sysconfdir}/neutron
 %{_sysconfdir}/neutron/release
+%attr(-, root, neutron) %{_datadir}/neutron/neutron-dist.conf
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/api-paste.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/l3_agent.ini
@@ -810,17 +813,23 @@ fi
 %dir %{_sysconfdir}/neutron/plugins/metaplugin
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/metaplugin/*.ini
 
+
 %files -n openstack-neutron-metering-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metering_agent.ini
 %{_bindir}/neutron-metering-agent
+
 
 %files -n openstack-neutron-vpn-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/vpn_agent.ini
 %{_bindir}/neutron-vpn-agent
 
+
 %changelog
+* Thu Sep 26 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.10.b3
+- Add support for neutron-dist.conf
+
 * Tue Sep 17 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2-0.9.b3
 - Fix typo in openstack-neutron-meetering-agent package name
 

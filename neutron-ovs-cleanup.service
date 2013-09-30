@@ -6,7 +6,7 @@ Before=neutron-openvswitch-agent.service neutron-dhcp-agent.service neutron-l3-a
 [Service]
 Type=oneshot
 User=neutron
-ExecStart=/usr/bin/neutron-ovs-cleanup  --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini --log-file /var/log/neutron/ovs-cleanup.log
+ExecStart=/usr/bin/neutron-ovs-cleanup --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini --log-file /var/log/neutron/ovs-cleanup.log
 PrivateTmp=true
 
 [Install]
