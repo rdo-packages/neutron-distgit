@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	0.10.b3%{?dist}
+Release:	0.11.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -12,7 +12,7 @@ License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
 #Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
-Source0:    http://launchpad.net/neutron/%{release_name}/%{release_name}-1/+download/neutron-%{version}.b3.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/%{release_name}-1/+download/neutron-%{version}.b3.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -29,7 +29,9 @@ Source16:	neutron-l3-agent.service
 Source17:	neutron-metadata-agent.service
 Source18:	neutron-ovs-cleanup.service
 Source19:	neutron-lbaas-agent.service
-Source20:   neutron-mlnx-agent.service
+Source20:	neutron-mlnx-agent.service
+Source21:	neutron-vpn-agent.service
+Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
@@ -374,7 +376,8 @@ utilization notifications.
 Summary:	Neutron VPNaaS agent
 Group:		Applications/System
 
-Requires:   openstack-neutron = %{version}-%{release}
+Requires:	openstack-neutron = %{version}-%{release}
+Requires:	python-jinja2
 
 %description -n openstack-neutron-vpn-agent
 Neutron provides an API to implement VPN as a service
@@ -449,6 +452,8 @@ install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/neutron-metadata-agent.
 install -p -D -m 644 %{SOURCE18} %{buildroot}%{_unitdir}/neutron-ovs-cleanup.service
 install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-lbaas-agent.service
 install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-mlnx-agent.service
+install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-vpn-agent.service
+install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-metering-agent.service
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/neutron
@@ -590,6 +595,38 @@ fi
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
     /bin/systemctl try-restart neutron-nec-agent.service >/dev/null 2>&1 || :
+fi
+
+
+%preun -n openstack-neutron-metering-agent
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable neutron-metering-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl stop neutron-metering-agent.service > /dev/null 2>&1 || :
+fi
+
+
+%postun -n openstack-neutron-metering-agent
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart neutron-metering-agent.service >/dev/null 2>&1 || :
+fi
+
+
+%preun -n openstack-neutron-vpn-agent
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable neutron-vpn-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl stop neutron-vpn-agent.service > /dev/null 2>&1 || :
+fi
+
+
+%postun -n openstack-neutron-vpn-agent
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart neutron-vpn-agent.service >/dev/null 2>&1 || :
 fi
 
 
@@ -817,16 +854,22 @@ fi
 %files -n openstack-neutron-metering-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metering_agent.ini
+%{_unitdir}/neutron-metering-agent.service
 %{_bindir}/neutron-metering-agent
 
 
 %files -n openstack-neutron-vpn-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/vpn_agent.ini
+%{_unitdir}/neutron-vpn-agent.service
 %{_bindir}/neutron-vpn-agent
 
 
 %changelog
+* Tue Oct  2 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.11b3
+- Add python-jinja2 requires to VPN agent
+- Add missing services and pre/postuns for VPN and metering agents
+
 * Thu Sep 26 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.10.b3
 - Add support for neutron-dist.conf
 
