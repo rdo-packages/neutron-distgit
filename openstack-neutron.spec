@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	0.12.rc1%{?dist}
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -12,7 +12,7 @@ License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
 #Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
-Source0:	http://launchpad.net/neutron/%{release_name}/%{release_name}-1/+download/neutron-%{version}.rc1.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/%{release_name}-1/+download/neutron-%{version}.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -35,7 +35,7 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2013.2.rc1
+# patches_base=2013.2
 #
 
 BuildArch:	noarch
@@ -387,7 +387,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.rc1
+%setup -q -n neutron-%{version}
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
@@ -866,6 +866,9 @@ fi
 
 
 %changelog
+* Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2-1
+- Update to havana GA
+
 * Thu Oct 10 2013 Terry Wilson <twilson@redhat.com> - 2013.2-0.12.rc1
 - Update to havana rc1
 
