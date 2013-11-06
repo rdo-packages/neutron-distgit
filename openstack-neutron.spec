@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -81,13 +81,15 @@ Requires:	MySQL-python
 Requires:	python-alembic
 Requires:	python-amqplib
 Requires:	python-anyjson
+Requires:	python-babel
 Requires:	python-eventlet
 Requires:	python-greenlet
 Requires:	python-httplib2
 Requires:	python-iso8601
+Requires:	python-keystoneclient
 Requires:	python-kombu
 Requires:	python-netaddr
-Requires:	python-oslo-config
+Requires:	python-oslo-config >= 1:1.2.0
 Requires:	python-paste-deploy
 Requires:	python-qpid
 Requires:	python-neutronclient >= 2.1.10
@@ -477,9 +479,9 @@ package = %{release}
 EOF
 
 %pre
-getent group neutron >/dev/null || groupadd -o -r neutron --gid 164
+getent group neutron >/dev/null || groupadd -r neutron
 getent passwd neutron >/dev/null || \
-    useradd -o --uid 164 -r -g neutron -d %{_sharedstatedir}/neutron -s /sbin/nologin \
+    useradd -r -g neutron -d %{_sharedstatedir}/neutron -s /sbin/nologin \
     -c "OpenStack Quantum Daemons" neutron
 exit 0
 
@@ -516,6 +518,45 @@ if [ $1 -ge 1 ] ; then
     /bin/systemctl try-restart neutron-l3-agent.service >/dev/null 2>&1 || :
     /bin/systemctl try-restart neutron-metadata-agent.service >/dev/null 2>&1 || :
     /bin/systemctl try-restart neutron-lbaas-agent.service >/dev/null 2>&1 || :
+fi
+
+%pretrans
+if rpm --quiet -q openstack-quantum; then
+    mkdir -p  %{_localstatedir}/lib/rpm-state/
+
+    # Create a script for restoring init script enabling that we can also
+    # use as a flag to detect quantum -> grizzly upgrades in %posttrans
+    systemctl list-unit-files|grep '^quantum.*enabled\s*$'| \
+      sed -re 's/(\S+).*/systemctl enable \1/
+               s/quantum/neutron/g' > %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM
+fi
+
+%posttrans
+# Handle migration from quantum -> neutron
+if [ -e %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM ];then
+    # Migrate existing config files
+    for i in `find /etc/quantum -name *.rpmsave`;do
+        new=${i//quantum/neutron}
+        new=${new/%.rpmsave/}
+        sed -e '/^sql_connection/ b
+                /^admin_user/ b
+                s/quantum/neutron/g
+                s/Quantum/Neutron/g' $i > $new
+    done
+
+    # Re-create plugin.ini if it existed.
+    if [ -h %{_sysconfdir}/quantum/plugin.ini ];then
+        plugin_ini=$(readlink %{_sysconfdir}/quantum/plugin.ini)
+        ln -s ${plugin_ini//quantum/neutron} %{_sysconfdir}/neutron/plugin.ini
+    fi
+
+    # Stamp the existing db as grizzly to avoid neutron-server breaking db migration
+    neutron-db-manage --config-file %{_sysconfdir}/neutron/neutron.conf --config-file %{_sysconfdir}/neutron/plugin.ini stamp grizzly || :
+
+    # Restore the enablement of the various neutron services
+    source %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM
+
+    rm -f %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM
 fi
 
 
@@ -866,6 +907,10 @@ fi
 
 
 %changelog
+* Wed Oct 30 2013 Terry Wilson <twilson@redaht.com> - 2013.2-4
+- Better support for upgrading from grizzly to havana
+- Update dependencies on python-{babel,keystoneclient,oslo-config}
+
 * Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2-1
 - Update to havana GA
 
