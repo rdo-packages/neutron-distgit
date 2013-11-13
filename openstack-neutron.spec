@@ -391,7 +391,7 @@ IPSec.
 %prep
 %setup -q -n neutron-%{version}
 
-find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
+find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 chmod 644 neutron/plugins/cisco/README
 
