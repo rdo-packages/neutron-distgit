@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -53,6 +53,7 @@ Requires:	python-pbr
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
 Requires:	dnsmasq
+Requires:	dnsmasq-utils
 
 Requires(pre):	shadow-utils
 Requires(post): systemd-units
@@ -907,7 +908,10 @@ fi
 
 
 %changelog
-* Wed Oct 30 2013 Terry Wilson <twilson@redaht.com> - 2013.2-4
+* Wed Nov 13 2013 Terry Wilson <twilson@redhat.com> - 2013.2-3
+- Add dnsmasq-utils dependency
+
+* Wed Oct 30 2013 Terry Wilson <twilson@redaht.com> - 2013.2-2
 - Better support for upgrading from grizzly to havana
 - Update dependencies on python-{babel,keystoneclient,oslo-config}
 
