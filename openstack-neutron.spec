@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	3%{?dist}
+Release:	4%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -907,6 +907,9 @@ fi
 
 
 %changelog
+* Mon Dec 02 2013 Terry Wilson <twilson@redhat.com> - 2013.2-4
+- Replace quantum references in neutron-dist.conf
+
 * Wed Nov 13 2013 Terry Wilson <twilson@redhat.com> - 2013.2-3
 - Add dnsmasq-utils dependency
 
