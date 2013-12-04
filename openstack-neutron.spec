@@ -34,7 +34,7 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2013.2
+# patches_base=2013.2+1
 #
 
 BuildArch:	noarch
