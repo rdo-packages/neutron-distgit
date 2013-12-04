@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	4%{?dist}
+Release:	5%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -729,6 +729,7 @@ fi
 %dir %attr(0755, neutron, neutron) %{_localstatedir}/log/neutron
 %dir %{_datarootdir}/neutron
 %dir %{_datarootdir}/neutron/rootwrap
+%{_datarootdir}/neutron/rootwrap/debug.filters
 %{_datarootdir}/neutron/rootwrap/dhcp.filters
 %{_datarootdir}/neutron/rootwrap/iptables-firewall.filters
 %{_datarootdir}/neutron/rootwrap/l3.filters
@@ -906,9 +907,13 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/vpn_agent.ini
 %{_unitdir}/neutron-vpn-agent.service
 %{_bindir}/neutron-vpn-agent
+%{_datarootdir}/neutron/rootwrap/vpnaas.filters
 
 
 %changelog
+* Wed Dec 04 2013 Terry Wilson <twilson@redhat.com> - 2013.2-5
+- Add missing debug and vpnaas rootwrap filters, bz#1034207
+
 * Mon Dec 02 2013 Terry Wilson <twilson@redhat.com> - 2013.2-4
 - Replace quantum references in neutron-dist.conf
 
