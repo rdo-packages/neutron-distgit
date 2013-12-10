@@ -167,7 +167,7 @@ case "${QUANTUM_PLUGIN}" in
 ;;
 
 "openvswitch")
-	if ! rpm -q openvswitch > /dev/null 
+	if ! rpm -q --whatprovides openvswitch > /dev/null 
 	then
 		echo "Please install openvswitch"
 		exit 0
@@ -199,7 +199,7 @@ echo "Plugin: ${QUANTUM_PLUGIN} => Database: ${DB_NAME}"
 # Make sure MySQL is installed.
 
 NEW_MYSQL_INSTALL=0
-if ! rpm -q mysql-server > /dev/null
+if ! rpm -q --whatprovides mysql-server > /dev/null
 then
 	if [ -z "${ASSUME_YES}" ] ; then
 		printf "mysql-server is not installed.  Would you like to install it now? (y/n): "
