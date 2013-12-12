@@ -37,6 +37,8 @@ Source30:	neutron-dist.conf
 # patches_base=2013.2+1
 #
 Patch0001: 0001-Add-vpnaas-and-debug-filters-to-setup.cfg.patch
+Patch0002: 0002-Add-fwaas_driver.ini-to-setup.cfg.patch
+Patch0003: 0003-Sync-rpc-fix-from-oslo-incubator.patch
 
 BuildArch:	noarch
 
@@ -393,6 +395,8 @@ IPSec.
 %setup -q -n neutron-%{version}
 
 %patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 chmod 644 neutron/plugins/cisco/README
