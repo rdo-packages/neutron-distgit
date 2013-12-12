@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2013.2
-Release:	5%{?dist}
+Release:	6%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -916,6 +916,10 @@ fi
 
 
 %changelog
+* Tue Dec 10 2013 Terry Wilson <twilson@redhat.com> - 2013.2-6
+- Add rootwrap.conf limitation to sudoers.d/neutron, bz#984097
+- neutron-server-setup: support mariadb
+
 * Wed Dec 04 2013 Terry Wilson <twilson@redhat.com> - 2013.2-5
 - Add missing debug and vpnaas rootwrap filters, bz#1034207
 
