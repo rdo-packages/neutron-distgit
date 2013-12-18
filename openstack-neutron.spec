@@ -1,8 +1,8 @@
 %global release_name havana
 
 Name:		openstack-neutron
-Version:	2013.2
-Release:	6%{?dist}
+Version:	2013.2.1
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -34,11 +34,9 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2013.2+1
+# patches_base=2013.2.1+1
 #
-Patch0001: 0001-Add-vpnaas-and-debug-filters-to-setup.cfg.patch
-Patch0002: 0002-Add-fwaas_driver.ini-to-setup.cfg.patch
-Patch0003: 0003-Sync-rpc-fix-from-oslo-incubator.patch
+Patch0001: 0001-Add-fwaas_driver.ini-to-setup.cfg.patch
 
 BuildArch:	noarch
 
@@ -395,8 +393,6 @@ IPSec.
 %setup -q -n neutron-%{version}
 
 %patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 chmod 644 neutron/plugins/cisco/README
@@ -916,6 +912,9 @@ fi
 
 
 %changelog
+* Wed Dec 18 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2.1-1
+- Update to havana stable release 2013.2.1
+
 * Tue Dec 10 2013 Terry Wilson <twilson@redhat.com> - 2013.2-6
 - Add rootwrap.conf limitation to sudoers.d/neutron, bz#984097
 - neutron-server-setup: support mariadb
