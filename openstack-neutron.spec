@@ -1,8 +1,8 @@
 %global release_name havana
 
 Name:		openstack-neutron
-Version:	2013.2.1
-Release:	1%{?dist}
+Version:	2014.1
+Release:	0.1.b1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,7 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.b1.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -34,7 +34,7 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2013.2.1+1
+# patches_base=2014.1.b1+1
 #
 Patch0001: 0001-Add-fwaas_driver.ini-to-setup.cfg.patch
 
@@ -390,7 +390,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}
+%setup -q -n neutron-%{version}.b1
 
 %patch0001 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
@@ -912,6 +912,9 @@ fi
 
 
 %changelog
+* Mon Dec 23 2013 Pádraig Brady <pbrady@redhat.com> - 2014.1.b1-1
+- Update to icehouse milestone 1
+
 * Wed Dec 18 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2.1-1
 - Update to havana stable release 2013.2.1
 

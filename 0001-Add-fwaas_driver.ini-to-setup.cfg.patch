@@ -1,4 +1,4 @@
-From 6b889cf184944cfae6dca4917356755243961f53 Mon Sep 17 00:00:00 2001
+From 571697f27bfcb2218efd5e7f4f1da3adec9dfea8 Mon Sep 17 00:00:00 2001
 From: Terry Wilson <twilson@redhat.com>
 Date: Fri, 6 Dec 2013 11:13:09 -0600
 Subject: [PATCH] Add fwaas_driver.ini to setup.cfg
@@ -11,7 +11,7 @@ Closes-Bug: 1258585
  1 files changed, 1 insertions(+), 0 deletions(-)
 
 diff --git a/setup.cfg b/setup.cfg
-index 1a40944..9fbf8ce 100644
+index fa01e45..0a4edfc 100644
 --- a/setup.cfg
 +++ b/setup.cfg
 @@ -26,6 +26,7 @@ data_files =
