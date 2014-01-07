@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.1.b1%{?dist}
+Release:	0.2.b1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -281,6 +281,7 @@ Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	openvswitch
+Requires:	python-psutil
 
 
 %description -n openstack-neutron-openvswitch
@@ -912,6 +913,9 @@ fi
 
 
 %changelog
+* Tue Jan 07 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b1-2
+- Add python-psutil requirement for openvswitch agent, bz#1049235
+
 * Mon Dec 23 2013 Pádraig Brady <pbrady@redhat.com> - 2014.1.b1-1
 - Update to icehouse milestone 1
 
