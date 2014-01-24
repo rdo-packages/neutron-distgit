@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.2.b1%{?dist}
+Release:	0.3.b1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -398,6 +398,8 @@ find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 chmod 644 neutron/plugins/cisco/README
 
+# Let's handle dependencies ourseleves
+rm -f requirements.txt
 
 %build
 %{__python} setup.py build
@@ -913,6 +915,9 @@ fi
 
 
 %changelog
+* Fri Jan 24 2014 Terry Wilson <twilson@redhat.com> - 2014.1.51-3
+- Remove requirements.txt, bz#1057615
+
 * Tue Jan 07 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b1-2
 - Add python-psutil requirement for openvswitch agent, bz#1049235
 
