@@ -915,7 +915,7 @@ fi
 
 
 %changelog
-* Fri Jan 24 2014 Terry Wilson <twilson@redhat.com> - 2014.1.51-3
+* Fri Jan 24 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b1-3
 - Remove requirements.txt, bz#1057615
 
 * Tue Jan 07 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b1-2
