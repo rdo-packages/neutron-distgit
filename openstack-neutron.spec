@@ -375,6 +375,17 @@ Neutron provides an API to measure bandwidth utilization
 This package contains the neutron agent responsible for generating bandwidth
 utilization notifications.
 
+
+%package -n openstack-neutron-vmware-nsx
+Summary:	Neutron VMWare NSX support
+Group:		Applications/System
+
+Requires:	openstack-neutron = %{version}-%{release}
+
+%description -n openstack-neutron-vmware-nsx
+This package adds VMWare NSX support for neutron
+
+
 %package -n openstack-neutron-vpn-agent
 Summary:	Neutron VPNaaS agent
 Group:		Applications/System
@@ -902,6 +913,13 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metering_agent.ini
 %{_unitdir}/neutron-metering-agent.service
 %{_bindir}/neutron-metering-agent
+
+
+%files -n openstack-neutron-vmware-nsx
+%doc LICENSE
+%{_bindir}/neutron-check-nsx-config
+%dir %{_sysconfdir}/neutron/plugins/vmware
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
 
 
 %files -n openstack-neutron-vpn-agent
