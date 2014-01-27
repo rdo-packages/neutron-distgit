@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.3.b1%{?dist}
+Release:	0.4.b2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,7 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.b1.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.b2.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -34,7 +34,7 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.1.b1+1
+# patches_base=2014.1.b2+1
 #
 Patch0001: 0001-Add-fwaas_driver.ini-to-setup.cfg.patch
 
@@ -391,7 +391,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.b1
+%setup -q -n neutron-%{version}.b2
 
 %patch0001 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
@@ -915,6 +915,9 @@ fi
 
 
 %changelog
+* Mon Jan 27 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b2-4
+- Update to icehouse milestone 2
+
 * Fri Jan 24 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b1-3
 - Remove requirements.txt, bz#1057615
 
