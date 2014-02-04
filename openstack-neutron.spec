@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.4.b2%{?dist}
+Release:	0.5.b2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -96,6 +96,7 @@ Requires:	python-neutronclient >= 2.1.10
 Requires:	python-routes
 Requires:	python-sqlalchemy
 Requires:	python-webob
+Requires:	python-stevedore
 Requires:	sudo
 
 
@@ -931,6 +932,9 @@ fi
 
 
 %changelog
+* Tue Feb 04 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1.b2-5
+- Fix missing dependency on python-stevedore
+
 * Mon Jan 27 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b2-4
 - Update to icehouse milestone 2
 
