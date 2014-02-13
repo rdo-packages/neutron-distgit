@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.5.b2%{?dist}
+Release:	0.6.b2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -254,22 +254,24 @@ This plugin implements Neutron v2 APIs with support for Mellanox embedded
 switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 
 
-%package -n openstack-neutron-nicira
+%package -n openstack-neutron-vmware
 Summary:	Neutron Nicira plugin
 Group:		Applications/System
 
 Provides:	openstack-quantum-nicira = %{version}-%{release}
 Obsoletes:	openstack-quantum-nicira < 2013.2-0.4.b3
+Provides:	openstack-neutron-nicira = %{version}-%{release}
+Obsoletes:	openstack-neutron-nicira < 2014.1-0.5.b2
 
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-nicira
+%description -n openstack-neutron-vmware
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
 This package contains the neutron plugin that implements virtual
-networks using Nicira NVP.
+networks using VMware NSX.
 
 
 %package -n openstack-neutron-openvswitch
@@ -375,16 +377,6 @@ Neutron provides an API to measure bandwidth utilization
 
 This package contains the neutron agent responsible for generating bandwidth
 utilization notifications.
-
-
-%package -n openstack-neutron-vmware-nsx
-Summary:	Neutron VMWare NSX support
-Group:		Applications/System
-
-Requires:	openstack-neutron = %{version}-%{release}
-
-%description -n openstack-neutron-vmware-nsx
-This package adds VMWare NSX support for neutron
 
 
 %package -n openstack-neutron-vpn-agent
@@ -844,14 +836,17 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/mlnx/*.ini
 
 
-%files -n openstack-neutron-nicira
+%files -n openstack-neutron-vmware
 %doc LICENSE
 %doc neutron/plugins/nicira/README
 %{_bindir}/neutron-check-nvp-config
 %{_bindir}/quantum-check-nvp-config
+%{_bindir}/neutron-check-nsx-config
 %{python_sitelib}/neutron/plugins/nicira
 %dir %{_sysconfdir}/neutron/plugins/nicira
+%dir %{_sysconfdir}/neutron/plugins/vmware
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nicira/*.ini
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
 
 
 %files -n openstack-neutron-openvswitch
@@ -916,13 +911,6 @@ fi
 %{_bindir}/neutron-metering-agent
 
 
-%files -n openstack-neutron-vmware-nsx
-%doc LICENSE
-%{_bindir}/neutron-check-nsx-config
-%dir %{_sysconfdir}/neutron/plugins/vmware
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
-
-
 %files -n openstack-neutron-vpn-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/vpn_agent.ini
@@ -932,6 +920,9 @@ fi
 
 
 %changelog
+* Thu Feb 13 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b2-6
+- Rename nicira plugin to vmware
+
 * Tue Feb 04 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1.b2-5
 - Fix missing dependency on python-stevedore
 
