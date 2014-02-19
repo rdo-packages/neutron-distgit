@@ -82,7 +82,7 @@ is_valid_plugin() {
 }
 
 ASSUME_YES=""
-QUANTUM_USER=neutron
+NEUTRON_USER=neutron
 MYSQL_Q_PW=neutron
 Q_CONF=/etc/neutron/neutron.conf
 LB_CONF=/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini
@@ -119,11 +119,11 @@ do
 			;;
                 -u|--user)
                         shift
-                        QUANTUM_USER=${1}
+                        NEUTRON_USER=${1}
                         ;;
                 -p|--plugin)
                         shift
-                        QUANTUM_PLUGIN=${1}
+                        NEUTRON_PLUGIN=${1}
                         ;;
 		*)
 			# ignore
@@ -134,33 +134,33 @@ do
 done
 
 # if the plugin is not defined
-if [ -z ${QUANTUM_PLUGIN} ] ; then
+if [ -z ${NEUTRON_PLUGIN} ] ; then
         echo "Please select a plugin from: ${SUPPORTED_PLUGINS[*]}"
 	echo "Choice:"
-        read QUANTUM_PLUGIN
+        read NEUTRON_PLUGIN
 fi
 
 # check that the plugin is valid
-is_valid_plugin ${QUANTUM_PLUGIN}
+is_valid_plugin ${NEUTRON_PLUGIN}
 if [ $? -ne 0 ]; then
-	echo "Plugin '${QUANTUM_PLUGIN}' not supported. Supported plugins:-"
+	echo "Plugin '${NEUTRON_PLUGIN}' not supported. Supported plugins:-"
 	echo "    ${SUPPORTED_PLUGINS[*]}"
 	exit 0
 fi
 
-echo "Quantum plugin: ${QUANTUM_PLUGIN}"
+echo "Neutron plugin: ${NEUTRON_PLUGIN}"
 
 if ! [ -e "${Q_CONF}" ]; then
 	echo "Please install the neutron package"
 	exit 0
 fi
 
-if ! [ -e "/etc/neutron/plugins/${QUANTUM_PLUGIN}" ]; then
-	echo "Please install the ${QUANTUM_PLUGIN} neutron plugin"
+if ! [ -e "/etc/neutron/plugins/${NEUTRON_PLUGIN}" ]; then
+	echo "Please install the ${NEUTRON_PLUGIN} neutron plugin"
         exit 0
 fi
 
-case "${QUANTUM_PLUGIN}" in
+case "${NEUTRON_PLUGIN}" in
 "linuxbridge")
 	DB_NAME="neutron_linux_bridge"
         Q_PLUGIN_CLASS="neutron.plugins.linuxbridge.lb_neutron_plugin.LinuxBridgePluginV2"
@@ -173,7 +173,7 @@ case "${QUANTUM_PLUGIN}" in
 		exit 0
 	fi
 	DB_NAME="ovs_neutron"
-        Q_PLUGIN_CLASS="neutron.plugins.openvswitch.ovs_neutron_plugin.OVSQuantumPluginV2"
+        Q_PLUGIN_CLASS="neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2"
 ;;
 esac
 
@@ -194,7 +194,7 @@ openstack-config --set ${Q_CONF} keystone_authtoken admin_tenant_name ${OS_TENAN
 openstack-config --set ${Q_CONF} keystone_authtoken admin_user ${OS_USERNAME}
 openstack-config --set ${Q_CONF} keystone_authtoken admin_password ${OS_PASSWORD}
 
-echo "Plugin: ${QUANTUM_PLUGIN} => Database: ${DB_NAME}"
+echo "Plugin: ${NEUTRON_PLUGIN} => Database: ${DB_NAME}"
 
 # Make sure MySQL is installed.
 
@@ -298,12 +298,12 @@ fi
 echo "Verified connectivity to MySQL."
 
 # Create a database user - check if it does not exist prior
-USER_EXISTS=$(mysql -u root ${MYSQL_ROOT_PW_ARG} -e "SELECT user FROM mysql.user WHERE user='${QUANTUM_USER}'"|grep ${QUANTUM_USER} | wc -l)
+USER_EXISTS=$(mysql -u root ${MYSQL_ROOT_PW_ARG} -e "SELECT user FROM mysql.user WHERE user='${NEUTRON_USER}'"|grep ${NEUTRON_USER} | wc -l)
 if [ ${USER_EXISTS} -ne 0 ]; then
-	echo "User ${QUANTUM_USER} already exists"
+	echo "User ${NEUTRON_USER} already exists"
 else
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "create user '${QUANTUM_USER}'@'%' identified by '${MYSQL_Q_PW}'"
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "create user '${QUANTUM_USER}'@'localhost' identified by '${MYSQL_Q_PW}'"
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "create user '${NEUTRON_USER}'@'%' identified by '${MYSQL_Q_PW}'"
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "create user '${NEUTRON_USER}'@'localhost' identified by '${MYSQL_Q_PW}'"
 fi
 
 #create database
@@ -314,11 +314,11 @@ fi
 mysql -u root ${MYSQL_ROOT_PW_ARG} -e "create database ${DB_NAME}"
 
 # Configure database specifics
-case "${QUANTUM_PLUGIN}" in
+case "${NEUTRON_PLUGIN}" in
 "linuxbridge")
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on neutron_linux_bridge.* to '${QUANTUM_USER}'@'%'"
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on neutron_linux_bridge.* to '${QUANTUM_USER}'@'localhost'"
-	openstack-config --set ${LB_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/neutron_linux_bridge
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on neutron_linux_bridge.* to '${NEUTRON_USER}'@'%'"
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on neutron_linux_bridge.* to '${NEUTRON_USER}'@'localhost'"
+	openstack-config --set ${LB_CONF} DATABASE sql_connection mysql://${NEUTRON_USER}:${MYSQL_Q_PW}@`hostname`/neutron_linux_bridge
 	
 	echo "Please enter network device for VLAN trunking:"
 	read NETWORK_DEVICE
@@ -328,9 +328,9 @@ case "${QUANTUM_PLUGIN}" in
 ;;
 
 "openvswitch")
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_neutron.* to '${QUANTUM_USER}'@'%'"
-	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_neutron.* to '${QUANTUM_USER}'@'localhost'"
-        openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${QUANTUM_USER}:${MYSQL_Q_PW}@`hostname`/ovs_neutron
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_neutron.* to '${NEUTRON_USER}'@'%'"
+	mysql -u root ${MYSQL_ROOT_PW_ARG} -e "grant all on ovs_neutron.* to '${NEUTRON_USER}'@'localhost'"
+        openstack-config --set ${OVS_CONF} DATABASE sql_connection mysql://${NEUTRON_USER}:${MYSQL_Q_PW}@`hostname`/ovs_neutron
         openstack-config --set ${OVS_CONF} SECURITYGROUP firewall_driver neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
 	ln -s ${OVS_CONF} /etc/neutron/plugin.ini
 ;;

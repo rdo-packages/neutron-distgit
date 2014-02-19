@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum Load Balancing as a Service Agent
+Description=OpenStack Neutron Load Balancing as a Service Agent
 After=syslog.target network.target
 
 [Service]

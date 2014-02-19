@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.6.b2%{?dist}
+Release:	0.7.b2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -92,7 +92,7 @@ Requires:	python-netaddr
 Requires:	python-oslo-config >= 1:1.2.0
 Requires:	python-paste-deploy
 Requires:	python-qpid
-Requires:	python-neutronclient >= 2.1.10
+Requires:	python-neutronclient >= 2.3.0
 Requires:	python-routes
 Requires:	python-sqlalchemy
 Requires:	python-webob
@@ -397,6 +397,12 @@ IPSec.
 %setup -q -n neutron-%{version}.b2
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
+
+# Ensure SOURCES.txt ends in a newline and if any patches have added files, append them to SOURCES.txt
+[ -n "$(tail -c 1 < neutron.egg-info/SOURCES.txt)" ] && echo >> neutron.egg-info/SOURCES.txt
+if ls %{_sourcedir}/*.patch >/dev/null 2>&1; then
+  awk '/^new file/ {split(a,files," ");print substr(files[3],3)} {a = $0}' %{_sourcedir}/*.patch >> neutron.egg-info/SOURCES.txt
+fi
 
 chmod 644 neutron/plugins/cisco/README
 
@@ -745,8 +751,8 @@ fi
 %files -n python-neutron
 %doc LICENSE
 %doc README.rst
-%{python_sitelib}/quantum
 %{python_sitelib}/neutron
+%{python_sitelib}/quantum
 %exclude %{python_sitelib}/neutron/plugins/bigswitch
 %exclude %{python_sitelib}/neutron/plugins/brocade
 %exclude %{python_sitelib}/neutron/plugins/cisco
@@ -920,22 +926,25 @@ fi
 
 
 %changelog
-* Thu Feb 13 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b2-6
+* Wed Feb 19 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.7.b2
+- Sync up Quantum renaming changes
+
+* Thu Feb 13 2014 Terry Wilson <twilson@redhat.com> - 2014.1-0.6.b2
 - Rename nicira plugin to vmware
 
-* Tue Feb 04 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1.b2-5
+* Tue Feb 04 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.5.b2
 - Fix missing dependency on python-stevedore
 
-* Mon Jan 27 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b2-4
+* Mon Jan 27 2014 Terry Wilson <twilson@redhat.com> - 2014.1-0.4.b2
 - Update to icehouse milestone 2
 
-* Fri Jan 24 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b1-3
+* Fri Jan 24 2014 Terry Wilson <twilson@redhat.com> - 2014.1-0.3.b1
 - Remove requirements.txt, bz#1057615
 
-* Tue Jan 07 2014 Terry Wilson <twilson@redhat.com> - 2014.1.b1-2
+* Tue Jan 07 2014 Terry Wilson <twilson@redhat.com> - 2014.1-0.2.b1
 - Add python-psutil requirement for openvswitch agent, bz#1049235
 
-* Mon Dec 23 2013 Pádraig Brady <pbrady@redhat.com> - 2014.1.b1-1
+* Mon Dec 23 2013 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.1.b1
 - Update to icehouse milestone 1
 
 * Wed Dec 18 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2.1-1

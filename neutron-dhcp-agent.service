@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum DHCP Agent
+Description=OpenStack Neutron DHCP Agent
 After=syslog.target network.target
 
 [Service]

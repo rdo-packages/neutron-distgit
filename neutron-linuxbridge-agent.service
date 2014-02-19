@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum Linux Bridge Agent
+Description=OpenStack Neutron Linux Bridge Agent
 After=syslog.target network.target
 
 [Service]

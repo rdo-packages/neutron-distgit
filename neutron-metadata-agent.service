@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum Metadata Agent
+Description=OpenStack Neutron Metadata Agent
 After=syslog.target network.target
 
 [Service]

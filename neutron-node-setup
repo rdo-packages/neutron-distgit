@@ -34,7 +34,7 @@ Options:
                 The neutron plugin. Supported plugins:-
                     ${SUPPORTED_PLUGINS[*]}
         --qhost       | -q
-		The Quantum hostname (assumes that this is also the QPID host).
+		The Neutron hostname (assumes that this is also the QPID host).
 EOF
 
 	exit 0
@@ -50,7 +50,7 @@ is_valid_plugin() {
 	return 1
 }
 
-QUANTUM_USER=neutron
+NEUTRON_USER=neutron
 LB_CONF=/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini
 OVS_CONF=/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
 
@@ -65,7 +65,7 @@ do
 			;;
                 -p|--plugin)
                         shift
-                        QUANTUM_PLUGIN=${1}
+                        NEUTRON_PLUGIN=${1}
                         ;;
                 -q|--qhost)
                         shift
@@ -80,30 +80,30 @@ do
 done
 
 # if the plugin is not defined
-if [ -z ${QUANTUM_PLUGIN} ] ; then
+if [ -z ${NEUTRON_PLUGIN} ] ; then
         echo "Please select a plugin from: ${SUPPORTED_PLUGINS[*]}"
         echo "Choice:"
-        read QUANTUM_PLUGIN
+        read NEUTRON_PLUGIN
 fi
 
 # check that the plugin is valid
-is_valid_plugin ${QUANTUM_PLUGIN}
+is_valid_plugin ${NEUTRON_PLUGIN}
 if [ $? -ne 0 ]; then
-        echo "Plugin '${QUANTUM_PLUGIN}' not supported. Supported plugins:-"
+        echo "Plugin '${NEUTRON_PLUGIN}' not supported. Supported plugins:-"
         echo "    ${SUPPORTED_PLUGINS[*]}"
         exit 0
 fi
 
-echo "Quantum plugin: ${QUANTUM_PLUGIN}"
+echo "Neutron plugin: ${NEUTRON_PLUGIN}"
 
-if ! [ -e "/etc/neutron/plugins/${QUANTUM_PLUGIN}" ]; then
-	echo "Please install the ${QUANTUM_PLUGIN} neutron plugin"
+if ! [ -e "/etc/neutron/plugins/${NEUTRON_PLUGIN}" ]; then
+	echo "Please install the ${NEUTRON_PLUGIN} neutron plugin"
         exit 0
 fi
 
 #if the database hostname and is not defined and is required
 if [ -z ${Q_HOST} ] ; then
-    echo "Please enter the Quantum hostname:"
+    echo "Please enter the Neutron hostname:"
     read Q_HOST
 fi
 
@@ -113,7 +113,7 @@ Q_CONF=/etc/neutron/neutron.conf
 openstack-config --set ${Q_CONF} DEFAULT rpc_backend neutron.openstack.common.rpc.impl_qpid
 openstack-config --set ${Q_CONF} DEFAULT qpid_hostname ${Q_HOST}
 
-case "${QUANTUM_PLUGIN}" in
+case "${NEUTRON_PLUGIN}" in
 "linuxbridge")
 ;;
 

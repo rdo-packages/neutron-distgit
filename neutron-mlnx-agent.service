@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum Mellanox Agent
+Description=OpenStack Neutron Mellanox Agent
 After=syslog.target network.target
 
 [Service]

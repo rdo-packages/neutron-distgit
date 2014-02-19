@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum NEC OpenFlow Agent
+Description=OpenStack Neutron NEC OpenFlow Agent
 After=syslog.target network.target
 
 [Service]

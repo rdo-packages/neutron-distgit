@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum Open vSwitch Agent
+Description=OpenStack Neutron Open vSwitch Agent
 After=syslog.target network.target
 
 [Service]

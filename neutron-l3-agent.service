@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum Layer 3 Agent
+Description=OpenStack Neutron Layer 3 Agent
 After=syslog.target network.target
 
 [Service]

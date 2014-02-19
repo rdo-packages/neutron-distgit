@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum Open vSwitch Cleanup Utility
+Description=OpenStack Neutron Open vSwitch Cleanup Utility
 After=syslog.target network.target openvswitch.service
 Before=neutron-openvswitch-agent.service neutron-dhcp-agent.service neutron-l3-agent.service openstack-nova-compute.service
 

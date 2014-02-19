@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenStack Quantum Ryu Network Operating System Agent
+Description=OpenStack Neutron Ryu Network Operating System Agent
 After=syslog.target network.target
 
 [Service]
