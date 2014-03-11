@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.8.b3%{?dist}
+Release:	0.9.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -103,7 +103,7 @@ Requires:	python-routes
 Requires:	python-sqlalchemy >= 0.7.8
 Requires:	python-webob >= 1.2.3
 Requires:	python-stevedore
-Requires:	python-six
+Requires:	python-six >= 1.4.1
 # requires.txt asks for six >= 1.5.2 actually
 Requires:	sudo
 
@@ -980,6 +980,9 @@ fi
 
 
 %changelog
+* Tue Mar 11 2014 Miguel Ángel Ajo <majopela@redhat.com> - 2013.1-0.9.b3
+- Forcing python-six version to be at least >= 1.4.1
+
 * Tue Mar 11 2014 Miguel Ángel Ajo <majopela@redhat.com> - 2014.1-0.8.b3
 - Updated to Icehouse milestone 3 
 - Added neutron-dhcp-agent dependency bz#1019487
