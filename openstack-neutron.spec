@@ -1,8 +1,8 @@
-%global release_name havana
+%global release_name icehouse
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.7.b2%{?dist}
+Release:	0.8.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,7 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.b2.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.b3.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -34,7 +34,7 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.1.b2+1
+# patches_base=2014.1.b3+1
 #
 
 BuildArch:	noarch
@@ -48,6 +48,11 @@ BuildRequires:  python-d2to1
 Requires:	python-neutron = %{version}-%{release}
 Requires:	openstack-utils
 Requires:	python-pbr
+
+# this require fixes bz#1019487 due to this patch 
+# https://review.openstack.org/#/c/61105/8/neutron/agent/linux/ovs_lib.py
+# which might need refactor to remove this dependency here
+Requires:       openstack-neutron-openvswitch
 
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
@@ -84,19 +89,22 @@ Requires:	python-anyjson
 Requires:	python-babel
 Requires:	python-eventlet
 Requires:	python-greenlet
-Requires:	python-httplib2
+Requires:	python-httplib2 >= 0.7.5
 Requires:	python-iso8601
-Requires:	python-keystoneclient
+Requires:	python-keystoneclient >= 0.6.0
 Requires:	python-kombu
+Requires:	python-lxml
 Requires:	python-netaddr
 Requires:	python-oslo-config >= 1:1.2.0
 Requires:	python-paste-deploy
 Requires:	python-qpid
-Requires:	python-neutronclient >= 2.3.0
+Requires:	python-neutronclient >= 2.3.4
 Requires:	python-routes
-Requires:	python-sqlalchemy
-Requires:	python-webob
+Requires:	python-sqlalchemy >= 0.7.8
+Requires:	python-webob >= 1.2.3
 Requires:	python-stevedore
+Requires:	python-six
+# requires.txt asks for six >= 1.5.2 actually
 Requires:	sudo
 
 
@@ -182,6 +190,21 @@ This package contains the neutron plugin that implements virtual
 networks using Microsoft Hyper-V.
 
 
+%package -n openstack-neutron-ibm
+Summary:       Neutron IBM plugin
+Group:         Applications/System
+
+Requires:      openstack-neutron = %{version}-%{release}
+
+
+%description -n openstack-neutron-ibm
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the neutron plugin that implements virtual
+networks from IBM.
+
+
 %package -n openstack-neutron-linuxbridge
 Summary:	Neutron linuxbridge plugin
 Group:		Applications/System
@@ -252,6 +275,18 @@ Requires:      openstack-neutron = %{version}-%{release}
 %description -n openstack-neutron-mellanox
 This plugin implements Neutron v2 APIs with support for Mellanox embedded
 switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
+
+
+%package -n openstack-neutron-ofagent
+Summary:       Neutron ofagent plugin from ryu project
+Group:         Applications/system
+
+Requires:      openstack-neutron = %{version}-%{release}
+
+
+%description -n openstack-neutron-ofagent
+This plugin implements Neutron v2 APIs with support for the ryu ofagent
+plugin.
 
 
 %package -n openstack-neutron-vmware
@@ -394,7 +429,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.b2
+%setup -q -n neutron-%{version}.b3
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -757,6 +792,7 @@ fi
 %exclude %{python_sitelib}/neutron/plugins/brocade
 %exclude %{python_sitelib}/neutron/plugins/cisco
 %exclude %{python_sitelib}/neutron/plugins/hyperv
+%exclude %{python_sitelib}/neutron/plugins/ibm
 %exclude %{python_sitelib}/neutron/plugins/linuxbridge
 %exclude %{python_sitelib}/neutron/plugins/metaplugin
 %exclude %{python_sitelib}/neutron/plugins/midonet
@@ -764,18 +800,31 @@ fi
 %exclude %{python_sitelib}/neutron/plugins/mlnx
 %exclude %{python_sitelib}/neutron/plugins/nec
 %exclude %{python_sitelib}/neutron/plugins/nicira
+%exclude %{python_sitelib}/neutron/plugins/ofagent
 %exclude %{python_sitelib}/neutron/plugins/openvswitch
 %exclude %{python_sitelib}/neutron/plugins/plumgrid
 %exclude %{python_sitelib}/neutron/plugins/ryu
+%exclude %{python_sitelib}/neutron/plugins/vmware
 %{python_sitelib}/neutron-%%{version}*.egg-info
 
 
 %files -n openstack-neutron-bigswitch
 %doc LICENSE
 %doc neutron/plugins/bigswitch/README
+%{_bindir}/neutron-restproxy-agent
 %{python_sitelib}/neutron/plugins/bigswitch
 %dir %{_sysconfdir}/neutron/plugins/bigswitch
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/bigswitch/*.ini
+
+
+%files -n openstack-neutron-ibm
+%doc LICENSE
+%{_bindir}/neutron-ibm-agent
+%{_bindir}/quantum-ibm-agent
+%doc neutron/plugins/ibm/README
+%{python_sitelib}/neutron/plugins/ibm
+%dir %{_sysconfdir}/neutron/plugins/ibm
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ibm/*.ini
 
 
 %files -n openstack-neutron-brocade
@@ -842,18 +891,10 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/mlnx/*.ini
 
 
-%files -n openstack-neutron-vmware
-%doc LICENSE
-%doc neutron/plugins/nicira/README
-%{_bindir}/neutron-check-nvp-config
-%{_bindir}/quantum-check-nvp-config
-%{_bindir}/neutron-check-nsx-config
-%{python_sitelib}/neutron/plugins/nicira
-%dir %{_sysconfdir}/neutron/plugins/nicira
-%dir %{_sysconfdir}/neutron/plugins/vmware
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nicira/*.ini
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
-
+%files -n openstack-neutron-ofagent
+%doc neutron/plugins/ofagent/README
+%{_bindir}/neutron-ofagent-agent
+%{python_sitelib}/neutron/plugins/ofagent
 
 %files -n openstack-neutron-openvswitch
 %doc LICENSE
@@ -910,6 +951,19 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/metaplugin/*.ini
 
 
+%files -n openstack-neutron-vmware
+%doc LICENSE
+%{_bindir}/neutron-check-nvp-config
+%{_bindir}/quantum-check-nvp-config
+%{_bindir}/neutron-check-nsx-config
+%{_bindir}/neutron-nsx-manage
+%{python_sitelib}/neutron/plugins/vmware
+%dir %{_sysconfdir}/neutron/plugins/nicira
+%dir %{_sysconfdir}/neutron/plugins/vmware
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nicira/*.ini
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
+
+
 %files -n openstack-neutron-metering-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metering_agent.ini
@@ -926,6 +980,12 @@ fi
 
 
 %changelog
+* Tue Mar 11 2014 Miguel Ángel Ajo <majopela@redhat.com> - 2014.1-0.8.b3
+- Updated to Icehouse milestone 3 
+- Added neutron-dhcp-agent dependency bz#1019487
+- Add openstack-neutron-ibm plugin
+- Add openstack-neutron-ofagent plugin from ryu project
+
 * Wed Feb 19 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.7.b2
 - Sync up Quantum renaming changes
 
