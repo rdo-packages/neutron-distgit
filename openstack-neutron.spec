@@ -36,6 +36,7 @@ Source30:	neutron-dist.conf
 #
 # patches_base=2014.1.b3+1
 #
+Patch0001: 0001-Merge-Create-agents-table-when-ML2-core_plugin-is-us.patch
 
 BuildArch:	noarch
 
@@ -431,6 +432,7 @@ IPSec.
 %prep
 %setup -q -n neutron-%{version}.b3
 
+%patch0001 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 # Ensure SOURCES.txt ends in a newline and if any patches have added files, append them to SOURCES.txt

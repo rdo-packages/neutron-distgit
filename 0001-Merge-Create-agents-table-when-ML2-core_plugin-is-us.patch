@@ -1,0 +1,23 @@
+From fb4ba6b06cf9c23c4bc44f9fa6598277fe103b66 Mon Sep 17 00:00:00 2001
+From: Jenkins <jenkins@review.openstack.org>
+Date: Thu, 13 Mar 2014 21:50:11 +0000
+Subject: [PATCH] Merge "Create agents table when ML2 core_plugin is used"
+ Conflicts: 
+ neutron/db/migration/alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py
+
+---
+ .../alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py      | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/neutron/db/migration/alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py b/neutron/db/migration/alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py
+index a1154af..45f35d4 100644
+--- a/neutron/db/migration/alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py
++++ b/neutron/db/migration/alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py
+@@ -40,6 +40,7 @@ migration_for_plugins = [
+     'neutron.plugins.vmware.plugin.NsxServicePlugin',
+     'neutron.services.loadbalancer.plugin.LoadBalancerPlugin',
+     'neutron.plugins.ibm.sdnve_neutron_plugin.SdnvePluginV2',
++    'neutron.plugins.ml2.plugin.Ml2Plugin',
+ ]
+ 
+ from alembic import op
