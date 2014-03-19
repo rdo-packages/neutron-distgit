@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.9.b3%{?dist}
+Release:	0.10.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -982,6 +982,9 @@ fi
 
 
 %changelog
+* Wed Mar 19 2014 Miguel Ángel ajo <majopela@redhat.com> - 2013.1-0.10.b3
+- Create agents table when ML2 core_plugin is used
+
 * Tue Mar 11 2014 Miguel Ángel Ajo <majopela@redhat.com> - 2013.1-0.9.b3
 - Forcing python-six version to be at least >= 1.4.1
 
