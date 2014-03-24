@@ -6,8 +6,8 @@ Subject: [PATCH] Merge "Create agents table when ML2 core_plugin is used"
  neutron/db/migration/alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py
 
 ---
- .../alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py      | 1 +
- 1 file changed, 1 insertion(+)
+ .../versions/511471cc46b_agent_ext_model_supp.py   |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
 diff --git a/neutron/db/migration/alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py b/neutron/db/migration/alembic_migrations/versions/511471cc46b_agent_ext_model_supp.py
 index a1154af..45f35d4 100644

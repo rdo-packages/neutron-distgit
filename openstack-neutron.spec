@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.10.b3%{?dist}
+Release:	0.11.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -37,6 +37,7 @@ Source30:	neutron-dist.conf
 # patches_base=2014.1.b3+1
 #
 Patch0001: 0001-Merge-Create-agents-table-when-ML2-core_plugin-is-us.patch
+Patch0002: 0002-remove-runtime-dependency-on-pbr.patch
 
 BuildArch:	noarch
 
@@ -48,7 +49,6 @@ BuildRequires:  python-d2to1
 
 Requires:	python-neutron = %{version}-%{release}
 Requires:	openstack-utils
-Requires:	python-pbr
 
 # this require fixes bz#1019487 due to this patch 
 # https://review.openstack.org/#/c/61105/8/neutron/agent/linux/ovs_lib.py
@@ -433,7 +433,10 @@ IPSec.
 %setup -q -n neutron-%{version}.b3
 
 %patch0001 -p1
+%patch0002 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
+
+sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
 
 # Ensure SOURCES.txt ends in a newline and if any patches have added files, append them to SOURCES.txt
 [ -n "$(tail -c 1 < neutron.egg-info/SOURCES.txt)" ] && echo >> neutron.egg-info/SOURCES.txt
@@ -982,6 +985,9 @@ fi
 
 
 %changelog
+* Mon Mar 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.11.b3
+- Remove runtime dependency on python-pbr
+
 * Wed Mar 19 2014 Miguel Ángel ajo <majopela@redhat.com> - 2013.1-0.10.b3
 - Create agents table when ML2 core_plugin is used
 
