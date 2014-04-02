@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.11.b3%{?dist}
+Release:	0.12.rc1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,7 +11,8 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.b3.tar.gz
+#Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.rc1.tar.gz
+Source0:	https://launchpad.net/neutron/icehouse/icehouse-rc1/+download/neutron-%{version}.rc1.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -34,10 +35,8 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.1.b3+1
+# patches_base=2014.1.rc1+1
 #
-Patch0001: 0001-Merge-Create-agents-table-when-ML2-core_plugin-is-us.patch
-Patch0002: 0002-remove-runtime-dependency-on-pbr.patch
 
 BuildArch:	noarch
 
@@ -310,6 +309,21 @@ This package contains the neutron plugin that implements virtual
 networks using VMware NSX.
 
 
+%package -n openstack-neutron-oneconvergence-nvsd
+Summary:	Neutron One Convergence NVSD plugin
+Group:		Applications/System
+
+Requires:	openstack-neutron = %{version}-%{release}
+
+
+%description -n openstack-neutron-oneconvergence-nvsd
+Neutron provides an API to dynamnically request and configure virtual
+networks.
+
+This package contains the neutron plugin that implements virtual
+networks using One Convergence NVSD
+
+
 %package -n openstack-neutron-openvswitch
 Summary:	Neutron openvswitch plugin
 Group:		Applications/System
@@ -319,7 +333,6 @@ Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	openvswitch
-Requires:	python-psutil
 
 
 %description -n openstack-neutron-openvswitch
@@ -430,10 +443,8 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.b3
+%setup -q -n neutron-%{version}.rc1
 
-%patch0001 -p1
-%patch0002 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
@@ -806,6 +817,7 @@ fi
 %exclude %{python_sitelib}/neutron/plugins/nec
 %exclude %{python_sitelib}/neutron/plugins/nicira
 %exclude %{python_sitelib}/neutron/plugins/ofagent
+%exclude %{python_sitelib}/neutron/plugins/oneconvergence
 %exclude %{python_sitelib}/neutron/plugins/openvswitch
 %exclude %{python_sitelib}/neutron/plugins/plumgrid
 %exclude %{python_sitelib}/neutron/plugins/ryu
@@ -820,6 +832,7 @@ fi
 %{python_sitelib}/neutron/plugins/bigswitch
 %dir %{_sysconfdir}/neutron/plugins/bigswitch
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/bigswitch/*.ini
+%doc %{_sysconfdir}/neutron/plugins/bigswitch/README
 
 
 %files -n openstack-neutron-ibm
@@ -900,6 +913,16 @@ fi
 %doc neutron/plugins/ofagent/README
 %{_bindir}/neutron-ofagent-agent
 %{python_sitelib}/neutron/plugins/ofagent
+
+
+%files -n openstack-neutron-oneconvergence-nvsd
+%doc LICENSE
+%doc neutron/plugins/oneconvergence/README
+%dir %{_sysconfdir}/neutron/plugins/oneconvergence
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/oneconvergence/nvsdplugin.ini
+%{_bindir}/neutron-nvsd-agent
+%{_bindir}/quantum-nvsd-agent
+%{python_sitelib}/neutron/plugins/oneconvergence
 
 %files -n openstack-neutron-openvswitch
 %doc LICENSE
@@ -985,6 +1008,10 @@ fi
 
 
 %changelog
+* Wed Apr 02 2014 Terry Wilson <twilson@redhat.com> 2014.1-0.12.rc1
+- Update to upstream 2014.1.rc1
+- Remove python-psutil requirement
+
 * Mon Mar 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.11.b3
 - Remove runtime dependency on python-pbr
 
