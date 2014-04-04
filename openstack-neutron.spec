@@ -37,6 +37,7 @@ Source30:	neutron-dist.conf
 #
 # patches_base=2014.1.rc1+1
 #
+Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 
 BuildArch:	noarch
 
@@ -440,6 +441,7 @@ IPSec.
 %prep
 %setup -q -n neutron-%{version}.rc1
 
+%patch0001 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
