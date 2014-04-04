@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.12.rc1%{?dist}
+Release:	0.13.rc1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -48,11 +48,6 @@ BuildRequires:  python-d2to1
 
 Requires:	python-neutron = %{version}-%{release}
 Requires:	openstack-utils
-
-# this require fixes bz#1019487 due to this patch 
-# https://review.openstack.org/#/c/61105/8/neutron/agent/linux/ovs_lib.py
-# which might need refactor to remove this dependency here
-Requires:       openstack-neutron-openvswitch
 
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
@@ -1008,6 +1003,9 @@ fi
 
 
 %changelog
+* Fri Apr 04 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.13.rc1
+- Fix startup issue due to invalid group permissions, bz#1080560
+
 * Wed Apr 02 2014 Terry Wilson <twilson@redhat.com> 2014.1-0.12.rc1
 - Update to upstream 2014.1.rc1
 - Remove python-psutil requirement
