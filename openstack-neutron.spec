@@ -111,7 +111,7 @@ networks.
 This package contains the neutron Python library.
 
 
-%package -n openstack-neutron-bigswitch
+%package bigswitch
 Summary:	Neutron Big Switch plugin
 Group:		Applications/System
 
@@ -121,7 +121,7 @@ Obsoletes:	openstack-quantum-bigswitch < 2013.2-0.4.b3
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-bigswitch
+%description bigswitch
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -130,7 +130,7 @@ networks using the FloodLight Openflow Controller or the Big Switch
 Networks Controller.
 
 
-%package -n openstack-neutron-brocade
+%package brocade
 Summary:	Neutron Brocade plugin
 Group:		Applications/System
 
@@ -140,7 +140,7 @@ Obsoletes:	openstack-quantum-brocade < 2013.2-0.4.b3
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-brocade
+%description brocade
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -148,7 +148,7 @@ This package contains the neutron plugin that implements virtual
 networks using Brocade VCS switches running NOS.
 
 
-%package -n openstack-neutron-cisco
+%package cisco
 Summary:	Neutron Cisco plugin
 Group:		Applications/System
 
@@ -159,7 +159,7 @@ Requires:	openstack-neutron = %{version}-%{release}
 Requires:	python-configobj
 
 
-%description -n openstack-neutron-cisco
+%description cisco
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -167,7 +167,7 @@ This package contains the neutron plugin that implements virtual
 networks using Cisco UCS and Nexus.
 
 
-%package -n openstack-neutron-hyperv
+%package hyperv
 Summary:	Neutron Hyper-V plugin
 Group:		Applications/System
 
@@ -177,7 +177,7 @@ Obsoletes:	openstack-quantum-hyperv < 2013.2-0.4.b3
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-hyperv
+%description hyperv
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -185,14 +185,14 @@ This package contains the neutron plugin that implements virtual
 networks using Microsoft Hyper-V.
 
 
-%package -n openstack-neutron-ibm
+%package ibm
 Summary:       Neutron IBM plugin
 Group:         Applications/System
 
 Requires:      openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-ibm
+%description ibm
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -200,7 +200,7 @@ This package contains the neutron plugin that implements virtual
 networks from IBM.
 
 
-%package -n openstack-neutron-linuxbridge
+%package linuxbridge
 Summary:	Neutron linuxbridge plugin
 Group:		Applications/System
 
@@ -212,7 +212,7 @@ Requires:	openstack-neutron = %{version}-%{release}
 Requires:	python-pyudev
 
 
-%description -n openstack-neutron-linuxbridge
+%description linuxbridge
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -220,7 +220,7 @@ This package contains the neutron plugin that implements virtual
 networks as VLANs using Linux bridging.
 
 
-%package -n openstack-neutron-midonet
+%package midonet
 Summary:	Neutron MidoNet plugin
 Group:		Applications/System
 
@@ -230,7 +230,7 @@ Obsoletes:	openstack-quantum-midonet < 2013.2-0.4.b3
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-midonet
+%description midonet
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -238,7 +238,7 @@ This package contains the neutron plugin that implements virtual
 networks using MidoNet from Midokura.
 
 
-%package -n openstack-neutron-ml2
+%package ml2
 Summary:    Neutron ML2 plugin
 Group:      Applications/System
 
@@ -248,7 +248,7 @@ Obsoletes:	openstack-quantum-ml2 < 2013.2-0.4.b3
 Requires:   openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-ml2
+%description ml2
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -257,7 +257,7 @@ to support separately extensible sets of network types and the mechanisms
 for accessing those types.
 
 
-%package -n openstack-neutron-mellanox
+%package mellanox
 Summary:    Neutron Mellanox plugin
 Group:      Applications/System
 
@@ -267,24 +267,24 @@ Obsoletes:	openstack-quantum-mellanox < 2013.2-0.4.b3
 Requires:      openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-mellanox
+%description mellanox
 This plugin implements Neutron v2 APIs with support for Mellanox embedded
 switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 
 
-%package -n openstack-neutron-ofagent
+%package ofagent
 Summary:       Neutron ofagent plugin from ryu project
 Group:         Applications/system
 
 Requires:      openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-ofagent
+%description ofagent
 This plugin implements Neutron v2 APIs with support for the ryu ofagent
 plugin.
 
 
-%package -n openstack-neutron-vmware
+%package vmware
 Summary:	Neutron Nicira plugin
 Group:		Applications/System
 
@@ -296,7 +296,7 @@ Obsoletes:	openstack-neutron-nicira < 2014.1-0.5.b2
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-vmware
+%description vmware
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -304,14 +304,14 @@ This package contains the neutron plugin that implements virtual
 networks using VMware NSX.
 
 
-%package -n openstack-neutron-oneconvergence-nvsd
+%package oneconvergence-nvsd
 Summary:	Neutron One Convergence NVSD plugin
 Group:		Applications/System
 
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-oneconvergence-nvsd
+%description oneconvergence-nvsd
 Neutron provides an API to dynamnically request and configure virtual
 networks.
 
@@ -319,7 +319,7 @@ This package contains the neutron plugin that implements virtual
 networks using One Convergence NVSD
 
 
-%package -n openstack-neutron-openvswitch
+%package openvswitch
 Summary:	Neutron openvswitch plugin
 Group:		Applications/System
 
@@ -330,7 +330,7 @@ Requires:	openstack-neutron = %{version}-%{release}
 Requires:	openvswitch
 
 
-%description -n openstack-neutron-openvswitch
+%description openvswitch
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -338,7 +338,7 @@ This package contains the neutron plugin that implements virtual
 networks using Open vSwitch.
 
 
-%package -n openstack-neutron-plumgrid
+%package plumgrid
 Summary:	Neutron PLUMgrid plugin
 Group:		Applications/System
 
@@ -348,7 +348,7 @@ Obsoletes:	openstack-quantum-plumgrid < 2013.2-0.4.b3
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-plumgrid
+%description plumgrid
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -356,7 +356,7 @@ This package contains the neutron plugin that implements virtual
 networks using the PLUMgrid platform.
 
 
-%package -n openstack-neutron-ryu
+%package ryu
 Summary:	Neutron Ryu plugin
 Group:		Applications/System
 
@@ -366,7 +366,7 @@ Obsoletes:	openstack-quantum-ryu < 2013.2-0.4.b3
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-ryu
+%description ryu
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -374,7 +374,7 @@ This package contains the neutron plugin that implements virtual
 networks using the Ryu Network Operating System.
 
 
-%package -n openstack-neutron-nec
+%package nec
 Summary:	Neutron NEC plugin
 Group:		Applications/System
 
@@ -384,7 +384,7 @@ Obsoletes:	openstack-quantum-nec < 2013.2-0.4.b3
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-nec
+%description nec
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -392,7 +392,7 @@ This package contains the neutron plugin that implements virtual
 networks using the NEC OpenFlow controller.
 
 
-%package -n openstack-neutron-metaplugin
+%package metaplugin
 Summary:	Neutron meta plugin
 Group:		Applications/System
 
@@ -402,7 +402,7 @@ Obsoletes:	openstack-quantum-metaplugin < 2013.2-0.4.b3
 Requires:	openstack-neutron = %{version}-%{release}
 
 
-%description -n openstack-neutron-metaplugin
+%description metaplugin
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -410,27 +410,27 @@ This package contains the neutron plugin that implements virtual
 networks using multiple other neutron plugins.
 
 
-%package -n openstack-neutron-metering-agent
+%package metering-agent
 Summary:	Neutron bandwidth metering agent
 Group:		Applications/System
 
 Requires:   openstack-neutron = %{version}-%{release}
 
-%description -n openstack-neutron-metering-agent
+%description metering-agent
 Neutron provides an API to measure bandwidth utilization
 
 This package contains the neutron agent responsible for generating bandwidth
 utilization notifications.
 
 
-%package -n openstack-neutron-vpn-agent
+%package vpn-agent
 Summary:	Neutron VPNaaS agent
 Group:		Applications/System
 
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	python-jinja2
 
-%description -n openstack-neutron-vpn-agent
+%description vpn-agent
 Neutron provides an API to implement VPN as a service
 
 This package contains the neutron agent responsible for implenting VPNaaS with
@@ -619,7 +619,7 @@ if [ -e %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM ];then
 fi
 
 
-%preun -n openstack-neutron-linuxbridge
+%preun linuxbridge
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
     /bin/systemctl --no-reload disable neutron-linuxbridge-agent.service > /dev/null 2>&1 || :
@@ -627,7 +627,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 
-%postun -n openstack-neutron-linuxbridge
+%postun linuxbridge
 /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
@@ -635,7 +635,7 @@ if [ $1 -ge 1 ] ; then
 fi
 
 
-%preun -n openstack-neutron-mellanox
+%preun mellanox
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
     /bin/systemctl --no-reload disable neutron-mlnx-agent.service > /dev/null 2>&1 || :
@@ -643,14 +643,14 @@ if [ $1 -eq 0 ] ; then
 fi
 
 
-%postun -n openstack-neutron-mellanox
+%postun mellanox
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
     /bin/systemctl try-restart neutron-mlnx-agent.service >/dev/null 2>&1 || :
 fi
 
 
-%preun -n openstack-neutron-openvswitch
+%preun openvswitch
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
     /bin/systemctl --no-reload disable neutron-openvswitch-agent.service > /dev/null 2>&1 || :
@@ -658,7 +658,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 
-%postun -n openstack-neutron-openvswitch
+%postun openvswitch
 /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
@@ -666,7 +666,7 @@ if [ $1 -ge 1 ] ; then
 fi
 
 
-%preun -n openstack-neutron-ryu
+%preun ryu
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
     /bin/systemctl --no-reload disable neutron-ryu-agent.service > /dev/null 2>&1 || :
@@ -674,7 +674,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 
-%postun -n openstack-neutron-ryu
+%postun ryu
 /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
@@ -682,7 +682,7 @@ if [ $1 -ge 1 ] ; then
 fi
 
 
-%preun -n openstack-neutron-nec
+%preun nec
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
     /bin/systemctl --no-reload disable neutron-nec-agent.service > /dev/null 2>&1 || :
@@ -690,7 +690,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 
-%postun -n openstack-neutron-nec
+%postun nec
 /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
@@ -698,7 +698,7 @@ if [ $1 -ge 1 ] ; then
 fi
 
 
-%preun -n openstack-neutron-metering-agent
+%preun metering-agent
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
     /bin/systemctl --no-reload disable neutron-metering-agent.service > /dev/null 2>&1 || :
@@ -706,7 +706,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 
-%postun -n openstack-neutron-metering-agent
+%postun metering-agent
 /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
@@ -714,7 +714,7 @@ if [ $1 -ge 1 ] ; then
 fi
 
 
-%preun -n openstack-neutron-vpn-agent
+%preun vpn-agent
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
     /bin/systemctl --no-reload disable neutron-vpn-agent.service > /dev/null 2>&1 || :
@@ -722,7 +722,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 
-%postun -n openstack-neutron-vpn-agent
+%postun vpn-agent
 /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
@@ -820,7 +820,7 @@ fi
 %{python_sitelib}/neutron-%%{version}*.egg-info
 
 
-%files -n openstack-neutron-bigswitch
+%files bigswitch
 %doc LICENSE
 %doc neutron/plugins/bigswitch/README
 %{_bindir}/neutron-restproxy-agent
@@ -830,7 +830,7 @@ fi
 %doc %{_sysconfdir}/neutron/plugins/bigswitch/README
 
 
-%files -n openstack-neutron-ibm
+%files ibm
 %doc LICENSE
 %{_bindir}/neutron-ibm-agent
 %{_bindir}/quantum-ibm-agent
@@ -840,7 +840,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ibm/*.ini
 
 
-%files -n openstack-neutron-brocade
+%files brocade
 %doc LICENSE
 %doc neutron/plugins/brocade/README.md
 %{python_sitelib}/neutron/plugins/brocade
@@ -848,7 +848,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/brocade/*.ini
 
 
-%files -n openstack-neutron-cisco
+%files cisco
 %doc LICENSE
 %doc neutron/plugins/cisco/README
 %{python_sitelib}/neutron/plugins/cisco
@@ -856,7 +856,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/cisco/*.ini
 
 
-%files -n openstack-neutron-hyperv
+%files hyperv
 %doc LICENSE
 #%%doc neutron/plugins/hyperv/README
 %{_bindir}/neutron-hyperv-agent
@@ -867,7 +867,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/hyperv/*.ini
 
 
-%files -n openstack-neutron-linuxbridge
+%files linuxbridge
 %doc LICENSE
 %doc neutron/plugins/linuxbridge/README
 %{_bindir}/neutron-linuxbridge-agent
@@ -879,7 +879,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/linuxbridge/*.ini
 
 
-%files -n openstack-neutron-midonet
+%files midonet
 %doc LICENSE
 #%%doc neutron/plugins/midonet/README
 %{python_sitelib}/neutron/plugins/midonet
@@ -887,14 +887,14 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/midonet/*.ini
 
 
-%files -n openstack-neutron-ml2
+%files ml2
 %doc neutron/plugins/ml2/README
 %{python_sitelib}/neutron/plugins/ml2
 %dir %{_sysconfdir}/neutron/plugins/ml2
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ml2/*.ini
 
 
-%files -n openstack-neutron-mellanox
+%files mellanox
 %doc neutron/plugins/mlnx/README
 %{_bindir}/neutron-mlnx-agent
 %{_bindir}/quantum-mlnx-agent
@@ -904,13 +904,13 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/mlnx/*.ini
 
 
-%files -n openstack-neutron-ofagent
+%files ofagent
 %doc neutron/plugins/ofagent/README
 %{_bindir}/neutron-ofagent-agent
 %{python_sitelib}/neutron/plugins/ofagent
 
 
-%files -n openstack-neutron-oneconvergence-nvsd
+%files oneconvergence-nvsd
 %doc LICENSE
 %doc neutron/plugins/oneconvergence/README
 %dir %{_sysconfdir}/neutron/plugins/oneconvergence
@@ -919,7 +919,7 @@ fi
 %{_bindir}/quantum-nvsd-agent
 %{python_sitelib}/neutron/plugins/oneconvergence
 
-%files -n openstack-neutron-openvswitch
+%files openvswitch
 %doc LICENSE
 %doc neutron/plugins/openvswitch/README
 %{_bindir}/neutron-openvswitch-agent
@@ -934,7 +934,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/openvswitch/*.ini
 
 
-%files -n openstack-neutron-plumgrid
+%files plumgrid
 %doc LICENSE
 %doc neutron/plugins/plumgrid/README
 %{python_sitelib}/neutron/plugins/plumgrid
@@ -942,7 +942,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/plumgrid/*.ini
 
 
-%files -n openstack-neutron-ryu
+%files ryu
 %doc LICENSE
 %doc neutron/plugins/ryu/README
 %{_bindir}/neutron-ryu-agent
@@ -954,7 +954,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ryu/*.ini
 
 
-%files -n openstack-neutron-nec
+%files nec
 %doc LICENSE
 %doc neutron/plugins/nec/README
 %{_bindir}/neutron-nec-agent
@@ -966,7 +966,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nec/*.ini
 
 
-%files -n openstack-neutron-metaplugin
+%files metaplugin
 %doc LICENSE
 %doc neutron/plugins/metaplugin/README
 %{python_sitelib}/neutron/plugins/metaplugin
@@ -974,7 +974,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/metaplugin/*.ini
 
 
-%files -n openstack-neutron-vmware
+%files vmware
 %doc LICENSE
 %{_bindir}/neutron-check-nvp-config
 %{_bindir}/quantum-check-nvp-config
@@ -987,14 +987,14 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
 
 
-%files -n openstack-neutron-metering-agent
+%files metering-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metering_agent.ini
 %{_unitdir}/neutron-metering-agent.service
 %{_bindir}/neutron-metering-agent
 
 
-%files -n openstack-neutron-vpn-agent
+%files vpn-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/vpn_agent.ini
 %{_unitdir}/neutron-vpn-agent.service
