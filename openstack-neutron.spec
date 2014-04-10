@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.14.rc1%{?dist}
+Release:	0.15.rc1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -210,7 +210,6 @@ Obsoletes:	openstack-quantum-linuxbridge < 2013.2-0.4.b3
 
 Requires:	bridge-utils
 Requires:	openstack-neutron = %{version}-%{release}
-Requires:	python-pyudev
 
 
 %description linuxbridge
@@ -1005,6 +1004,9 @@ fi
 
 
 %changelog
+* Thu Apr 10 2014 Miguel Ángel Ajo <majopela@redhat.com> 2014.1-0.15.rc1
+- Removes the python-pyudev dependency, bz#1053001
+
 * Thu Apr 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-0.14.rc1
 - Remove signing_dir from neutron-dist.conf, bz#1050842
 
