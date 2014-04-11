@@ -34,7 +34,7 @@ Options:
                 The neutron plugin. Supported plugins:-
                     ${SUPPORTED_PLUGINS[*]}
         --qhost       | -q
-		The Neutron hostname (assumes that this is also the QPID host).
+		The Neutron hostname (assumes that this is also the rabbitmq host).
 EOF
 
 	exit 0
@@ -109,9 +109,9 @@ fi
 
 Q_PORT=9696
 Q_CONF=/etc/neutron/neutron.conf
-# QPID
-openstack-config --set ${Q_CONF} DEFAULT rpc_backend neutron.openstack.common.rpc.impl_qpid
-openstack-config --set ${Q_CONF} DEFAULT qpid_hostname ${Q_HOST}
+# rabbitmq 
+openstack-config --set ${Q_CONF} DEFAULT rpc_backend neutron.openstack.common.rpc.impl_kombu
+openstack-config --set ${Q_CONF} DEFAULT rabbit_host ${Q_HOST}
 
 case "${NEUTRON_PLUGIN}" in
 "linuxbridge")

@@ -180,9 +180,9 @@ esac
 # Update neutron.conf
 # Plugin
 openstack-config --set ${Q_CONF} DEFAULT core_plugin $Q_PLUGIN_CLASS
-# QPID
-openstack-config --set ${Q_CONF} DEFAULT rpc_backend neutron.openstack.common.rpc.impl_qpid
-openstack-config --set ${Q_CONF} DEFAULT qpid_hostname localhost
+# rabbitmq
+openstack-config --set ${Q_CONF} DEFAULT rpc_backend neutron.openstack.common.rpc.impl_kombu
+openstack-config --set ${Q_CONF} DEFAULT rabbitmq_host localhost
 # Authentication
 openstack-config --set ${Q_CONF} DEFAULT auth_strategy keystone
 
