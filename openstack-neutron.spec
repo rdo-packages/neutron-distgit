@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.16.rc1%{?dist}
+Release:	0.17.rc2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -12,7 +12,7 @@ License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
 #Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.rc1.tar.gz
-Source0:	https://launchpad.net/neutron/icehouse/icehouse-rc1/+download/neutron-%{version}.rc1.tar.gz
+Source0:	https://launchpad.net/neutron/icehouse/icehouse-rc2/+download/neutron-%{version}.rc2.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -35,7 +35,7 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.1.rc1+1
+# patches_base=2014.1.rc2+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 
@@ -438,7 +438,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.rc1
+%setup -q -n neutron-%{version}.rc2
 
 %patch0001 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
@@ -1004,6 +1004,9 @@ fi
 
 
 %changelog
+* Fri Apr 11 2014 Miguel Angel Ajo <mangelajo@redhat.com> 2014.1-0.17.rc2
+- Update to upstream 2014.1.rc2
+
 * Fri Apr 11 2014 Miguel Ángel Ajo <majopela@redhat.com> 2014.1-0.16.rc1
 - Use rabbitmq by default
 

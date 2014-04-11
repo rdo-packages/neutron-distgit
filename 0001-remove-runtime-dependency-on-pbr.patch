@@ -1,11 +1,11 @@
-From b497f037b74da752151c60f3392d03c9ed31e56e Mon Sep 17 00:00:00 2001
+From 8e4da5834e9de003c03adf5f1905709827398c20 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
 Date: Mon, 24 Mar 2014 14:50:23 +0000
 Subject: [PATCH] remove runtime dependency on pbr
 
 ---
- neutron/version.py |   13 +++++++++++--
- 1 files changed, 11 insertions(+), 2 deletions(-)
+ neutron/version.py | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/neutron/version.py b/neutron/version.py
 index 1819264..e5333c6 100644
