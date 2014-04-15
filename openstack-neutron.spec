@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.18.rc2%{?dist}
+Release:	0.19.rc2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -38,6 +38,7 @@ Source30:	neutron-dist.conf
 # patches_base=2014.1.rc2+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
+Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
 
 BuildArch:	noarch
 
@@ -442,6 +443,7 @@ IPSec.
 %setup -q -n neutron-%{version}.rc2
 
 %patch0001 -p1
+%patch0002 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
@@ -1005,6 +1007,9 @@ fi
 
 
 %changelog
+* Tue Apr 15 2014 Miguel Ángel Ajo <majopela@redhat.com> -2014.1-0.19.rc2
+- Include the systemd readiness notification patch
+
 * Tue Apr 15 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.18.rc2
 - Add missing dependency on python-oslo-rootwrap
 
