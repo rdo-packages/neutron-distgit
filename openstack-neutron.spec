@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.17.rc2%{?dist}
+Release:	0.18.rc2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -48,6 +48,7 @@ BuildRequires:  python-pbr
 BuildRequires:  python-d2to1
 
 Requires:	python-neutron = %{version}-%{release}
+Requires:	python-oslo-rootwrap
 Requires:	openstack-utils
 
 # dnsmasq is not a hard requirement, but is currently the only option
@@ -1004,6 +1005,9 @@ fi
 
 
 %changelog
+* Tue Apr 15 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.18.rc2
+- Add missing dependency on python-oslo-rootwrap
+
 * Fri Apr 11 2014 Miguel Angel Ajo <mangelajo@redhat.com> 2014.1-0.17.rc2
 - Update to upstream 2014.1.rc2
 
