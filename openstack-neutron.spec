@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	9%{?dist}
+Release:	10%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -48,7 +48,6 @@ BuildRequires:  python-pbr
 BuildRequires:  python-d2to1
 
 Requires:	python-novaclient
-Requires:	python-keystone
 Requires:	python-neutron = %{version}-%{release}
 Requires:	python-oslo-rootwrap
 Requires:	openstack-utils
@@ -1012,6 +1011,9 @@ fi
 
 
 %changelog
+* Fri Apr 18 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-10
+- Remove uneeded dep on python-keystone
+
 * Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-9
 - Require python-novaclient (used for Nova notifications)
 
