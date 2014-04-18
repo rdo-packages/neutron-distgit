@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	5%{?dist}
+Release:	6%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -521,8 +521,10 @@ install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-vpn-agent.servi
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-metering-agent.service
 
 # Setup directories
+install -d -m 755 %{buildroot}%{_datadir}/neutron
 install -d -m 755 %{buildroot}%{_sharedstatedir}/neutron
 install -d -m 755 %{buildroot}%{_localstatedir}/log/neutron
+install -d -m 755 %{buildroot}%{_localstatedir}/run/neutron
 
 # Install setup helper scripts
 install -p -D -m 755 %{SOURCE4} %{buildroot}%{_bindir}/neutron-server-setup
@@ -1007,6 +1009,9 @@ fi
 
 
 %changelog
+* Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-6
+- Add more build directories
+
 * Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-5
 - Require python-keystoneclient >= 0.7.0 to reflect upstream requirement
 
