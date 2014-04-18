@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	0.19.rc2%{?dist}
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,8 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-#Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.rc1.tar.gz
-Source0:	https://launchpad.net/neutron/icehouse/icehouse-rc2/+download/neutron-%{version}.rc2.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source4:	neutron-server-setup
@@ -35,7 +34,7 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.1.rc2+1
+# patches_base=2014.1+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
@@ -440,7 +439,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.rc2
+%setup -q -n neutron-%{version}
 
 %patch0001 -p1
 %patch0002 -p1
@@ -1007,6 +1006,9 @@ fi
 
 
 %changelog
+* Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-1
+- Update to upstream 2014.1
+
 * Tue Apr 15 2014 Miguel Ángel Ajo <majopela@redhat.com> -2014.1-0.19.rc2
 - Include the systemd readiness notification patch
 
