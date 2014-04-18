@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	3%{?dist}
+Release:	4%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -47,6 +47,7 @@ BuildRequires:	systemd-units
 BuildRequires:  python-pbr
 BuildRequires:  python-d2to1
 
+Requires:	python-keystone
 Requires:	python-neutron = %{version}-%{release}
 Requires:	python-oslo-rootwrap
 Requires:	openstack-utils
@@ -1006,6 +1007,9 @@ fi
 
 
 %changelog
+* Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-4
+- Require python-keystone package
+
 * Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-3
 - Clean up neutron-dist.conf to reflect identical upstream defaults
 
