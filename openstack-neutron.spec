@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	6%{?dist}
+Release:	7%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -459,6 +459,8 @@ chmod 644 neutron/plugins/cisco/README
 # Let's handle dependencies ourseleves
 rm -f requirements.txt
 
+sed -i "s,DATADIR,%{_datadir}," %{SOURCE30}
+
 %build
 %{__python} setup.py build
 
@@ -497,6 +499,7 @@ mv %{buildroot}/usr/etc/neutron/rootwrap.d/*.filters %{buildroot}%{_datarootdir}
 # Move config files to proper location
 install -d -m 755 %{buildroot}%{_sysconfdir}/neutron
 mv %{buildroot}/usr/etc/neutron/* %{buildroot}%{_sysconfdir}/neutron
+mv %{buildroot}%{_sysconfdir}/neutron/api-paste.ini %{buildroot}%{_datadir}/neutron/api-paste.ini
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/plugins/*/*.ini
 
 # Install logrotate
@@ -777,7 +780,7 @@ fi
 %dir %{_sysconfdir}/neutron
 %{_sysconfdir}/neutron/release
 %attr(-, root, neutron) %{_datadir}/neutron/neutron-dist.conf
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/api-paste.ini
+%attr(-, root, neutron) %{_datadir}/neutron/api-paste.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/fwaas_driver.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/l3_agent.ini
@@ -1009,6 +1012,9 @@ fi
 
 
 %changelog
+* Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-7
+- Move api-paste.ini to /usr to make sure new values are applied on upgrade
+
 * Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-6
 - Add more build directories
 
