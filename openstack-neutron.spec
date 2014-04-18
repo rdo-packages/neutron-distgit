@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	4%{?dist}
+Release:	5%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -89,7 +89,7 @@ Requires:	python-eventlet
 Requires:	python-greenlet
 Requires:	python-httplib2 >= 0.7.5
 Requires:	python-iso8601
-Requires:	python-keystoneclient >= 0.6.0
+Requires:	python-keystoneclient >= 0.7.0
 Requires:	python-kombu
 Requires:	python-lxml
 Requires:	python-netaddr
@@ -1007,6 +1007,9 @@ fi
 
 
 %changelog
+* Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-5
+- Require python-keystoneclient >= 0.7.0 to reflect upstream requirement
+
 * Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-4
 - Require python-keystone package
 
