@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	7%{?dist}
+Release:	8%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -464,16 +464,15 @@ sed -i "s,DATADIR,%{_datadir}," %{SOURCE30}
 %build
 %{__python} setup.py build
 
-# Loop through values in neutron-dist.conf and make sure that the values
-# are substituted into the neutron.conf as comments. Some of these values
-# will have been uncommented as a way of upstream setting defaults outside
-# of the code. For service_provider and notification-driver, there are
-# commented examples above uncommented settings, so this specifically
-# skips those comments and instead comments out the actual settings and
-# substitutes the correct default values.
+# Loop through values in neutron-dist.conf and make sure that the values are
+# substituted into the neutron.conf as comments. Some of these values will be
+# uncommented; this is how upstream sets defaults outside of the code. For
+# service_provider, there are commented examples above the uncommented setting,
+# so this specifically skips those comments and instead comments out the actual
+# setting and substitutes the correct default value.
 while read name eq value; do
   test "$name" && test "$value" || continue
-  if [ "$name" = "service_provider" -o "$name" = "notification_driver" ]; then
+  if [ "$name" = "service_provider" ]; then
     sed -ri "0,/^$name *=/{s!^$name *=.*!# $name = $value!}" etc/neutron.conf
   else
     sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/neutron.conf
@@ -1012,6 +1011,9 @@ fi
 
 
 %changelog
+* Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-8
+- We no longer specify notification_driver in neutron-dist.conf
+
 * Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-7
 - Move api-paste.ini to /usr to make sure new values are applied on upgrade
 
