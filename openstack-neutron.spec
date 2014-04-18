@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	8%{?dist}
+Release:	9%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -47,6 +47,7 @@ BuildRequires:	systemd-units
 BuildRequires:  python-pbr
 BuildRequires:  python-d2to1
 
+Requires:	python-novaclient
 Requires:	python-keystone
 Requires:	python-neutron = %{version}-%{release}
 Requires:	python-oslo-rootwrap
@@ -1011,6 +1012,9 @@ fi
 
 
 %changelog
+* Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-9
+- Require python-novaclient (used for Nova notifications)
+
 * Fri Apr 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-8
 - We no longer specify notification_driver in neutron-dist.conf
 
