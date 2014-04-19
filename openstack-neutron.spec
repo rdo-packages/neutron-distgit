@@ -459,8 +459,6 @@ chmod 644 neutron/plugins/cisco/README
 # Let's handle dependencies ourseleves
 rm -f requirements.txt
 
-sed -i "s,DATADIR,%{_datadir}," %{SOURCE30}
-
 %build
 %{__python} setup.py build
 
