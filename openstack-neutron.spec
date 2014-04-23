@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	11%{?dist}
+Release:	12%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -14,10 +14,6 @@ URL:		http://launchpad.net/neutron/
 Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
-Source4:	neutron-server-setup
-Source5:	neutron-node-setup
-Source6:	neutron-dhcp-setup
-Source7:	neutron-l3-setup
 Source10:	neutron-server.service
 Source11:	neutron-linuxbridge-agent.service
 Source12:	neutron-openvswitch-agent.service
@@ -526,12 +522,6 @@ install -d -m 755 %{buildroot}%{_sharedstatedir}/neutron
 install -d -m 755 %{buildroot}%{_localstatedir}/log/neutron
 install -d -m 755 %{buildroot}%{_localstatedir}/run/neutron
 
-# Install setup helper scripts
-install -p -D -m 755 %{SOURCE4} %{buildroot}%{_bindir}/neutron-server-setup
-install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/neutron-node-setup
-install -p -D -m 755 %{SOURCE6} %{buildroot}%{_bindir}/neutron-dhcp-setup
-install -p -D -m 755 %{SOURCE7} %{buildroot}%{_bindir}/neutron-l3-setup
-
 # Install dist conf
 install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
 
@@ -755,18 +745,14 @@ fi
 %{_bindir}/neutron-db-manage
 %{_bindir}/neutron-debug
 %{_bindir}/neutron-dhcp-agent
-%{_bindir}/neutron-dhcp-setup
 %{_bindir}/neutron-l3-agent
-%{_bindir}/neutron-l3-setup
 %{_bindir}/neutron-lbaas-agent
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
-%{_bindir}/neutron-node-setup
 %{_bindir}/neutron-ns-metadata-proxy
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-xen-dom0
 %{_bindir}/neutron-server
-%{_bindir}/neutron-server-setup
 %{_bindir}/neutron-usage-audit
 
 %{_unitdir}/neutron-dhcp-agent.service
@@ -1009,6 +995,9 @@ fi
 
 
 %changelog
+* Wed Apr 23 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-12
+- Removed obsolete setup scripts
+
 * Tue Apr 22 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-11
 - Pin python-novaclient dependency to >= 2.17.0
 
