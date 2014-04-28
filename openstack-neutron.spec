@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	12%{?dist}
+Release:	13%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -34,6 +34,7 @@ Source30:	neutron-dist.conf
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
+Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
 
 BuildArch:	noarch
 
@@ -440,6 +441,7 @@ IPSec.
 
 %patch0001 -p1
 %patch0002 -p1
+%patch0003 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
@@ -995,6 +997,9 @@ fi
 
 
 %changelog
+* Mon Apr 28 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-13
+- Removed signing_dir from neutron.conf (bz#1050842)
+
 * Wed Apr 23 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-12
 - Removed obsolete setup scripts
 
