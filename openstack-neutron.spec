@@ -460,15 +460,16 @@ rm -f requirements.txt
 %build
 %{__python} setup.py build
 
-# Loop through values in neutron-dist.conf and make sure that the values are
-# substituted into the neutron.conf as comments. Some of these values will be
-# uncommented; this is how upstream sets defaults outside of the code. For
-# service_provider, there are commented examples above the uncommented setting,
-# so this specifically skips those comments and instead comments out the actual
-# setting and substitutes the correct default value.
+# Loop through values in neutron-dist.conf and make sure that the values
+# are substituted into the neutron.conf as comments. Some of these values
+# will have been uncommented as a way of upstream setting defaults outside
+# of the code. For service_provider and notification-driver, there are
+# commented examples above uncommented settings, so this specifically
+# skips those comments and instead comments out the actual settings and
+# substitutes the correct default values.
 while read name eq value; do
   test "$name" && test "$value" || continue
-  if [ "$name" = "service_provider" ]; then
+  if [ "$name" = "service_provider" -o "$name" = "notification_driver" ]; then
     sed -ri "0,/^$name *=/{s!^$name *=.*!# $name = $value!}" etc/neutron.conf
   else
     sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/neutron.conf
