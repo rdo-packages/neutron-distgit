@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	13%{?dist}
+Release:	14%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -998,6 +998,9 @@ fi
 
 
 %changelog
+* Tue Apr 29 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-14
+- Removed signing_dir from neutron-dist.conf, again (bz#1050842)
+
 * Mon Apr 28 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-13
 - Removed signing_dir from neutron.conf (bz#1050842)
 
