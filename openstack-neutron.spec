@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	15%{?dist}
+Release:	16%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -998,6 +998,9 @@ fi
 
 
 %changelog
+* Fri May 16 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-16
+- Fixed neutron-server startup due to duplicate options
+
 * Thu May 15 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-15
 - Make neutron-vpn-agent read fwaas_driver.ini, bz#1098121
 
