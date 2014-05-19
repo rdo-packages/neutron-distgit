@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	16%{?dist}
+Release:	17%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -35,6 +35,7 @@ Source30:	neutron-dist.conf
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
 Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
+Patch0004: 0004-Validate-CIDR-given-as-ip-prefix-in-security-group-r.patch
 
 BuildArch:	noarch
 
@@ -442,6 +443,7 @@ IPSec.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
+%patch0004 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
@@ -998,6 +1000,9 @@ fi
 
 
 %changelog
+* Mon May 19 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-17
+- Validate CIDR given as ip-prefix in security-group-rule-create, bz#1090137
+
 * Fri May 16 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-16
 - Fixed neutron-server startup due to duplicate options
 
