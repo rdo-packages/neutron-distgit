@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	18%{?dist}
+Release:	19%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -1004,6 +1004,10 @@ fi
 
 
 %changelog
+* Wed May 28 2014 Miguel Angel Ajo <majopela@redhat.com> 2014.1-19
+- Remove kernel version check for OVS VXLAN, not revelant for RDO
+  bz#1081011
+
 * Mon May 19 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-18
 - netaddr<=0.7.10 raises ValueError instead of AddrFormatError, bz#1090137
 
