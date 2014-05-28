@@ -37,6 +37,7 @@ Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
 Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
 Patch0004: 0004-Validate-CIDR-given-as-ip-prefix-in-security-group-r.patch
 Patch0005: 0005-netaddr-0.7.10-raises-ValueError-instead-of-AddrForm.patch
+Patch0006: 0006-Remove-kernel-version-check-for-OVS-VXLAN.patch
 
 BuildArch:	noarch
 
@@ -446,6 +447,7 @@ IPSec.
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
+%patch0006 -p1
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
