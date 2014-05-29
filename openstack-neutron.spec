@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	19%{?dist}
+Release:	20%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -272,6 +272,18 @@ Requires:      openstack-neutron = %{version}-%{release}
 %description mellanox
 This plugin implements Neutron v2 APIs with support for Mellanox embedded
 switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
+
+
+%package nuage
+Summary:    Neutron Nuage plugin
+Group:      Applications/System
+
+Requires:   openstack-neutron = %{version}-%{release}
+
+
+%description nuage
+This plugin implements Neutron v2 APIs with support for Nuage Networks
+Virtual Service Platform (VSP).
 
 
 %package ofagent
@@ -810,6 +822,7 @@ fi
 %exclude %{python_sitelib}/neutron/plugins/midonet
 %exclude %{python_sitelib}/neutron/plugins/ml2
 %exclude %{python_sitelib}/neutron/plugins/mlnx
+%exclude %{python_sitelib}/neutron/plugins/nuage
 %exclude %{python_sitelib}/neutron/plugins/nec
 %exclude %{python_sitelib}/neutron/plugins/nicira
 %exclude %{python_sitelib}/neutron/plugins/ofagent
@@ -904,6 +917,12 @@ fi
 %dir %{_sysconfdir}/neutron/plugins/mlnx
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/mlnx/*.ini
 
+%files nuage
+%doc LICENSE
+#%doc neutron/plugins/nuage/README
+%{python_sitelib}/neutron/plugins/nuage
+#%dir %{_sysconfdir}/neutron/plugins/nuage
+#%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nuage/*.ini
 
 %files ofagent
 %doc neutron/plugins/ofagent/README
@@ -1004,6 +1023,9 @@ fi
 
 
 %changelog
+* Thu May 29 2014 Miguel Ángel Ajo <majopela@redhat.com> 2014.1-20
+- Add nuage plugin packaging as openstack-neutron-nuage
+
 * Wed May 28 2014 Miguel Angel Ajo <majopela@redhat.com> 2014.1-19
 - Remove kernel version check for OVS VXLAN, not revelant for RDO
   bz#1081011
