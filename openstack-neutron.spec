@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	20%{?dist}
+Release:	21%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -1023,6 +1023,9 @@ fi
 
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2014.1-21
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Thu May 29 2014 Miguel Ángel Ajo <majopela@redhat.com> 2014.1-20
 - Add nuage plugin packaging as openstack-neutron-nuage
 
