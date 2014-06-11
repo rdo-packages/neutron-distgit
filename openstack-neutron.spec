@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1
-Release:	21%{?dist}
+Release:	22%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -38,6 +38,7 @@ Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
 Patch0004: 0004-Validate-CIDR-given-as-ip-prefix-in-security-group-r.patch
 Patch0005: 0005-netaddr-0.7.10-raises-ValueError-instead-of-AddrForm.patch
 Patch0006: 0006-Remove-kernel-version-check-for-OVS-VXLAN.patch
+Patch0007: 0007-Ensure-routing-key-is-specified-in-the-address-for-a.patch
 
 BuildArch:	noarch
 
@@ -460,6 +461,8 @@ IPSec.
 %patch0004 -p1
 %patch0005 -p1
 %patch0006 -p1
+%patch0007 -p1
+
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
@@ -1023,6 +1026,9 @@ fi
 
 
 %changelog
+* Wed Jun 11 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-22
+- Ensure routing key is specified in the address for a direct producer, bz#1108025
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2014.1-21
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
