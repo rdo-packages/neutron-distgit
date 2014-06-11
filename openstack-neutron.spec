@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.1
-Release:	4%{?dist}
+Release:	5%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -1028,6 +1028,9 @@ fi
 
 
 %changelog
+* Wed Jun 11 2014 Jakub Libosvar <jlibosva@redhat.com> 2014.1.1-5
+- Disable nova notifications by default, bz#1093879
+
 * Wed Jun 25 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-4
 - remove token from notifier middleware, bz#1112948
 
