@@ -1,8 +1,8 @@
 %global release_name icehouse
 
 Name:		openstack-neutron
-Version:	2014.1
-Release:	22%{?dist}
+Version:	2014.1.1
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -30,15 +30,13 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.1+1
+# patches_base=2014.1.1+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
 Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
-Patch0004: 0004-Validate-CIDR-given-as-ip-prefix-in-security-group-r.patch
-Patch0005: 0005-netaddr-0.7.10-raises-ValueError-instead-of-AddrForm.patch
-Patch0006: 0006-Remove-kernel-version-check-for-OVS-VXLAN.patch
-Patch0007: 0007-Ensure-routing-key-is-specified-in-the-address-for-a.patch
+Patch0004: 0004-Remove-kernel-version-check-for-OVS-VXLAN.patch
+Patch0005: 0005-Ensure-routing-key-is-specified-in-the-address-for-a.patch
 
 BuildArch:	noarch
 
@@ -460,8 +458,6 @@ IPSec.
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
-%patch0006 -p1
-%patch0007 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -518,6 +514,9 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/neutron
 mv %{buildroot}/usr/etc/neutron/* %{buildroot}%{_sysconfdir}/neutron
 mv %{buildroot}%{_sysconfdir}/neutron/api-paste.ini %{buildroot}%{_datadir}/neutron/api-paste.ini
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/plugins/*/*.ini
+
+# TODO: remove this once the plugin is separately packaged
+rm %{buildroot}%{_sysconfdir}/neutron/plugins/embrane/heleos_conf.ini
 
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-neutron
@@ -922,10 +921,9 @@ fi
 
 %files nuage
 %doc LICENSE
-#%doc neutron/plugins/nuage/README
 %{python_sitelib}/neutron/plugins/nuage
-#%dir %{_sysconfdir}/neutron/plugins/nuage
-#%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nuage/*.ini
+%dir %{_sysconfdir}/neutron/plugins/nuage
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nuage/*.ini
 
 %files ofagent
 %doc neutron/plugins/ofagent/README
@@ -1026,6 +1024,10 @@ fi
 
 
 %changelog
+* Fri Jun 13 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-1
+- Update to upstream 2014.1.1
+- Added previously missing ml2_conf_mlnx.ini, bz#1100136
+
 * Wed Jun 11 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1-22
 - Ensure routing key is specified in the address for a direct producer, bz#1108025
 

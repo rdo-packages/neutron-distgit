@@ -1,4 +1,4 @@
-From a6dd0b111106f4726f8145d4a2a99106eeace959 Mon Sep 17 00:00:00 2001
+From 059e5c38756cdc398539311ea11e39bc3001c62f Mon Sep 17 00:00:00 2001
 From: Russell Bryant <rbryant@redhat.com>
 Date: Mon, 9 Jun 2014 16:53:21 -0400
 Subject: [PATCH] Ensure routing key is specified in the address for a direct
@@ -21,7 +21,7 @@ Related-Bug: #1300318
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/neutron/openstack/common/rpc/impl_qpid.py b/neutron/openstack/common/rpc/impl_qpid.py
-index 6f2a3dc..01e1d64 100644
+index a7dcf29..5fb2c49 100644
 --- a/neutron/openstack/common/rpc/impl_qpid.py
 +++ b/neutron/openstack/common/rpc/impl_qpid.py
 @@ -368,7 +368,7 @@ class DirectPublisher(Publisher):

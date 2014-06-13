@@ -1,4 +1,4 @@
-From f3b031cc24f3d16152cec0687d3b1ca986b07732 Mon Sep 17 00:00:00 2001
+From ee813364611fa5347c1c53fb01cdf8339e870dee Mon Sep 17 00:00:00 2001
 From: Jakub Libosvar <libosvar@redhat.com>
 Date: Mon, 17 Mar 2014 16:36:01 +0100
 Subject: [PATCH] Sync service and systemd modules from oslo-incubator

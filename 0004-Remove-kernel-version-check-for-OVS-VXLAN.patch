@@ -1,4 +1,4 @@
-From 964dc8a4804853d3e82898daeb6a1af54702e2cf Mon Sep 17 00:00:00 2001
+From 820aadfd3293d3aef49fb19d8f43781dcbd93407 Mon Sep 17 00:00:00 2001
 From: Miguel Angel Ajo <mangelajo@redhat.com>
 Date: Mon, 26 May 2014 15:56:23 +0200
 Subject: [PATCH] Remove kernel version check for OVS VXLAN
@@ -40,17 +40,17 @@ index c6e65e5..5caef4b 100644
              self.setup_tunnel_br(tun_br)
          # Collect additional bridges to monitor
 diff --git a/neutron/plugins/openvswitch/agent/ovs_neutron_agent.py b/neutron/plugins/openvswitch/agent/ovs_neutron_agent.py
-index 11ff682..603a5c7 100644
+index 79c03f1..17906d0 100644
 --- a/neutron/plugins/openvswitch/agent/ovs_neutron_agent.py
 +++ b/neutron/plugins/openvswitch/agent/ovs_neutron_agent.py
-@@ -211,7 +211,6 @@ class OVSNeutronAgent(sg_rpc.SecurityGroupAgentRpcCallbackMixin,
+@@ -212,7 +212,6 @@ class OVSNeutronAgent(sg_rpc.SecurityGroupAgentRpcCallbackMixin,
          self.local_ip = local_ip
          self.tunnel_count = 0
          self.vxlan_udp_port = cfg.CONF.AGENT.vxlan_udp_port
 -        self._check_ovs_version()
+         self.tun_br = None
          if self.enable_tunneling:
              self.setup_tunnel_br(tun_br)
-         # Collect additional bridges to monitor
 diff --git a/neutron/tests/unit/ofagent/test_ofa_neutron_agent.py b/neutron/tests/unit/ofagent/test_ofa_neutron_agent.py
 index 71afcd2..9d8e83a 100644
 --- a/neutron/tests/unit/ofagent/test_ofa_neutron_agent.py
@@ -92,10 +92,10 @@ index 71afcd2..9d8e83a 100644
          min_kernel_ver = OVS_LINUX_KERN_VERS_WITHOUT_VXLAN
          install_ver = str(float(min_vxlan_ver) - 0.01)
 diff --git a/neutron/tests/unit/openvswitch/test_ovs_lib.py b/neutron/tests/unit/openvswitch/test_ovs_lib.py
-index a9c1b98..647f631 100644
+index dbf155b..77e383a 100644
 --- a/neutron/tests/unit/openvswitch/test_ovs_lib.py
 +++ b/neutron/tests/unit/openvswitch/test_ovs_lib.py
-@@ -827,31 +827,31 @@ class OVS_Lib_Test(base.BaseTestCase):
+@@ -899,31 +899,31 @@ class OVS_Lib_Test(base.BaseTestCase):
                          version_ok = False
                  self.assertEqual(version_ok, expecting_ok)
  
@@ -132,7 +132,7 @@ index a9c1b98..647f631 100644
          min_vxlan_ver = constants.MINIMUM_OVS_VXLAN_VERSION
          min_kernel_ver = OVS_LINUX_KERN_VERS_WITHOUT_VXLAN
          install_ver = str(float(min_vxlan_ver) - 0.01)
-@@ -860,7 +860,7 @@ class OVS_Lib_Test(base.BaseTestCase):
+@@ -932,7 +932,7 @@ class OVS_Lib_Test(base.BaseTestCase):
                                        min_kernel_ver,
                                        expecting_ok=False)
  
@@ -142,10 +142,10 @@ index a9c1b98..647f631 100644
          min_kernel_ver = constants.MINIMUM_LINUX_KERNEL_OVS_VXLAN
          self._check_ovs_vxlan_version(min_vxlan_ver, min_vxlan_ver,
 diff --git a/neutron/tests/unit/openvswitch/test_ovs_neutron_agent.py b/neutron/tests/unit/openvswitch/test_ovs_neutron_agent.py
-index e6eebef..b2f30ab 100644
+index 94d3c93..651c991 100644
 --- a/neutron/tests/unit/openvswitch/test_ovs_neutron_agent.py
 +++ b/neutron/tests/unit/openvswitch/test_ovs_neutron_agent.py
-@@ -514,30 +514,30 @@ class TestOvsNeutronAgent(base.BaseTestCase):
+@@ -520,30 +520,30 @@ class TestOvsNeutronAgent(base.BaseTestCase):
                          version_ok = False
                  self.assertEqual(version_ok, expecting_ok)
  
@@ -182,10 +182,10 @@ index e6eebef..b2f30ab 100644
          min_kernel_ver = OVS_LINUX_KERN_VERS_WITHOUT_VXLAN
          install_ver = str(float(min_vxlan_ver) - 0.01)
 diff --git a/neutron/tests/unit/openvswitch/test_ovs_tunnel.py b/neutron/tests/unit/openvswitch/test_ovs_tunnel.py
-index 1940730..809f807 100644
+index 126b9cc..2ae4fe8 100644
 --- a/neutron/tests/unit/openvswitch/test_ovs_tunnel.py
 +++ b/neutron/tests/unit/openvswitch/test_ovs_tunnel.py
-@@ -247,7 +247,7 @@ class TunnelTest(base.BaseTestCase):
+@@ -249,7 +249,7 @@ class TunnelTest(base.BaseTestCase):
                                            self.VETH_MTU)
          self._verify_mock_calls()
  

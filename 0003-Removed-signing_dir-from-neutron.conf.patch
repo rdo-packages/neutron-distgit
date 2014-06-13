@@ -1,4 +1,4 @@
-From f8ad6b7a6cbec015fd64d1f6bdb35f4b9eb48f3f Mon Sep 17 00:00:00 2001
+From 7ab686298e665e4914b1eac0e800b181684cbad5 Mon Sep 17 00:00:00 2001
 From: Ihar Hrachyshka <ihrachys@redhat.com>
 Date: Mon, 28 Apr 2014 15:05:30 +0200
 Subject: [PATCH] Removed signing_dir from neutron.conf
@@ -14,7 +14,7 @@ Change-Id: Ideb393f9010f4f1706392ccdfdd5fa7307bda070
  1 file changed, 1 deletion(-)
 
 diff --git a/etc/neutron.conf b/etc/neutron.conf
-index 775c757..e3ebf74 100644
+index e258720..ce95fc4 100644
 --- a/etc/neutron.conf
 +++ b/etc/neutron.conf
 @@ -398,7 +398,6 @@ auth_protocol = http
