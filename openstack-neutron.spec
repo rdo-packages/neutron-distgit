@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -37,6 +37,7 @@ Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
 Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
 Patch0004: 0004-Remove-kernel-version-check-for-OVS-VXLAN.patch
 Patch0005: 0005-Ensure-routing-key-is-specified-in-the-address-for-a.patch
+Patch0006: 0006-Notify-systemd-when-starting-Neutron-server.patch
 
 BuildArch:	noarch
 
@@ -458,6 +459,7 @@ IPSec.
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
+%patch0006 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -1024,6 +1026,9 @@ fi
 
 
 %changelog
+* Tue Jun 24 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-2
+- Notify systemd when starting Neutron server, bz#1063427
+
 * Fri Jun 13 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-1
 - Update to upstream 2014.1.1
 - Added previously missing ml2_conf_mlnx.ini, bz#1100136
