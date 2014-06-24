@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -1026,6 +1026,10 @@ fi
 
 
 %changelog
+* Tue Jun 24 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-3
+- Send SIGTERM signal only to parent process when stopping neutron
+  service, bz#1110642
+
 * Tue Jun 24 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-2
 - Notify systemd when starting Neutron server, bz#1063427
 
