@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.1
-Release:	3%{?dist}
+Release:	4%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -38,6 +38,7 @@ Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
 Patch0004: 0004-Remove-kernel-version-check-for-OVS-VXLAN.patch
 Patch0005: 0005-Ensure-routing-key-is-specified-in-the-address-for-a.patch
 Patch0006: 0006-Notify-systemd-when-starting-Neutron-server.patch
+Patch0007: 0007-remove-token-from-notifier-middleware.patch
 
 BuildArch:	noarch
 
@@ -460,6 +461,7 @@ IPSec.
 %patch0004 -p1
 %patch0005 -p1
 %patch0006 -p1
+%patch0007 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -1026,6 +1028,9 @@ fi
 
 
 %changelog
+* Wed Jun 25 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-4
+- remove token from notifier middleware, bz#1112948
+
 * Tue Jun 24 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-3
 - Send SIGTERM signal only to parent process when stopping neutron
   service, bz#1110642

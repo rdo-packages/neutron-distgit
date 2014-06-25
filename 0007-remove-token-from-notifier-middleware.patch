@@ -1,0 +1,100 @@
+From 82ee57e843c3f51b20275c3e1d934b6e39560e85 Mon Sep 17 00:00:00 2001
+From: Grant Murphy <gmurphy@redhat.com>
+Date: Thu, 19 Jun 2014 02:30:13 +0000
+Subject: [PATCH] remove token from notifier middleware
+
+oslo-incubator sync to address the security bug
+in middleware (as below).
+
+notifier middleware is capturing token and sending it to MQ. this
+is not advisable so we should filter it out.
+
+Change-Id: Ia1bfa1bd24989681db1d2f385defc12e69a01f8d
+Closes-Bug: #1321080
+(cherry picked from commit 0324965a0c2987e5cad6276f011682dec184205f)
+---
+ neutron/openstack/common/middleware/catch_errors.py |  6 +++---
+ neutron/openstack/common/middleware/notifier.py     | 10 +++++-----
+ neutron/openstack/common/middleware/sizelimit.py    |  4 ++--
+ 3 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/neutron/openstack/common/middleware/catch_errors.py b/neutron/openstack/common/middleware/catch_errors.py
+index b692aee..32b4443 100644
+--- a/neutron/openstack/common/middleware/catch_errors.py
++++ b/neutron/openstack/common/middleware/catch_errors.py
+@@ -22,7 +22,7 @@ to hide internal errors from API response.
+ import webob.dec
+ import webob.exc
+ 
+-from neutron.openstack.common.gettextutils import _  # noqa
++from neutron.openstack.common.gettextutils import _LE
+ from neutron.openstack.common import log as logging
+ from neutron.openstack.common.middleware import base
+ 
+@@ -37,7 +37,7 @@ class CatchErrorsMiddleware(base.Middleware):
+         try:
+             response = req.get_response(self.application)
+         except Exception:
+-            LOG.exception(_('An error occurred during '
+-                            'processing the request: %s'))
++            LOG.exception(_LE('An error occurred during '
++                              'processing the request: %s'))
+             response = webob.exc.HTTPInternalServerError()
+         return response
+diff --git a/neutron/openstack/common/middleware/notifier.py b/neutron/openstack/common/middleware/notifier.py
+index 1dce3f5..e34699c 100644
+--- a/neutron/openstack/common/middleware/notifier.py
++++ b/neutron/openstack/common/middleware/notifier.py
+@@ -24,7 +24,7 @@ import six
+ import webob.dec
+ 
+ from neutron.openstack.common import context
+-from neutron.openstack.common.gettextutils import _
++from neutron.openstack.common.gettextutils import _LE
+ from neutron.openstack.common import log as logging
+ from neutron.openstack.common.middleware import base
+ from neutron.openstack.common.notifier import api
+@@ -37,8 +37,8 @@ def log_and_ignore_error(fn):
+         try:
+             return fn(*args, **kwargs)
+         except Exception as e:
+-            LOG.exception(_('An exception occurred processing '
+-                            'the API call: %s ') % e)
++            LOG.exception(_LE('An exception occurred processing '
++                              'the API call: %s ') % e)
+     return wrapped
+ 
+ 
+@@ -56,7 +56,7 @@ class RequestNotifier(base.Middleware):
+         return _factory
+ 
+     def __init__(self, app, **conf):
+-        self.service_name = conf.get('service_name', None)
++        self.service_name = conf.get('service_name')
+         self.ignore_req_list = [x.upper().strip() for x in
+                                 conf.get('ignore_req_list', '').split(',')]
+         super(RequestNotifier, self).__init__(app)
+@@ -68,7 +68,7 @@ class RequestNotifier(base.Middleware):
+ 
+         """
+         return dict((k, v) for k, v in six.iteritems(environ)
+-                    if k.isupper())
++                    if k.isupper() and k != 'HTTP_X_AUTH_TOKEN')
+ 
+     @log_and_ignore_error
+     def process_request(self, request):
+diff --git a/neutron/openstack/common/middleware/sizelimit.py b/neutron/openstack/common/middleware/sizelimit.py
+index 56b3200..05653ba 100644
+--- a/neutron/openstack/common/middleware/sizelimit.py
++++ b/neutron/openstack/common/middleware/sizelimit.py
+@@ -29,8 +29,8 @@ from neutron.openstack.common.middleware import base
+ max_req_body_size = cfg.IntOpt('max_request_body_size',
+                                deprecated_name='osapi_max_request_body_size',
+                                default=114688,
+-                               help='the maximum body size '
+-                                    'per each request(bytes)')
++                               help='The maximum body size '
++                                    'per request, in bytes')
+ 
+ CONF = cfg.CONF
+ CONF.register_opt(max_req_body_size)
