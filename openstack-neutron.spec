@@ -1028,7 +1028,7 @@ fi
 
 
 %changelog
-* Wed Jun 11 2014 Jakub Libosvar <jlibosva@redhat.com> 2014.1.1-5
+* Wed Jul 02 2014 Jakub Libosvar <jlibosva@redhat.com> 2014.1.1-5
 - Disable nova notifications by default, bz#1093879
 
 * Wed Jun 25 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-4
