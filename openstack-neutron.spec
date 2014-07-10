@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.1
-Release:	5%{?dist}
+Release:	6%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -801,7 +801,7 @@ fi
 %config(noreplace) %{_sysconfdir}/neutron/rootwrap.conf
 %dir %{_sysconfdir}/neutron/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
-%config(noreplace) %{_sysconfdir}/sudoers.d/neutron
+%config %{_sysconfdir}/sudoers.d/neutron
 %dir %attr(0755, neutron, neutron) %{_sharedstatedir}/neutron
 %dir %attr(0755, neutron, neutron) %{_localstatedir}/log/neutron
 %dir %{_datarootdir}/neutron
@@ -1028,6 +1028,9 @@ fi
 
 
 %changelog
+* Thu Jul 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-6
+- removed 'noreplace' tag from sudoers file to reflect change in RHEL-OSP
+
 * Wed Jul 02 2014 Jakub Libosvar <jlibosva@redhat.com> 2014.1.1-5
 - Disable nova notifications by default, bz#1093879
 
