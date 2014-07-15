@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.1
-Release:	6%{?dist}
+Release:	7%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -818,25 +818,6 @@ fi
 %doc README.rst
 %{python_sitelib}/neutron
 %{python_sitelib}/quantum
-%exclude %{python_sitelib}/neutron/plugins/bigswitch
-%exclude %{python_sitelib}/neutron/plugins/brocade
-%exclude %{python_sitelib}/neutron/plugins/cisco
-%exclude %{python_sitelib}/neutron/plugins/hyperv
-%exclude %{python_sitelib}/neutron/plugins/ibm
-%exclude %{python_sitelib}/neutron/plugins/linuxbridge
-%exclude %{python_sitelib}/neutron/plugins/metaplugin
-%exclude %{python_sitelib}/neutron/plugins/midonet
-%exclude %{python_sitelib}/neutron/plugins/ml2
-%exclude %{python_sitelib}/neutron/plugins/mlnx
-%exclude %{python_sitelib}/neutron/plugins/nuage
-%exclude %{python_sitelib}/neutron/plugins/nec
-%exclude %{python_sitelib}/neutron/plugins/nicira
-%exclude %{python_sitelib}/neutron/plugins/ofagent
-%exclude %{python_sitelib}/neutron/plugins/oneconvergence
-%exclude %{python_sitelib}/neutron/plugins/openvswitch
-%exclude %{python_sitelib}/neutron/plugins/plumgrid
-%exclude %{python_sitelib}/neutron/plugins/ryu
-%exclude %{python_sitelib}/neutron/plugins/vmware
 %{python_sitelib}/neutron-%%{version}*.egg-info
 
 
@@ -844,26 +825,14 @@ fi
 %doc LICENSE
 %doc neutron/plugins/bigswitch/README
 %{_bindir}/neutron-restproxy-agent
-%{python_sitelib}/neutron/plugins/bigswitch
 %dir %{_sysconfdir}/neutron/plugins/bigswitch
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/bigswitch/*.ini
 %doc %{_sysconfdir}/neutron/plugins/bigswitch/README
 
 
-%files ibm
-%doc LICENSE
-%{_bindir}/neutron-ibm-agent
-%{_bindir}/quantum-ibm-agent
-%doc neutron/plugins/ibm/README
-%{python_sitelib}/neutron/plugins/ibm
-%dir %{_sysconfdir}/neutron/plugins/ibm
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ibm/*.ini
-
-
 %files brocade
 %doc LICENSE
 %doc neutron/plugins/brocade/README.md
-%{python_sitelib}/neutron/plugins/brocade
 %dir %{_sysconfdir}/neutron/plugins/brocade
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/brocade/*.ini
 
@@ -871,7 +840,6 @@ fi
 %files cisco
 %doc LICENSE
 %doc neutron/plugins/cisco/README
-%{python_sitelib}/neutron/plugins/cisco
 %dir %{_sysconfdir}/neutron/plugins/cisco
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/cisco/*.ini
 
@@ -881,10 +849,17 @@ fi
 #%%doc neutron/plugins/hyperv/README
 %{_bindir}/neutron-hyperv-agent
 %{_bindir}/quantum-hyperv-agent
-%{python_sitelib}/neutron/plugins/hyperv
 %dir %{_sysconfdir}/neutron/plugins/hyperv
-%exclude %{python_sitelib}/neutron/plugins/hyperv/agent
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/hyperv/*.ini
+
+
+%files ibm
+%doc LICENSE
+%{_bindir}/neutron-ibm-agent
+%{_bindir}/quantum-ibm-agent
+%doc neutron/plugins/ibm/README
+%dir %{_sysconfdir}/neutron/plugins/ibm
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ibm/*.ini
 
 
 %files linuxbridge
@@ -893,7 +868,6 @@ fi
 %{_bindir}/neutron-linuxbridge-agent
 %{_bindir}/quantum-linuxbridge-agent
 %{_unitdir}/neutron-linuxbridge-agent.service
-%{python_sitelib}/neutron/plugins/linuxbridge
 %{_datarootdir}/neutron/rootwrap/linuxbridge-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/linuxbridge
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/linuxbridge/*.ini
@@ -902,24 +876,23 @@ fi
 %files midonet
 %doc LICENSE
 #%%doc neutron/plugins/midonet/README
-%{python_sitelib}/neutron/plugins/midonet
 %dir %{_sysconfdir}/neutron/plugins/midonet
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/midonet/*.ini
 
 
 %files ml2
+%doc LICENSE
 %doc neutron/plugins/ml2/README
-%{python_sitelib}/neutron/plugins/ml2
 %dir %{_sysconfdir}/neutron/plugins/ml2
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ml2/*.ini
 
 
 %files mellanox
+%doc LICENSE
 %doc neutron/plugins/mlnx/README
 %{_bindir}/neutron-mlnx-agent
 %{_bindir}/quantum-mlnx-agent
 %{_unitdir}/neutron-mlnx-agent.service
-%{python_sitelib}/neutron/plugins/mlnx
 %dir %{_sysconfdir}/neutron/plugins/mlnx
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/mlnx/*.ini
 
@@ -930,9 +903,9 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nuage/*.ini
 
 %files ofagent
+%doc LICENSE
 %doc neutron/plugins/ofagent/README
 %{_bindir}/neutron-ofagent-agent
-%{python_sitelib}/neutron/plugins/ofagent
 
 
 %files oneconvergence-nvsd
@@ -942,7 +915,6 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/oneconvergence/nvsdplugin.ini
 %{_bindir}/neutron-nvsd-agent
 %{_bindir}/quantum-nvsd-agent
-%{python_sitelib}/neutron/plugins/oneconvergence
 
 %files openvswitch
 %doc LICENSE
@@ -953,7 +925,6 @@ fi
 %{_bindir}/quantum-ovs-cleanup
 %{_unitdir}/neutron-openvswitch-agent.service
 %{_unitdir}/neutron-ovs-cleanup.service
-%{python_sitelib}/neutron/plugins/openvswitch
 %{_datarootdir}/neutron/rootwrap/openvswitch-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/openvswitch
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/openvswitch/*.ini
@@ -962,7 +933,6 @@ fi
 %files plumgrid
 %doc LICENSE
 %doc neutron/plugins/plumgrid/README
-%{python_sitelib}/neutron/plugins/plumgrid
 %dir %{_sysconfdir}/neutron/plugins/plumgrid
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/plumgrid/*.ini
 
@@ -973,7 +943,6 @@ fi
 %{_bindir}/neutron-ryu-agent
 %{_bindir}/quantum-ryu-agent
 %{_unitdir}/neutron-ryu-agent.service
-%{python_sitelib}/neutron/plugins/ryu
 %{_datarootdir}/neutron/rootwrap/ryu-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/ryu
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ryu/*.ini
@@ -985,7 +954,6 @@ fi
 %{_bindir}/neutron-nec-agent
 %{_bindir}/quantum-nec-agent
 %{_unitdir}/neutron-nec-agent.service
-%{python_sitelib}/neutron/plugins/nec
 %{_datarootdir}/neutron/rootwrap/nec-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/nec
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nec/*.ini
@@ -994,7 +962,6 @@ fi
 %files metaplugin
 %doc LICENSE
 %doc neutron/plugins/metaplugin/README
-%{python_sitelib}/neutron/plugins/metaplugin
 %dir %{_sysconfdir}/neutron/plugins/metaplugin
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/metaplugin/*.ini
 
@@ -1005,7 +972,6 @@ fi
 %{_bindir}/quantum-check-nvp-config
 %{_bindir}/neutron-check-nsx-config
 %{_bindir}/neutron-nsx-manage
-%{python_sitelib}/neutron/plugins/vmware
 %dir %{_sysconfdir}/neutron/plugins/nicira
 %dir %{_sysconfdir}/neutron/plugins/vmware
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nicira/*.ini
@@ -1028,6 +994,13 @@ fi
 
 
 %changelog
+* Wed Jul 16 2014 Miguel Ángel Ajo <majopela@redhat.com> 2014.1.1-7
+- Moved all plugin sources to python-neutron to avoid breaking
+  hidden upstream dependencies from agents to plugins, etc.
+  fixes rhbz#1119619
+- Removed the hyper-v agent exclude.
+- Added a few LICENSE files to packages that missed it.
+
 * Thu Jul 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-6
 - removed 'noreplace' tag from sudoers file to reflect change in RHEL-OSP
 
