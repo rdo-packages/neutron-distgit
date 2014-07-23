@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.1
-Release:	7%{?dist}
+Release:	8%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -39,6 +39,7 @@ Patch0004: 0004-Remove-kernel-version-check-for-OVS-VXLAN.patch
 Patch0005: 0005-Ensure-routing-key-is-specified-in-the-address-for-a.patch
 Patch0006: 0006-Notify-systemd-when-starting-Neutron-server.patch
 Patch0007: 0007-remove-token-from-notifier-middleware.patch
+Patch0008: 0008-no-quota-for-allowed-address-pair.patch
 
 BuildArch:	noarch
 
@@ -462,6 +463,7 @@ IPSec.
 %patch0005 -p1
 %patch0006 -p1
 %patch0007 -p1
+%patch0008 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -994,6 +996,9 @@ fi
 
 
 %changelog
+* Wed Jul 23 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-8
+- no quota for allowed address pair, rhbz#1121941
+
 * Wed Jul 16 2014 Miguel Ángel Ajo <majopela@redhat.com> 2014.1.1-7
 - Moved all plugin sources to python-neutron to avoid breaking
   hidden upstream dependencies from agents to plugins, etc.
