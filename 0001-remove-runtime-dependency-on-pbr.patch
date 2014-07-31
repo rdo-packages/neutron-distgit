@@ -1,4 +1,4 @@
-From e578b88d17185d2121197490e62bdb30252ea60e Mon Sep 17 00:00:00 2001
+From 335733277b8b3c0a47fd4e9a914a6f15c7d24249 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
 Date: Mon, 24 Mar 2014 14:50:23 +0000
 Subject: [PATCH] remove runtime dependency on pbr
@@ -8,10 +8,10 @@ Subject: [PATCH] remove runtime dependency on pbr
  1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/neutron/version.py b/neutron/version.py
-index 1819264..e5333c6 100644
+index 2dbf54d..3c9d912 100644
 --- a/neutron/version.py
 +++ b/neutron/version.py
-@@ -14,6 +14,15 @@
+@@ -12,6 +12,15 @@
  #    License for the specific language governing permissions and limitations
  #    under the License.
  

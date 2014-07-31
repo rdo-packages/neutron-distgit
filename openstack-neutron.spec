@@ -1,8 +1,8 @@
-%global release_name icehouse
+%global release_name juno
 
 Name:		openstack-neutron
-Version:	2014.1.1
-Release:	8%{?dist}
+Version:	2014.2.b2
+Release:	0.1.b2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,7 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/juno-2/+download/neutron-%{version}.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source10:	neutron-server.service
@@ -30,16 +30,9 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.1.1+1
+# patches_base=2014.2.b2+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
-Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
-Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
-Patch0004: 0004-Remove-kernel-version-check-for-OVS-VXLAN.patch
-Patch0005: 0005-Ensure-routing-key-is-specified-in-the-address-for-a.patch
-Patch0006: 0006-Notify-systemd-when-starting-Neutron-server.patch
-Patch0007: 0007-remove-token-from-notifier-middleware.patch
-Patch0008: 0008-no-quota-for-allowed-address-pair.patch
 
 BuildArch:	noarch
 
@@ -50,7 +43,6 @@ BuildRequires:  python-pbr
 BuildRequires:  python-d2to1
 
 Requires:	python-neutron = %{version}-%{release}
-Requires:	python-oslo-rootwrap
 Requires:	openstack-utils
 
 # dnsmasq is not a hard requirement, but is currently the only option
@@ -82,29 +74,39 @@ Provides:	python-quantum = %{version}-%{release}
 Obsoletes:	python-quantum < 2013.2-0.4.b3
 
 Requires:	MySQL-python
-Requires:	python-alembic
-Requires:	python-amqplib
-Requires:	python-anyjson
-Requires:	python-babel
-Requires:	python-eventlet
-Requires:	python-greenlet
+Requires:	python-alembic >= 0.6.2
+Requires:	python-anyjson >= 0.3.3
+Requires:	python-babel >= 1.3
+Requires:	python-eventlet >= 0.13.0
+Requires:	python-greenlet >= 0.3.2
 Requires:	python-httplib2 >= 0.7.5
-Requires:	python-iso8601
-Requires:	python-keystoneclient >= 0.7.0
-Requires:	python-kombu
-Requires:	python-lxml
-Requires:	python-netaddr
-Requires:	python-oslo-config >= 1:1.2.0
-Requires:	python-paste-deploy
+Requires:	python-iso8601 >= 0.1.9
+Requires:	python-jinja2
+# jsonrpclib is not packaged for Fedora
+#Requires:	python-jsonrpclib
+Requires:	python-keystoneclient >= 0.9.0
+Requires:	python-keystonemiddleware
+Requires:	python-kombu >= 2.4.8
+Requires:	python-netaddr >= 0.7.6
+Requires:	python-neutronclient >= 2.3.5
+Conflicts:      python-neutronclient >= 3
+Requires:	python-novaclient >= 2.17.0
+Requires:	python-oslo-config >= 1.2.1
+Requires:	python-oslo-db >= 0.2.0
+Requires:	python-oslo-messaging >= 1.3.0
+Requires:	python-oslo-rootwrap
+Requires:	python-paste
+Requires:	python-paste-deploy >= 1.5.0
 Requires:	python-qpid
-Requires:	python-neutronclient >= 2.3.4
-Requires:	python-routes
-Requires:	python-sqlalchemy >= 0.7.8
+Requires:	python-requests >= 1.1
+Requires:	python-routes >= 1.12.3
+Conflicts:	python-routes = 2.0
+Requires:	python-sqlalchemy >= 0.8.4
+Conflicts:      python-sqlalchemy = 0.9.5
+Conflicts:      python-sqlalchemy >= 1.0
+Requires:	python-stevedore >= 0.14
+Requires:	python-six >= 1.7.0
 Requires:	python-webob >= 1.2.3
-Requires:	python-stevedore
-Requires:	python-six >= 1.4.1
-# requires.txt asks for six >= 1.5.2 actually
-Requires:	python-novaclient >= 1:2.17.0
 Requires:	sudo
 
 
@@ -161,7 +163,6 @@ Provides:	openstack-quantum-cisco = %{version}-%{release}
 Obsoletes:	openstack-quantum-cisco < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
-Requires:	python-configobj
 
 
 %description cisco
@@ -304,8 +305,6 @@ plugin.
 Summary:	Neutron Nicira plugin
 Group:		Applications/System
 
-Provides:	openstack-quantum-nicira = %{version}-%{release}
-Obsoletes:	openstack-quantum-nicira < 2013.2-0.4.b3
 Provides:	openstack-neutron-nicira = %{version}-%{release}
 Obsoletes:	openstack-neutron-nicira < 2014.1-0.5.b2
 
@@ -444,7 +443,6 @@ Summary:	Neutron VPNaaS agent
 Group:		Applications/System
 
 Requires:	openstack-neutron = %{version}-%{release}
-Requires:	python-jinja2
 
 %description vpn-agent
 Neutron provides an API to implement VPN as a service
@@ -457,13 +455,6 @@ IPSec.
 %setup -q -n neutron-%{version}
 
 %patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
-%patch0007 -p1
-%patch0008 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -758,18 +749,6 @@ fi
 %files
 %doc LICENSE
 %doc README.rst
-%{_bindir}/quantum-db-manage
-%{_bindir}/quantum-debug
-%{_bindir}/quantum-dhcp-agent
-%{_bindir}/quantum-l3-agent
-%{_bindir}/quantum-lbaas-agent
-%{_bindir}/quantum-metadata-agent
-%{_bindir}/quantum-netns-cleanup
-%{_bindir}/quantum-ns-metadata-proxy
-%{_bindir}/quantum-rootwrap
-%{_bindir}/quantum-rootwrap-xen-dom0
-%{_bindir}/quantum-server
-%{_bindir}/quantum-usage-audit
 
 %{_bindir}/neutron-db-manage
 %{_bindir}/neutron-debug
@@ -781,6 +760,7 @@ fi
 %{_bindir}/neutron-ns-metadata-proxy
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-xen-dom0
+%{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 
@@ -819,7 +799,6 @@ fi
 %doc LICENSE
 %doc README.rst
 %{python_sitelib}/neutron
-%{python_sitelib}/quantum
 %{python_sitelib}/neutron-%%{version}*.egg-info
 
 
@@ -850,7 +829,6 @@ fi
 %doc LICENSE
 #%%doc neutron/plugins/hyperv/README
 %{_bindir}/neutron-hyperv-agent
-%{_bindir}/quantum-hyperv-agent
 %dir %{_sysconfdir}/neutron/plugins/hyperv
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/hyperv/*.ini
 
@@ -858,7 +836,6 @@ fi
 %files ibm
 %doc LICENSE
 %{_bindir}/neutron-ibm-agent
-%{_bindir}/quantum-ibm-agent
 %doc neutron/plugins/ibm/README
 %dir %{_sysconfdir}/neutron/plugins/ibm
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ibm/*.ini
@@ -868,7 +845,6 @@ fi
 %doc LICENSE
 %doc neutron/plugins/linuxbridge/README
 %{_bindir}/neutron-linuxbridge-agent
-%{_bindir}/quantum-linuxbridge-agent
 %{_unitdir}/neutron-linuxbridge-agent.service
 %{_datarootdir}/neutron/rootwrap/linuxbridge-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/linuxbridge
@@ -893,7 +869,6 @@ fi
 %doc LICENSE
 %doc neutron/plugins/mlnx/README
 %{_bindir}/neutron-mlnx-agent
-%{_bindir}/quantum-mlnx-agent
 %{_unitdir}/neutron-mlnx-agent.service
 %dir %{_sysconfdir}/neutron/plugins/mlnx
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/mlnx/*.ini
@@ -916,15 +891,12 @@ fi
 %dir %{_sysconfdir}/neutron/plugins/oneconvergence
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/oneconvergence/nvsdplugin.ini
 %{_bindir}/neutron-nvsd-agent
-%{_bindir}/quantum-nvsd-agent
 
 %files openvswitch
 %doc LICENSE
 %doc neutron/plugins/openvswitch/README
 %{_bindir}/neutron-openvswitch-agent
-%{_bindir}/quantum-openvswitch-agent
 %{_bindir}/neutron-ovs-cleanup
-%{_bindir}/quantum-ovs-cleanup
 %{_unitdir}/neutron-openvswitch-agent.service
 %{_unitdir}/neutron-ovs-cleanup.service
 %{_datarootdir}/neutron/rootwrap/openvswitch-plugin.filters
@@ -943,7 +915,6 @@ fi
 %doc LICENSE
 %doc neutron/plugins/ryu/README
 %{_bindir}/neutron-ryu-agent
-%{_bindir}/quantum-ryu-agent
 %{_unitdir}/neutron-ryu-agent.service
 %{_datarootdir}/neutron/rootwrap/ryu-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/ryu
@@ -954,7 +925,6 @@ fi
 %doc LICENSE
 %doc neutron/plugins/nec/README
 %{_bindir}/neutron-nec-agent
-%{_bindir}/quantum-nec-agent
 %{_unitdir}/neutron-nec-agent.service
 %{_datarootdir}/neutron/rootwrap/nec-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/nec
@@ -970,13 +940,9 @@ fi
 
 %files vmware
 %doc LICENSE
-%{_bindir}/neutron-check-nvp-config
-%{_bindir}/quantum-check-nvp-config
 %{_bindir}/neutron-check-nsx-config
 %{_bindir}/neutron-nsx-manage
-%dir %{_sysconfdir}/neutron/plugins/nicira
 %dir %{_sysconfdir}/neutron/plugins/vmware
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nicira/*.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
 
 
@@ -996,6 +962,14 @@ fi
 
 
 %changelog
+* Thu Jul 31 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.1.b2
+- Update to upstream 2014.2.b2
+- Moved python dependencies from plugin and agent and server packages to
+  python-neutron
+- Synchronized dependencies with u/s, made all version requirements
+  explicit
+- Removed python-configobj dependency (seems to be obsolete)
+
 * Wed Jul 23 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.1.1-8
 - no quota for allowed address pair, rhbz#1121941
 
