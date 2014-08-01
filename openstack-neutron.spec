@@ -452,7 +452,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}
+%setup -q -n neutron-%{upstream_version}
 
 %patch0001 -p1
 
@@ -756,6 +756,7 @@ fi
 %{_bindir}/neutron-l3-agent
 %{_bindir}/neutron-lbaas-agent
 %{_bindir}/neutron-metadata-agent
+%{_bindir}/neutron-sriov-nic-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ns-metadata-proxy
 %{_bindir}/neutron-rootwrap
