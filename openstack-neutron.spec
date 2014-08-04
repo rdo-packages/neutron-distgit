@@ -822,6 +822,7 @@ fi
 %files cisco
 %doc LICENSE
 %doc neutron/plugins/cisco/README
+%{_bindir}/neutron-cisco-cfg-agent
 %dir %{_sysconfdir}/neutron/plugins/cisco
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/cisco/*.ini
 
