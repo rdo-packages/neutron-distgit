@@ -1,8 +1,8 @@
 %global release_name juno
 
 Name:		openstack-neutron
-Version:	2014.2.b2
-Release:	0.1.b2%{?dist}
+Version:	2014.2
+Release:	0.2.b2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,7 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/juno-2/+download/neutron-%{version}.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/juno-2/+download/neutron-%{version}.b2.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source10:	neutron-server.service
@@ -452,7 +452,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}
+%setup -q -n neutron-%{version}.b2
 
 %patch0001 -p1
 
@@ -758,6 +758,7 @@ fi
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ns-metadata-proxy
+%{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-xen-dom0
 %{_bindir}/neutron-sanity-check
@@ -896,7 +897,6 @@ fi
 %doc LICENSE
 %doc neutron/plugins/openvswitch/README
 %{_bindir}/neutron-openvswitch-agent
-%{_bindir}/neutron-ovs-cleanup
 %{_unitdir}/neutron-openvswitch-agent.service
 %{_unitdir}/neutron-ovs-cleanup.service
 %{_datarootdir}/neutron/rootwrap/openvswitch-plugin.filters
@@ -962,6 +962,10 @@ fi
 
 
 %changelog
+* Mon Aug 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.2.b2
+- Moved neutron-ovs-cleanup from openvswitch plugin package into base
+  package, for it may be used by other plugins (f.e. ofagent).
+
 * Thu Jul 31 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.1.b2
 - Update to upstream 2014.2.b2
 - Moved python dependencies from plugin and agent and server packages to
