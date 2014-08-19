@@ -173,6 +173,21 @@ This package contains the neutron plugin that implements virtual
 networks using Cisco UCS and Nexus.
 
 
+%package opencontrail
+Summary:	Neutron OpenContrail plugin
+Group:		Applications/System
+
+Requires:	openstack-neutron = %{version}-%{release}
+
+
+%description opencontrail
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the neutron plugin that implements virtual
+networks using OpenContrail.
+
+
 %package hyperv
 Summary:	Neutron Hyper-V plugin
 Group:		Applications/System
@@ -827,6 +842,12 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/cisco/*.ini
 
 
+%files opencontrail
+%doc LICENSE
+%dir %{_sysconfdir}/neutron/plugins/opencontrail
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/opencontrail/*.ini
+
+
 %files hyperv
 %doc LICENSE
 #%%doc neutron/plugins/hyperv/README
@@ -964,6 +985,9 @@ fi
 
 
 %changelog
+* Tue Aug 19 2014 Derek Higgins <derekh@redhat.com> - XXX
+- Add the opencontrail package
+
 * Thu Jul 31 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.1.b2
 - Update to upstream 2014.2.b2
 - Moved python dependencies from plugin and agent and server packages to
