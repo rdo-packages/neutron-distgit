@@ -820,11 +820,11 @@ fi
 
 %files bigswitch
 %doc LICENSE
-%doc neutron/plugins/bigswitch/README
 %{_bindir}/neutron-restproxy-agent
 %dir %{_sysconfdir}/neutron/plugins/bigswitch
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/bigswitch/*.ini
-%doc %{_sysconfdir}/neutron/plugins/bigswitch/README
+%doc %{_sysconfdir}/neutron/plugins/bigswitch/ssl/ca_certs/README
+%doc %{_sysconfdir}/neutron/plugins/bigswitch/ssl/host_certs/README
 
 
 %files brocade
@@ -985,6 +985,9 @@ fi
 
 
 %changelog
+* Fri Aug 22 2014 Derek Higgins <derekh@redhat.com> - XXX
+- Fixup README's for the bigswitch plugin
+
 * Tue Aug 19 2014 Derek Higgins <derekh@redhat.com> - XXX
 - Add the opencontrail package
 
