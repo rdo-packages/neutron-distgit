@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.2.b2%{?dist}
+Release:	0.3.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -30,7 +30,7 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.2.b2+1
+# patches_base=2014.2.b3+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 
@@ -74,7 +74,7 @@ Provides:	python-quantum = %{version}-%{release}
 Obsoletes:	python-quantum < 2013.2-0.4.b3
 
 Requires:	MySQL-python
-Requires:	python-alembic >= 0.6.2
+Requires:	python-alembic >= 0.6.4
 Requires:	python-anyjson >= 0.3.3
 Requires:	python-babel >= 1.3
 Requires:	python-eventlet >= 0.13.0
@@ -84,25 +84,25 @@ Requires:	python-iso8601 >= 0.1.9
 Requires:	python-jinja2
 # jsonrpclib is not packaged for Fedora
 #Requires:	python-jsonrpclib
-Requires:	python-keystoneclient >= 0.9.0
-Requires:	python-keystonemiddleware
+Requires:	python-keystoneclient >= 0.10.0
+Requires:	python-keystonemiddleware >= 1.0.0
 Requires:	python-kombu >= 2.4.8
 Requires:	python-netaddr >= 0.7.6
-Requires:	python-neutronclient >= 2.3.5
+Requires:	python-neutronclient >= 2.3.6
 Conflicts:      python-neutronclient >= 3
 Requires:	python-novaclient >= 2.17.0
-Requires:	python-oslo-config >= 1.2.1
-Requires:	python-oslo-db >= 0.2.0
-Requires:	python-oslo-messaging >= 1.3.0
+Requires:	python-oslo-config >= 1.4.0.0-0.1.a3
+Requires:	python-oslo-db >= 0.4.0
+Requires:	python-oslo-messaging >= 1.4.0.0-2.a3
+# in requirements.txt: oslo.rootwrap>=1.3.0.0a1
 Requires:	python-oslo-rootwrap
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
 Requires:	python-qpid
-Requires:	python-requests >= 1.1
+Requires:	python-requests >= 1.2.1
 Requires:	python-routes >= 1.12.3
 Conflicts:	python-routes = 2.0
-Requires:	python-sqlalchemy >= 0.8.4
-Conflicts:      python-sqlalchemy = 0.9.5
+Requires:	python-sqlalchemy >= 0.9.7
 Conflicts:      python-sqlalchemy >= 1.0
 Requires:	python-stevedore >= 0.14
 Requires:	python-six >= 1.7.0
@@ -962,6 +962,9 @@ fi
 
 
 %changelog
+* Fri Sep 12 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.3.b3
+- Update to upstream 2014.2.b3
+
 * Mon Aug 18 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.2.b2
 - Moved neutron-ovs-cleanup from openvswitch plugin package into base
   package, for it may be used by other plugins (f.e. ofagent).
