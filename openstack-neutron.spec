@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.3.b3%{?dist}
+Release:	0.4.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -49,6 +49,10 @@ Requires:	openstack-utils
 # when neutron-dhcp-agent is deployed.
 Requires:	dnsmasq
 Requires:	dnsmasq-utils
+
+# radvd is not a hard requirement, but is currently the only option
+# for IPv6 deployments.
+Requires:	radvd
 
 Requires(pre):	shadow-utils
 Requires(post): systemd-units
@@ -962,6 +966,9 @@ fi
 
 
 %changelog
+* Fri Sep 12 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.4.b3
+- Added radvd as a dependency for IPv6 address management.
+
 * Fri Sep 12 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.3.b3
 - Update to upstream 2014.2.b3
 
