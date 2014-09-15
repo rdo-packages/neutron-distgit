@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.4.b3%{?dist}
+Release:	0.5.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -175,6 +175,21 @@ networks.
 
 This package contains the neutron plugin that implements virtual
 networks using Cisco UCS and Nexus.
+
+
+%package embrane
+Summary:	Neutron Embrane plugin
+Group:		Applications/System
+
+Requires:	openstack-neutron = %{version}-%{release}
+
+
+%description embrane
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the neutron plugin that implements virtual
+L3-L7 network services using Embrane's heleos platform.
 
 
 %package hyperv
@@ -516,9 +531,6 @@ mv %{buildroot}/usr/etc/neutron/* %{buildroot}%{_sysconfdir}/neutron
 mv %{buildroot}%{_sysconfdir}/neutron/api-paste.ini %{buildroot}%{_datadir}/neutron/api-paste.ini
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/plugins/*/*.ini
 
-# TODO: remove this once the plugin is separately packaged
-rm %{buildroot}%{_sysconfdir}/neutron/plugins/embrane/heleos_conf.ini
-
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-neutron
 
@@ -830,6 +842,13 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/cisco/*.ini
 
 
+%files embrane
+%doc LICENSE
+%doc neutron/plugins/embrane/README
+%dir %{_sysconfdir}/neutron/plugins/embrane
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/embrane/*.ini
+
+
 %files hyperv
 %doc LICENSE
 #%%doc neutron/plugins/hyperv/README
@@ -966,6 +985,9 @@ fi
 
 
 %changelog
+* Mon Sep 15 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.5.b3
+- Split embrane pieces into separate plugin package.
+
 * Fri Sep 12 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.4.b3
 - Added radvd as a dependency for IPv6 address management.
 
