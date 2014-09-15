@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.5.b3%{?dist}
+Release:	0.6.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -86,8 +86,7 @@ Requires:	python-greenlet >= 0.3.2
 Requires:	python-httplib2 >= 0.7.5
 Requires:	python-iso8601 >= 0.1.9
 Requires:	python-jinja2
-# jsonrpclib is not packaged for Fedora
-#Requires:	python-jsonrpclib
+Requires:	python-jsonrpclib
 Requires:	python-keystoneclient >= 0.10.0
 Requires:	python-keystonemiddleware >= 1.0.0
 Requires:	python-kombu >= 2.4.8
@@ -98,8 +97,7 @@ Requires:	python-novaclient >= 2.17.0
 Requires:	python-oslo-config >= 1.4.0.0-0.1.a3
 Requires:	python-oslo-db >= 0.4.0
 Requires:	python-oslo-messaging >= 1.4.0.0-2.a3
-# in requirements.txt: oslo.rootwrap>=1.3.0.0a1
-Requires:	python-oslo-rootwrap
+Requires:	python-oslo-rootwrap >= 1.3.0.0-0.1.a1
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
 Requires:	python-qpid
@@ -985,6 +983,10 @@ fi
 
 
 %changelog
+* Mon Sep 15 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.6.b3
+- python-jsonrpclib is now available in Fedora.
+- python-oslo-rootwrap >= 1.3.0.0.a1 is now available in Fedora.
+
 * Mon Sep 15 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.5.b3
 - Split embrane pieces into separate plugin package.
 
