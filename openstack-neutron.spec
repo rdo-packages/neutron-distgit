@@ -806,6 +806,7 @@ fi
 %dir %{_datarootdir}/neutron/rootwrap
 %{_datarootdir}/neutron/rootwrap/debug.filters
 %{_datarootdir}/neutron/rootwrap/dhcp.filters
+%{_datarootdir}/neutron/rootwrap/ipset-firewall.filters
 %{_datarootdir}/neutron/rootwrap/iptables-firewall.filters
 %{_datarootdir}/neutron/rootwrap/l3.filters
 %{_datarootdir}/neutron/rootwrap/lbaas-haproxy.filters
@@ -985,6 +986,9 @@ fi
 
 
 %changelog
+* Tue Sep 16 2014 Derek Higgins <derekh@redhat.com> - XXX
+- Add rootwrap/ipset-firewall.filters
+
 * Fri Aug 22 2014 Derek Higgins <derekh@redhat.com> - XXX
 - Fixup README's for the bigswitch plugin
 
