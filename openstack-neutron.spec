@@ -108,6 +108,7 @@ Requires:	python-stevedore >= 0.14
 Requires:	python-six >= 1.7.0
 Requires:	python-webob >= 1.2.3
 Requires:	sudo
+Requires:	ipset
 
 
 
@@ -986,6 +987,9 @@ fi
 
 
 %changelog
+* Wed Sep 17 2014 Derek Higgins <derekh@redhat.com> - XXX
+- Also depend on the ipset package
+
 * Tue Sep 16 2014 Derek Higgins <derekh@redhat.com> - XXX
 - Add rootwrap/ipset-firewall.filters
 
