@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.6.b3%{?dist}
+Release:	0.7.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -33,6 +33,7 @@ Source30:	neutron-dist.conf
 # patches_base=2014.2.b3+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
+Patch0002: 0002-Forbid-regular-users-to-reset-admin-only-attrs-to-de.patch
 
 BuildArch:	noarch
 
@@ -472,6 +473,7 @@ IPSec.
 %setup -q -n neutron-%{version}.b2
 
 %patch0001 -p1
+%patch0002 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -983,6 +985,9 @@ fi
 
 
 %changelog
+* Thu Sep 25 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.7.b3
+- Forbid regular users to reset admin-only attrs to default values, rhbz#1142012
+
 * Mon Sep 15 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.6.b3
 - python-jsonrpclib is now available in Fedora.
 - python-oslo-rootwrap >= 1.3.0.0.a1 is now available in Fedora.
