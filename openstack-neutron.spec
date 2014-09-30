@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.7.b3%{?dist}
+Release:	0.8.b3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -985,6 +985,9 @@ fi
 
 
 %changelog
+* Tue Sep 30 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.8.b3
+- Removed service_providers from neutron-dist.conf, rhbz#1022725
+
 * Thu Sep 25 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.7.b3
 - Forbid regular users to reset admin-only attrs to default values, rhbz#1142012
 
