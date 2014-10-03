@@ -1,8 +1,10 @@
 %global release_name juno
 
+%global pre_release_version rc1
+
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.8.b3%{?dist}
+Release:	0.9.%{pre_release_version}%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,7 +13,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/juno-2/+download/neutron-%{version}.b2.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/juno-%{pre_release_version}/+download/neutron-%{version}.%{pre_release_version}.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source10:	neutron-server.service
@@ -27,13 +29,14 @@ Source19:	neutron-lbaas-agent.service
 Source20:	neutron-mlnx-agent.service
 Source21:	neutron-vpn-agent.service
 Source22:	neutron-metering-agent.service
+Source23:	neutron-sriov-nic-agent.service
+Source24:	neutron-cisco-cfg-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.2.b3+1
+# patches_base=2014.2.rc1+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
-Patch0002: 0002-Forbid-regular-users-to-reset-admin-only-attrs-to-de.patch
 
 BuildArch:	noarch
 
@@ -54,6 +57,11 @@ Requires:	dnsmasq-utils
 # radvd is not a hard requirement, but is currently the only option
 # for IPv6 deployments.
 Requires:	radvd
+
+# those are not hard requirements, but are used to implement firewall
+# drivers.
+Requires:	ipset
+Requires:	iptables
 
 Requires(pre):	shadow-utils
 Requires(post): systemd-units
@@ -82,7 +90,7 @@ Requires:	MySQL-python
 Requires:	python-alembic >= 0.6.4
 Requires:	python-anyjson >= 0.3.3
 Requires:	python-babel >= 1.3
-Requires:	python-eventlet >= 0.13.0
+Requires:	python-eventlet >= 0.15.1
 Requires:	python-greenlet >= 0.3.2
 Requires:	python-httplib2 >= 0.7.5
 Requires:	python-iso8601 >= 0.1.9
@@ -91,10 +99,10 @@ Requires:	python-jsonrpclib
 Requires:	python-keystoneclient >= 0.10.0
 Requires:	python-keystonemiddleware >= 1.0.0
 Requires:	python-kombu >= 2.4.8
-Requires:	python-netaddr >= 0.7.6
+Requires:	python-netaddr >= 0.7.12
 Requires:	python-neutronclient >= 2.3.6
 Conflicts:      python-neutronclient >= 3
-Requires:	python-novaclient >= 2.17.0
+Requires:	python-novaclient >= 2.18.0
 Requires:	python-oslo-config >= 1.4.0.0-0.1.a3
 Requires:	python-oslo-db >= 0.4.0
 Requires:	python-oslo-messaging >= 1.4.0.0-2.a3
@@ -319,6 +327,18 @@ This plugin implements Neutron v2 APIs with support for the ryu ofagent
 plugin.
 
 
+%package opencontrail
+Summary:       Neutron OpenContrail plugin
+Group:         Applications/system
+
+Requires:      openstack-neutron = %{version}-%{release}
+
+
+%description opencontrail
+This plugin implements Neutron v2 APIs with support for the OpenContrail
+plugin.
+
+
 %package vmware
 Summary:	Neutron Nicira plugin
 Group:		Applications/System
@@ -456,6 +476,20 @@ This package contains the neutron agent responsible for generating bandwidth
 utilization notifications.
 
 
+%package sriov-nic-agent
+Summary:       Neutron SR-IOV NIC agent
+Group:         Applications/system
+
+Requires:      openstack-neutron = %{version}-%{release}
+
+
+%description sriov-nic-agent
+Neutron allows to run virtual instances using SR-IOV NIC hardware
+
+This package contains the Neutron agent to support advanced features of
+SR-IOV network cards.
+
+
 %package vpn-agent
 Summary:	Neutron VPNaaS agent
 Group:		Applications/System
@@ -470,10 +504,9 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.b2
+%setup -q -n neutron-%{version}.%{pre_release_version}
 
 %patch0001 -p1
-%patch0002 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -551,6 +584,8 @@ install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-lbaas-agent.ser
 install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-mlnx-agent.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-vpn-agent.service
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-metering-agent.service
+install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
+install -p -D -m 644 %{SOURCE24} %{buildroot}%{_unitdir}/neutron-cisco-cfg-agent.service
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_datadir}/neutron
@@ -651,6 +686,22 @@ if [ -e %{_localstatedir}/lib/rpm-state/UPGRADE_FROM_QUANTUM ];then
 fi
 
 
+%preun cisco
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable neutron-cisco-cfg-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl stop neutron-cisco-cfg-agent.service > /dev/null 2>&1 || :
+fi
+
+
+%postun cisco
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart neutron-cisco-cfg-agent.service >/dev/null 2>&1 || :
+fi
+
+
 %preun linuxbridge
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
@@ -746,6 +797,22 @@ if [ $1 -ge 1 ] ; then
 fi
 
 
+%preun sriov-nic-agent
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable neutron-sriov-nic-agent.service > /dev/null 2>&1 || :
+    /bin/systemctl stop neutron-sriov-nic-agent.service > /dev/null 2>&1 || :
+fi
+
+
+%postun sriov-nic-agent
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart neutron-sriov-nic-agent.service >/dev/null 2>&1 || :
+fi
+
+
 %preun vpn-agent
 if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
@@ -807,6 +874,7 @@ fi
 %dir %{_datarootdir}/neutron/rootwrap
 %{_datarootdir}/neutron/rootwrap/debug.filters
 %{_datarootdir}/neutron/rootwrap/dhcp.filters
+%{_datarootdir}/neutron/rootwrap/ipset-firewall.filters
 %{_datarootdir}/neutron/rootwrap/iptables-firewall.filters
 %{_datarootdir}/neutron/rootwrap/l3.filters
 %{_datarootdir}/neutron/rootwrap/lbaas-haproxy.filters
@@ -824,8 +892,8 @@ fi
 %doc neutron/plugins/bigswitch/README
 %{_bindir}/neutron-restproxy-agent
 %dir %{_sysconfdir}/neutron/plugins/bigswitch
+%{_sysconfdir}/neutron/plugins/bigswitch/ssl
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/bigswitch/*.ini
-%doc %{_sysconfdir}/neutron/plugins/bigswitch/README
 
 
 %files brocade
@@ -838,6 +906,8 @@ fi
 %files cisco
 %doc LICENSE
 %doc neutron/plugins/cisco/README
+%{_bindir}/neutron-cisco-cfg-agent
+%{_unitdir}/neutron-cisco-cfg-agent.service
 %dir %{_sysconfdir}/neutron/plugins/cisco
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/cisco/*.ini
 
@@ -897,11 +967,13 @@ fi
 %dir %{_sysconfdir}/neutron/plugins/mlnx
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/mlnx/*.ini
 
+
 %files nuage
 %doc LICENSE
 %{python_sitelib}/neutron/plugins/nuage
 %dir %{_sysconfdir}/neutron/plugins/nuage
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nuage/*.ini
+
 
 %files ofagent
 %doc LICENSE
@@ -915,6 +987,14 @@ fi
 %dir %{_sysconfdir}/neutron/plugins/oneconvergence
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/oneconvergence/nvsdplugin.ini
 %{_bindir}/neutron-nvsd-agent
+
+
+%files opencontrail
+%doc LICENSE
+#%doc neutron/plugins/opencontrail/README
+%dir %{_sysconfdir}/neutron/plugins/opencontrail
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/opencontrail/*.ini
+
 
 %files openvswitch
 %doc LICENSE
@@ -976,6 +1056,12 @@ fi
 %{_bindir}/neutron-metering-agent
 
 
+%files sriov-nic-agent
+%doc LICENSE
+%{_unitdir}/neutron-sriov-nic-agent.service
+%{_bindir}/neutron-sriov-nic-agent
+
+
 %files vpn-agent
 %doc LICENSE
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/vpn_agent.ini
@@ -985,6 +1071,9 @@ fi
 
 
 %changelog
+* Fri Oct 03 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.9.rc1
+- Update to upstream 2014.2.rc1
+
 * Tue Sep 30 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.8.b3
 - Removed service_providers from neutron-dist.conf, rhbz#1022725
 
