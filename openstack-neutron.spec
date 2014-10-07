@@ -4,7 +4,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.9.%{pre_release_version}%{?dist}
+Release:	0.10.%{pre_release_version}%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -44,7 +44,7 @@ BuildRequires:	python2-devel
 BuildRequires:	python-d2to1
 BuildRequires:	python-pbr
 BuildRequires:	python-setuptools
-BuildRequires:	systemd-units
+BuildRequires:	systemd
 
 Requires:	python-neutron = %{version}-%{release}
 Requires:	openstack-utils
@@ -64,9 +64,9 @@ Requires:	ipset
 Requires:	iptables
 
 Requires(pre): shadow-utils
-Requires(post): systemd-units
-Requires(preun): systemd-units
-Requires(postun): systemd-units
+Requires(post): systemd
+Requires(preun): systemd
+Requires(postun): systemd
 
 
 %description
@@ -611,181 +611,99 @@ exit 0
 
 
 %post
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%systemd_post neutron-dhcp-agent.service
+%systemd_post neutron-l3-agent.service
+%systemd_post neutron-lbaas-agent.service
+%systemd_post neutron-metadata-agent.service
+%systemd_post neutron-server.service
 
 
 %preun
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-server.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-server.service > /dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable neutron-dhcp-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-dhcp-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable neutron-l3-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-l3-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable neutron-metadata-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-metadata-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable neutron-lbaas-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-lbaas-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-dhcp-agent.service
+%systemd_preun neutron-l3-agent.service
+%systemd_preun neutron-lbaas-agent.service
+%systemd_preun neutron-metadata-agent.service
+%systemd_preun neutron-server.service
 
 
 %postun
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-server.service >/dev/null 2>&1 || :
-    /bin/systemctl try-restart neutron-dhcp-agent.service >/dev/null 2>&1 || :
-    /bin/systemctl try-restart neutron-l3-agent.service >/dev/null 2>&1 || :
-    /bin/systemctl try-restart neutron-metadata-agent.service >/dev/null 2>&1 || :
-    /bin/systemctl try-restart neutron-lbaas-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-dhcp-agent.service
+%systemd_postun_with_restart neutron-l3-agent.service
+%systemd_postun_with_restart neutron-lbaas-agent.service
+%systemd_postun_with_restart neutron-metadata-agent.service
+%systemd_postun_with_restart neutron-server.service
 
 
 %preun cisco
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-cisco-cfg-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-cisco-cfg-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-cisco-cfg-agent.service
 
 
 %postun cisco
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-cisco-cfg-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-cisco-cfg-agent.service
 
 
 %preun linuxbridge
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-linuxbridge-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-linuxbridge-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-linuxbridge-agent.service
 
 
 %postun linuxbridge
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-linuxbridge-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-linuxbridge-agent.service
 
 
 %preun mellanox
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-mlnx-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-mlnx-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-mlnx-agent.service
 
 
 %postun mellanox
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-mlnx-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-mlnx-agent.service
 
 
 %preun nec
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-nec-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-nec-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-nec-agent.service
 
 
 %postun nec
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-nec-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-nec-agent.service
 
 
 %preun openvswitch
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-openvswitch-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-openvswitch-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-openvswitch-agent.service
 
 
 %postun openvswitch
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-openvswitch-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-openvswitch-agent.service
 
 
 %preun ryu
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-ryu-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-ryu-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-ryu-agent.service
 
 
 %postun ryu
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-ryu-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-ryu-agent.service
 
 
 %preun metering-agent
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-metering-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-metering-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-metering-agent.service
 
 
 %postun metering-agent
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-metering-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-metering-agent.service
 
 
 %preun sriov-nic-agent
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-sriov-nic-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-sriov-nic-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-sriov-nic-agent.service
 
 
 %postun sriov-nic-agent
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-sriov-nic-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-sriov-nic-agent.service
 
 
 %preun vpn-agent
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable neutron-vpn-agent.service > /dev/null 2>&1 || :
-    /bin/systemctl stop neutron-vpn-agent.service > /dev/null 2>&1 || :
-fi
+%systemd_preun neutron-vpn-agent.service
 
 
 %postun vpn-agent
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart neutron-vpn-agent.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart neutron-vpn-agent.service
 
 
 %files
@@ -1030,6 +948,9 @@ fi
 
 
 %changelog
+* Tue Oct 07 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.10.rc1
+- use macroized systemd scriptlets, rhbz#850253
+
 * Fri Oct 03 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.9.rc1
 - Update to upstream 2014.2.rc1
 
