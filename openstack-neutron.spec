@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.12.rc2%{?dist}
+Release:	0.13.rc2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -100,10 +100,10 @@ Requires:	python-netaddr >= 0.7.12
 Requires:	python-neutronclient >= 2.3.6
 Conflicts:	python-neutronclient >= 3
 Requires:	python-novaclient >= 2.18.0
-Requires:	python-oslo-config >= 1.4.0
+Requires:	python-oslo-config >= 2:1.4.0
 Requires:	python-oslo-db >= 1.0.0
-Requires:	python-oslo-messaging >= 1.4.0
-Requires:	python-oslo-rootwrap >= 1.3.0
+Requires:	python-oslo-messaging >= 1.4.0.0
+Requires:	python-oslo-rootwrap >= 1.3.0.0
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
 Requires:	python-qpid
@@ -945,6 +945,9 @@ exit 0
 
 
 %changelog
+* Fri Oct 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.13.rc2
+- Updated some of dependencies to reflect epoches and version numbers in Fedora
+
 * Fri Oct 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.12.rc2
 - Updated dependencies to reflect upstream requirements.txt
 
