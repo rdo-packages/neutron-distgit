@@ -1,10 +1,8 @@
 %global release_name juno
 
-%global pre_release_version rc1
-
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.10.%{pre_release_version}%{?dist}
+Release:	0.11.rc2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -13,7 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/juno-%{pre_release_version}/+download/neutron-%{version}.%{pre_release_version}.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/juno-rc2/+download/neutron-%{version}.rc2.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source10:	neutron-server.service
@@ -34,7 +32,7 @@ Source24:	neutron-cisco-cfg-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.2.rc1+1
+# patches_base=2014.2.rc2+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 
@@ -504,7 +502,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.%{pre_release_version}
+%setup -q -n neutron-%{version}.rc2
 
 %patch0001 -p1
 
@@ -948,6 +946,9 @@ exit 0
 
 
 %changelog
+* Fri Oct 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.11.rc2
+- Update to upstream 2014.2.rc2
+
 * Tue Oct 07 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.10.rc1
 - use macroized systemd scriptlets, rhbz#850253
 
