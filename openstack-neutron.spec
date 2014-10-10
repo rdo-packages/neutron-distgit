@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.11.rc2%{?dist}
+Release:	0.12.rc2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -96,15 +96,14 @@ Requires:	python-jinja2
 Requires:	python-jsonrpclib
 Requires:	python-keystoneclient >= 0.10.0
 Requires:	python-keystonemiddleware >= 1.0.0
-Requires:	python-kombu >= 2.4.8
 Requires:	python-netaddr >= 0.7.12
 Requires:	python-neutronclient >= 2.3.6
 Conflicts:	python-neutronclient >= 3
 Requires:	python-novaclient >= 2.18.0
-Requires:	python-oslo-config >= 1.4.0.0-0.1.a3
-Requires:	python-oslo-db >= 0.4.0
-Requires:	python-oslo-messaging >= 1.4.0.0-2.a3
-Requires:	python-oslo-rootwrap >= 1.3.0.0-0.1.a1
+Requires:	python-oslo-config >= 1.4.0
+Requires:	python-oslo-db >= 1.0.0
+Requires:	python-oslo-messaging >= 1.4.0
+Requires:	python-oslo-rootwrap >= 1.3.0
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
 Requires:	python-qpid
@@ -113,7 +112,7 @@ Requires:	python-routes >= 1.12.3
 Conflicts:	python-routes = 2.0
 Requires:	python-sqlalchemy >= 0.9.7
 Conflicts:	python-sqlalchemy >= 1.0
-Requires:	python-stevedore >= 0.14
+Requires:	python-stevedore >= 1.0.0
 Requires:	python-six >= 1.7.0
 Requires:	python-webob >= 1.2.3
 Requires:	sudo
@@ -946,6 +945,9 @@ exit 0
 
 
 %changelog
+* Fri Oct 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.12.rc2
+- Updated dependencies to reflect upstream requirements.txt
+
 * Fri Oct 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.11.rc2
 - Update to upstream 2014.2.rc2
 
