@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.13.rc2%{?dist}
+Release:	0.14.rc3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -11,7 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/neutron/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/juno-rc2/+download/neutron-%{version}.rc2.tar.gz
+Source0:	http://launchpad.net/neutron/%{release_name}/juno-rc3/+download/neutron-%{version}.rc3.tar.gz
 Source1:	neutron.logrotate
 Source2:	neutron-sudoers
 Source10:	neutron-server.service
@@ -32,7 +32,7 @@ Source24:	neutron-cisco-cfg-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.2.rc2+1
+# patches_base=2014.2.rc3+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 
@@ -501,7 +501,7 @@ IPSec.
 
 
 %prep
-%setup -q -n neutron-%{version}.rc2
+%setup -q -n neutron-%{version}.rc3
 
 %patch0001 -p1
 
@@ -945,6 +945,9 @@ exit 0
 
 
 %changelog
+* Wed Oct 15 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.14.rc3
+- Update to upstream 2014.2.rc3
+
 * Fri Oct 10 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.13.rc2
 - Updated some of dependencies to reflect epoches and version numbers in Fedora
 
