@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	0.14.rc3%{?dist}
+Release:	0.15.rc3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -29,6 +29,7 @@ Source21:	neutron-vpn-agent.service
 Source22:	neutron-metering-agent.service
 Source23:	neutron-sriov-nic-agent.service
 Source24:	neutron-cisco-cfg-agent.service
+Source25:	neutron-netns-cleanup.service
 
 Source30:	neutron-dist.conf
 #
@@ -581,6 +582,7 @@ install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-vpn-agent.servi
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-metering-agent.service
 install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
 install -p -D -m 644 %{SOURCE24} %{buildroot}%{_unitdir}/neutron-cisco-cfg-agent.service
+install -p -D -m 644 %{SOURCE25} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_datadir}/neutron
@@ -727,6 +729,7 @@ exit 0
 %{_unitdir}/neutron-lbaas-agent.service
 %{_unitdir}/neutron-metadata-agent.service
 %{_unitdir}/neutron-server.service
+%{_unitdir}/neutron-netns-cleanup.service
 %dir %{_sysconfdir}/neutron
 %{_sysconfdir}/neutron/release
 %attr(-, root, neutron) %{_datadir}/neutron/neutron-dist.conf
@@ -945,6 +948,12 @@ exit 0
 
 
 %changelog
+* Thu Oct 16 2014 Miguel Ángel Ajo <majopela@redhat.com> 2014.2-0.15.rc3
+- neutron-netns-cleanup (network namespaces cleanup) service definition added.
+- Enables RemainAfterExit for the oneshot neutron-ovs-cleanup script,
+  to make it compatible with manual pacemaker deployments as an agents
+  pre/post.
+
 * Wed Oct 15 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-0.14.rc3
 - Update to upstream 2014.2.rc3
 
