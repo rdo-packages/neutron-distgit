@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -730,6 +730,7 @@ exit 0
 %{_unitdir}/neutron-metadata-agent.service
 %{_unitdir}/neutron-server.service
 %{_unitdir}/neutron-netns-cleanup.service
+%{_unitdir}/neutron-ovs-cleanup.service
 %dir %{_sysconfdir}/neutron
 %{_sysconfdir}/neutron/release
 %attr(-, root, neutron) %{_datadir}/neutron/neutron-dist.conf
@@ -895,7 +896,6 @@ exit 0
 %doc neutron/plugins/openvswitch/README
 %{_bindir}/neutron-openvswitch-agent
 %{_unitdir}/neutron-openvswitch-agent.service
-%{_unitdir}/neutron-ovs-cleanup.service
 %{_datarootdir}/neutron/rootwrap/openvswitch-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/openvswitch
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/openvswitch/*.ini
@@ -948,6 +948,9 @@ exit 0
 
 
 %changelog
+* Fri Oct 17 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-2
+- Moved neutron-ovs-cleanup systemd service file into base package too.
+
 * Fri Oct 17 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-1
 - Update to upstream 2014.2
 
