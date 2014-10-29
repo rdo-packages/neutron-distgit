@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	3%{?dist}
+Release:	4%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -748,8 +748,8 @@ exit 0
 %dir %{_sysconfdir}/neutron/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
 %config %{_sysconfdir}/sudoers.d/neutron
-%dir %attr(0755, neutron, neutron) %{_sharedstatedir}/neutron
-%dir %attr(0755, neutron, neutron) %{_localstatedir}/log/neutron
+%dir %attr(0750, neutron, neutron) %{_sharedstatedir}/neutron
+%dir %attr(0750, neutron, neutron) %{_localstatedir}/log/neutron
 %dir %{_datarootdir}/neutron
 %dir %{_datarootdir}/neutron/rootwrap
 %{_datarootdir}/neutron/rootwrap/debug.filters
@@ -950,6 +950,11 @@ exit 0
 
 
 %changelog
+* Wed Oct 29 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-4
+- Made /var/log/neutron and /var/lib/neutron permissions more strict
+  (0755 -> 0750) since those directories may contain sensitive data,
+  rhbz#1149688
+
 * Wed Oct 29 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-3
 - Create DHCP port for IPv6 subnet, bz#1158507
 
