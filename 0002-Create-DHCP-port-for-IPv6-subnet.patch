@@ -1,0 +1,77 @@
+From e60e43be81fde4092a1dbb0b4fb6e2ede516165e Mon Sep 17 00:00:00 2001
+From: Xu Han Peng <xuhanp@cn.ibm.com>
+Date: Wed, 24 Sep 2014 17:37:23 +0800
+Subject: [PATCH] Create DHCP port for IPv6 subnet
+
+There is a bug in dhcp agent code that when first port is created
+in an IPv6 subnet, DHCP port is not automatically created.
+
+This fix resolves this problem by removing the IP version check
+in configure_dhcp_for_network method.
+
+Change-Id: If3f405d367a7099d9f33d72d11ffcb7a393abe23
+Closes-Bug: #1367500
+(cherry picked from commit 1b66e11b5d8c0b3de0610ca02c3e10b6f64ae375)
+(cherry picked from commit 8575fe95a6f1b46fb8ad645f26928471d5f53c9e)
+---
+ neutron/agent/dhcp_agent.py           |  5 +++--
+ neutron/tests/unit/test_dhcp_agent.py | 15 +++++++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/neutron/agent/dhcp_agent.py b/neutron/agent/dhcp_agent.py
+index 5a501fa..c8ea89b 100644
+--- a/neutron/agent/dhcp_agent.py
++++ b/neutron/agent/dhcp_agent.py
+@@ -227,9 +227,10 @@ class DhcpAgent(manager.Manager):
+                 self.conf, network)
+ 
+         for subnet in network.subnets:
+-            if subnet.enable_dhcp and subnet.ip_version == 4:
++            if subnet.enable_dhcp:
+                 if self.call_driver('enable', network):
+-                    if self.conf.use_namespaces and enable_metadata:
++                    if (subnet.ip_version == 4 and self.conf.use_namespaces
++                        and enable_metadata):
+                         self.enable_isolated_metadata_proxy(network)
+                         enable_metadata = False  # Don't trigger twice
+                     self.cache.put(network)
+diff --git a/neutron/tests/unit/test_dhcp_agent.py b/neutron/tests/unit/test_dhcp_agent.py
+index c6f9864..5e02428 100644
+--- a/neutron/tests/unit/test_dhcp_agent.py
++++ b/neutron/tests/unit/test_dhcp_agent.py
+@@ -64,6 +64,12 @@ fake_subnet3 = dhcp.DictModel(dict(id='bbbbbbbb-1111-2222-bbbbbbbbbbbb',
+                               network_id='12345678-1234-5678-1234567890ab',
+                               cidr='192.168.1.1/24', enable_dhcp=True))
+ 
++fake_ipv6_subnet = dhcp.DictModel(dict(id='bbbbbbbb-1111-2222-bbbbbbbbbbbb',
++                              network_id='12345678-1234-5678-1234567890ab',
++                              cidr='2001:0db8::1:0:0:1/128', enable_dhcp=True,
++                              tenant_id=fake_tenant_id,
++                              gateway_ip='2001:0db8::1:0:0:1', ip_version=6))
++
+ fake_meta_subnet = dhcp.DictModel(dict(id='bbbbbbbb-1111-2222-bbbbbbbbbbbb',
+                                   network_id='12345678-1234-5678-1234567890ab',
+                                   cidr='169.254.169.252/30',
+@@ -104,6 +110,12 @@ fake_network = dhcp.NetModel(True, dict(id='12345678-1234-5678-1234567890ab',
+                              subnets=[fake_subnet1, fake_subnet2],
+                              ports=[fake_port1]))
+ 
++fake_network_ipv6 = dhcp.NetModel(True, dict(
++                             id='12345678-1234-5678-1234567890ab',
++                             tenant_id='aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaa',
++                             admin_state_up=True,
++                             subnets=[fake_ipv6_subnet]))
++
+ isolated_network = dhcp.NetModel(
+     True, dict(
+         id='12345678-1234-5678-1234567890ab',
+@@ -555,6 +567,9 @@ class TestDhcpAgentEventHandler(base.BaseTestCase):
+     def test_enable_dhcp_helper(self):
+         self._enable_dhcp_helper(fake_network)
+ 
++    def test_enable_dhcp_helper_ipv6_network(self):
++        self._enable_dhcp_helper(fake_network_ipv6)
++
+     def test_enable_dhcp_helper_down_network(self):
+         self.plugin.get_network_info.return_value = fake_down_network
+         self.dhcp.enable_dhcp_helper(fake_down_network.id)

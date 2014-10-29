@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -36,6 +36,7 @@ Source30:	neutron-dist.conf
 # patches_base=+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
+Patch0002: 0002-Create-DHCP-port-for-IPv6-subnet.patch
 
 BuildArch:	noarch
 
@@ -505,6 +506,7 @@ IPSec.
 %setup -q -n neutron-%{version}
 
 %patch0001 -p1
+%patch0002 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -948,6 +950,9 @@ exit 0
 
 
 %changelog
+* Wed Oct 29 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-3
+- Create DHCP port for IPv6 subnet, bz#1158507
+
 * Fri Oct 17 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-2
 - Moved neutron-ovs-cleanup systemd service file into base package too.
 
