@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	4%{?dist}
+Release:	5%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -57,6 +57,10 @@ Requires:	dnsmasq-utils
 # radvd is not a hard requirement, but is currently the only option
 # for IPv6 deployments.
 Requires:	radvd
+
+# conntrack is not a hard requirement, but is currently used by L3 agent
+# to immediately drop connections after a floating IP is disassociated
+Requires:	conntrack-tools
 
 # those are not hard requirements, but are used to implement firewall
 # drivers.
@@ -950,6 +954,9 @@ exit 0
 
 
 %changelog
+* Fri Oct 31 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-5
+- added conntrack-tools as runtime dependency for L3 agent, rhbz#1158871
+
 * Wed Oct 29 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-4
 - Made /var/log/neutron and /var/lib/neutron permissions more strict
   (0755 -> 0750) since those directories may contain sensitive data,
