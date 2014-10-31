@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	5%{?dist}
+Release:	6%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -61,6 +61,10 @@ Requires:	radvd
 # conntrack is not a hard requirement, but is currently used by L3 agent
 # to immediately drop connections after a floating IP is disassociated
 Requires:	conntrack-tools
+
+# keepalived is not a hard requirement, but is currently used by DVR L3
+# agent
+Requires:	keepalived
 
 # those are not hard requirements, but are used to implement firewall
 # drivers.
@@ -954,6 +958,9 @@ exit 0
 
 
 %changelog
+* Fri Oct 31 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-6
+- added keepalived as runtime dependency for L3 agent
+
 * Fri Oct 31 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-5
 - added conntrack-tools as runtime dependency for L3 agent, rhbz#1158871
 
