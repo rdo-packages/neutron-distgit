@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	7%{?dist}
+Release:	8%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -30,8 +30,13 @@ Source22:	neutron-metering-agent.service
 Source23:	neutron-sriov-nic-agent.service
 Source24:	neutron-cisco-cfg-agent.service
 Source25:	neutron-netns-cleanup.service
+Source26:	neutron-netns-cleanup.init
+Source27:	neutron-ovs-cleanup.init
+Source28:	NetnsCleanup.ocf_ra
+Source29:	OVSCleanup.ocf_ra
+Source30:	NeutronScale.ocf_ra
 
-Source30:	neutron-dist.conf
+Source40:	neutron-dist.conf
 #
 # patches_base=+1
 #
@@ -546,7 +551,7 @@ while read name eq value; do
   else
     sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/neutron.conf
   fi
-done < %{SOURCE30}
+done < %{SOURCE40}
 
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
@@ -594,6 +599,13 @@ install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent
 install -p -D -m 644 %{SOURCE24} %{buildroot}%{_unitdir}/neutron-cisco-cfg-agent.service
 install -p -D -m 644 %{SOURCE25} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
 
+# Install scripts for pacemaker support
+install -p -D -m 755 %{SOURCE26} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
+install -p -D -m 755 %{SOURCE27} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
+install -p -D -m 755 %{SOURCE28} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NetnsCleanup
+install -p -D -m 755 %{SOURCE29} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/OVSCleanup
+install -p -D -m 755 %{SOURCE30} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
+
 # Setup directories
 install -d -m 755 %{buildroot}%{_datadir}/neutron
 install -d -m 755 %{buildroot}%{_sharedstatedir}/neutron
@@ -601,7 +613,7 @@ install -d -m 755 %{buildroot}%{_localstatedir}/log/neutron
 install -d -m 755 %{buildroot}%{_localstatedir}/run/neutron
 
 # Install dist conf
-install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
+install -p -D -m 640 %{SOURCE40} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
 
 # Install version info file
 cat > %{buildroot}%{_sysconfdir}/neutron/release <<EOF
@@ -733,6 +745,12 @@ exit 0
 %{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
+
+%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
+%{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
+%{_prefix}/lib/ocf/resource.d/neutron/NetnsCleanup
+%{_prefix}/lib/ocf/resource.d/neutron/OVSCleanup
+%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
 
 %{_unitdir}/neutron-dhcp-agent.service
 %{_unitdir}/neutron-l3-agent.service
@@ -958,6 +976,9 @@ exit 0
 
 
 %changelog
+* Tue Nov 11 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-8
+- Added pacemaker OCF resources
+
 * Tue Nov 11 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-7
 - don't kill children of agents, rhbz#1063427
 
