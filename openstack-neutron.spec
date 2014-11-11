@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	6%{?dist}
+Release:	7%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -958,6 +958,9 @@ exit 0
 
 
 %changelog
+* Tue Nov 11 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-7
+- don't kill children of agents, rhbz#1063427
+
 * Fri Oct 31 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-6
 - added keepalived as runtime dependency for L3 agent
 
