@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	8%{?dist}
+Release:	9%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -774,7 +774,7 @@ exit 0
 %dir %{_sysconfdir}/neutron/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
 %config %{_sysconfdir}/sudoers.d/neutron
-%dir %attr(0750, neutron, neutron) %{_sharedstatedir}/neutron
+%dir %attr(0755, neutron, neutron) %{_sharedstatedir}/neutron
 %dir %attr(0750, neutron, neutron) %{_localstatedir}/log/neutron
 %dir %{_datarootdir}/neutron
 %dir %{_datarootdir}/neutron/rootwrap
@@ -976,6 +976,10 @@ exit 0
 
 
 %changelog
+* Thu Nov 13 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-9
+- Revert to 755 permissions for /var/lib/neutron since dnsmasq drops
+  'neutron' user and runs as 'nobody' by default, rhbz#1163759
+
 * Tue Nov 11 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-8
 - Added pacemaker OCF resources
 
