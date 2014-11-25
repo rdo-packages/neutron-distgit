@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	9%{?dist}
+Release:	10%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -41,7 +41,7 @@ Source40:	neutron-dist.conf
 # patches_base=+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
-Patch0002: 0002-Create-DHCP-port-for-IPv6-subnet.patch
+Patch0002: 0002-Drop-and-recreate-FK-if-adding-new-PK-to-routerl3bin.patch
 
 BuildArch:	noarch
 
@@ -976,6 +976,11 @@ exit 0
 
 
 %changelog
+* Tue Nov 25 2014 Alan Pevec <apevec@redhat.com> 2014.2-10
+- Drop and recreate FK to support MariaDB 10, rhbz#1157599
+- Drop "Create DHCP port for IPv6 subnet" due to regression:
+  https://bugs.launchpad.net/neutron/+bug/1392564
+
 * Thu Nov 13 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-9
 - Revert to 755 permissions for /var/lib/neutron since dnsmasq drops
   'neutron' user and runs as 'nobody' by default, rhbz#1163759
