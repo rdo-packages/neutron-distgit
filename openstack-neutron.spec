@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2
-Release:	10%{?dist}
+Release:	11%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -42,6 +42,7 @@ Source40:	neutron-dist.conf
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 Patch0002: 0002-Drop-and-recreate-FK-if-adding-new-PK-to-routerl3bin.patch
+Patch0003: 0003-Fix-hostname-regex-pattern.patch
 
 BuildArch:	noarch
 
@@ -520,6 +521,7 @@ IPSec.
 
 %patch0001 -p1
 %patch0002 -p1
+%patch0003 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -976,6 +978,9 @@ exit 0
 
 
 %changelog
+* Tue Nov 25 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-11
+- CVE-2014-7821: Fix hostname regex pattern, rhbz#1165886, rhbz#1165887
+
 * Tue Nov 25 2014 Alan Pevec <apevec@redhat.com> 2014.2-10
 - Drop and recreate FK to support MariaDB 10, rhbz#1157599
 - Drop "Create DHCP port for IPv6 subnet" due to regression:
