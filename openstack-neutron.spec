@@ -17,7 +17,6 @@ Source2:	neutron-sudoers
 Source10:	neutron-server.service
 Source11:	neutron-linuxbridge-agent.service
 Source12:	neutron-openvswitch-agent.service
-Source13:	neutron-ryu-agent.service
 Source14:	neutron-nec-agent.service
 Source15:	neutron-dhcp-agent.service
 Source16:	neutron-l3-agent.service
@@ -438,24 +437,6 @@ This package contains the Neutron plugin that implements virtual
 networks using the PLUMgrid platform.
 
 
-%package ryu
-Summary:	Neutron Ryu plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-ryu = %{version}-%{release}
-Obsoletes:	openstack-quantum-ryu < 2013.2-0.4.b3
-
-Requires:	openstack-neutron = %{version}-%{release}
-
-
-%description ryu
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using the Ryu Network Operating System.
-
-
 %package vmware
 Summary:	Neutron Nicira plugin
 Group:		Applications/System
@@ -583,7 +564,6 @@ install -p -D -m 440 %{SOURCE2} %{buildroot}%{_sysconfdir}/sudoers.d/neutron
 install -p -D -m 644 %{SOURCE10} %{buildroot}%{_unitdir}/neutron-server.service
 install -p -D -m 644 %{SOURCE11} %{buildroot}%{_unitdir}/neutron-linuxbridge-agent.service
 install -p -D -m 644 %{SOURCE12} %{buildroot}%{_unitdir}/neutron-openvswitch-agent.service
-install -p -D -m 644 %{SOURCE13} %{buildroot}%{_unitdir}/neutron-ryu-agent.service
 install -p -D -m 644 %{SOURCE14} %{buildroot}%{_unitdir}/neutron-nec-agent.service
 install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/neutron-dhcp-agent.service
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/neutron-l3-agent.service
@@ -691,14 +671,6 @@ exit 0
 
 %postun openvswitch
 %systemd_postun_with_restart neutron-openvswitch-agent.service
-
-
-%preun ryu
-%systemd_preun neutron-ryu-agent.service
-
-
-%postun ryu
-%systemd_postun_with_restart neutron-ryu-agent.service
 
 
 %preun metering-agent
@@ -935,16 +907,6 @@ exit 0
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/plumgrid/*.ini
 
 
-%files ryu
-%doc LICENSE
-%doc neutron/plugins/ryu/README
-%{_bindir}/neutron-ryu-agent
-%{_unitdir}/neutron-ryu-agent.service
-%{_datarootdir}/neutron/rootwrap/ryu-plugin.filters
-%dir %{_sysconfdir}/neutron/plugins/ryu
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ryu/*.ini
-
-
 %files vmware
 %doc LICENSE
 %{_bindir}/neutron-check-nsx-config
@@ -975,6 +937,9 @@ exit 0
 
 
 %changelog
+* Wed Dec 3 2014 Dan Prince <dprince@redhat.com> XXX
+- The ryu plugin has been removed.
+
 * Thu Nov 13 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-9
 - Revert to 755 permissions for /var/lib/neutron since dnsmasq drops
   'neutron' user and runs as 'nobody' by default, rhbz#1163759
