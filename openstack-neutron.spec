@@ -166,6 +166,7 @@ Provides:	openstack-quantum-brocade = %{version}-%{release}
 Obsoletes:	openstack-quantum-brocade < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
+Requires:	python-ncclient
 
 
 %description brocade
@@ -184,6 +185,7 @@ Provides:	openstack-quantum-cisco = %{version}-%{release}
 Obsoletes:	openstack-quantum-cisco < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
+Requires:	python-ncclient
 
 
 %description cisco
@@ -320,6 +322,8 @@ Provides:	openstack-quantum-ml2 = %{version}-%{release}
 Obsoletes:	openstack-quantum-ml2 < 2013.2-0.4.b3
 
 Requires:	openstack-neutron = %{version}-%{release}
+# needed for brocade and cisco drivers
+Requires:	python-ncclient
 
 
 %description ml2
@@ -937,7 +941,11 @@ exit 0
 
 
 %changelog
-* Wed Dec 3 2014 Dan Prince <dprince@redhat.com> XXX
+* Mon Dec 08 2014 Ihar Hrachyshka <ihrachys@redhat.com> XXX
+- Added missing python-ncclient dependency to brocade, cisco, and ml2
+  plugins, rhbz#1125978
+
+* Wed Dec 03 2014 Dan Prince <dprince@redhat.com> XXX
 - The ryu plugin has been removed.
 
 * Thu Nov 13 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-9
