@@ -1,8 +1,8 @@
 %global release_name juno
 
 Name:		openstack-neutron
-Version:	2014.2
-Release:	11%{?dist}
+Version:	2014.2.1
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -41,8 +41,6 @@ Source40:	neutron-dist.conf
 # patches_base=+1
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
-Patch0002: 0002-Drop-and-recreate-FK-if-adding-new-PK-to-routerl3bin.patch
-Patch0003: 0003-Fix-hostname-regex-pattern.patch
 
 BuildArch:	noarch
 
@@ -520,8 +518,6 @@ IPSec.
 %setup -q -n neutron-%{version}
 
 %patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -978,6 +974,9 @@ exit 0
 
 
 %changelog
+* Fri Dec 05 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2.1-1
+- Update to upstream 2014.2.1
+
 * Tue Nov 25 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2-11
 - CVE-2014-7821: Fix hostname regex pattern, rhbz#1165886, rhbz#1165887
 
