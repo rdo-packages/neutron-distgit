@@ -22,20 +22,18 @@ Source15:	neutron-dhcp-agent.service
 Source16:	neutron-l3-agent.service
 Source17:	neutron-metadata-agent.service
 Source18:	neutron-ovs-cleanup.service
-Source19:	neutron-lbaas-agent.service
-Source20:	neutron-mlnx-agent.service
-Source21:	neutron-vpn-agent.service
-Source22:	neutron-metering-agent.service
-Source23:	neutron-sriov-nic-agent.service
-Source24:	neutron-cisco-cfg-agent.service
-Source25:	neutron-netns-cleanup.service
-Source26:	neutron-netns-cleanup.init
-Source27:	neutron-ovs-cleanup.init
-Source28:	NetnsCleanup.ocf_ra
-Source29:	OVSCleanup.ocf_ra
-Source30:	NeutronScale.ocf_ra
+Source19:	neutron-mlnx-agent.service
+Source20:	neutron-metering-agent.service
+Source21:	neutron-sriov-nic-agent.service
+Source22:	neutron-cisco-cfg-agent.service
+Source23:	neutron-netns-cleanup.service
+Source24:	neutron-netns-cleanup.init
+Source25:	neutron-ovs-cleanup.init
+Source26:	NetnsCleanup.ocf_ra
+Source27:	OVSCleanup.ocf_ra
+Source28:	NeutronScale.ocf_ra
 
-Source40:	neutron-dist.conf
+Source30:	neutron-dist.conf
 #
 # patches_base=+1
 #
@@ -482,19 +480,6 @@ This package contains the Neutron agent to support advanced features of
 SR-IOV network cards.
 
 
-%package vpn-agent
-Summary:	Neutron VPNaaS agent
-Group:		Applications/System
-
-Requires:	openstack-neutron = %{version}-%{release}
-
-%description vpn-agent
-Neutron provides an API to implement VPN as a service
-
-This package contains the Neutron agent responsible for implementing VPNaaS with
-IPSec.
-
-
 %prep
 %setup -q -n neutron-%{upstream_version}
 
@@ -530,7 +515,7 @@ while read name eq value; do
   else
     sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/neutron.conf
   fi
-done < %{SOURCE40}
+done < %{SOURCE30}
 
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
@@ -554,6 +539,14 @@ mv %{buildroot}/usr/etc/neutron/* %{buildroot}%{_sysconfdir}/neutron
 mv %{buildroot}%{_sysconfdir}/neutron/api-paste.ini %{buildroot}%{_datadir}/neutron/api-paste.ini
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/plugins/*/*.ini
 
+# those files do not belong here but to appropriate neutron-*aas repositories
+# TODO(ihrachyshka): remove once https://review.openstack.org/142756 is merged
+rm -f %{buildroot}%{_sysconfdir}/neutron/fwaas_driver.ini
+rm -f %{buildroot}%{_sysconfdir}/neutron/lbaas_agent.ini
+rm -f %{buildroot}%{_sysconfdir}/neutron/vpn_agent.ini
+rm -f %{buildroot}%{_bindir}/neutron-lbaas-agent
+rm -f %{buildroot}%{_bindir}/neutron-vpn-agent
+
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-neutron
 
@@ -569,20 +562,18 @@ install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/neutron-dhcp-agent.serv
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/neutron-l3-agent.service
 install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/neutron-metadata-agent.service
 install -p -D -m 644 %{SOURCE18} %{buildroot}%{_unitdir}/neutron-ovs-cleanup.service
-install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-lbaas-agent.service
-install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-mlnx-agent.service
-install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-vpn-agent.service
-install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-metering-agent.service
-install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
-install -p -D -m 644 %{SOURCE24} %{buildroot}%{_unitdir}/neutron-cisco-cfg-agent.service
-install -p -D -m 644 %{SOURCE25} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
+install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-mlnx-agent.service
+install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-metering-agent.service
+install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
+install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-cisco-cfg-agent.service
+install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
 
 # Install scripts for pacemaker support
-install -p -D -m 755 %{SOURCE26} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
-install -p -D -m 755 %{SOURCE27} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
-install -p -D -m 755 %{SOURCE28} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NetnsCleanup
-install -p -D -m 755 %{SOURCE29} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/OVSCleanup
-install -p -D -m 755 %{SOURCE30} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
+install -p -D -m 755 %{SOURCE24} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
+install -p -D -m 755 %{SOURCE25} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
+install -p -D -m 755 %{SOURCE26} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NetnsCleanup
+install -p -D -m 755 %{SOURCE27} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/OVSCleanup
+install -p -D -m 755 %{SOURCE28} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_datadir}/neutron
@@ -591,7 +582,7 @@ install -d -m 755 %{buildroot}%{_localstatedir}/log/neutron
 install -d -m 755 %{buildroot}%{_localstatedir}/run/neutron
 
 # Install dist conf
-install -p -D -m 640 %{SOURCE40} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
+install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
 
 # Install version info file
 cat > %{buildroot}%{_sysconfdir}/neutron/release <<EOF
@@ -612,7 +603,6 @@ exit 0
 %post
 %systemd_post neutron-dhcp-agent.service
 %systemd_post neutron-l3-agent.service
-%systemd_post neutron-lbaas-agent.service
 %systemd_post neutron-metadata-agent.service
 %systemd_post neutron-server.service
 
@@ -620,7 +610,6 @@ exit 0
 %preun
 %systemd_preun neutron-dhcp-agent.service
 %systemd_preun neutron-l3-agent.service
-%systemd_preun neutron-lbaas-agent.service
 %systemd_preun neutron-metadata-agent.service
 %systemd_preun neutron-server.service
 
@@ -628,7 +617,6 @@ exit 0
 %postun
 %systemd_postun_with_restart neutron-dhcp-agent.service
 %systemd_postun_with_restart neutron-l3-agent.service
-%systemd_postun_with_restart neutron-lbaas-agent.service
 %systemd_postun_with_restart neutron-metadata-agent.service
 %systemd_postun_with_restart neutron-server.service
 
@@ -689,14 +677,6 @@ exit 0
 %systemd_postun_with_restart neutron-sriov-nic-agent.service
 
 
-%preun vpn-agent
-%systemd_preun neutron-vpn-agent.service
-
-
-%postun vpn-agent
-%systemd_postun_with_restart neutron-vpn-agent.service
-
-
 %files
 %doc LICENSE
 %doc README.rst
@@ -705,7 +685,6 @@ exit 0
 %{_bindir}/neutron-debug
 %{_bindir}/neutron-dhcp-agent
 %{_bindir}/neutron-l3-agent
-%{_bindir}/neutron-lbaas-agent
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ns-metadata-proxy
@@ -724,7 +703,6 @@ exit 0
 
 %{_unitdir}/neutron-dhcp-agent.service
 %{_unitdir}/neutron-l3-agent.service
-%{_unitdir}/neutron-lbaas-agent.service
 %{_unitdir}/neutron-metadata-agent.service
 %{_unitdir}/neutron-server.service
 %{_unitdir}/neutron-netns-cleanup.service
@@ -734,10 +712,8 @@ exit 0
 %attr(-, root, neutron) %{_datadir}/neutron/neutron-dist.conf
 %attr(-, root, neutron) %{_datadir}/neutron/api-paste.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/dhcp_agent.ini
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/fwaas_driver.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/l3_agent.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metadata_agent.ini
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/lbaas_agent.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/policy.json
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/neutron.conf
 %config(noreplace) %{_sysconfdir}/neutron/rootwrap.conf
@@ -755,6 +731,7 @@ exit 0
 %{_datarootdir}/neutron/rootwrap/l3.filters
 %{_datarootdir}/neutron/rootwrap/lbaas-haproxy.filters
 %{_datarootdir}/neutron/rootwrap/ofagent.filters
+%{_datarootdir}/neutron/rootwrap/vpnaas.filters
 
 
 %files -n python-neutron
@@ -926,14 +903,6 @@ exit 0
 %doc LICENSE
 %{_unitdir}/neutron-sriov-nic-agent.service
 %{_bindir}/neutron-sriov-nic-agent
-
-
-%files vpn-agent
-%doc LICENSE
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/vpn_agent.ini
-%{_unitdir}/neutron-vpn-agent.service
-%{_bindir}/neutron-vpn-agent
-%{_datarootdir}/neutron/rootwrap/vpnaas.filters
 
 
 %changelog
