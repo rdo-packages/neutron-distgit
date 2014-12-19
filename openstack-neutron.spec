@@ -801,6 +801,7 @@ fi
 %changelog
 * Mon Oct 19 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-2.el7
 - Update the path to the ovs plugin configuration, rhbz#1270325
+- Fix netns-cleanup not killing radvd or keepalived rhbz#1268244 rhbz#1175251
 
 * Mon Oct 19 2015 Alan Pevec <alan.pevec@redhat.com> 1:7.0.0-1
 - Update to 7.0.0
