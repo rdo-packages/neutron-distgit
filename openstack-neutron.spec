@@ -145,6 +145,20 @@ networks.
 This package contains the Neutron Python library.
 
 
+%package -n python-neutron-tests
+Summary:	Neutron tests
+Group:		Applications/System
+
+Requires:	openstack-neutron = %{version}-%{release}
+
+
+%description -n python-neutron-tests
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains Neutron test files.
+
+
 %package bigswitch
 Summary:	Neutron Big Switch plugin
 Group:		Applications/System
@@ -536,9 +550,6 @@ done < %{SOURCE30}
 rm -rf %{buildroot}%{python_sitelib}/bin
 rm -rf %{buildroot}%{python_sitelib}/doc
 rm -rf %{buildroot}%{python_sitelib}/tools
-rm -rf %{buildroot}%{python_sitelib}/neutron/tests
-rm -rf %{buildroot}%{python_sitelib}/neutron/plugins/*/tests
-rm -f %{buildroot}%{python_sitelib}/neutron/plugins/*/run_tests.*
 rm %{buildroot}/usr/etc/init.d/neutron-server
 
 # Move rootwrap files to proper location
@@ -746,11 +757,16 @@ exit 0
 %{_datarootdir}/neutron/rootwrap/vpnaas.filters
 
 
+%files -n python-neutron-tests
+%{python_sitelib}/neutron/tests
+
+
 %files -n python-neutron
 %doc LICENSE
 %doc README.rst
 %{python_sitelib}/neutron
 %{python_sitelib}/neutron-*.egg-info
+%exclude %{python_sitelib}/neutron/tests
 
 
 %files bigswitch
