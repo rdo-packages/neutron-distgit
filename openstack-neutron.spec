@@ -78,9 +78,9 @@ Requires(preun): systemd
 Requires(postun): systemd
 
 # TODO(ihrachyshka): remove upgrade dependencies after Kilo
-Requires:	openstack-neutron-fwaas >= %{version}
-Requires:	openstack-neutron-lbaas >= %{version}
-Requires:	openstack-neutron-vpnaas >= %{version}
+#Requires:	openstack-neutron-fwaas >= %{version}
+#Requires:	openstack-neutron-lbaas >= %{version}
+#Requires:	openstack-neutron-vpnaas >= %{version}
 
 
 %description
