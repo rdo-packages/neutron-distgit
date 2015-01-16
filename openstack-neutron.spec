@@ -752,9 +752,7 @@ exit 0
 %{_datarootdir}/neutron/rootwrap/ipset-firewall.filters
 %{_datarootdir}/neutron/rootwrap/iptables-firewall.filters
 %{_datarootdir}/neutron/rootwrap/l3.filters
-%{_datarootdir}/neutron/rootwrap/lbaas-haproxy.filters
 %{_datarootdir}/neutron/rootwrap/ofagent.filters
-%{_datarootdir}/neutron/rootwrap/vpnaas.filters
 
 
 %files -n python-neutron-tests
