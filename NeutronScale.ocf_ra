@@ -83,7 +83,7 @@ END
 
 #######################################################################
 
-neutronconfigfiles="dhcp_agent.ini fwaas_driver.ini l3_agent.ini lbaas_agent.ini metadata_agent.ini neutron.conf plugins/openvswitch/ovs_neutron_plugin.ini"
+neutronconfigfiles="dhcp_agent.ini l3_agent.ini metadata_agent.ini neutron.conf plugins/openvswitch/ovs_neutron_plugin.ini"
 
 neutron_scale_usage() {
 	cat <<END

@@ -556,14 +556,6 @@ mv %{buildroot}/usr/etc/neutron/* %{buildroot}%{_sysconfdir}/neutron
 mv %{buildroot}%{_sysconfdir}/neutron/api-paste.ini %{buildroot}%{_datadir}/neutron/api-paste.ini
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/plugins/*/*.ini
 
-# those files do not belong here but to appropriate neutron-*aas repositories
-# TODO(ihrachyshka): remove once https://review.openstack.org/142756 is merged
-rm -f %{buildroot}%{_sysconfdir}/neutron/fwaas_driver.ini
-rm -f %{buildroot}%{_sysconfdir}/neutron/lbaas_agent.ini
-rm -f %{buildroot}%{_sysconfdir}/neutron/vpn_agent.ini
-rm -f %{buildroot}%{_bindir}/neutron-lbaas-agent
-rm -f %{buildroot}%{_bindir}/neutron-vpn-agent
-
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-neutron
 
