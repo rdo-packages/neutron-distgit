@@ -45,7 +45,7 @@ BuildRequires:	python2-devel
 BuildRequires:	python-d2to1
 BuildRequires:	python-pbr
 BuildRequires:	python-setuptools
-BuildRequires:	systemd
+BuildRequires:	systemd-units
 
 Requires:	python-neutron = %{version}-%{release}
 Requires:	openstack-utils
