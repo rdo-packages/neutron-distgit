@@ -593,14 +593,6 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/neutron
 # Install dist conf
 install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
 
-# Install version info file
-cat > %{buildroot}%{_sysconfdir}/neutron/release <<EOF
-[Neutron]
-vendor = Fedora Project
-product = OpenStack Neutron
-package = %{release}
-EOF
-
 %pre
 getent group neutron >/dev/null || groupadd -r neutron
 getent passwd neutron >/dev/null || \
@@ -717,7 +709,6 @@ exit 0
 %{_unitdir}/neutron-netns-cleanup.service
 %{_unitdir}/neutron-ovs-cleanup.service
 %dir %{_sysconfdir}/neutron
-%{_sysconfdir}/neutron/release
 %attr(-, root, neutron) %{_datadir}/neutron/neutron-dist.conf
 %attr(-, root, neutron) %{_datadir}/neutron/api-paste.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/dhcp_agent.ini
