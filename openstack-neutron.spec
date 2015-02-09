@@ -1,8 +1,8 @@
 %global release_name juno
 
 Name:		openstack-neutron
-Version:	2014.2.1
-Release:	2%{?dist}
+Version:	2014.2.2
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -978,6 +978,9 @@ exit 0
 
 
 %changelog
+* Mon Feb 09 2015 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2.2-1
+- Update to upstream 2014.2.2, rhbz#1188392
+
 * Fri Dec 05 2014 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2.1-2
 - Added missing python-ncclient dependency to brocade, cisco, and ml2
   plugins, rhbz#1125978
