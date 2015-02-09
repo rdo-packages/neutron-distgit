@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.2.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -103,6 +103,7 @@ Requires:	python-alembic >= 0.6.4
 Requires:	python-anyjson >= 0.3.3
 Requires:	python-babel >= 1.3
 Requires:	python-eventlet >= 0.15.1
+Conflicts:	python-eventlet >= 0.16.0
 Requires:	python-greenlet >= 0.3.2
 Requires:	python-httplib2 >= 0.7.5
 Requires:	python-iso8601 >= 0.1.9
@@ -116,7 +117,9 @@ Conflicts:	python-neutronclient >= 3
 Requires:	python-novaclient >= 2.18.0
 Requires:	python-oslo-config >= 2:1.4.0
 Requires:	python-oslo-db >= 1.0.0
+Conflicts:	python-oslo-db >= 1.1
 Requires:	python-oslo-messaging >= 1.4.0.0
+Conflicts:	python-oslo-messaging >= 1.6.0
 Requires:	python-oslo-rootwrap >= 1.3.0.0
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
@@ -978,6 +981,9 @@ exit 0
 
 
 %changelog
+* Mon Feb 09 2015 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2.2-2
+- Update maximum dependencies as per upstream requirements.txt
+
 * Mon Feb 09 2015 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2.2-1
 - Update to upstream 2014.2.2, rhbz#1188392
 
