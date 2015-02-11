@@ -510,7 +510,7 @@ find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 rm -f requirements.txt
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 # Loop through values in neutron-dist.conf and make sure that the values
 # are substituted into the neutron.conf as comments. Some of these values
@@ -529,12 +529,12 @@ while read name eq value; do
 done < %{SOURCE30}
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Remove unused files
-rm -rf %{buildroot}%{python_sitelib}/bin
-rm -rf %{buildroot}%{python_sitelib}/doc
-rm -rf %{buildroot}%{python_sitelib}/tools
+rm -rf %{buildroot}%{python2_sitelib}/bin
+rm -rf %{buildroot}%{python2_sitelib}/doc
+rm -rf %{buildroot}%{python2_sitelib}/tools
 rm %{buildroot}/usr/etc/init.d/neutron-server
 
 # Move rootwrap files to proper location
@@ -724,15 +724,15 @@ exit 0
 
 
 %files -n python-neutron-tests
-%{python_sitelib}/neutron/tests
+%{python2_sitelib}/neutron/tests
 
 
 %files -n python-neutron
 %doc LICENSE
 %doc README.rst
-%{python_sitelib}/neutron
-%{python_sitelib}/neutron-*.egg-info
-%exclude %{python_sitelib}/neutron/tests
+%{python2_sitelib}/neutron
+%{python2_sitelib}/neutron-*.egg-info
+%exclude %{python2_sitelib}/neutron/tests
 
 
 %files bigswitch
@@ -835,7 +835,7 @@ exit 0
 
 %files nuage
 %doc LICENSE
-%{python_sitelib}/neutron/plugins/nuage
+%{python2_sitelib}/neutron/plugins/nuage
 %dir %{_sysconfdir}/neutron/plugins/nuage
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nuage/*.ini
 
