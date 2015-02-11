@@ -679,7 +679,7 @@ exit 0
 
 
 %files
-%doc LICENSE
+%license LICENSE
 %doc README.rst
 
 %{_bindir}/neutron-db-manage
