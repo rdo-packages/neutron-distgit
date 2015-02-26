@@ -104,7 +104,6 @@ Requires:	python-keystoneclient >= 0.10.0
 Requires:	python-keystonemiddleware >= 1.0.0
 Requires:	python-netaddr >= 0.7.12
 Requires:	python-neutronclient >= 2.3.6
-Conflicts:	python-neutronclient >= 3
 Requires:	python-novaclient >= 2.18.0
 Requires:	python-oslo-config >= 2:1.4.0
 Requires:	python-oslo-db >= 1.0.0
@@ -119,9 +118,7 @@ Requires:	python-pbr
 Requires:	python-qpid
 Requires:	python-requests >= 1.2.1
 Requires:	python-routes >= 1.12.3
-Conflicts:	python-routes = 2.0
 Requires:	python-sqlalchemy >= 0.9.7
-Conflicts:	python-sqlalchemy >= 1.0
 Requires:	python-stevedore >= 1.0.0
 Requires:	python-six >= 1.7.0
 Requires:	python-webob >= 1.2.3
