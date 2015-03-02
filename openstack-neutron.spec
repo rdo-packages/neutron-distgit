@@ -129,6 +129,10 @@ Requires:	python-stevedore >= 1.0.0
 Requires:	python-six >= 1.7.0
 Requires:	python-webob >= 1.2.3
 Requires:	sudo
+Requires:	python-retrying
+Requires:	python-oslo-concurrency
+Requires:	python-oslo-i18n
+Requires:	python-oslo-middleware
 
 
 
