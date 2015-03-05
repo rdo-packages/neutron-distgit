@@ -223,6 +223,24 @@ This package contains the Neutron plugin that implements virtual
 L3-L7 network services using Embrane's heleos platform.
 
 
+%package hyperv
+Summary:	Neutron Hyper-V agent
+Group:		Applications/System
+
+Provides:	openstack-quantum-hyperv = %{version}-%{release}
+Obsoletes:	openstack-quantum-hyperv < 2013.2-0.4.b3
+
+Requires:	openstack-neutron = %{version}-%{release}
+
+
+%description hyperv
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the Neutron agent that implements virtual
+networks using Microsoft Hyper-V.
+
+
 %package ibm
 Summary:	Neutron IBM plugin
 Group:		Applications/System
@@ -744,6 +762,12 @@ exit 0
 %doc neutron/plugins/embrane/README
 %dir %{_sysconfdir}/neutron/plugins/embrane
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/embrane/*.ini
+
+
+%files hyperv
+%doc LICENSE
+%{_bindir}/neutron-hyperv-agent
+%dir %{_sysconfdir}/neutron/plugins/hyperv
 
 
 %files ibm
