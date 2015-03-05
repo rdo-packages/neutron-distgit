@@ -875,8 +875,6 @@ exit 0
 
 %files vmware
 %doc LICENSE
-%{_bindir}/neutron-check-nsx-config
-%{_bindir}/neutron-nsx-manage
 %dir %{_sysconfdir}/neutron/plugins/vmware
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
 
