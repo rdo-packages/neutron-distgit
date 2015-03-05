@@ -34,10 +34,6 @@ Source27:	OVSCleanup.ocf_ra
 Source28:	NeutronScale.ocf_ra
 
 Source30:	neutron-dist.conf
-#
-# patches_base=+1
-#
-Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 
 BuildArch:	noarch
 
@@ -119,6 +115,7 @@ Requires:	python-oslo-utils >= 1.1.0
 Requires:	python-oslo-context
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
+Requires:	python-pbr
 Requires:	python-qpid
 Requires:	python-requests >= 1.2.1
 Requires:	python-routes >= 1.12.3
@@ -507,17 +504,7 @@ SR-IOV network cards.
 %prep
 %setup -q -n neutron-%{upstream_version}
 
-%patch0001 -p1
-
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
-
-sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' neutron/version.py
-
-# Ensure SOURCES.txt ends in a newline and if any patches have added files, append them to SOURCES.txt
-[ -n "$(tail -c 1 < neutron.egg-info/SOURCES.txt)" ] && echo >> neutron.egg-info/SOURCES.txt
-if ls %{_sourcedir}/*.patch >/dev/null 2>&1; then
-  awk '/^new file/ {split(a,files," ");print substr(files[3],3)} {a = $0}' %{_sourcedir}/*.patch >> neutron.egg-info/SOURCES.txt
-fi
 
 # Let's handle dependencies ourseleves
 rm -f requirements.txt
