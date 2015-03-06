@@ -766,7 +766,6 @@ exit 0
 %files hyperv
 %doc LICENSE
 %{_bindir}/neutron-hyperv-agent
-%dir %{_sysconfdir}/neutron/plugins/hyperv
 
 
 %files ibm
