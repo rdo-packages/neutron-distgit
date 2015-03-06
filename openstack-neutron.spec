@@ -835,8 +835,6 @@ exit 0
 
 %files ofagent
 %doc LICENSE
-%doc neutron/plugins/ofagent/README
-%{_bindir}/neutron-ofagent-agent
 
 
 %files oneconvergence-nvsd
