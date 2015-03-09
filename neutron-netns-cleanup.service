@@ -7,8 +7,8 @@ Before=neutron-openvswitch-agent.service neutron-dhcp-agent.service neutron-l3-a
 Type=oneshot
 User=neutron
 ExecStart=/usr/bin/neutron-netns-cleanup --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/dhcp_agent.ini --log-file /var/log/neutron/netns-cleanup.log
-ExecStop=/usr/bin/neutron-netns-cleanup --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/dhcp_agent.ini --log-file /var/log/neutron/netns-cleanup.log
-PrivateTmp=true
+ExecStop=/usr/bin/neutron-netns-cleanup --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/dhcp_agent.ini --log-file /var/log/neutron/netns-cleanup.log --force
+PrivateTmp=false
 RemainAfterExit=yes
 
 [Install]
