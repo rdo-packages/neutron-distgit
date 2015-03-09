@@ -733,7 +733,6 @@ exit 0
 
 %files bigswitch
 %doc LICENSE
-%doc neutron/plugins/bigswitch/README
 %{_bindir}/neutron-restproxy-agent
 %dir %{_sysconfdir}/neutron/plugins/bigswitch
 %{_sysconfdir}/neutron/plugins/bigswitch/ssl
