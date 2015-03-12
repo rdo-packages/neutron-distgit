@@ -581,6 +581,10 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/neutron
 # Install dist conf
 install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
 
+# Create and populate configuration directory for L3 agent
+mkdir -p %{buildroot}%{_sysconfdir}/neutron/l3_agent
+ln -s ../l3_agent.ini %{buildroot}%{_sysconfdir}/neutron/l3_agent/l3_agent.conf
+
 %pre
 getent group neutron >/dev/null || groupadd -r neutron
 getent passwd neutron >/dev/null || \
@@ -708,6 +712,7 @@ exit 0
 %dir %{_sysconfdir}/neutron/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
 %config %{_sysconfdir}/sudoers.d/neutron
+%{_sysconfdir}/neutron/l3_agent/*.conf
 %dir %attr(0755, neutron, neutron) %{_sharedstatedir}/neutron
 %dir %attr(0750, neutron, neutron) %{_localstatedir}/log/neutron
 %dir %{_datarootdir}/neutron
