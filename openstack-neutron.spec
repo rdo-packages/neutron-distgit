@@ -740,6 +740,7 @@ exit 0
 %doc neutron/plugins/brocade/README.md
 %dir %{_sysconfdir}/neutron/plugins/brocade
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/brocade/*.ini
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/brocade/vyatta/*.ini
 
 
 %files cisco
