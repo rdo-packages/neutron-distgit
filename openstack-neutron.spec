@@ -580,8 +580,8 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/%{service}
 install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/%{service}/%{service}-dist.conf
 
 # Create and populate configuration directory for L3 agent
-mkdir -p %{buildroot}%{_sysconfdir}/%{service}/l3_agent
-ln -s ../l3_agent.ini %{buildroot}%{_sysconfdir}/%{service}/l3_agent/l3_agent.conf
+mkdir -p %{buildroot}%{_datadir}/%{service}/l3_agent
+ln -s ../l3_agent.ini %{buildroot}%{_datadir}/%{service}/l3_agent/l3_agent.conf
 
 # Kill hyperv agent since it's of no use for Linux
 rm %{buildroot}/%{_bindir}/neutron-hyperv-agent
@@ -703,6 +703,7 @@ exit 0
 %dir %{_sysconfdir}/%{service}
 %attr(-, root, %{service}) %{_datadir}/%{service}/%{service}-dist.conf
 %attr(-, root, %{service}) %{_datadir}/%{service}/api-paste.ini
+%{_datadir}/%{service}/l3_agent/*.conf
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/l3_agent.ini
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/metadata_agent.ini
@@ -712,7 +713,6 @@ exit 0
 %dir %{_sysconfdir}/%{service}/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
 %config %{_sysconfdir}/sudoers.d/%{service}
-%{_sysconfdir}/%{service}/l3_agent/*.conf
 %dir %attr(0755, %{service}, %{service}) %{_sharedstatedir}/%{service}
 %dir %attr(0750, %{service}, %{service}) %{_localstatedir}/log/%{service}
 %dir %{_datarootdir}/%{service}
