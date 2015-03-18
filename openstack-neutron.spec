@@ -25,13 +25,12 @@ Source18:	neutron-ovs-cleanup.service
 Source19:	neutron-mlnx-agent.service
 Source20:	neutron-metering-agent.service
 Source21:	neutron-sriov-nic-agent.service
-Source22:	neutron-cisco-cfg-agent.service
-Source23:	neutron-netns-cleanup.service
-Source24:	neutron-netns-cleanup.init
-Source25:	neutron-ovs-cleanup.init
-Source26:	NetnsCleanup.ocf_ra
-Source27:	OVSCleanup.ocf_ra
-Source28:	NeutronScale.ocf_ra
+Source22:	neutron-netns-cleanup.service
+Source23:	neutron-netns-cleanup.init
+Source24:	neutron-ovs-cleanup.init
+Source25:	NetnsCleanup.ocf_ra
+Source26:	OVSCleanup.ocf_ra
+Source27:	NeutronScale.ocf_ra
 
 Source30:	neutron-dist.conf
 
@@ -562,15 +561,14 @@ install -p -D -m 644 %{SOURCE18} %{buildroot}%{_unitdir}/neutron-ovs-cleanup.ser
 install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-mlnx-agent.service
 install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-metering-agent.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
-install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-cisco-cfg-agent.service
-install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
+install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
 
 # Install scripts for pacemaker support
-install -p -D -m 755 %{SOURCE24} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
-install -p -D -m 755 %{SOURCE25} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
-install -p -D -m 755 %{SOURCE26} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NetnsCleanup
-install -p -D -m 755 %{SOURCE27} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/OVSCleanup
-install -p -D -m 755 %{SOURCE28} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
+install -p -D -m 755 %{SOURCE23} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
+install -p -D -m 755 %{SOURCE24} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
+install -p -D -m 755 %{SOURCE25} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NetnsCleanup
+install -p -D -m 755 %{SOURCE26} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/OVSCleanup
+install -p -D -m 755 %{SOURCE27} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_datadir}/neutron
@@ -612,14 +610,6 @@ exit 0
 %systemd_postun_with_restart neutron-l3-agent.service
 %systemd_postun_with_restart neutron-metadata-agent.service
 %systemd_postun_with_restart neutron-server.service
-
-
-%preun cisco
-%systemd_preun neutron-cisco-cfg-agent.service
-
-
-%postun cisco
-%systemd_postun_with_restart neutron-cisco-cfg-agent.service
 
 
 %preun linuxbridge
@@ -754,8 +744,6 @@ exit 0
 %files cisco
 %doc LICENSE
 %doc neutron/plugins/cisco/README
-%{_bindir}/neutron-cisco-cfg-agent
-%{_unitdir}/neutron-cisco-cfg-agent.service
 %dir %{_sysconfdir}/neutron/plugins/cisco
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/cisco/*.ini
 
