@@ -673,6 +673,7 @@ exit 0
 %{_bindir}/neutron-ns-metadata-proxy
 %{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-rootwrap
+%{_bindir}/neutron-rootwrap-daemon
 %{_bindir}/neutron-rootwrap-xen-dom0
 %{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-server
