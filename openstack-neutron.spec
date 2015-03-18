@@ -780,7 +780,7 @@ exit 0
 
 %files mellanox
 %doc LICENSE
-%doc neutron/plugins/mlnx/README
+%doc neutron/plugins/ml2/drivers/mlnx/README
 %{_bindir}/neutron-mlnx-agent
 %{_unitdir}/neutron-mlnx-agent.service
 %dir %{_sysconfdir}/neutron/plugins/mlnx
