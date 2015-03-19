@@ -599,6 +599,8 @@ exit 0
 %systemd_post neutron-l3-agent.service
 %systemd_post neutron-metadata-agent.service
 %systemd_post neutron-server.service
+%systemd_post neutron-netns-cleanup.service
+%systemd_post neutron-ovs-cleanup.service
 
 
 %preun
@@ -606,6 +608,8 @@ exit 0
 %systemd_preun neutron-l3-agent.service
 %systemd_preun neutron-metadata-agent.service
 %systemd_preun neutron-server.service
+%systemd_preun neutron-netns-cleanup.service
+%systemd_preun neutron-ovs-cleanup.service
 
 
 %postun
