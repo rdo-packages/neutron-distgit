@@ -731,7 +731,6 @@ exit 0
 
 %files -n python-%{service}
 %license LICENSE
-%doc README.rst
 %{python2_sitelib}/%{service}
 %{python2_sitelib}/%{service}-*.egg-info
 %exclude %{python2_sitelib}/%{service}/tests
