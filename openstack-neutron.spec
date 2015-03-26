@@ -416,6 +416,21 @@ This package contains the Neutron plugin that implements virtual
 networks using Open vSwitch.
 
 
+%package ovsvapp
+Summary:	Neutron OVSvApp vSphere plugin
+Group:		Applications/System
+
+Requires:	openstack-%{service} = %{version}-%{release}
+
+
+%description ovsvapp
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the Neutron plugin that implements virtual
+networks using OVSvApp vSphere L2 agent.
+
+
 %package plumgrid
 Summary:	Neutron PLUMgrid plugin
 Group:		Applications/System
@@ -843,6 +858,14 @@ exit 0
 %{_datarootdir}/neutron/rootwrap/openvswitch-plugin.filters
 %dir %{_sysconfdir}/neutron/plugins/openvswitch
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/openvswitch/*.ini
+
+
+%files ovsvapp
+%license LICENSE
+%{_bindir}/neutron-ovsvapp-agent
+# TODO: add a systemd unit file
+%dir %{_sysconfdir}/neutron/plugins/ovsvapp
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ovsvapp/*.ini
 
 
 %files plumgrid
