@@ -1,6 +1,7 @@
 %global release_name juno
+%global service neutron
 
-Name:		openstack-neutron
+Name:		openstack-%{service}
 Version:    XXX
 Release:    XXX{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
@@ -9,11 +10,11 @@ Summary:	OpenStack Networking Service
 
 Group:		Applications/System
 License:	ASL 2.0
-URL:		http://launchpad.net/neutron/
+URL:		http://launchpad.net/%{service}/
 
-Source0:	http://launchpad.net/neutron/%{release_name}/%{version}/+download/neutron-%{version}.tar.gz
-Source1:	neutron.logrotate
-Source2:	neutron-sudoers
+Source0:	http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{version}.tar.gz
+Source1:	%{service}.logrotate
+Source2:	%{service}-sudoers
 Source10:	neutron-server.service
 Source11:	neutron-linuxbridge-agent.service
 Source12:	neutron-openvswitch-agent.service
@@ -32,7 +33,7 @@ Source25:	NetnsCleanup.ocf_ra
 Source26:	OVSCleanup.ocf_ra
 Source27:	NeutronScale.ocf_ra
 
-Source30:	neutron-dist.conf
+Source30:	%{service}-dist.conf
 
 BuildArch:	noarch
 
@@ -42,7 +43,7 @@ BuildRequires:	python-pbr
 BuildRequires:	python-setuptools
 BuildRequires:	systemd-units
 
-Requires:	python-neutron = %{version}-%{release}
+Requires:	python-%{service} = %{version}-%{release}
 Requires:	openstack-utils
 
 # dnsmasq is not a hard requirement, but is currently the only option
@@ -82,7 +83,7 @@ Neutron API supports extensions to provide advanced network
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 
-%package -n python-neutron
+%package -n python-%{service}
 Summary:	Neutron Python libraries
 Group:		Applications/System
 
@@ -129,21 +130,21 @@ Requires:	python-oslo-middleware
 
 
 
-%description -n python-neutron
+%description -n python-%{service}
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
 This package contains the Neutron Python library.
 
 
-%package -n python-neutron-tests
+%package -n python-%{service}-tests
 Summary:	Neutron tests
 Group:		Applications/System
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
-%description -n python-neutron-tests
+%description -n python-%{service}-tests
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
@@ -157,7 +158,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-bigswitch = %{version}-%{release}
 Obsoletes:	openstack-quantum-bigswitch < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description bigswitch
@@ -176,7 +177,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-brocade = %{version}-%{release}
 Obsoletes:	openstack-quantum-brocade < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 Requires:	python-ncclient
 
 
@@ -195,7 +196,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-cisco = %{version}-%{release}
 Obsoletes:	openstack-quantum-cisco < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 Requires:	python-ncclient
 
 
@@ -211,7 +212,7 @@ networks using Cisco UCS and Nexus.
 Summary:	Neutron Embrane plugin
 Group:		Applications/System
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description embrane
@@ -226,7 +227,7 @@ L3-L7 network services using Embrane's heleos platform.
 Summary:	Neutron IBM plugin
 Group:		Applications/System
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description ibm
@@ -245,7 +246,7 @@ Provides:	openstack-quantum-linuxbridge = %{version}-%{release}
 Obsoletes:	openstack-quantum-linuxbridge < 2013.2-0.4.b3
 
 Requires:	bridge-utils
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description linuxbridge
@@ -263,7 +264,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-mellanox = %{version}-%{release}
 Obsoletes:	openstack-quantum-mellanox < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description mellanox
@@ -278,7 +279,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-metaplugin = %{version}-%{release}
 Obsoletes:	openstack-quantum-metaplugin < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description metaplugin
@@ -296,7 +297,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-midonet = %{version}-%{release}
 Obsoletes:	openstack-quantum-midonet < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description midonet
@@ -314,7 +315,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-ml2 = %{version}-%{release}
 Obsoletes:	openstack-quantum-ml2 < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 # needed for brocade and cisco drivers
 Requires:	python-ncclient
 
@@ -335,7 +336,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-nec = %{version}-%{release}
 Obsoletes:	openstack-quantum-nec < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description nec
@@ -350,7 +351,7 @@ networks using the NEC OpenFlow controller.
 Summary:	Neutron Nuage plugin
 Group:		Applications/System
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description nuage
@@ -362,7 +363,7 @@ Virtual Service Platform (VSP).
 Summary:	Neutron ofagent plugin from ryu project
 Group:		Applications/system
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description ofagent
@@ -374,7 +375,7 @@ plugin.
 Summary:	Neutron One Convergence NVSD plugin
 Group:		Applications/System
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description oneconvergence-nvsd
@@ -389,7 +390,7 @@ networks using One Convergence NVSD
 Summary:	Neutron OpenContrail plugin
 Group:		Applications/system
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description opencontrail
@@ -404,7 +405,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-openvswitch = %{version}-%{release}
 Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 Requires:	openvswitch
 
 
@@ -438,7 +439,7 @@ Group:		Applications/System
 Provides:	openstack-quantum-plumgrid = %{version}-%{release}
 Obsoletes:	openstack-quantum-plumgrid < 2013.2-0.4.b3
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description plumgrid
@@ -453,10 +454,10 @@ networks using the PLUMgrid platform.
 Summary:	Neutron Nicira plugin
 Group:		Applications/System
 
-Provides:	openstack-neutron-nicira = %{version}-%{release}
-Obsoletes:	openstack-neutron-nicira < 2014.1-0.5.b2
+Provides:	openstack-%{service}-nicira = %{version}-%{release}
+Obsoletes:	openstack-%{service}-nicira < 2014.1-0.5.b2
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description vmware
@@ -471,7 +472,7 @@ networks using VMware NSX.
 Summary:	Neutron bandwidth metering agent
 Group:		Applications/System
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 %description metering-agent
 Neutron provides an API to measure bandwidth utilization
@@ -484,7 +485,7 @@ utilization notifications.
 Summary:	Neutron SR-IOV NIC agent
 Group:		Applications/system
 
-Requires:	openstack-neutron = %{version}-%{release}
+Requires:	openstack-%{service} = %{version}-%{release}
 
 
 %description sriov-nic-agent
@@ -495,9 +496,9 @@ SR-IOV network cards.
 
 
 %prep
-%setup -q -n neutron-%{upstream_version}
+%setup -q -n %{service}-%{upstream_version}
 
-find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
+find %{service} -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 # Let's handle dependencies ourseleves
 rm -f requirements.txt
@@ -518,9 +519,9 @@ export SKIP_PIP_INSTALL=1
 while read name eq value; do
   test "$name" && test "$value" || continue
   if [ "$name" = "notification_driver" ]; then
-    sed -ri "0,/^$name *=/{s!^$name *=.*!# $name = $value!}" etc/neutron.conf
+    sed -ri "0,/^$name *=/{s!^$name *=.*!# $name = $value!}" etc/%{service}.conf
   else
-    sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/neutron.conf
+    sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/%{service}.conf
   fi
 done < %{SOURCE30}
 
@@ -534,20 +535,20 @@ rm -rf %{buildroot}%{python2_sitelib}/tools
 rm %{buildroot}/usr/etc/init.d/neutron-server
 
 # Move rootwrap files to proper location
-install -d -m 755 %{buildroot}%{_datarootdir}/neutron/rootwrap
-mv %{buildroot}/usr/etc/neutron/rootwrap.d/*.filters %{buildroot}%{_datarootdir}/neutron/rootwrap
+install -d -m 755 %{buildroot}%{_datarootdir}/%{service}/rootwrap
+mv %{buildroot}/usr/etc/%{service}/rootwrap.d/*.filters %{buildroot}%{_datarootdir}/%{service}/rootwrap
 
 # Move config files to proper location
-install -d -m 755 %{buildroot}%{_sysconfdir}/neutron
-mv %{buildroot}/usr/etc/neutron/* %{buildroot}%{_sysconfdir}/neutron
-mv %{buildroot}%{_sysconfdir}/neutron/api-paste.ini %{buildroot}%{_datadir}/neutron/api-paste.ini
+install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}
+mv %{buildroot}/usr/etc/%{service}/* %{buildroot}%{_sysconfdir}/%{service}
+mv %{buildroot}%{_sysconfdir}/%{service}/api-paste.ini %{buildroot}%{_datadir}/%{service}/api-paste.ini
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/plugins/*/*.ini
 
 # Install logrotate
-install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-neutron
+install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-%{service}
 
 # Install sudoers
-install -p -D -m 440 %{SOURCE2} %{buildroot}%{_sysconfdir}/sudoers.d/neutron
+install -p -D -m 440 %{SOURCE2} %{buildroot}%{_sysconfdir}/sudoers.d/%{service}
 
 # Install systemd units
 install -p -D -m 644 %{SOURCE10} %{buildroot}%{_unitdir}/neutron-server.service
@@ -571,27 +572,27 @@ install -p -D -m 755 %{SOURCE26} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutr
 install -p -D -m 755 %{SOURCE27} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
 
 # Setup directories
-install -d -m 755 %{buildroot}%{_datadir}/neutron
-install -d -m 755 %{buildroot}%{_sharedstatedir}/neutron
-install -d -m 755 %{buildroot}%{_localstatedir}/log/neutron
-install -d -m 755 %{buildroot}%{_localstatedir}/run/neutron
+install -d -m 755 %{buildroot}%{_datadir}/%{service}
+install -d -m 755 %{buildroot}%{_sharedstatedir}/%{service}
+install -d -m 755 %{buildroot}%{_localstatedir}/log/%{service}
+install -d -m 755 %{buildroot}%{_localstatedir}/run/%{service}
 
 # Install dist conf
-install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/neutron/neutron-dist.conf
+install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/%{service}/%{service}-dist.conf
 
 # Create and populate configuration directory for L3 agent
-mkdir -p %{buildroot}%{_sysconfdir}/neutron/l3_agent
-ln -s ../l3_agent.ini %{buildroot}%{_sysconfdir}/neutron/l3_agent/l3_agent.conf
+mkdir -p %{buildroot}%{_sysconfdir}/%{service}/l3_agent
+ln -s ../l3_agent.ini %{buildroot}%{_sysconfdir}/%{service}/l3_agent/l3_agent.conf
 
 # Kill hyperv agent since it's of no use for Linux
 rm %{buildroot}/%{_bindir}/neutron-hyperv-agent
 
 
 %pre
-getent group neutron >/dev/null || groupadd -r neutron
-getent passwd neutron >/dev/null || \
-    useradd -r -g neutron -d %{_sharedstatedir}/neutron -s /sbin/nologin \
-    -c "OpenStack Neutron Daemons" neutron
+getent group %{service} >/dev/null || groupadd -r %{service}
+getent passwd %{service} >/dev/null || \
+    useradd -r -g %{service} -d %{_sharedstatedir}/%{service} -s /sbin/nologin \
+    -c "OpenStack Neutron Daemons" %{service}
 exit 0
 
 
@@ -700,135 +701,135 @@ exit 0
 %{_unitdir}/neutron-server.service
 %{_unitdir}/neutron-netns-cleanup.service
 %{_unitdir}/neutron-ovs-cleanup.service
-%dir %{_sysconfdir}/neutron
-%attr(-, root, neutron) %{_datadir}/neutron/neutron-dist.conf
-%attr(-, root, neutron) %{_datadir}/neutron/api-paste.ini
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/dhcp_agent.ini
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/l3_agent.ini
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metadata_agent.ini
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/policy.json
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/neutron.conf
-%config(noreplace) %{_sysconfdir}/neutron/rootwrap.conf
-%dir %{_sysconfdir}/neutron/plugins
+%dir %{_sysconfdir}/%{service}
+%attr(-, root, %{service}) %{_datadir}/%{service}/%{service}-dist.conf
+%attr(-, root, %{service}) %{_datadir}/%{service}/api-paste.ini
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/dhcp_agent.ini
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/l3_agent.ini
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/metadata_agent.ini
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/policy.json
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/%{service}.conf
+%config(noreplace) %{_sysconfdir}/%{service}/rootwrap.conf
+%dir %{_sysconfdir}/%{service}/plugins
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
-%config %{_sysconfdir}/sudoers.d/neutron
-%{_sysconfdir}/neutron/l3_agent/*.conf
-%dir %attr(0755, neutron, neutron) %{_sharedstatedir}/neutron
-%dir %attr(0750, neutron, neutron) %{_localstatedir}/log/neutron
-%dir %{_datarootdir}/neutron
-%dir %{_datarootdir}/neutron/rootwrap
-%{_datarootdir}/neutron/rootwrap/debug.filters
-%{_datarootdir}/neutron/rootwrap/dhcp.filters
-%{_datarootdir}/neutron/rootwrap/ipset-firewall.filters
-%{_datarootdir}/neutron/rootwrap/iptables-firewall.filters
-%{_datarootdir}/neutron/rootwrap/l3.filters
+%config %{_sysconfdir}/sudoers.d/%{service}
+%{_sysconfdir}/%{service}/l3_agent/*.conf
+%dir %attr(0755, %{service}, %{service}) %{_sharedstatedir}/%{service}
+%dir %attr(0750, %{service}, %{service}) %{_localstatedir}/log/%{service}
+%dir %{_datarootdir}/%{service}
+%dir %{_datarootdir}/%{service}/rootwrap
+%{_datarootdir}/%{service}/rootwrap/debug.filters
+%{_datarootdir}/%{service}/rootwrap/dhcp.filters
+%{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
+%{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
+%{_datarootdir}/%{service}/rootwrap/l3.filters
 
 
-%files -n python-neutron-tests
-%{python2_sitelib}/neutron/tests
+%files -n python-%{service}-tests
+%{python2_sitelib}/%{service}/tests
 
 
-%files -n python-neutron
+%files -n python-%{service}
 %doc LICENSE
 %doc README.rst
-%{python2_sitelib}/neutron
-%{python2_sitelib}/neutron-*.egg-info
-%exclude %{python2_sitelib}/neutron/tests
+%{python2_sitelib}/%{service}
+%{python2_sitelib}/%{service}-*.egg-info
+%exclude %{python2_sitelib}/%{service}/tests
 
 
 %files bigswitch
 %doc LICENSE
 %{_bindir}/neutron-restproxy-agent
-%dir %{_sysconfdir}/neutron/plugins/bigswitch
-%{_sysconfdir}/neutron/plugins/bigswitch/ssl
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/bigswitch/*.ini
+%dir %{_sysconfdir}/%{service}/plugins/bigswitch
+%{_sysconfdir}/%{service}/plugins/bigswitch/ssl
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/bigswitch/*.ini
 
 
 %files brocade
 %doc LICENSE
-%doc neutron/plugins/brocade/README.md
-%dir %{_sysconfdir}/neutron/plugins/brocade
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/brocade/*.ini
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/brocade/vyatta/*.ini
+%doc %{service}/plugins/brocade/README.md
+%dir %{_sysconfdir}/%{service}/plugins/brocade
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/brocade/*.ini
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/brocade/vyatta/*.ini
 
 
 %files cisco
 %doc LICENSE
-%doc neutron/plugins/cisco/README
-%dir %{_sysconfdir}/neutron/plugins/cisco
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/cisco/*.ini
+%doc %{service}/plugins/cisco/README
+%dir %{_sysconfdir}/%{service}/plugins/cisco
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/cisco/*.ini
 
 
 %files embrane
 %doc LICENSE
-%doc neutron/plugins/embrane/README
-%dir %{_sysconfdir}/neutron/plugins/embrane
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/embrane/*.ini
+%doc %{service}/plugins/embrane/README
+%dir %{_sysconfdir}/%{service}/plugins/embrane
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/embrane/*.ini
 
 
 %files ibm
 %doc LICENSE
 %{_bindir}/neutron-ibm-agent
-%doc neutron/plugins/ibm/README
-%dir %{_sysconfdir}/neutron/plugins/ibm
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ibm/*.ini
+%doc %{service}/plugins/ibm/README
+%dir %{_sysconfdir}/%{service}/plugins/ibm
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ibm/*.ini
 
 
 %files linuxbridge
 %doc LICENSE
-%doc neutron/plugins/linuxbridge/README
+%doc %{service}/plugins/linuxbridge/README
 %{_bindir}/neutron-linuxbridge-agent
 %{_unitdir}/neutron-linuxbridge-agent.service
-%{_datarootdir}/neutron/rootwrap/linuxbridge-plugin.filters
-%dir %{_sysconfdir}/neutron/plugins/linuxbridge
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/linuxbridge/*.ini
+%{_datarootdir}/%{service}/rootwrap/linuxbridge-plugin.filters
+%dir %{_sysconfdir}/%{service}/plugins/linuxbridge
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/linuxbridge/*.ini
 
 
 %files mellanox
 %doc LICENSE
-%doc neutron/plugins/ml2/drivers/mlnx/README
+%doc %{service}/plugins/ml2/drivers/mlnx/README
 %{_bindir}/neutron-mlnx-agent
 %{_unitdir}/neutron-mlnx-agent.service
-%dir %{_sysconfdir}/neutron/plugins/mlnx
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/mlnx/*.ini
+%dir %{_sysconfdir}/%{service}/plugins/mlnx
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*.ini
 
 
 %files metaplugin
 %doc LICENSE
-%doc neutron/plugins/metaplugin/README
-%dir %{_sysconfdir}/neutron/plugins/metaplugin
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/metaplugin/*.ini
+%doc %{service}/plugins/metaplugin/README
+%dir %{_sysconfdir}/%{service}/plugins/metaplugin
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/metaplugin/*.ini
 
 
 %files midonet
 %doc LICENSE
-#%doc neutron/plugins/midonet/README
-%dir %{_sysconfdir}/neutron/plugins/midonet
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/midonet/*.ini
+#%doc %{service}/plugins/midonet/README
+%dir %{_sysconfdir}/%{service}/plugins/midonet
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/midonet/*.ini
 
 
 %files ml2
 %doc LICENSE
-%doc neutron/plugins/ml2/README
-%dir %{_sysconfdir}/neutron/plugins/ml2
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ml2/*.ini
+%doc %{service}/plugins/ml2/README
+%dir %{_sysconfdir}/%{service}/plugins/ml2
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*.ini
 
 
 %files nec
 %doc LICENSE
-%doc neutron/plugins/nec/README
+%doc %{service}/plugins/nec/README
 %{_bindir}/neutron-nec-agent
 %{_unitdir}/neutron-nec-agent.service
-%{_datarootdir}/neutron/rootwrap/nec-plugin.filters
-%dir %{_sysconfdir}/neutron/plugins/nec
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nec/*.ini
+%{_datarootdir}/%{service}/rootwrap/nec-plugin.filters
+%dir %{_sysconfdir}/%{service}/plugins/nec
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/nec/*.ini
 
 
 %files nuage
 %doc LICENSE
-%{python2_sitelib}/neutron/plugins/nuage
-%dir %{_sysconfdir}/neutron/plugins/nuage
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nuage/*.ini
+%{python2_sitelib}/%{service}/plugins/nuage
+%dir %{_sysconfdir}/%{service}/plugins/nuage
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/nuage/*.ini
 
 
 %files ofagent
@@ -837,53 +838,53 @@ exit 0
 
 %files oneconvergence-nvsd
 %doc LICENSE
-%doc neutron/plugins/oneconvergence/README
-%dir %{_sysconfdir}/neutron/plugins/oneconvergence
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/oneconvergence/*.ini
+%doc %{service}/plugins/oneconvergence/README
+%dir %{_sysconfdir}/%{service}/plugins/oneconvergence
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/oneconvergence/*.ini
 %{_bindir}/neutron-nvsd-agent
 
 
 %files opencontrail
 %doc LICENSE
-#%doc neutron/plugins/opencontrail/README
-%dir %{_sysconfdir}/neutron/plugins/opencontrail
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/opencontrail/*.ini
+#%doc %{service}/plugins/opencontrail/README
+%dir %{_sysconfdir}/%{service}/plugins/opencontrail
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/opencontrail/*.ini
 
 
 %files openvswitch
 %doc LICENSE
-%doc neutron/plugins/openvswitch/README
+%doc %{service}/plugins/openvswitch/README
 %{_bindir}/neutron-openvswitch-agent
 %{_unitdir}/neutron-openvswitch-agent.service
-%{_datarootdir}/neutron/rootwrap/openvswitch-plugin.filters
-%dir %{_sysconfdir}/neutron/plugins/openvswitch
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/openvswitch/*.ini
+%{_datarootdir}/%{service}/rootwrap/openvswitch-plugin.filters
+%dir %{_sysconfdir}/%{service}/plugins/openvswitch
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/openvswitch/*.ini
 
 
 %files ovsvapp
 %license LICENSE
 %{_bindir}/neutron-ovsvapp-agent
 # TODO: add a systemd unit file
-%dir %{_sysconfdir}/neutron/plugins/ovsvapp
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ovsvapp/*.ini
+%dir %{_sysconfdir}/%{service}/plugins/ovsvapp
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ovsvapp/*.ini
 
 
 %files plumgrid
 %doc LICENSE
-%doc neutron/plugins/plumgrid/README
-%dir %{_sysconfdir}/neutron/plugins/plumgrid
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/plumgrid/*.ini
+%doc %{service}/plugins/plumgrid/README
+%dir %{_sysconfdir}/%{service}/plugins/plumgrid
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/plumgrid/*.ini
 
 
 %files vmware
 %doc LICENSE
-%dir %{_sysconfdir}/neutron/plugins/vmware
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/vmware/*.ini
+%dir %{_sysconfdir}/%{service}/plugins/vmware
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/vmware/*.ini
 
 
 %files metering-agent
 %doc LICENSE
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/metering_agent.ini
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/metering_agent.ini
 %{_unitdir}/neutron-metering-agent.service
 %{_bindir}/neutron-metering-agent
 
