@@ -729,7 +729,7 @@ exit 0
 
 
 %files -n python-%{service}
-%doc LICENSE
+%license LICENSE
 %doc README.rst
 %{python2_sitelib}/%{service}
 %{python2_sitelib}/%{service}-*.egg-info
@@ -737,7 +737,7 @@ exit 0
 
 
 %files bigswitch
-%doc LICENSE
+%license LICENSE
 %{_bindir}/neutron-restproxy-agent
 %dir %{_sysconfdir}/%{service}/plugins/bigswitch
 %{_sysconfdir}/%{service}/plugins/bigswitch/ssl
@@ -745,7 +745,7 @@ exit 0
 
 
 %files brocade
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/brocade/README.md
 %dir %{_sysconfdir}/%{service}/plugins/brocade
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/brocade/*.ini
@@ -753,21 +753,21 @@ exit 0
 
 
 %files cisco
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/cisco/README
 %dir %{_sysconfdir}/%{service}/plugins/cisco
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/cisco/*.ini
 
 
 %files embrane
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/embrane/README
 %dir %{_sysconfdir}/%{service}/plugins/embrane
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/embrane/*.ini
 
 
 %files ibm
-%doc LICENSE
+%license LICENSE
 %{_bindir}/neutron-ibm-agent
 %doc %{service}/plugins/ibm/README
 %dir %{_sysconfdir}/%{service}/plugins/ibm
@@ -775,7 +775,7 @@ exit 0
 
 
 %files linuxbridge
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/linuxbridge/README
 %{_bindir}/neutron-linuxbridge-agent
 %{_unitdir}/neutron-linuxbridge-agent.service
@@ -785,7 +785,7 @@ exit 0
 
 
 %files mellanox
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/ml2/drivers/mlnx/README
 %{_bindir}/neutron-mlnx-agent
 %{_unitdir}/neutron-mlnx-agent.service
@@ -794,28 +794,28 @@ exit 0
 
 
 %files metaplugin
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/metaplugin/README
 %dir %{_sysconfdir}/%{service}/plugins/metaplugin
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/metaplugin/*.ini
 
 
 %files midonet
-%doc LICENSE
+%license LICENSE
 #%doc %{service}/plugins/midonet/README
 %dir %{_sysconfdir}/%{service}/plugins/midonet
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/midonet/*.ini
 
 
 %files ml2
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/ml2/README
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*.ini
 
 
 %files nec
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/nec/README
 %{_bindir}/neutron-nec-agent
 %{_unitdir}/neutron-nec-agent.service
@@ -825,18 +825,18 @@ exit 0
 
 
 %files nuage
-%doc LICENSE
+%license LICENSE
 %{python2_sitelib}/%{service}/plugins/nuage
 %dir %{_sysconfdir}/%{service}/plugins/nuage
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/nuage/*.ini
 
 
 %files ofagent
-%doc LICENSE
+%license LICENSE
 
 
 %files oneconvergence-nvsd
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/oneconvergence/README
 %dir %{_sysconfdir}/%{service}/plugins/oneconvergence
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/oneconvergence/*.ini
@@ -844,14 +844,14 @@ exit 0
 
 
 %files opencontrail
-%doc LICENSE
+%license LICENSE
 #%doc %{service}/plugins/opencontrail/README
 %dir %{_sysconfdir}/%{service}/plugins/opencontrail
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/opencontrail/*.ini
 
 
 %files openvswitch
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/openvswitch/README
 %{_bindir}/neutron-openvswitch-agent
 %{_unitdir}/neutron-openvswitch-agent.service
@@ -869,27 +869,27 @@ exit 0
 
 
 %files plumgrid
-%doc LICENSE
+%license LICENSE
 %doc %{service}/plugins/plumgrid/README
 %dir %{_sysconfdir}/%{service}/plugins/plumgrid
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/plumgrid/*.ini
 
 
 %files vmware
-%doc LICENSE
+%license LICENSE
 %dir %{_sysconfdir}/%{service}/plugins/vmware
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/vmware/*.ini
 
 
 %files metering-agent
-%doc LICENSE
+%license LICENSE
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/metering_agent.ini
 %{_unitdir}/neutron-metering-agent.service
 %{_bindir}/neutron-metering-agent
 
 
 %files sriov-nic-agent
-%doc LICENSE
+%license LICENSE
 %{_unitdir}/neutron-sriov-nic-agent.service
 %{_bindir}/neutron-sriov-nic-agent
 
