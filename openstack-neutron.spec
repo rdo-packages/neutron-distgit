@@ -725,6 +725,7 @@ exit 0
 
 
 %files -n python-%{service}-tests
+%license LICENSE
 %{python2_sitelib}/%{service}/tests
 
 
