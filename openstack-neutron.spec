@@ -1,4 +1,3 @@
-%global release_name juno
 %global service neutron
 
 Name:		openstack-%{service}
@@ -12,7 +11,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
-Source0:	http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{version}.tar.gz
+Source0:	http://tarballs.openstack.org/%{service}/%{service}-master.tar.gz
 Source1:	%{service}.logrotate
 Source2:	%{service}-sudoers
 Source10:	neutron-server.service
