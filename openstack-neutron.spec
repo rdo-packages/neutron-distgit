@@ -757,6 +757,8 @@ exit 0
 %doc %{service}/plugins/cisco/README
 %dir %{_sysconfdir}/%{service}/plugins/cisco
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/cisco/*.ini
+%{_bindir}/neutron-cisco-apic-host-agent
+%{_bindir}/neutron-cisco-apic-service-agent
 
 
 %files embrane
