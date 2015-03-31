@@ -581,7 +581,7 @@ install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/%{service}/%{service}-d
 
 # Create and populate configuration directory for L3 agent
 mkdir -p %{buildroot}%{_datadir}/%{service}/l3_agent
-ln -s ../l3_agent.ini %{buildroot}%{_datadir}/%{service}/l3_agent/l3_agent.conf
+ln -s %{_sysconfdir}/%{service}/l3_agent.ini %{buildroot}%{_datadir}/%{service}/l3_agent/l3_agent.conf
 
 # Kill hyperv agent since it's of no use for Linux
 rm %{buildroot}/%{_bindir}/neutron-hyperv-agent
