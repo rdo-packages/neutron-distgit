@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 User=neutron
-ExecStart=/usr/bin/neutron-ryu-agent --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ryu/ryu.ini --log-file /var/log/neutron/ryu-agent.log
+ExecStart=/usr/bin/neutron-ryu-agent --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ryu/ryu.ini --config-dir /etc/neutron/conf.d/neutron-ryu-agent --log-file /var/log/neutron/ryu-agent.log
 PrivateTmp=true
 KillMode=process
 
