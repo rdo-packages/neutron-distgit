@@ -106,6 +106,7 @@ Requires:	python-neutronclient >= 2.3.6
 Requires:	python-novaclient >= 2.18.0
 Requires:	python-oslo-config >= 2:1.4.0
 Requires:	python-oslo-db >= 1.0.0
+Requires:	python-oslo-log >= 1.0.0
 Requires:	python-oslo-messaging >= 1.4.0.0
 Requires:	python-oslo-rootwrap >= 1.3.0.0
 Requires:	python-oslo-serialization >= 1.0.0
