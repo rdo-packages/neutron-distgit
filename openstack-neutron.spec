@@ -603,6 +603,9 @@ install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/%{service}/%{service}-d
 mkdir -p %{buildroot}%{_datadir}/%{service}/l3_agent
 ln -s %{_sysconfdir}/%{service}/l3_agent.ini %{buildroot}%{_datadir}/%{service}/l3_agent/l3_agent.conf
 
+# Create dist configuration directory for neutron-server (may be filled by advanced services)
+mkdir -p %{buildroot}%{_datadir}/%{service}/server
+
 # Create configuration directories for all services that can be populated by users with custom *.conf files
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d
 for service in server ovs-cleanup netns-cleanup; do
@@ -723,6 +726,8 @@ exit 0
 %{_unitdir}/neutron-netns-cleanup.service
 %{_unitdir}/neutron-ovs-cleanup.service
 %attr(-, root, %{service}) %{_datadir}/%{service}/api-paste.ini
+%dir %{_datadir}/%{service}/l3_agent
+%dir %{_datadir}/%{service}/server
 %{_datadir}/%{service}/l3_agent/*.conf
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/l3_agent.ini
