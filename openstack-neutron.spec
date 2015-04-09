@@ -619,7 +619,7 @@ done
 rm %{buildroot}/%{_bindir}/neutron-hyperv-agent
 
 
-%pre
+%pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
 getent passwd %{service} >/dev/null || \
     useradd -r -g %{service} -d %{_sharedstatedir}/%{service} -s /sbin/nologin \
