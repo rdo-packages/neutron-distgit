@@ -1,8 +1,8 @@
 %global release_name juno
 
 Name:		openstack-neutron
-Version:	2014.2.2
-Release:	2%{?dist}
+Version:	2014.2.3
+Release:	1%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -981,6 +981,9 @@ exit 0
 
 
 %changelog
+* Mon Apr 13 2015 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2.3-1
+- Update to upstream 2014.2.3, rhbz#1210459
+
 * Mon Feb 09 2015 Ihar Hrachyshka <ihrachys@redhat.com> 2014.2.2-2
 - Update maximum dependencies as per upstream requirements.txt
 
