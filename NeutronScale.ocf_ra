@@ -83,7 +83,7 @@ END
 
 #######################################################################
 
-neutronconfigfiles="dhcp_agent.ini fwaas_driver.ini l3_agent.ini lbaas_agent.ini metadata_agent.ini neutron.conf plugins/openvswitch/ovs_neutron_plugin.ini"
+neutronconfigfiles="dhcp_agent.ini l3_agent.ini metadata_agent.ini neutron.conf plugins/openvswitch/ovs_neutron_plugin.ini"
 
 neutron_scale_usage() {
 	cat <<END
@@ -128,7 +128,7 @@ neutron_scale_start() {
 			ocf_log info "/etc/neutron/$i not installed. skipping"
 		fi
 	done
-	touch ${HA_RSCTMP}/neutron-scale
+	touch ${HA_RSCTMP}/neutron-scale-${OCF_RESKEY_CRM_meta_clone}
 	return $OCF_SUCCESS
 }
 
@@ -146,12 +146,12 @@ neutron_scale_stop() {
 			ocf_log info "/etc/neutron/$i not installed. skipping"
 		fi
 	done
-	rm -f ${HA_RSCTMP}/neutron-scale
+	rm -f ${HA_RSCTMP}/neutron-scale-${OCF_RESKEY_CRM_meta_clone}
 	return $OCF_SUCCESS
 }
 
 neutron_scale_monitor() {
-	if [ ! -f ${HA_RSCTMP}/neutron-scale ]; then
+	if [ ! -f ${HA_RSCTMP}/neutron-scale-${OCF_RESKEY_CRM_meta_clone} ]; then
 		return $OCF_NOT_RUNNING
 	fi
 	return $OCF_SUCCESS
