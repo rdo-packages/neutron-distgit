@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 User=neutron
-ExecStart=/usr/bin/neutron-mlnx-agent --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/mlnx/mlnx_conf.ini --config-dir /etc/neutron/conf.d/neutron-mlnx-agent --log-file /var/log/neutron/mlnx-agent.log
+ExecStart=/usr/bin/neutron-mlnx-agent --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/mlnx/mlnx_conf.ini --config-dir /etc/neutron/conf.d/common --config-dir /etc/neutron/conf.d/neutron-mlnx-agent --log-file /var/log/neutron/mlnx-agent.log
 PrivateTmp=true
 KillMode=process
 
