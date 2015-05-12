@@ -3,8 +3,6 @@
 Name:		openstack-%{service}
 Version:    XXX
 Release:    XXX{?dist}
-Provides:	openstack-quantum = %{version}-%{release}
-Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
 
 Group:		Applications/System
@@ -87,9 +85,6 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 Summary:	Neutron Python libraries
 Group:		Applications/System
 
-Provides:	python-quantum = %{version}-%{release}
-Obsoletes:	python-quantum < 2013.2-0.4.b3
-
 Requires:	MySQL-python
 Requires:	python-alembic >= 0.6.4
 Requires:	python-anyjson >= 0.3.3
@@ -170,9 +165,6 @@ This package contains Neutron common files.
 Summary:	Neutron Big Switch plugin
 Group:		Applications/System
 
-Provides:	openstack-quantum-bigswitch = %{version}-%{release}
-Obsoletes:	openstack-quantum-bigswitch < 2013.2-0.4.b3
-
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
 
@@ -189,9 +181,6 @@ Networks Controller.
 Summary:	Neutron Brocade plugin
 Group:		Applications/System
 
-Provides:	openstack-quantum-brocade = %{version}-%{release}
-Obsoletes:	openstack-quantum-brocade < 2013.2-0.4.b3
-
 Requires:	openstack-%{service}-common = %{version}-%{release}
 Requires:	python-ncclient
 
@@ -207,9 +196,6 @@ networks using Brocade VCS switches running NOS.
 %package cisco
 Summary:	Neutron Cisco plugin
 Group:		Applications/System
-
-Provides:	openstack-quantum-cisco = %{version}-%{release}
-Obsoletes:	openstack-quantum-cisco < 2013.2-0.4.b3
 
 Requires:	openstack-%{service}-common = %{version}-%{release}
 Requires:	python-ncclient
@@ -257,9 +243,6 @@ networks from IBM.
 Summary:	Neutron linuxbridge plugin
 Group:		Applications/System
 
-Provides:	openstack-quantum-linuxbridge = %{version}-%{release}
-Obsoletes:	openstack-quantum-linuxbridge < 2013.2-0.4.b3
-
 Requires:	bridge-utils
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
@@ -276,9 +259,6 @@ networks as VLANs using Linux bridging.
 Summary:	Neutron Mellanox plugin
 Group:		Applications/System
 
-Provides:	openstack-quantum-mellanox = %{version}-%{release}
-Obsoletes:	openstack-quantum-mellanox < 2013.2-0.4.b3
-
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
 
@@ -290,9 +270,6 @@ switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 %package metaplugin
 Summary:	Neutron meta plugin
 Group:		Applications/System
-
-Provides:	openstack-quantum-metaplugin = %{version}-%{release}
-Obsoletes:	openstack-quantum-metaplugin < 2013.2-0.4.b3
 
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
@@ -309,9 +286,6 @@ networks using multiple other Neutron plugins.
 Summary:	Neutron MidoNet plugin
 Group:		Applications/System
 
-Provides:	openstack-quantum-midonet = %{version}-%{release}
-Obsoletes:	openstack-quantum-midonet < 2013.2-0.4.b3
-
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
 
@@ -326,9 +300,6 @@ networks using MidoNet from Midokura.
 %package ml2
 Summary:	Neutron ML2 plugin
 Group:		Applications/System
-
-Provides:	openstack-quantum-ml2 = %{version}-%{release}
-Obsoletes:	openstack-quantum-ml2 < 2013.2-0.4.b3
 
 Requires:	openstack-%{service}-common = %{version}-%{release}
 # needed for brocade and cisco drivers
@@ -347,9 +318,6 @@ for accessing those types.
 %package nec
 Summary:	Neutron NEC plugin
 Group:		Applications/System
-
-Provides:	openstack-quantum-nec = %{version}-%{release}
-Obsoletes:	openstack-quantum-nec < 2013.2-0.4.b3
 
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
@@ -417,9 +385,6 @@ plugin.
 Summary:	Neutron openvswitch plugin
 Group:		Applications/System
 
-Provides:	openstack-quantum-openvswitch = %{version}-%{release}
-Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b3
-
 Requires:	openstack-%{service}-common = %{version}-%{release}
 Requires:	openvswitch
 
@@ -450,9 +415,6 @@ networks using OVSvApp vSphere L2 agent.
 %package plumgrid
 Summary:	Neutron PLUMgrid plugin
 Group:		Applications/System
-
-Provides:	openstack-quantum-plumgrid = %{version}-%{release}
-Obsoletes:	openstack-quantum-plumgrid < 2013.2-0.4.b3
 
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
