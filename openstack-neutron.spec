@@ -386,7 +386,11 @@ Summary:	Neutron openvswitch plugin
 Group:		Applications/System
 
 Requires:	openstack-%{service}-common = %{version}-%{release}
+# We require openvswitch when using vsctl to access ovsdb;
+# but if we use native access, then we just need python bindings.
+# since we don't know what users actually use, we depend on both.
 Requires:	openvswitch
+Requires:	python-openvswitch
 
 
 %description openvswitch
