@@ -769,7 +769,7 @@ exit 0
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/%{service}.conf
 %config(noreplace) %{_sysconfdir}/%{service}/rootwrap.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
-%config %{_sysconfdir}/sudoers.d/%{service}
+%{_sysconfdir}/sudoers.d/%{service}
 %dir %attr(0755, %{service}, %{service}) %{_sharedstatedir}/%{service}
 %dir %attr(0750, %{service}, %{service}) %{_localstatedir}/log/%{service}
 %dir %{_datarootdir}/%{service}
