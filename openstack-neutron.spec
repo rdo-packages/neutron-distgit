@@ -607,7 +607,7 @@ ln -s %{_sysconfdir}/%{service}/l3_agent.ini %{buildroot}%{_datadir}/%{service}/
 mkdir -p %{buildroot}%{_datadir}/%{service}/server
 
 # Create configuration directories for all services that can be populated by users with custom *.conf files
-mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d
+mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
 for service in server ovs-cleanup netns-cleanup; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
@@ -762,6 +762,8 @@ exit 0
 %dir %{_sysconfdir}/%{service}
 %dir %{_sysconfdir}/%{service}/conf.d
 %{_sysconfdir}/%{service}/conf.d/README
+%dir %{_sysconfdir}/%{service}/conf.d
+%dir %{_sysconfdir}/%{service}/conf.d/common
 %dir %{_sysconfdir}/%{service}/plugins
 %attr(-, root, %{service}) %{_datadir}/%{service}/%{service}-dist.conf
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/%{service}.conf
