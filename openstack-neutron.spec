@@ -672,6 +672,7 @@ exit 0
 %{_bindir}/neutron-db-manage
 %{_bindir}/neutron-debug
 %{_bindir}/neutron-dhcp-agent
+%{_bindir}/neutron-ipset-cleanup
 %{_bindir}/neutron-keepalived-state-change
 %{_bindir}/neutron-l3-agent
 %{_bindir}/neutron-metadata-agent
