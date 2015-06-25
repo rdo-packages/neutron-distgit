@@ -728,7 +728,6 @@ exit 0
 %{_bindir}/neutron-rootwrap-daemon
 %{_bindir}/neutron-rootwrap-xen-dom0
 %dir %{_sysconfdir}/%{service}
-%dir %{_sysconfdir}/%{service}/conf.d
 %{_sysconfdir}/%{service}/conf.d/README
 %dir %{_sysconfdir}/%{service}/conf.d
 %dir %{_sysconfdir}/%{service}/conf.d/common
