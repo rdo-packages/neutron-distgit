@@ -619,12 +619,29 @@ exit 0
 %systemd_postun_with_restart neutron-server.service
 
 
+%post linuxbridge
+%systemd_post neutron-linuxbridge-agent.service
+oldconf=%{_sysconfdir}/%{service}/plugins/linuxbridge/linuxbridge_conf.ini
+newconf=%{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
+if [ $1 -gt 1 ]; then
+    if [ -e $oldconf ]; then
+        # Imitate noreplace
+        cp $newconf ${newconf}.rpmnew
+        cp $oldconf $newconf
+    fi
+fi
+
+
 %preun linuxbridge
 %systemd_preun neutron-linuxbridge-agent.service
 
 
 %postun linuxbridge
 %systemd_postun_with_restart neutron-linuxbridge-agent.service
+
+
+%post mellanox
+%systemd_post neutron-mlnx-agent.service
 
 
 %preun mellanox
@@ -635,12 +652,29 @@ exit 0
 %systemd_postun_with_restart neutron-mlnx-agent.service
 
 
+%post nec
+%systemd_post neutron-nec-agent.service
+
+
 %preun nec
 %systemd_preun neutron-nec-agent.service
 
 
 %postun nec
 %systemd_postun_with_restart neutron-nec-agent.service
+
+
+%post openvswitch
+%systemd_post neutron-openvswitch-agent.service
+oldconf=%{_sysconfdir}/%{service}/plugins/openvswitch/ovs_neutron_plugin.ini
+newconf=%{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
+if [ $1 -gt 1 ]; then
+    if [ -e $oldconf ]; then
+        # Imitate noreplace
+        cp $newconf ${newconf}.rpmnew
+        cp $oldconf $newconf
+    fi
+fi
 
 
 %preun openvswitch
@@ -651,12 +685,20 @@ exit 0
 %systemd_postun_with_restart neutron-openvswitch-agent.service
 
 
+%post metering-agent
+%systemd_post neutron-metering-agent.service
+
+
 %preun metering-agent
 %systemd_preun neutron-metering-agent.service
 
 
 %postun metering-agent
 %systemd_postun_with_restart neutron-metering-agent.service
+
+
+%post sriov-nic-agent
+%systemd_post neutron-sriov-nic-agent.service
 
 
 %preun sriov-nic-agent
@@ -791,12 +833,12 @@ exit 0
 
 %files linuxbridge
 %license LICENSE
-%doc %{service}/plugins/linuxbridge/README
+%doc %{service}/plugins/ml2/drivers/linuxbridge/agent/README
 %{_bindir}/neutron-linuxbridge-agent
 %{_unitdir}/neutron-linuxbridge-agent.service
 %{_datarootdir}/%{service}/rootwrap/linuxbridge-plugin.filters
-%dir %{_sysconfdir}/%{service}/plugins/linuxbridge
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/linuxbridge/*.ini
+%dir %{_sysconfdir}/%{service}/plugins/ml2
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-agent
 
 
@@ -829,6 +871,8 @@ exit 0
 %doc %{service}/plugins/ml2/README
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*.ini
+%exclude %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
+%exclude %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
 
 
 %files nec
@@ -870,12 +914,12 @@ exit 0
 
 %files openvswitch
 %license LICENSE
-%doc %{service}/plugins/openvswitch/README
+%doc %{service}/plugins/ml2/drivers/openvswitch/agent/README
 %{_bindir}/neutron-openvswitch-agent
 %{_unitdir}/neutron-openvswitch-agent.service
 %{_datarootdir}/%{service}/rootwrap/openvswitch-plugin.filters
-%dir %{_sysconfdir}/%{service}/plugins/openvswitch
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/openvswitch/*.ini
+%dir %{_sysconfdir}/%{service}/plugins/ml2
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-openvswitch-agent
 
 
