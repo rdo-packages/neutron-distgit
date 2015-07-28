@@ -43,7 +43,6 @@ BuildRequires:	python-setuptools
 BuildRequires:	systemd-units
 
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-Requires:	openstack-utils
 
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
