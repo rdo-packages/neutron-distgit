@@ -268,21 +268,6 @@ This plugin implements Neutron v2 APIs with support for Mellanox embedded
 switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 
 
-%package metaplugin
-Summary:	Neutron meta plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description metaplugin
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using multiple other Neutron plugins.
-
-
 %package midonet
 Summary:	Neutron MidoNet plugin
 Group:		Applications/System
@@ -812,8 +797,6 @@ fi
 %doc %{service}/plugins/cisco/README
 %dir %{_sysconfdir}/%{service}/plugins/cisco
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/cisco/*.ini
-%{_bindir}/neutron-cisco-apic-host-agent
-%{_bindir}/neutron-cisco-apic-service-agent
 
 
 %files embrane
@@ -833,7 +816,6 @@ fi
 
 %files linuxbridge
 %license LICENSE
-%doc %{service}/plugins/ml2/drivers/linuxbridge/agent/README
 %{_bindir}/neutron-linuxbridge-agent
 %{_unitdir}/neutron-linuxbridge-agent.service
 %{_datarootdir}/%{service}/rootwrap/linuxbridge-plugin.filters
@@ -850,13 +832,6 @@ fi
 %dir %{_sysconfdir}/%{service}/plugins/mlnx
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
-
-
-%files metaplugin
-%license LICENSE
-%doc %{service}/plugins/metaplugin/README
-%dir %{_sysconfdir}/%{service}/plugins/metaplugin
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/metaplugin/*.ini
 
 
 %files midonet
@@ -914,7 +889,6 @@ fi
 
 %files openvswitch
 %license LICENSE
-%doc %{service}/plugins/ml2/drivers/openvswitch/agent/README
 %{_bindir}/neutron-openvswitch-agent
 %{_unitdir}/neutron-openvswitch-agent.service
 %{_datarootdir}/%{service}/rootwrap/openvswitch-plugin.filters
