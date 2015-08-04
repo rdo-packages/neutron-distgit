@@ -109,14 +109,17 @@ Requires:	python-keystonemiddleware >= 1.0.0
 Requires:	python-netaddr >= 0.7.12
 Requires:	python-neutronclient >= 2.3.6
 Requires:	python-novaclient >= 2.18.0
-Requires:	python-oslo-config >= 2:1.4.0
-Requires:	python-oslo-db >= 1.0.0
+Requires:	python-oslo-concurrency >= 1.8.0
+Requires:	python-oslo-config >= 2:1.9.3
+Requires:	python-oslo-context >= 0.2.0
+Requires:	python-oslo-db >= 1.7.0
+Requires:	python-oslo-i18n >= 1.5.0
 Requires:	python-oslo-log >= 1.0.0
-Requires:	python-oslo-messaging >= 1.4.0.0
-Requires:	python-oslo-rootwrap >= 1.3.0.0
-Requires:	python-oslo-serialization >= 1.0.0
-Requires:	python-oslo-utils >= 1.1.0
-Requires:	python-oslo-context
+Requires:	python-oslo-messaging >= 1.8.0
+Requires:	python-oslo-middleware >= 1.0.0
+Requires:	python-oslo-rootwrap >= 1.6.0
+Requires:	python-oslo-serialization >= 1.4.0
+Requires:	python-oslo-utils >= 1.4.0
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
 Requires:	python-pbr
@@ -129,9 +132,6 @@ Requires:	python-six >= 1.7.0
 Requires:	python-webob >= 1.2.3
 Requires:	sudo
 Requires:	python-retrying
-Requires:	python-oslo-concurrency
-Requires:	python-oslo-i18n
-Requires:	python-oslo-middleware
 
 
 
