@@ -417,24 +417,6 @@ This package contains the Neutron plugin that implements virtual
 networks using the PLUMgrid platform.
 
 
-%package vmware
-Summary:	Neutron Nicira plugin
-Group:		Applications/System
-
-Provides:	openstack-%{service}-nicira = %{epoch}:%{version}-%{release}
-Obsoletes:	openstack-%{service}-nicira < 2014.1-0.5.b2
-
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description vmware
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using VMware NSX.
-
-
 %package metering-agent
 Summary:	Neutron bandwidth metering agent
 Group:		Applications/System
@@ -910,12 +892,6 @@ fi
 %doc %{service}/plugins/plumgrid/README
 %dir %{_sysconfdir}/%{service}/plugins/plumgrid
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/plumgrid/*.ini
-
-
-%files vmware
-%license LICENSE
-%dir %{_sysconfdir}/%{service}/plugins/vmware
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/vmware/*.ini
 
 
 %files metering-agent
