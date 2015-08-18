@@ -107,6 +107,7 @@ Requires:	python-oslo-messaging >= 1.4.0.0
 Requires:	python-oslo-rootwrap >= 1.3.0.0
 Requires:	python-oslo-serialization >= 1.0.0
 Requires:	python-oslo-utils >= 1.1.0
+Requires:	python-oslo-versionedobjects >= 0.6.0
 Requires:	python-oslo-context
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
