@@ -4,8 +4,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	2015.1.0
-Release:	2%{?milestone}%{?dist}
+Version:	2015.1.1
+Release:	1%{?milestone}%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -950,6 +950,9 @@ exit 0
 
 
 %changelog
+* Fri Aug 21 2015 Haikel Guemar <hguemar@fedoraproject.org> 2015.1.1-1
+- Update to upstream 2015.1.1
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2015.1.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
