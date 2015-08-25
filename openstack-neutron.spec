@@ -16,7 +16,6 @@ Source2:	%{service}-sudoers
 Source10:	neutron-server.service
 Source11:	neutron-linuxbridge-agent.service
 Source12:	neutron-openvswitch-agent.service
-Source14:	neutron-nec-agent.service
 Source15:	neutron-dhcp-agent.service
 Source16:	neutron-l3-agent.service
 Source17:	neutron-metadata-agent.service
@@ -302,21 +301,6 @@ to support separately extensible sets of network types and the mechanisms
 for accessing those types.
 
 
-%package nec
-Summary:	Neutron NEC plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description nec
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using the NEC OpenFlow controller.
-
-
 %package nuage
 Summary:	Neutron Nuage plugin
 Group:		Applications/System
@@ -505,7 +489,6 @@ install -p -D -m 440 %{SOURCE2} %{buildroot}%{_sysconfdir}/sudoers.d/%{service}
 install -p -D -m 644 %{SOURCE10} %{buildroot}%{_unitdir}/neutron-server.service
 install -p -D -m 644 %{SOURCE11} %{buildroot}%{_unitdir}/neutron-linuxbridge-agent.service
 install -p -D -m 644 %{SOURCE12} %{buildroot}%{_unitdir}/neutron-openvswitch-agent.service
-install -p -D -m 644 %{SOURCE14} %{buildroot}%{_unitdir}/neutron-nec-agent.service
 install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/neutron-dhcp-agent.service
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/neutron-l3-agent.service
 install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/neutron-metadata-agent.service
@@ -546,7 +529,7 @@ mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
 for service in server ovs-cleanup netns-cleanup; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
-for service in linuxbridge openvswitch nec dhcp l3 metadata mlnx metering sriov-nic; do
+for service in linuxbridge openvswitch dhcp l3 metadata mlnx metering sriov-nic; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
 
@@ -618,18 +601,6 @@ fi
 
 %postun mellanox
 %systemd_postun_with_restart neutron-mlnx-agent.service
-
-
-%post nec
-%systemd_post neutron-nec-agent.service
-
-
-%preun nec
-%systemd_preun neutron-nec-agent.service
-
-
-%postun nec
-%systemd_postun_with_restart neutron-nec-agent.service
 
 
 %post openvswitch
@@ -831,17 +802,6 @@ fi
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*.ini
 %exclude %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %exclude %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
-
-
-%files nec
-%license LICENSE
-%doc %{service}/plugins/nec/README
-%{_bindir}/neutron-nec-agent
-%{_unitdir}/neutron-nec-agent.service
-%{_datarootdir}/%{service}/rootwrap/nec-plugin.filters
-%dir %{_sysconfdir}/%{service}/plugins/nec
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/nec/*.ini
-%dir %{_sysconfdir}/%{service}/conf.d/%{service}-nec-agent
 
 
 %files nuage
