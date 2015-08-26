@@ -6,7 +6,6 @@ Release:    XXX{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
-Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
@@ -86,8 +85,6 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 %package -n python-%{service}
 Summary:	Neutron Python libraries
-Group:		Applications/System
-
 Requires:	MySQL-python
 Requires:	python-alembic >= 0.8.0
 Requires:	python-debtcollector >= 0.3.0
@@ -138,8 +135,6 @@ This package contains the Neutron Python library.
 
 %package -n python-%{service}-tests
 Summary:	Neutron tests
-Group:		Applications/System
-
 Requires:	openstack-%{service} = %{epoch}:%{version}-%{release}
 
 
@@ -152,8 +147,6 @@ This package contains Neutron test files.
 
 %package common
 Summary:	Neutron common files
-Group:		Applications/System
-
 Requires:	python-%{service} = %{epoch}:%{version}-%{release}
 
 
@@ -166,8 +159,6 @@ This package contains Neutron common files.
 
 %package bigswitch
 Summary:	Neutron Big Switch plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -182,8 +173,6 @@ Networks Controller.
 
 %package brocade
 Summary:	Neutron Brocade plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:	python-ncclient
 
@@ -198,8 +187,6 @@ networks using Brocade VCS switches running NOS.
 
 %package cisco
 Summary:	Neutron Cisco plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:	python-ncclient
 
@@ -214,8 +201,6 @@ networks using Cisco UCS and Nexus.
 
 %package embrane
 Summary:	Neutron Embrane plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -229,8 +214,6 @@ L3-L7 network services using Embrane's heleos platform.
 
 %package linuxbridge
 Summary:	Neutron linuxbridge plugin
-Group:		Applications/System
-
 Requires:	bridge-utils
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
@@ -245,8 +228,6 @@ networks as VLANs using Linux bridging.
 
 %package mellanox
 Summary:	Neutron Mellanox plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -257,8 +238,6 @@ switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 
 %package midonet
 Summary:	Neutron MidoNet plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -272,8 +251,6 @@ networks using MidoNet from Midokura.
 
 %package ml2
 Summary:	Neutron ML2 plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 # needed for brocade and cisco drivers
 Requires:	python-ncclient
@@ -290,8 +267,6 @@ for accessing those types.
 
 %package nuage
 Summary:	Neutron Nuage plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -302,8 +277,6 @@ Virtual Service Platform (VSP).
 
 %package ofagent
 Summary:	Neutron ofagent plugin from ryu project
-Group:		Applications/system
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -314,8 +287,6 @@ plugin.
 
 %package oneconvergence-nvsd
 Summary:	Neutron One Convergence NVSD plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -329,8 +300,6 @@ networks using One Convergence NVSD
 
 %package opencontrail
 Summary:	Neutron OpenContrail plugin
-Group:		Applications/system
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -341,8 +310,6 @@ plugin.
 
 %package openvswitch
 Summary:	Neutron openvswitch plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 # We require openvswitch when using vsctl to access ovsdb;
 # but if we use native access, then we just need python bindings.
@@ -361,8 +328,6 @@ networks using Open vSwitch.
 
 %package ovsvapp
 Summary:	Neutron OVSvApp vSphere plugin
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -376,8 +341,6 @@ networks using OVSvApp vSphere L2 agent.
 
 %package metering-agent
 Summary:	Neutron bandwidth metering agent
-Group:		Applications/System
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -390,8 +353,6 @@ utilization notifications.
 
 %package sriov-nic-agent
 Summary:	Neutron SR-IOV NIC agent
-Group:		Applications/system
-
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
