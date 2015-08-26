@@ -660,6 +660,7 @@ fi
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ns-metadata-proxy
 %{_bindir}/neutron-ovs-cleanup
+%{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
