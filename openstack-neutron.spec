@@ -122,7 +122,6 @@ Requires:	python-six >= 1.9.0
 Requires:	python-sqlalchemy >= 0.9.7
 Requires:	python-stevedore >= 1.5.0
 Requires:	python-webob >= 1.2.3
-Requires:	sudo
 
 
 
@@ -148,6 +147,7 @@ This package contains Neutron test files.
 %package common
 Summary:	Neutron common files
 Requires:	python-%{service} = %{epoch}:%{version}-%{release}
+Requires:	sudo
 
 
 %description common
