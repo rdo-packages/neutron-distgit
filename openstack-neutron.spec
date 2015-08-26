@@ -85,7 +85,7 @@ Summary:	Neutron Python libraries
 Group:		Applications/System
 
 Requires:	MySQL-python
-Requires:	python-alembic >= 0.6.4
+Requires:	python-alembic >= 0.8.0
 Requires:	python-anyjson >= 0.3.3
 Requires:	python-babel >= 1.3
 Requires:	python-eventlet >= 0.15.1
