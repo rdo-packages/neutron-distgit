@@ -52,6 +52,10 @@ Requires:	dnsmasq-utils
 # for IPv6 deployments.
 Requires:	radvd
 
+# dibbler is not a hard requirement, but is currently the default option
+# for IPv6 prefix delegation.
+Requires:	dibbler-client
+
 # conntrack is not a hard requirement, but is currently used by L3 agent
 # to immediately drop connections after a floating IP is disassociated
 Requires:	conntrack-tools
