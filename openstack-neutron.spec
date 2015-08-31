@@ -225,21 +225,6 @@ This package contains the Neutron plugin that implements virtual
 L3-L7 network services using Embrane's heleos platform.
 
 
-%package ibm
-Summary:	Neutron IBM plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description ibm
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks from IBM.
-
-
 %package linuxbridge
 Summary:	Neutron linuxbridge plugin
 Group:		Applications/System
@@ -385,21 +370,6 @@ networks.
 
 This package contains the Neutron plugin that implements virtual
 networks using OVSvApp vSphere L2 agent.
-
-
-%package plumgrid
-Summary:	Neutron PLUMgrid plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description plumgrid
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using the PLUMgrid platform.
 
 
 %package metering-agent
@@ -761,14 +731,6 @@ fi
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/embrane/*.ini
 
 
-%files ibm
-%license LICENSE
-%{_bindir}/neutron-ibm-agent
-%doc %{service}/plugins/ibm/README
-%dir %{_sysconfdir}/%{service}/plugins/ibm
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ibm/*.ini
-
-
 %files linuxbridge
 %license LICENSE
 %{_bindir}/neutron-linuxbridge-agent
@@ -847,13 +809,6 @@ fi
 # TODO: add a systemd unit file
 %dir %{_sysconfdir}/%{service}/plugins/ovsvapp
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ovsvapp/*.ini
-
-
-%files plumgrid
-%license LICENSE
-%doc %{service}/plugins/plumgrid/README
-%dir %{_sysconfdir}/%{service}/plugins/plumgrid
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/plumgrid/*.ini
 
 
 %files metering-agent
