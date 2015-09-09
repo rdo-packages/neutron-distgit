@@ -90,44 +90,42 @@ Group:		Applications/System
 
 Requires:	MySQL-python
 Requires:	python-alembic >= 0.8.0
-Requires:	python-anyjson >= 0.3.3
-Requires:	python-babel >= 1.3
-Requires:	python-eventlet >= 0.15.1
+Requires:	python-debtcollector >= 0.3.0
+Requires:	python-eventlet >= 0.17.4
 Requires:	python-greenlet >= 0.3.2
 Requires:	python-httplib2 >= 0.7.5
-Requires:	python-iso8601 >= 0.1.9
-Requires:	python-jinja2
-Requires:	python-jsonrpclib
-Requires:	python-keystoneclient >= 0.10.0
-Requires:	python-keystonemiddleware >= 1.0.0
+Requires:	python-jinja2 >= 2.6
+Requires:	python-keystoneclient >= 1.6.0
+Requires:	python-keystonemiddleware >= 2.0.0
 Requires:	python-netaddr >= 0.7.12
-Requires:	python-neutronclient >= 2.3.6
-Requires:	python-novaclient >= 2.18.0
-Requires:	python-oslo-config >= 2:1.4.0
-Requires:	python-oslo-db >= 1.0.0
-Requires:	python-oslo-log >= 1.2.0
-Requires:	python-oslo-messaging >= 1.4.0.0
-Requires:	python-oslo-rootwrap >= 1.3.0.0
-Requires:	python-oslo-serialization >= 1.0.0
-Requires:	python-oslo-utils >= 1.1.0
+Requires:	python-neutronclient >= 2.6.0
+Requires:	python-novaclient >= 2.26.0
+Requires:	python-oslo-concurrency >= 2.3.0
+Requires:	python-oslo-config >= 2:2.1.0
+Requires:	python-oslo-context >= 0.2.0
+Requires:	python-oslo-db >= 2.0
+Requires:	python-oslo-i18n >= 1.5.0
+Requires:	python-oslo-log >= 1.8.0
+Requires:	python-oslo-messaging >= 1.16.0
+Requires:	python-oslo-middleware >= 2.4.0
+Requires:       python-oslo-policy >= 0.5.0
+Requires:	python-oslo-rootwrap >= 2.0.0
+Requires:	python-oslo-serialization >= 1.4.0
+Requires:	python-oslo-service >= 0.6.0
+Requires:	python-oslo-utils >= 2.0.0
 Requires:	python-oslo-versionedobjects >= 0.6.0
-Requires:	python-oslo-context
+Requires:	python-oslo-context >= 0.2.0
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
 Requires:	python-pbr
-Requires:	python-qpid
-Requires:	python-requests >= 1.2.1
+Requires:	python-requests >= 2.5.2
+Requires:	python-retrying >= 1.2.3
 Requires:	python-routes >= 1.12.3
+Requires:	python-six >= 1.9.0
 Requires:	python-sqlalchemy >= 0.9.7
-Requires:	python-stevedore >= 1.0.0
-Requires:	python-six >= 1.7.0
+Requires:	python-stevedore >= 1.5.0
 Requires:	python-webob >= 1.2.3
 Requires:	sudo
-Requires:	python-retrying
-Requires:	python-oslo-concurrency
-Requires:	python-oslo-i18n
-Requires:	python-oslo-middleware
-Requires:       python-oslo-policy
 
 
 
