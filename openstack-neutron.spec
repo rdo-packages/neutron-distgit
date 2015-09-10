@@ -477,6 +477,7 @@ Provides:	openstack-%{service}-nicira = %{version}-%{release}
 Obsoletes:	openstack-%{service}-nicira < 2014.1-0.5.b2
 
 Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	python-networking-vmware-nsx
 
 
 %description vmware
