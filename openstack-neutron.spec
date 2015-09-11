@@ -373,6 +373,8 @@ rm -f requirements.txt
 
 
 %build
+export PBR_VERSION=%{version}
+export SKIP_PIP_INSTALL=1
 %{__python2} setup.py build
 
 # Loop through values in neutron-dist.conf and make sure that the values
@@ -392,8 +394,6 @@ while read name eq value; do
 done < %{SOURCE30}
 
 %install
-export PBR_VERSION=%{version}-%{release}
-export SKIP_PIP_INSTALL=1
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Remove unused files
