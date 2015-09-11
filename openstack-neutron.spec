@@ -785,6 +785,7 @@ fi
 %license LICENSE
 %{_unitdir}/neutron-sriov-nic-agent.service
 %{_bindir}/neutron-sriov-nic-agent
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/sriov_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-sriov-nic-agent
 
 
