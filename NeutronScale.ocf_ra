@@ -83,7 +83,8 @@ END
 
 #######################################################################
 
-neutronconfigfiles="dhcp_agent.ini l3_agent.ini metadata_agent.ini neutron.conf plugins/openvswitch/ovs_neutron_plugin.ini"
+neutronconfigfiles_to_clean="dhcp_agent.ini fwaas_driver.ini lbaas_agent.ini l3_agent.ini metadata_agent.ini plugins/openvswitch/ovs_neutron_plugin.ini"
+neutronconfigfile="neutron.conf"
 
 neutron_scale_usage() {
 	cat <<END
@@ -113,39 +114,52 @@ neutron_scale_validate() {
 	return $OCF_SUCCESS
 }
 
-neutron_scale_start() {
-	hostid=${OCF_RESKEY_hostbasename}-${OCF_RESKEY_CRM_meta_clone}
-	for i in $neutronconfigfiles; do
+cleanup_old_config_files() {
+	# cleanup old config files if they exist, since we
+	# only need to set host= into neutron.conf
+
+	for i in $neutronconfigfiles_to_clean; do
 		if [ -f "/etc/neutron/$i" ]; then
-			openstack-config --set /etc/neutron/$i DEFAULT host $hostid
-			if [ $? != 0 ]; then
-				ocf_log err "neutron-scale: unable to set host info to $hostid for /etc/neutron/$i"
-				return OCF_ERR_GENERIC
-			else
-				ocf_log info "neutron-scale: host $hostid set for /etc/neutron/$i"
+			openstack-config --del /etc/neutron/$i DEFAULT host
+			if [ $? == 0 ]; then
+				ocf_log info "neutron-scale: host cleared for /etc/neutron/$i"
 			fi
-		else
-			ocf_log info "/etc/neutron/$i not installed. skipping"
 		fi
 	done
+}
+
+neutron_scale_start() {
+	hostid=${OCF_RESKEY_hostbasename}-${OCF_RESKEY_CRM_meta_clone}
+	cleanup_old_config_files
+	config_file="/etc/neutron/$neutronconfigfile"
+	if [ -f "$config_file" ]; then
+		openstack-config --set $config_file DEFAULT host $hostid
+		if [ $? != 0 ]; then
+			ocf_log err "neutron-scale: unable to set host info to $hostid for $config_file"
+			return OCF_ERR_GENERIC
+		else
+			ocf_log info "neutron-scale: host $hostid set for $config_file"
+		fi
+	else
+		ocf_log err "/etc/neutron/$config_file not installed."
+		return OCF_ERR_GENERIC
+	fi
 	touch ${HA_RSCTMP}/neutron-scale-${OCF_RESKEY_CRM_meta_clone}
 	return $OCF_SUCCESS
 }
 
 neutron_scale_stop() {
-	for i in $neutronconfigfiles; do
-		if [ -f "/etc/neutron/$i" ]; then
-			openstack-config --del /etc/neutron/$i DEFAULT host
-			if [ $? != 0 ]; then
-				ocf_log err "neutron-scale: unable to delete host info for /etc/neutron/$i"
-				return OCF_ERR_GENERIC
-			else
-				ocf_log info "neutron-scale: host delete for /etc/neutron/$i"
-			fi
+	if [ -f "/etc/neutron/$neutronconfigfile" ]; then
+		openstack-config --del /etc/neutron/$neutronconfigfile DEFAULT host
+		if [ $? != 0 ]; then
+			ocf_log err "neutron-scale: unable to delete host info for /etc/neutron/$i"
+			return OCF_ERR_GENERIC
 		else
-			ocf_log info "/etc/neutron/$i not installed. skipping"
+			ocf_log info "neutron-scale: host delete for /etc/neutron/$i"
 		fi
-	done
+	else
+		ocf_log info "/etc/neutron/$neutronconfigfile not installed. skipping"
+	fi
 	rm -f ${HA_RSCTMP}/neutron-scale-${OCF_RESKEY_CRM_meta_clone}
 	return $OCF_SUCCESS
 }

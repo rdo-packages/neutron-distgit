@@ -1,27 +1,25 @@
-%global release_name kilo
+%global release_name liberty
 %global service neutron
+%global milestone .0b3
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	2015.1.0
-Release:	2%{?milestone}%{?dist}
-Provides:	openstack-quantum = %{version}-%{release}
-Obsoletes:	openstack-quantum < 2013.2-0.4.b3
+Version:	7.0
+Release:	0.1%{?milestone}%{?dist}
+Epoch:		1
 Summary:	OpenStack Networking Service
 
-Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
-Source0:	http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
+Source0:	http://launchpad.net/%{service}/%{release_name}/%{release_name}-3/+download/%{service}-%{upstream_version}.tar.gz
 
 Source1:	%{service}.logrotate
 Source2:	%{service}-sudoers
 Source10:	neutron-server.service
 Source11:	neutron-linuxbridge-agent.service
 Source12:	neutron-openvswitch-agent.service
-Source14:	neutron-nec-agent.service
 Source15:	neutron-dhcp-agent.service
 Source16:	neutron-l3-agent.service
 Source17:	neutron-metadata-agent.service
@@ -45,10 +43,9 @@ BuildRequires:	python2-devel
 BuildRequires:	python-d2to1
 BuildRequires:	python-pbr
 BuildRequires:	python-setuptools
-BuildRequires:	systemd
+BuildRequires:	systemd-units
 
-Requires:	openstack-%{service}-common = %{version}-%{release}
-Requires:	openstack-utils
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
@@ -58,6 +55,10 @@ Requires:	dnsmasq-utils
 # radvd is not a hard requirement, but is currently the only option
 # for IPv6 deployments.
 Requires:	radvd
+
+# dibbler is not a hard requirement, but is currently the default option
+# for IPv6 prefix delegation.
+Requires:	dibbler-client
 
 # conntrack is not a hard requirement, but is currently used by L3 agent
 # to immediately drop connections after a floating IP is disassociated
@@ -89,50 +90,43 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 %package -n python-%{service}
 Summary:	Neutron Python libraries
-Group:		Applications/System
-
-Provides:	python-quantum = %{version}-%{release}
-Obsoletes:	python-quantum < 2013.2-0.4.b3
-
 Requires:	MySQL-python
-Requires:	python-alembic >= 0.6.4
-Requires:	python-anyjson >= 0.3.3
-Requires:	python-babel >= 1.3
-Requires:	python-eventlet >= 0.15.1
+Requires:	python-alembic >= 0.8.0
+Requires:	python-debtcollector >= 0.3.0
+Requires:	python-eventlet >= 0.17.4
 Requires:	python-greenlet >= 0.3.2
 Requires:	python-httplib2 >= 0.7.5
-Requires:	python-iso8601 >= 0.1.9
-Requires:	python-jinja2
-Requires:	python-jsonrpclib
-Requires:	python-keystoneclient >= 0.10.0
-Requires:	python-keystonemiddleware >= 1.0.0
+Requires:	python-jinja2 >= 2.6
+Requires:	python-keystoneclient >= 1.6.0
+Requires:	python-keystonemiddleware >= 2.0.0
 Requires:	python-netaddr >= 0.7.12
-Requires:	python-neutronclient >= 2.3.6
-Requires:	python-novaclient >= 2.18.0
-Requires:	python-oslo-config >= 2:1.4.0
-Requires:	python-oslo-db >= 1.0.0
-Requires:	python-oslo-log >= 1.0.0
-Requires:	python-oslo-messaging >= 1.4.0.0
-Requires:	python-oslo-rootwrap >= 1.3.0.0
-Requires:	python-oslo-serialization >= 1.0.0
-Requires:	python-oslo-utils >= 1.1.0
-Requires:	python-oslo-context
+Requires:	python-neutronclient >= 2.6.0
+Requires:	python-novaclient >= 2.26.0
+Requires:	python-oslo-concurrency >= 2.3.0
+Requires:	python-oslo-config >= 2:2.1.0
+Requires:	python-oslo-context >= 0.2.0
+Requires:	python-oslo-db >= 2.0
+Requires:	python-oslo-i18n >= 1.5.0
+Requires:	python-oslo-log >= 1.8.0
+Requires:	python-oslo-messaging >= 1.16.0
+Requires:	python-oslo-middleware >= 2.4.0
+Requires:       python-oslo-policy >= 0.5.0
+Requires:	python-oslo-rootwrap >= 2.0.0
+Requires:	python-oslo-serialization >= 1.4.0
+Requires:	python-oslo-service >= 0.6.0
+Requires:	python-oslo-utils >= 2.0.0
+Requires:	python-oslo-versionedobjects >= 0.6.0
+Requires:	python-oslo-context >= 0.2.0
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
 Requires:	python-pbr
-Requires:	python-qpid
-Requires:	python-requests >= 1.2.1
+Requires:	python-requests >= 2.5.2
+Requires:	python-retrying >= 1.2.3
 Requires:	python-routes >= 1.12.3
+Requires:	python-six >= 1.9.0
 Requires:	python-sqlalchemy >= 0.9.7
-Requires:	python-stevedore >= 1.0.0
-Requires:	python-six >= 1.7.0
+Requires:	python-stevedore >= 1.5.0
 Requires:	python-webob >= 1.2.3
-Requires:	sudo
-Requires:	python-retrying
-Requires:	python-oslo-concurrency
-Requires:	python-oslo-i18n
-Requires:	python-oslo-middleware
-
 
 
 %description -n python-%{service}
@@ -144,9 +138,7 @@ This package contains the Neutron Python library.
 
 %package -n python-%{service}-tests
 Summary:	Neutron tests
-Group:		Applications/System
-
-Requires:	openstack-%{service} = %{version}-%{release}
+Requires:	openstack-%{service} = %{epoch}:%{version}-%{release}
 
 
 %description -n python-%{service}-tests
@@ -158,9 +150,8 @@ This package contains Neutron test files.
 
 %package common
 Summary:	Neutron common files
-Group:		Applications/System
-
-Requires:	python-%{service} = %{version}-%{release}
+Requires:	python-%{service} = %{epoch}:%{version}-%{release}
+Requires:	sudo
 
 
 %description common
@@ -172,12 +163,7 @@ This package contains Neutron common files.
 
 %package bigswitch
 Summary:	Neutron Big Switch plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-bigswitch = %{version}-%{release}
-Obsoletes:	openstack-quantum-bigswitch < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description bigswitch
@@ -191,12 +177,7 @@ Networks Controller.
 
 %package brocade
 Summary:	Neutron Brocade plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-brocade = %{version}-%{release}
-Obsoletes:	openstack-quantum-brocade < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:	python-ncclient
 
 
@@ -210,12 +191,7 @@ networks using Brocade VCS switches running NOS.
 
 %package cisco
 Summary:	Neutron Cisco plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-cisco = %{version}-%{release}
-Obsoletes:	openstack-quantum-cisco < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:	python-ncclient
 
 
@@ -229,9 +205,7 @@ networks using Cisco UCS and Nexus.
 
 %package embrane
 Summary:	Neutron Embrane plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description embrane
@@ -242,30 +216,10 @@ This package contains the Neutron plugin that implements virtual
 L3-L7 network services using Embrane's heleos platform.
 
 
-%package ibm
-Summary:	Neutron IBM plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
-
-
-%description ibm
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks from IBM.
-
-
 %package linuxbridge
 Summary:	Neutron linuxbridge plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-linuxbridge = %{version}-%{release}
-Obsoletes:	openstack-quantum-linuxbridge < 2013.2-0.4.b3
-
 Requires:	bridge-utils
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description linuxbridge
@@ -278,12 +232,7 @@ networks as VLANs using Linux bridging.
 
 %package mellanox
 Summary:	Neutron Mellanox plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-mellanox = %{version}-%{release}
-Obsoletes:	openstack-quantum-mellanox < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description mellanox
@@ -291,32 +240,9 @@ This plugin implements Neutron v2 APIs with support for Mellanox embedded
 switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 
 
-%package metaplugin
-Summary:	Neutron meta plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-metaplugin = %{version}-%{release}
-Obsoletes:	openstack-quantum-metaplugin < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
-
-
-%description metaplugin
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using multiple other Neutron plugins.
-
-
 %package midonet
 Summary:	Neutron MidoNet plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-midonet = %{version}-%{release}
-Obsoletes:	openstack-quantum-midonet < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description midonet
@@ -329,12 +255,7 @@ networks using MidoNet from Midokura.
 
 %package ml2
 Summary:	Neutron ML2 plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-ml2 = %{version}-%{release}
-Obsoletes:	openstack-quantum-ml2 < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 # needed for brocade and cisco drivers
 Requires:	python-ncclient
 
@@ -348,29 +269,9 @@ to support separately extensible sets of network types and the mechanisms
 for accessing those types.
 
 
-%package nec
-Summary:	Neutron NEC plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-nec = %{version}-%{release}
-Obsoletes:	openstack-quantum-nec < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
-
-
-%description nec
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using the NEC OpenFlow controller.
-
-
 %package nuage
 Summary:	Neutron Nuage plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description nuage
@@ -380,9 +281,7 @@ Virtual Service Platform (VSP).
 
 %package ofagent
 Summary:	Neutron ofagent plugin from ryu project
-Group:		Applications/system
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description ofagent
@@ -392,9 +291,7 @@ plugin.
 
 %package oneconvergence-nvsd
 Summary:	Neutron One Convergence NVSD plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description oneconvergence-nvsd
@@ -407,9 +304,7 @@ networks using One Convergence NVSD
 
 %package opencontrail
 Summary:	Neutron OpenContrail plugin
-Group:		Applications/system
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description opencontrail
@@ -419,13 +314,12 @@ plugin.
 
 %package openvswitch
 Summary:	Neutron openvswitch plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-openvswitch = %{version}-%{release}
-Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+# We require openvswitch when using vsctl to access ovsdb;
+# but if we use native access, then we just need python bindings.
+# since we don't know what users actually use, we depend on both.
 Requires:	openvswitch
+Requires:	python-openvswitch
 
 
 %description openvswitch
@@ -438,9 +332,7 @@ networks using Open vSwitch.
 
 %package ovsvapp
 Summary:	Neutron OVSvApp vSphere plugin
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description ovsvapp
@@ -451,47 +343,9 @@ This package contains the Neutron plugin that implements virtual
 networks using OVSvApp vSphere L2 agent.
 
 
-%package plumgrid
-Summary:	Neutron PLUMgrid plugin
-Group:		Applications/System
-
-Provides:	openstack-quantum-plumgrid = %{version}-%{release}
-Obsoletes:	openstack-quantum-plumgrid < 2013.2-0.4.b3
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
-
-
-%description plumgrid
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using the PLUMgrid platform.
-
-
-%package vmware
-Summary:	Neutron Nicira plugin
-Group:		Applications/System
-
-Provides:	openstack-%{service}-nicira = %{version}-%{release}
-Obsoletes:	openstack-%{service}-nicira < 2014.1-0.5.b2
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
-
-
-%description vmware
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using VMware NSX.
-
-
 %package metering-agent
 Summary:	Neutron bandwidth metering agent
-Group:		Applications/System
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description metering-agent
@@ -503,9 +357,7 @@ utilization notifications.
 
 %package sriov-nic-agent
 Summary:	Neutron SR-IOV NIC agent
-Group:		Applications/system
-
-Requires:	openstack-%{service}-common = %{version}-%{release}
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description sriov-nic-agent
@@ -562,7 +414,7 @@ mv %{buildroot}/usr/etc/%{service}/rootwrap.d/*.filters %{buildroot}%{_datarootd
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}
 mv %{buildroot}/usr/etc/%{service}/* %{buildroot}%{_sysconfdir}/%{service}
 mv %{buildroot}%{_sysconfdir}/%{service}/api-paste.ini %{buildroot}%{_datadir}/%{service}/api-paste.ini
-chmod 640  %{buildroot}%{_sysconfdir}/neutron/plugins/*/*.ini
+chmod 640 %{buildroot}%{_sysconfdir}/%{service}/plugins/*/*.ini
 
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-%{service}
@@ -574,7 +426,6 @@ install -p -D -m 440 %{SOURCE2} %{buildroot}%{_sysconfdir}/sudoers.d/%{service}
 install -p -D -m 644 %{SOURCE10} %{buildroot}%{_unitdir}/neutron-server.service
 install -p -D -m 644 %{SOURCE11} %{buildroot}%{_unitdir}/neutron-linuxbridge-agent.service
 install -p -D -m 644 %{SOURCE12} %{buildroot}%{_unitdir}/neutron-openvswitch-agent.service
-install -p -D -m 644 %{SOURCE14} %{buildroot}%{_unitdir}/neutron-nec-agent.service
 install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/neutron-dhcp-agent.service
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/neutron-l3-agent.service
 install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/neutron-metadata-agent.service
@@ -611,11 +462,11 @@ ln -s %{_sysconfdir}/%{service}/l3_agent.ini %{buildroot}%{_datadir}/%{service}/
 mkdir -p %{buildroot}%{_datadir}/%{service}/server
 
 # Create configuration directories for all services that can be populated by users with custom *.conf files
-mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d
+mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
 for service in server ovs-cleanup netns-cleanup; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
-for service in linuxbridge openvswitch nec dhcp l3 metadata mlnx metering sriov-nic; do
+for service in linuxbridge openvswitch dhcp l3 metadata mlnx metering sriov-nic; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
 
@@ -656,12 +507,29 @@ exit 0
 %systemd_postun_with_restart neutron-server.service
 
 
+%post linuxbridge
+%systemd_post neutron-linuxbridge-agent.service
+oldconf=%{_sysconfdir}/%{service}/plugins/linuxbridge/linuxbridge_conf.ini
+newconf=%{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
+if [ $1 -gt 1 ]; then
+    if [ -e $oldconf ]; then
+        # Imitate noreplace
+        cp $newconf ${newconf}.rpmnew
+        cp $oldconf $newconf
+    fi
+fi
+
+
 %preun linuxbridge
 %systemd_preun neutron-linuxbridge-agent.service
 
 
 %postun linuxbridge
 %systemd_postun_with_restart neutron-linuxbridge-agent.service
+
+
+%post mellanox
+%systemd_post neutron-mlnx-agent.service
 
 
 %preun mellanox
@@ -672,12 +540,17 @@ exit 0
 %systemd_postun_with_restart neutron-mlnx-agent.service
 
 
-%preun nec
-%systemd_preun neutron-nec-agent.service
-
-
-%postun nec
-%systemd_postun_with_restart neutron-nec-agent.service
+%post openvswitch
+%systemd_post neutron-openvswitch-agent.service
+oldconf=%{_sysconfdir}/%{service}/plugins/openvswitch/ovs_neutron_plugin.ini
+newconf=%{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
+if [ $1 -gt 1 ]; then
+    if [ -e $oldconf ]; then
+        # Imitate noreplace
+        cp $newconf ${newconf}.rpmnew
+        cp $oldconf $newconf
+    fi
+fi
 
 
 %preun openvswitch
@@ -688,12 +561,20 @@ exit 0
 %systemd_postun_with_restart neutron-openvswitch-agent.service
 
 
+%post metering-agent
+%systemd_post neutron-metering-agent.service
+
+
 %preun metering-agent
 %systemd_preun neutron-metering-agent.service
 
 
 %postun metering-agent
 %systemd_postun_with_restart neutron-metering-agent.service
+
+
+%post sriov-nic-agent
+%systemd_post neutron-sriov-nic-agent.service
 
 
 %preun sriov-nic-agent
@@ -709,12 +590,14 @@ exit 0
 %{_bindir}/neutron-db-manage
 %{_bindir}/neutron-debug
 %{_bindir}/neutron-dhcp-agent
+%{_bindir}/neutron-ipset-cleanup
 %{_bindir}/neutron-keepalived-state-change
 %{_bindir}/neutron-l3-agent
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ns-metadata-proxy
 %{_bindir}/neutron-ovs-cleanup
+%{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
@@ -764,20 +647,22 @@ exit 0
 %{_bindir}/neutron-rootwrap-daemon
 %{_bindir}/neutron-rootwrap-xen-dom0
 %dir %{_sysconfdir}/%{service}
-%dir %{_sysconfdir}/%{service}/conf.d
 %{_sysconfdir}/%{service}/conf.d/README
+%dir %{_sysconfdir}/%{service}/conf.d
+%dir %{_sysconfdir}/%{service}/conf.d/common
 %dir %{_sysconfdir}/%{service}/plugins
 %attr(-, root, %{service}) %{_datadir}/%{service}/%{service}-dist.conf
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/%{service}.conf
 %config(noreplace) %{_sysconfdir}/%{service}/rootwrap.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
-%config %{_sysconfdir}/sudoers.d/%{service}
+%{_sysconfdir}/sudoers.d/%{service}
 %dir %attr(0755, %{service}, %{service}) %{_sharedstatedir}/%{service}
 %dir %attr(0750, %{service}, %{service}) %{_localstatedir}/log/%{service}
 %dir %{_datarootdir}/%{service}
 %dir %{_datarootdir}/%{service}/rootwrap
 %{_datarootdir}/%{service}/rootwrap/debug.filters
 %{_datarootdir}/%{service}/rootwrap/dhcp.filters
+%{_datarootdir}/%{service}/rootwrap/ebtables.filters
 %{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/l3.filters
@@ -801,11 +686,8 @@ exit 0
 
 %files cisco
 %license LICENSE
-%doc %{service}/plugins/cisco/README
 %dir %{_sysconfdir}/%{service}/plugins/cisco
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/cisco/*.ini
-%{_bindir}/neutron-cisco-apic-host-agent
-%{_bindir}/neutron-cisco-apic-service-agent
 
 
 %files embrane
@@ -815,22 +697,13 @@ exit 0
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/embrane/*.ini
 
 
-%files ibm
-%license LICENSE
-%{_bindir}/neutron-ibm-agent
-%doc %{service}/plugins/ibm/README
-%dir %{_sysconfdir}/%{service}/plugins/ibm
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ibm/*.ini
-
-
 %files linuxbridge
 %license LICENSE
-%doc %{service}/plugins/linuxbridge/README
 %{_bindir}/neutron-linuxbridge-agent
 %{_unitdir}/neutron-linuxbridge-agent.service
 %{_datarootdir}/%{service}/rootwrap/linuxbridge-plugin.filters
-%dir %{_sysconfdir}/%{service}/plugins/linuxbridge
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/linuxbridge/*.ini
+%dir %{_sysconfdir}/%{service}/plugins/ml2
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-agent
 
 
@@ -842,13 +715,6 @@ exit 0
 %dir %{_sysconfdir}/%{service}/plugins/mlnx
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
-
-
-%files metaplugin
-%license LICENSE
-%doc %{service}/plugins/metaplugin/README
-%dir %{_sysconfdir}/%{service}/plugins/metaplugin
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/metaplugin/*.ini
 
 
 %files midonet
@@ -863,17 +729,8 @@ exit 0
 %doc %{service}/plugins/ml2/README
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*.ini
-
-
-%files nec
-%license LICENSE
-%doc %{service}/plugins/nec/README
-%{_bindir}/neutron-nec-agent
-%{_unitdir}/neutron-nec-agent.service
-%{_datarootdir}/%{service}/rootwrap/nec-plugin.filters
-%dir %{_sysconfdir}/%{service}/plugins/nec
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/nec/*.ini
-%dir %{_sysconfdir}/%{service}/conf.d/%{service}-nec-agent
+%exclude %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
+%exclude %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
 
 
 %files nuage
@@ -904,12 +761,11 @@ exit 0
 
 %files openvswitch
 %license LICENSE
-%doc %{service}/plugins/openvswitch/README
 %{_bindir}/neutron-openvswitch-agent
 %{_unitdir}/neutron-openvswitch-agent.service
 %{_datarootdir}/%{service}/rootwrap/openvswitch-plugin.filters
-%dir %{_sysconfdir}/%{service}/plugins/openvswitch
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/openvswitch/*.ini
+%dir %{_sysconfdir}/%{service}/plugins/ml2
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-openvswitch-agent
 
 
@@ -919,19 +775,6 @@ exit 0
 # TODO: add a systemd unit file
 %dir %{_sysconfdir}/%{service}/plugins/ovsvapp
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ovsvapp/*.ini
-
-
-%files plumgrid
-%license LICENSE
-%doc %{service}/plugins/plumgrid/README
-%dir %{_sysconfdir}/%{service}/plugins/plumgrid
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/plumgrid/*.ini
-
-
-%files vmware
-%license LICENSE
-%dir %{_sysconfdir}/%{service}/plugins/vmware
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/vmware/*.ini
 
 
 %files metering-agent
@@ -948,8 +791,17 @@ exit 0
 %{_bindir}/neutron-sriov-nic-agent
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-sriov-nic-agent
 
+%files nuage
+%license LICENSE
+%{python2_sitelib}/%{service}/plugins/nuage
+%dir %{_sysconfdir}/%{service}/plugins/nuage
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/nuage/*.ini
+
 
 %changelog
+* Wed Sep 16 2015 Ihar Hrachyshka <ihrachys@redhat.com> - 7.0-0.1b3
+- Bump to Liberty M3
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2015.1.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
