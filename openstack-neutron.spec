@@ -5,7 +5,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	7.0
+Version:	7.0.0
 Release:	0.1%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
@@ -14,6 +14,10 @@ License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
 Source0:	http://launchpad.net/%{service}/%{release_name}/%{release_name}-3/+download/%{service}-%{upstream_version}.tar.gz
+
+#
+# patches_base=7.0.0.0b3
+#
 
 Source1:	%{service}.logrotate
 Source2:	%{service}-sudoers
@@ -799,6 +803,9 @@ fi
 
 
 %changelog
+* Wed Sep 16 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-0.1.0b3.el7
+- Update to upstream 7.0.0.0b3
+
 * Wed Sep 16 2015 Ihar Hrachyshka <ihrachys@redhat.com> - 7.0-0.1b3
 - Bump to Liberty M3
 
