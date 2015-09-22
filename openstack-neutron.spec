@@ -33,6 +33,8 @@ Source24:	neutron-ovs-cleanup.init
 Source25:	NetnsCleanup.ocf_ra
 Source26:	OVSCleanup.ocf_ra
 Source27:	NeutronScale.ocf_ra
+Source28:	neutron-dev-server.service
+Source29:	neutron-rpc-server.service
 
 Source30:	%{service}-dist.conf
 Source31:	conf.README
@@ -205,6 +207,19 @@ This package contains the Neutron plugin that implements virtual
 networks using Cisco UCS and Nexus.
 
 
+%package dev-server
+Summary:	Neutron Server (WSGI pecan)
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+
+
+%description dev-server
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains an alternative Neutron server implementation that uses
+pecan library as its WSGI backend.
+
+
 %package embrane
 Summary:	Neutron Embrane plugin
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -357,6 +372,19 @@ This package contains the Neutron agent responsible for generating bandwidth
 utilization notifications.
 
 
+%package rpc-server
+Summary:	Neutron (RPC only) Server
+Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+
+
+%description rpc-server
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains an alternative Neutron server that handles AMQP RPC
+workload only.
+
+
 %package sriov-nic-agent
 Summary:	Neutron SR-IOV NIC agent
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -437,6 +465,8 @@ install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-mlnx-agent.serv
 install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-metering-agent.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
+install -p -D -m 644 %{SOURCE28} %{buildroot}%{_unitdir}/neutron-dev-server.service
+install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.service
 
 # Install scripts for pacemaker support
 install -p -D -m 755 %{SOURCE23} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
@@ -466,7 +496,7 @@ mkdir -p %{buildroot}%{_datadir}/%{service}/server
 
 # Create configuration directories for all services that can be populated by users with custom *.conf files
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
-for service in server ovs-cleanup netns-cleanup; do
+for service in server dev-server rpc-server ovs-cleanup netns-cleanup; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
 for service in linuxbridge openvswitch dhcp l3 metadata mlnx metering sriov-nic; do
@@ -603,8 +633,6 @@ fi
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-server
-%{_bindir}/neutron-dev-server
-%{_bindir}/neutron-rpc-server
 %{_bindir}/neutron-usage-audit
 %{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
 %{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
@@ -702,6 +730,13 @@ fi
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/embrane/*.ini
 
 
+%files dev-server
+%license LICENSE
+%{_bindir}/neutron-dev-server
+%{_unitdir}/neutron-dev-server.service
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-dev-server
+
+
 %files linuxbridge
 %license LICENSE
 %{_bindir}/neutron-linuxbridge-agent
@@ -790,6 +825,13 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-metering-agent
 
 
+%files rpc-server
+%license LICENSE
+%{_bindir}/neutron-rpc-server
+%{_unitdir}/neutron-rpc-server.service
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-rpc-server
+
+
 %files sriov-nic-agent
 %license LICENSE
 %{_unitdir}/neutron-sriov-nic-agent.service
@@ -802,6 +844,7 @@ fi
 * Mon Oct 19 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-2.el7
 - Update the path to the ovs plugin configuration, rhbz#1270325
 - Fix netns-cleanup not killing radvd or keepalived rhbz#1268244 rhbz#1175251
+- Add systemd units for new neutron server flavours
 
 * Mon Oct 19 2015 Alan Pevec <alan.pevec@redhat.com> 1:7.0.0-1
 - Update to 7.0.0
