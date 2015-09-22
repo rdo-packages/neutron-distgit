@@ -596,6 +596,8 @@ fi
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-server
+%{_bindir}/neutron-dev-server
+%{_bindir}/neutron-rpc-server
 %{_bindir}/neutron-usage-audit
 %{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
 %{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
