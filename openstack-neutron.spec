@@ -375,7 +375,6 @@ rm -f requirements.txt
 
 
 %build
-export PBR_VERSION=%{version}
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py build
 
@@ -396,6 +395,8 @@ while read name eq value; do
 done < %{SOURCE30}
 
 %install
+# pbr does not like dashes in version strings, neither it likes fc* prefixes (dev* is fine)
+export PBR_VERSION=%{version}.%(echo %{release} | sed 's/%{?dist}//')
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Remove unused files
