@@ -300,16 +300,6 @@ This package contains the Neutron plugin that implements virtual
 networks using One Convergence NVSD
 
 
-%package opencontrail
-Summary:	Neutron OpenContrail plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description opencontrail
-This plugin implements Neutron v2 APIs with support for the OpenContrail
-plugin.
-
-
 %package openvswitch
 Summary:	Neutron openvswitch plugin
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -751,13 +741,6 @@ fi
 %dir %{_sysconfdir}/%{service}/plugins/oneconvergence
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/oneconvergence/*.ini
 %{_bindir}/neutron-nvsd-agent
-
-
-%files opencontrail
-%license LICENSE
-#%doc %{service}/plugins/opencontrail/README
-%dir %{_sysconfdir}/%{service}/plugins/opencontrail
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/opencontrail/*.ini
 
 
 %files openvswitch
