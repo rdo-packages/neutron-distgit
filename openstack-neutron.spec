@@ -6,7 +6,7 @@
 
 Name:		openstack-%{service}
 Version:	7.0.0
-Release:	0.2%{?milestone}%{?dist}
+Release:	0.3%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
@@ -46,6 +46,7 @@ BuildArch:	noarch
 BuildRequires:	python2-devel
 BuildRequires:	python-d2to1
 BuildRequires:	python-pbr
+BuildRequires:	python-pecan
 BuildRequires:	python-setuptools
 BuildRequires:	systemd-units
 
@@ -114,7 +115,7 @@ Requires:	python-oslo-i18n >= 1.5.0
 Requires:	python-oslo-log >= 1.8.0
 Requires:	python-oslo-messaging >= 1.16.0
 Requires:	python-oslo-middleware >= 2.4.0
-Requires:       python-oslo-policy >= 0.5.0
+Requires:	python-oslo-policy >= 0.5.0
 Requires:	python-oslo-rootwrap >= 2.0.0
 Requires:	python-oslo-serialization >= 1.4.0
 Requires:	python-oslo-service >= 0.6.0
@@ -123,6 +124,7 @@ Requires:	python-oslo-versionedobjects >= 0.6.0
 Requires:	python-oslo-context >= 0.2.0
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
+Requires:	python-pecan >= 1.0.0
 Requires:	python-pbr
 Requires:	python-requests >= 2.5.2
 Requires:	python-retrying >= 1.2.3
@@ -381,7 +383,6 @@ rm -f requirements.txt
 
 
 %build
-export PBR_VERSION=%{version}
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py build
 
@@ -399,9 +400,11 @@ while read name eq value; do
   else
     sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/%{service}.conf
   fi
-done < %{SOURCE40}
+done < %{SOURCE30}
 
 %install
+# pbr does not like dashes in version strings, neither it likes fc* prefixes (dev* is fine)
+export PBR_VERSION=%{version}.%(echo %{release} | sed 's/%{?dist}//')
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Remove unused files
