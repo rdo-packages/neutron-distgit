@@ -797,12 +797,6 @@ fi
 %{_bindir}/neutron-sriov-nic-agent
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-sriov-nic-agent
 
-%files nuage
-%license LICENSE
-%{python2_sitelib}/%{service}/plugins/nuage
-%dir %{_sysconfdir}/%{service}/plugins/nuage
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/nuage/*.ini
-
 
 %changelog
 * Wed Sep 30 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-0.2.0rc1.el7
