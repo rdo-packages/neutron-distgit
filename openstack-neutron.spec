@@ -86,7 +86,6 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 %package -n python-%{service}
 Summary:	Neutron Python libraries
-Requires:	MySQL-python
 Requires:	python-alembic >= 0.8.0
 Requires:	python-debtcollector >= 0.3.0
 Requires:	python-eventlet >= 0.17.4
