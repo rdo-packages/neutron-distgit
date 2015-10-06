@@ -33,6 +33,7 @@ Source29:	neutron-rpc-server.service
 
 Source30:	%{service}-dist.conf
 Source31:	conf.README
+Source32:	neutron-linuxbridge-cleanup.service
 
 BuildArch:	noarch
 
@@ -439,6 +440,8 @@ install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
 install -p -D -m 644 %{SOURCE28} %{buildroot}%{_unitdir}/neutron-dev-server.service
 install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.service
+install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cleanup.service
+
 
 # Install scripts for pacemaker support
 install -p -D -m 755 %{SOURCE23} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
@@ -468,7 +471,7 @@ mkdir -p %{buildroot}%{_datadir}/%{service}/server
 
 # Create configuration directories for all services that can be populated by users with custom *.conf files
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
-for service in server dev-server rpc-server ovs-cleanup netns-cleanup; do
+for service in server dev-server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
 for service in linuxbridge openvswitch dhcp l3 metadata mlnx metering sriov-nic; do
@@ -494,6 +497,7 @@ exit 0
 %systemd_post neutron-server.service
 %systemd_post neutron-netns-cleanup.service
 %systemd_post neutron-ovs-cleanup.service
+%systemd_post neutron-linuxbridge-cleanup.service
 
 
 %preun
@@ -503,6 +507,7 @@ exit 0
 %systemd_preun neutron-server.service
 %systemd_preun neutron-netns-cleanup.service
 %systemd_preun neutron-ovs-cleanup.service
+%systemd_preun neutron-linuxbridge-cleanup.service
 
 
 %postun
@@ -598,6 +603,7 @@ fi
 %{_bindir}/neutron-ipset-cleanup
 %{_bindir}/neutron-keepalived-state-change
 %{_bindir}/neutron-l3-agent
+%{_bindir}/neutron-linuxbridge-cleanup
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ns-metadata-proxy
@@ -617,6 +623,7 @@ fi
 %{_unitdir}/neutron-server.service
 %{_unitdir}/neutron-netns-cleanup.service
 %{_unitdir}/neutron-ovs-cleanup.service
+%{_unitdir}/neutron-linuxbridge-cleanup.service
 %attr(-, root, %{service}) %{_datadir}/%{service}/api-paste.ini
 %dir %{_datadir}/%{service}/l3_agent
 %dir %{_datadir}/%{service}/server
@@ -631,6 +638,7 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-server
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-netns-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovs-cleanup
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-cleanup
 
 
 %files -n python-%{service}-tests
