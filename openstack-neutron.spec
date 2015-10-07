@@ -289,19 +289,6 @@ This plugin implements Neutron v2 APIs with support for the ryu ofagent
 plugin.
 
 
-%package oneconvergence-nvsd
-Summary:	Neutron One Convergence NVSD plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description oneconvergence-nvsd
-Neutron provides an API to dynamnically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using One Convergence NVSD
-
-
 %package openvswitch
 Summary:	Neutron openvswitch plugin
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -755,14 +742,6 @@ fi
 
 %files ofagent
 %license LICENSE
-
-
-%files oneconvergence-nvsd
-%license LICENSE
-%doc %{service}/plugins/oneconvergence/README
-%dir %{_sysconfdir}/%{service}/plugins/oneconvergence
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/oneconvergence/*.ini
-%{_bindir}/neutron-nvsd-agent
 
 
 %files openvswitch
