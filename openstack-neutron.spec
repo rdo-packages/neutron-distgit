@@ -1,22 +1,22 @@
 %global release_name liberty
 %global service neutron
-%global milestone .0rc1
+%global milestone .0rc2
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
 Version:	7.0.0
-Release:	0.4%{?milestone}%{?dist}
+Release:	0.5%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
 License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
-Source0:	http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc1/+download/%{service}-%{upstream_version}.tar.gz
+Source0:	http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc2/+download/%{service}-%{upstream_version}.tar.gz
 
 #
-# patches_base=7.0.0.0rc1
+# patches_base=7.0.0.0rc2
 #
 
 Source1:	%{service}.logrotate
@@ -106,21 +106,21 @@ Requires:	python-keystoneclient >= 1.6.0
 Requires:	python-keystonemiddleware >= 2.0.0
 Requires:	python-netaddr >= 0.7.12
 Requires:	python-neutronclient >= 2.6.0
-Requires:	python-novaclient >= 2.26.0
+Requires:	python-novaclient >= 2.28.1
 Requires:	python-oslo-concurrency >= 2.3.0
-Requires:	python-oslo-config >= 2:2.1.0
+Requires:	python-oslo-config >= 2:2.3.0
 Requires:	python-oslo-context >= 0.2.0
-Requires:	python-oslo-db >= 2.0
+Requires:	python-oslo-db >= 2.4.1
 Requires:	python-oslo-i18n >= 1.5.0
 Requires:	python-oslo-log >= 1.8.0
 Requires:	python-oslo-messaging >= 1.16.0
-Requires:	python-oslo-middleware >= 2.4.0
+Requires:	python-oslo-middleware >= 2.8.0
 Requires:	python-oslo-policy >= 0.5.0
 Requires:	python-oslo-rootwrap >= 2.0.0
 Requires:	python-oslo-serialization >= 1.4.0
-Requires:	python-oslo-service >= 0.6.0
+Requires:	python-oslo-service >= 0.7.0
 Requires:	python-oslo-utils >= 2.0.0
-Requires:	python-oslo-versionedobjects >= 0.6.0
+Requires:	python-oslo-versionedobjects >= 0.9.0
 Requires:	python-oslo-context >= 0.2.0
 Requires:	python-paste
 Requires:	python-paste-deploy >= 1.5.0
@@ -803,6 +803,9 @@ fi
 
 
 %changelog
+* Thu Oct 08 2015 Alan Pevec <alan.pevec@redhat.com> 1:7.0.0-0.5.0rc2
+- Update to upstream 7.0.0.0rc2
+
 * Wed Sep 30 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-0.2.0rc1.el7
 - Update to upstream 7.0.0.0rc1
 
