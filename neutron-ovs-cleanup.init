@@ -24,7 +24,7 @@ pidfile="/var/run/$proj/$prog.pid"
 configs=(
     "/usr/share/$proj/$proj-dist.conf" \
     "/etc/$proj/$proj.conf" \
-    "/etc/$proj/plugins/openvswitch/ovs_neutron_plugin.ini" \
+    "/etc/$proj/plugins/ml2/openvswitch_agent.ini" \
 )
 configs_str=${configs[@]/#/--config-file }
 
