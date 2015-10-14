@@ -36,6 +36,7 @@ Source31:	conf.README
 
 BuildArch:	noarch
 
+BuildRequires:	git
 BuildRequires:	python2-devel
 BuildRequires:	python-d2to1
 BuildRequires:	python-pbr
@@ -394,12 +395,15 @@ SR-IOV network cards.
 
 
 %prep
-%setup -q -n %{service}-%{upstream_version}
+%autosetup -n %{service}-%{upstream_version} -S git
 
 find %{service} -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 # Let's handle dependencies ourseleves
 rm -f requirements.txt
+
+# Kill egg-info in order to generate new SOURCES.txt
+rm -rf neutron.egg-info
 
 
 %build
