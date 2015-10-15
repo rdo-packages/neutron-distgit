@@ -4,7 +4,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	2015.1.1
+Version:	2015.1.2
 Release:	1%{?milestone}%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
@@ -950,6 +950,9 @@ exit 0
 
 
 %changelog
+* Fri Oct 16 2015 Haikel Guemar <hguemar@fedoraproject.org> 2015.1.2-1
+- Update to upstream 2015.1.2
+
 * Fri Aug 21 2015 Haikel Guemar <hguemar@fedoraproject.org> 2015.1.1-1
 - Update to upstream 2015.1.1
 
