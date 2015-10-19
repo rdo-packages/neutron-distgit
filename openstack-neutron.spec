@@ -1,23 +1,19 @@
 %global release_name liberty
 %global service neutron
-%global milestone .0rc2
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
 Version:	7.0.0
-Release:	0.5%{?milestone}%{?dist}
+Release:	1%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
 License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
-Source0:	http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc2/+download/%{service}-%{upstream_version}.tar.gz
+Source0:        http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
 
-#
-# patches_base=7.0.0.0rc2
-#
 
 Source1:	%{service}.logrotate
 Source2:	%{service}-sudoers
@@ -803,6 +799,9 @@ fi
 
 
 %changelog
+* Mon Oct 19 2015 Alan Pevec <alan.pevec@redhat.com> 1:7.0.0-1
+- Update to 7.0.0
+
 * Thu Oct 08 2015 Alan Pevec <alan.pevec@redhat.com> 1:7.0.0-0.5.0rc2
 - Update to upstream 7.0.0.0rc2
 
