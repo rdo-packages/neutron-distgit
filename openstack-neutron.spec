@@ -217,19 +217,6 @@ This package contains an alternative Neutron server implementation that uses
 pecan library as its WSGI backend.
 
 
-%package embrane
-Summary:	Neutron Embrane plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description embrane
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-L3-L7 network services using Embrane's heleos platform.
-
-
 %package linuxbridge
 Summary:	Neutron linuxbridge plugin
 Requires:	bridge-utils
@@ -692,13 +679,6 @@ fi
 %license LICENSE
 %dir %{_sysconfdir}/%{service}/plugins/cisco
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/cisco/*.ini
-
-
-%files embrane
-%license LICENSE
-%doc %{service}/plugins/embrane/README
-%dir %{_sysconfdir}/%{service}/plugins/embrane
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/embrane/*.ini
 
 
 %files dev-server
