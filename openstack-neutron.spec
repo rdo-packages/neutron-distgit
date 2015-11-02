@@ -19,7 +19,6 @@ Source15:	neutron-dhcp-agent.service
 Source16:	neutron-l3-agent.service
 Source17:	neutron-metadata-agent.service
 Source18:	neutron-ovs-cleanup.service
-Source19:	neutron-mlnx-agent.service
 Source20:	neutron-metering-agent.service
 Source21:	neutron-sriov-nic-agent.service
 Source22:	neutron-netns-cleanup.service
@@ -231,16 +230,6 @@ This package contains the Neutron plugin that implements virtual
 networks as VLANs using Linux bridging.
 
 
-%package mellanox
-Summary:	Neutron Mellanox plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description mellanox
-This plugin implements Neutron v2 APIs with support for Mellanox embedded
-switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
-
-
 %package ml2
 Summary:	Neutron ML2 plugin
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -293,19 +282,6 @@ networks.
 
 This package contains the Neutron plugin that implements virtual
 networks using Open vSwitch.
-
-
-%package ovsvapp
-Summary:	Neutron OVSvApp vSphere plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description ovsvapp
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using OVSvApp vSphere L2 agent.
 
 
 %package metering-agent
@@ -412,7 +388,6 @@ install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/neutron-dhcp-agent.serv
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/neutron-l3-agent.service
 install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/neutron-metadata-agent.service
 install -p -D -m 644 %{SOURCE18} %{buildroot}%{_unitdir}/neutron-ovs-cleanup.service
-install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-mlnx-agent.service
 install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-metering-agent.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
@@ -452,7 +427,7 @@ mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
 for service in server dev-server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
-for service in linuxbridge openvswitch dhcp l3 metadata mlnx metering sriov-nic; do
+for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
 
@@ -514,18 +489,6 @@ fi
 
 %postun linuxbridge
 %systemd_postun_with_restart neutron-linuxbridge-agent.service
-
-
-%post mellanox
-%systemd_post neutron-mlnx-agent.service
-
-
-%preun mellanox
-%systemd_preun neutron-mlnx-agent.service
-
-
-%postun mellanox
-%systemd_postun_with_restart neutron-mlnx-agent.service
 
 
 %post openvswitch
@@ -698,16 +661,6 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-agent
 
 
-%files mellanox
-%license LICENSE
-%doc %{service}/plugins/ml2/drivers/mlnx/README
-%{_bindir}/neutron-mlnx-agent
-%{_unitdir}/neutron-mlnx-agent.service
-%dir %{_sysconfdir}/%{service}/plugins/mlnx
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*.ini
-%dir %{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
-
-
 %files ml2
 %license LICENSE
 %doc %{service}/plugins/ml2/README
@@ -736,14 +689,6 @@ fi
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-openvswitch-agent
-
-
-%files ovsvapp
-%license LICENSE
-%{_bindir}/neutron-ovsvapp-agent
-# TODO: add a systemd unit file
-%dir %{_sysconfdir}/%{service}/plugins/ovsvapp
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ovsvapp/*.ini
 
 
 %files metering-agent
