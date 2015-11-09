@@ -219,6 +219,7 @@ pecan library as its WSGI backend.
 %package linuxbridge
 Summary:	Neutron linuxbridge plugin
 Requires:	bridge-utils
+Requires:	ebtables
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
