@@ -233,6 +233,7 @@ L3-L7 network services using Embrane's heleos platform.
 %package linuxbridge
 Summary:	Neutron linuxbridge plugin
 Requires:	bridge-utils
+Requires:	ebtables
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
