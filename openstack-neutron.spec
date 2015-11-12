@@ -5,7 +5,7 @@
 
 Name:		openstack-%{service}
 Version:	7.0.0
-Release:	2%{?milestone}%{?dist}
+Release:	3%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
@@ -237,6 +237,7 @@ L3-L7 network services using Embrane's heleos platform.
 %package linuxbridge
 Summary:	Neutron linuxbridge plugin
 Requires:	bridge-utils
+Requires:	ebtables
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -431,8 +432,15 @@ while read name eq value; do
 done < %{SOURCE30}
 
 %install
-# pbr does not like dashes in version strings, neither it likes fc* prefixes (dev* is fine)
-export PBR_VERSION=%{version}%(echo %{release} | sed 's/%{?dist}//')
+# Enforce pbr version to reflect rpm version-release pair. Since release is not
+# guaranteed to correspond SemVer requirements that are enforced by pbr, use so
+# called 'build metadata' to pass release info as part of the version string
+# (build metadata is separated with + sign).
+#
+# It is required that the build metadata consists of alphanumeric characters
+# only, so sanitize it appropriately, as per point #12 at
+# http://docs.openstack.org/developer/pbr/semver.html#semantic-versioning-specification-semver
+export PBR_VERSION=%{version}+%(echo %{release} | sed 's/%{?dist}//' | sed 's/[^0-9A-Za-z]//g')
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Remove unused files
@@ -845,6 +853,11 @@ fi
 
 
 %changelog
+* Thu Nov 12 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-3.el7
+- ovs agent: wait until network.service is up
+- fixed pbr version override with rpm package version
+- add ebtables dependency to linuxbridge agent
+
 * Mon Oct 19 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-2.el7
 - Update the path to the ovs plugin configuration, rhbz#1270325
 - Fix netns-cleanup not killing radvd or keepalived rhbz#1268244 rhbz#1175251
