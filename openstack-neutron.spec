@@ -355,15 +355,6 @@ while read name eq value; do
 done < %{SOURCE30}
 
 %install
-# Enforce pbr version to reflect rpm version-release pair. Since release is not
-# guaranteed to correspond SemVer requirements that are enforced by pbr, use so
-# called 'build metadata' to pass release info as part of the version string
-# (build metadata is separated with + sign).
-#
-# It is required that the build metadata consists of alphanumeric characters
-# only, so sanitize it appropriately, as per point #12 at
-# http://docs.openstack.org/developer/pbr/semver.html#semantic-versioning-specification-semver
-export PBR_VERSION=%{version}+%(echo %{release} | sed 's/%{?dist}//' | sed 's/[^0-9A-Za-z]//g')
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Remove unused files
