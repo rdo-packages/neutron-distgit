@@ -5,7 +5,7 @@
 
 Name:		openstack-%{service}
 Version:	7.0.0
-Release:	3%{?milestone}%{?dist}
+Release:	4%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
@@ -844,6 +844,9 @@ fi
 
 
 %changelog
+* Wed Nov 18 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-4.el7
+- Don't set PBR_VERSION, it seems pbr does not really implement SemVer 3.0, rhbz#1281920
+
 * Thu Nov 12 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-3.el7
 - ovs agent: wait until network.service is up
 - fixed pbr version override with rpm package version
