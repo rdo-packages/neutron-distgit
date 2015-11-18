@@ -361,7 +361,6 @@ done < %{SOURCE30}
 rm -rf %{buildroot}%{python2_sitelib}/bin
 rm -rf %{buildroot}%{python2_sitelib}/doc
 rm -rf %{buildroot}%{python2_sitelib}/tools
-rm %{buildroot}/usr/etc/init.d/neutron-server
 
 # Move rootwrap files to proper location
 install -d -m 755 %{buildroot}%{_datarootdir}/%{service}/rootwrap
