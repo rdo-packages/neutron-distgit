@@ -161,20 +161,6 @@ networks.
 This package contains Neutron common files.
 
 
-%package bigswitch
-Summary:	Neutron Big Switch plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description bigswitch
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using the FloodLight Openflow Controller or the Big Switch
-Networks Controller.
-
-
 %package brocade
 Summary:	Neutron Brocade plugin
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -618,14 +604,6 @@ fi
 %{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/l3.filters
-
-
-%files bigswitch
-%license LICENSE
-%{_bindir}/neutron-restproxy-agent
-%dir %{_sysconfdir}/%{service}/plugins/bigswitch
-%{_sysconfdir}/%{service}/plugins/bigswitch/ssl
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/bigswitch/*.ini
 
 
 %files brocade
