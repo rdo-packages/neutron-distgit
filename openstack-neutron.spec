@@ -39,6 +39,16 @@ BuildArch:	noarch
 BuildRequires:	git
 BuildRequires:	python2-devel
 BuildRequires:	python-d2to1
+BuildRequires:	python-keystonemiddleware
+BuildRequires:	python-novaclient
+BuildRequires:	python-oslo-concurrency
+BuildRequires:	python-oslo-config
+BuildRequires:	python-oslo-db
+BuildRequires:	python-oslo-log
+BuildRequires:	python-oslo-messaging
+BuildRequires:	python-oslo-policy
+BuildRequires:	python-oslo-rootwrap
+BuildRequires:	python-oslo-service
 BuildRequires:	python-pbr
 BuildRequires:	python-pecan
 BuildRequires:	python-setuptools
@@ -161,20 +171,6 @@ networks.
 This package contains Neutron common files.
 
 
-%package brocade
-Summary:	Neutron Brocade plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-Requires:	python-ncclient
-
-
-%description brocade
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using Brocade VCS switches running NOS.
-
-
 %package cisco
 Summary:	Neutron Cisco plugin
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -231,16 +227,6 @@ networks.
 This package contains a Neutron plugin that allows the use of drivers
 to support separately extensible sets of network types and the mechanisms
 for accessing those types.
-
-
-%package nuage
-Summary:	Neutron Nuage plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description nuage
-This plugin implements Neutron v2 APIs with support for Nuage Networks
-Virtual Service Platform (VSP).
 
 
 %package ofagent
@@ -324,6 +310,15 @@ rm -rf neutron.egg-info
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py build
 
+# Generate configuration files
+PYTHONPATH=. tools/generate_config_file_samples.sh
+find etc -name *.sample | while read filename
+do
+    filedir=$(dirname $filename)
+    file=$(basename $filename .sample)
+    mv ${filename} ${filedir}/${file}
+done
+
 # Loop through values in neutron-dist.conf and make sure that the values
 # are substituted into the neutron.conf as comments. Some of these values
 # will have been uncommented as a way of upstream setting defaults outside
@@ -357,6 +352,17 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}
 mv %{buildroot}/usr/etc/%{service}/* %{buildroot}%{_sysconfdir}/%{service}
 mv %{buildroot}%{_sysconfdir}/%{service}/api-paste.ini %{buildroot}%{_datadir}/%{service}/api-paste.ini
 chmod 640 %{buildroot}%{_sysconfdir}/%{service}/plugins/*/*.ini
+
+# The generated config files are not moved automatically by setup.py
+mv etc/%{service}.conf %{buildroot}%{_sysconfdir}/%{service}/%{service}.conf
+for agent in dhcp l3 metadata metering
+do
+  mv etc/${agent}_agent.ini %{buildroot}%{_sysconfdir}/%{service}/${agent}_agent.ini
+done
+for file in linuxbridge_agent ml2_conf ml2_conf_sriov openvswitch_agent sriov_agent
+do
+  mv etc/%{service}/plugins/ml2/${file}.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2/${file}.ini
+done
 
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-%{service}
@@ -414,9 +420,6 @@ done
 for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
-
-# Kill hyperv agent since it's of no use for Linux
-rm %{buildroot}/%{_bindir}/neutron-hyperv-agent
 
 
 %pre common
@@ -606,14 +609,6 @@ fi
 %{_datarootdir}/%{service}/rootwrap/l3.filters
 
 
-%files brocade
-%license LICENSE
-%doc %{service}/plugins/brocade/README.md
-%dir %{_sysconfdir}/%{service}/plugins/brocade
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/brocade/*.ini
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/brocade/vyatta/*.ini
-
-
 %files cisco
 %license LICENSE
 %dir %{_sysconfdir}/%{service}/plugins/cisco
@@ -644,13 +639,6 @@ fi
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*.ini
 %exclude %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %exclude %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
-
-
-%files nuage
-%license LICENSE
-%{python2_sitelib}/%{service}/plugins/nuage
-%dir %{_sysconfdir}/%{service}/plugins/nuage
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/nuage/*.ini
 
 
 %files ofagent
