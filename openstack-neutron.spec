@@ -229,16 +229,6 @@ to support separately extensible sets of network types and the mechanisms
 for accessing those types.
 
 
-%package ofagent
-Summary:	Neutron ofagent plugin from ryu project
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description ofagent
-This plugin implements Neutron v2 APIs with support for the ryu ofagent
-plugin.
-
-
 %package openvswitch
 Summary:	Neutron openvswitch plugin
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -354,6 +344,8 @@ mv %{buildroot}%{_sysconfdir}/%{service}/api-paste.ini %{buildroot}%{_datadir}/%
 chmod 640 %{buildroot}%{_sysconfdir}/%{service}/plugins/*/*.ini
 
 # The generated config files are not moved automatically by setup.py
+install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
+
 mv etc/%{service}.conf %{buildroot}%{_sysconfdir}/%{service}/%{service}.conf
 for agent in dhcp l3 metadata metering
 do
@@ -639,10 +631,6 @@ fi
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*.ini
 %exclude %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %exclude %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
-
-
-%files ofagent
-%license LICENSE
 
 
 %files openvswitch
