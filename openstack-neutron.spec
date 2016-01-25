@@ -1,85 +1,86 @@
 %global service neutron
 
-Name:		openstack-%{service}
-Version:    XXX
-Release:    XXX{?dist}
-Epoch:		1
-Summary:	OpenStack Networking Service
+Name:           openstack-%{service}
+Version:        XXX
+Release:        XXX
+Epoch:          1
+Summary:        OpenStack Networking Service
 
-License:	ASL 2.0
-URL:		http://launchpad.net/%{service}/
+License:        ASL 2.0
+URL:            http://launchpad.net/%{service}/
 
-Source0:	http://tarballs.openstack.org/%{service}/%{service}-master.tar.gz
-Source1:	%{service}.logrotate
-Source2:	%{service}-sudoers
-Source10:	neutron-server.service
-Source11:	neutron-linuxbridge-agent.service
-Source12:	neutron-openvswitch-agent.service
-Source15:	neutron-dhcp-agent.service
-Source16:	neutron-l3-agent.service
-Source17:	neutron-metadata-agent.service
-Source18:	neutron-ovs-cleanup.service
-Source20:	neutron-metering-agent.service
-Source21:	neutron-sriov-nic-agent.service
-Source22:	neutron-netns-cleanup.service
-Source23:	neutron-netns-cleanup.init
-Source24:	neutron-ovs-cleanup.init
-Source25:	NetnsCleanup.ocf_ra
-Source26:	OVSCleanup.ocf_ra
-Source27:	NeutronScale.ocf_ra
-Source29:	neutron-rpc-server.service
+Source0:        http://tarballs.openstack.org/%{service}/%{service}-master.tar.gz
+Source1:        %{service}.logrotate
+Source2:        %{service}-sudoers
+Source10:       neutron-server.service
+Source11:       neutron-linuxbridge-agent.service
+Source12:       neutron-openvswitch-agent.service
+Source15:       neutron-dhcp-agent.service
+Source16:       neutron-l3-agent.service
+Source17:       neutron-metadata-agent.service
+Source18:       neutron-ovs-cleanup.service
+Source20:       neutron-metering-agent.service
+Source21:       neutron-sriov-nic-agent.service
+Source22:       neutron-netns-cleanup.service
+Source23:       neutron-netns-cleanup.init
+Source24:       neutron-ovs-cleanup.init
+Source25:       NetnsCleanup.ocf_ra
+Source26:       OVSCleanup.ocf_ra
+Source27:       NeutronScale.ocf_ra
+Source29:       neutron-rpc-server.service
 
-Source30:	%{service}-dist.conf
-Source31:	conf.README
-Source32:	neutron-linuxbridge-cleanup.service
+Source30:       %{service}-dist.conf
+Source31:       conf.README
+Source32:       neutron-linuxbridge-cleanup.service
 
-BuildArch:	noarch
+BuildArch:      noarch
 
-BuildRequires:	git
-BuildRequires:	python2-devel
-BuildRequires:	python-d2to1
-BuildRequires:	python-keystonemiddleware
-BuildRequires:	python-novaclient
-BuildRequires:	python-oslo-concurrency
-BuildRequires:	python-oslo-config
-BuildRequires:	python-oslo-db
-BuildRequires:	python-oslo-log
-BuildRequires:	python-oslo-messaging
-BuildRequires:	python-oslo-policy
-BuildRequires:	python-oslo-rootwrap
-BuildRequires:	python-oslo-service
-BuildRequires:	python-pbr
-BuildRequires:	python-pecan
-BuildRequires:	python-setuptools
-BuildRequires:	systemd-units
+BuildRequires:  git
+BuildRequires:  python2-devel
+BuildRequires:  python-d2to1
+BuildRequires:  python-keystoneauth1 >= 2.1.0
+BuildRequires:  python-keystonemiddleware
+BuildRequires:  python-novaclient
+BuildRequires:  python-oslo-concurrency
+BuildRequires:  python-oslo-config
+BuildRequires:  python-oslo-db
+BuildRequires:  python-oslo-log
+BuildRequires:  python-oslo-messaging
+BuildRequires:  python-oslo-policy
+BuildRequires:  python-oslo-rootwrap
+BuildRequires:  python-oslo-service
+BuildRequires:  python-pbr
+BuildRequires:  python-pecan
+BuildRequires:  python-setuptools
+BuildRequires:  systemd-units
 
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
-Requires:	dnsmasq
-Requires:	dnsmasq-utils
+Requires:       dnsmasq
+Requires:       dnsmasq-utils
 
 # radvd is not a hard requirement, but is currently the only option
 # for IPv6 deployments.
-Requires:	radvd
+Requires:       radvd
 
 # dibbler is not a hard requirement, but is currently the default option
 # for IPv6 prefix delegation.
-Requires:	dibbler-client
+Requires:       dibbler-client
 
 # conntrack is not a hard requirement, but is currently used by L3 agent
 # to immediately drop connections after a floating IP is disassociated
-Requires:	conntrack-tools
+Requires:       conntrack-tools
 
 # keepalived is not a hard requirement, but is currently used by DVR L3
 # agent
-Requires:	keepalived
+Requires:       keepalived
 
 # those are not hard requirements, but are used to implement firewall
 # drivers.
-Requires:	ipset
-Requires:	iptables
+Requires:       ipset
+Requires:       iptables
 
 Requires(pre): shadow-utils
 Requires(post): systemd
@@ -99,46 +100,47 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 
 %package -n python-%{service}
-Summary:	Neutron Python libraries
-Requires:	python-alembic >= 0.8.0
-Requires:	python-debtcollector >= 0.3.0
-Requires:	python-eventlet >= 0.17.4
-Requires:	python-greenlet >= 0.3.2
-Requires:	python-httplib2 >= 0.7.5
-Requires:	python-jinja2 >= 2.6
-Requires:	python-keystoneclient >= 1.6.0
-Requires:	python-keystonemiddleware >= 2.0.0
-Requires:	python-netaddr >= 0.7.12
-Requires:	python-neutronclient >= 2.6.0
-Requires:	python-novaclient >= 2.26.0
-Requires:	python-oslo-concurrency >= 2.3.0
-Requires:	python-oslo-config >= 2:2.1.0
-Requires:	python-oslo-context >= 0.2.0
-Requires:	python-oslo-db >= 2.0
-Requires:	python-oslo-i18n >= 1.5.0
-Requires:	python-oslo-log >= 1.8.0
-Requires:	python-oslo-messaging >= 1.16.0
-Requires:	python-oslo-middleware >= 2.4.0
-Requires:	python-oslo-policy >= 0.5.0
-Requires:	python-oslo-reports >= 0.6.0
-Requires:	python-oslo-rootwrap >= 2.0.0
-Requires:	python-oslo-serialization >= 1.4.0
-Requires:	python-oslo-service >= 0.6.0
-Requires:	python-oslo-utils >= 2.0.0
-Requires:	python-oslo-versionedobjects >= 0.6.0
-Requires:	python-oslo-context >= 0.2.0
-Requires:	python-paste
-Requires:	python-paste-deploy >= 1.5.0
-Requires:	python-pecan >= 1.0.0
-Requires:	python-pbr
-Requires:	python-requests >= 2.5.2
-Requires:	python-retrying >= 1.2.3
-Requires:	python-routes >= 1.12.3
-Requires:	python-ryu >= 3.23.2
-Requires:	python-six >= 1.9.0
-Requires:	python-sqlalchemy >= 0.9.7
-Requires:	python-stevedore >= 1.5.0
-Requires:	python-webob >= 1.2.3
+Summary:        Neutron Python libraries
+Requires:       python-alembic >= 0.8.0
+Requires:       python-debtcollector >= 0.3.0
+Requires:       python-eventlet >= 0.17.4
+Requires:       python-greenlet >= 0.3.2
+Requires:       python-httplib2 >= 0.7.5
+Requires:       python-jinja2 >= 2.6
+Requires:       python-keystoneauth1 >= 2.1.0
+Requires:       python-keystoneclient >= 1.6.0
+Requires:       python-keystonemiddleware >= 2.0.0
+Requires:       python-netaddr >= 0.7.12
+Requires:       python-neutronclient >= 2.6.0
+Requires:       python-novaclient >= 2.26.0
+Requires:       python-oslo-concurrency >= 2.3.0
+Requires:       python-oslo-config >= 2:2.1.0
+Requires:       python-oslo-context >= 0.2.0
+Requires:       python-oslo-db >= 2.0
+Requires:       python-oslo-i18n >= 1.5.0
+Requires:       python-oslo-log >= 1.8.0
+Requires:       python-oslo-messaging >= 1.16.0
+Requires:       python-oslo-middleware >= 2.4.0
+Requires:       python-oslo-policy >= 0.5.0
+Requires:       python-oslo-reports >= 0.6.0
+Requires:       python-oslo-rootwrap >= 2.0.0
+Requires:       python-oslo-serialization >= 1.4.0
+Requires:       python-oslo-service >= 0.6.0
+Requires:       python-oslo-utils >= 2.0.0
+Requires:       python-oslo-versionedobjects >= 0.6.0
+Requires:       python-oslo-context >= 0.2.0
+Requires:       python-paste
+Requires:       python-paste-deploy >= 1.5.0
+Requires:       python-pecan >= 1.0.0
+Requires:       python-pbr
+Requires:       python-requests >= 2.5.2
+Requires:       python-retrying >= 1.2.3
+Requires:       python-routes >= 1.12.3
+Requires:       python-ryu >= 3.23.2
+Requires:       python-six >= 1.9.0
+Requires:       python-sqlalchemy >= 0.9.7
+Requires:       python-stevedore >= 1.5.0
+Requires:       python-webob >= 1.2.3
 
 
 
@@ -150,8 +152,8 @@ This package contains the Neutron Python library.
 
 
 %package -n python-%{service}-tests
-Summary:	Neutron tests
-Requires:	openstack-%{service} = %{epoch}:%{version}-%{release}
+Summary:        Neutron tests
+Requires:       openstack-%{service} = %{epoch}:%{version}-%{release}
 
 
 %description -n python-%{service}-tests
@@ -162,9 +164,9 @@ This package contains Neutron test files.
 
 
 %package common
-Summary:	Neutron common files
-Requires:	python-%{service} = %{epoch}:%{version}-%{release}
-Requires:	sudo
+Summary:        Neutron common files
+Requires:       python-%{service} = %{epoch}:%{version}-%{release}
+Requires:       sudo
 
 
 %description common
@@ -174,25 +176,11 @@ networks.
 This package contains Neutron common files.
 
 
-%package cisco
-Summary:	Neutron Cisco plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-Requires:	python-ncclient
-
-
-%description cisco
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using Cisco UCS and Nexus.
-
-
 %package linuxbridge
-Summary:	Neutron linuxbridge plugin
-Requires:	bridge-utils
-Requires:	ebtables
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Summary:        Neutron linuxbridge plugin
+Requires:       bridge-utils
+Requires:       ebtables
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description linuxbridge
@@ -204,10 +192,10 @@ networks as VLANs using Linux bridging.
 
 
 %package ml2
-Summary:	Neutron ML2 plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Summary:        Neutron ML2 plugin
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 # needed for brocade and cisco drivers
-Requires:	python-ncclient
+Requires:       python-ncclient
 
 
 %description ml2
@@ -220,13 +208,13 @@ for accessing those types.
 
 
 %package openvswitch
-Summary:	Neutron openvswitch plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Summary:        Neutron openvswitch plugin
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 # We require openvswitch when using vsctl to access ovsdb;
 # but if we use native access, then we just need python bindings.
 # since we don't know what users actually use, we depend on both.
-Requires:	openvswitch
-Requires:	python-openvswitch
+Requires:       openvswitch
+Requires:       python-openvswitch
 
 
 %description openvswitch
@@ -238,8 +226,8 @@ networks using Open vSwitch.
 
 
 %package metering-agent
-Summary:	Neutron bandwidth metering agent
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Summary:        Neutron bandwidth metering agent
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description metering-agent
@@ -250,8 +238,8 @@ utilization notifications.
 
 
 %package rpc-server
-Summary:	Neutron (RPC only) Server
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Summary:        Neutron (RPC only) Server
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description rpc-server
@@ -263,8 +251,8 @@ workload only.
 
 
 %package sriov-nic-agent
-Summary:	Neutron SR-IOV NIC agent
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Summary:        Neutron SR-IOV NIC agent
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description sriov-nic-agent
@@ -587,12 +575,6 @@ fi
 %{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/l3.filters
-
-
-%files cisco
-%license LICENSE
-%dir %{_sysconfdir}/%{service}/plugins/cisco
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/cisco/*.ini
 
 
 %files linuxbridge
