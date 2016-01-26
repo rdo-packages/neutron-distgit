@@ -331,7 +331,6 @@ mv %{buildroot}/usr/etc/%{service}/rootwrap.d/*.filters %{buildroot}%{_datarootd
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}
 mv %{buildroot}/usr/etc/%{service}/* %{buildroot}%{_sysconfdir}/%{service}
 mv %{buildroot}%{_sysconfdir}/%{service}/api-paste.ini %{buildroot}%{_datadir}/%{service}/api-paste.ini
-chmod 640 %{buildroot}%{_sysconfdir}/%{service}/plugins/*/*.ini
 
 # The generated config files are not moved automatically by setup.py
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
