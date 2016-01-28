@@ -138,7 +138,7 @@ Requires:       python-retrying >= 1.2.3
 Requires:       python-routes >= 1.12.3
 Requires:       python-ryu >= 3.23.2
 Requires:       python-six >= 1.9.0
-Requires:       python-sqlalchemy >= 0.9.7
+Requires:       python-sqlalchemy >= 1.0.10
 Requires:       python-stevedore >= 1.5.0
 Requires:       python-webob >= 1.2.3
 
