@@ -4,7 +4,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	2015.1.2
+Version:	2015.1.3
 Release:	1%{?milestone}%{?dist}
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
@@ -14,7 +14,7 @@ Group:		Applications/System
 License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
-Source0:	http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
+Source0:	http://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
 Source1:	%{service}.logrotate
 Source2:	%{service}-sudoers
@@ -950,6 +950,9 @@ exit 0
 
 
 %changelog
+* Wed Feb 03 2016 Haikel Guemar <hguemar@fedoraproject.org> 2015.1.3-1
+- Update to 2015.1.3
+
 * Fri Oct 16 2015 Haikel Guemar <hguemar@fedoraproject.org> 2015.1.2-1
 - Update to upstream 2015.1.2
 
