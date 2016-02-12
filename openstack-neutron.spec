@@ -40,6 +40,7 @@ BuildRequires:  python2-devel
 BuildRequires:  python-d2to1
 BuildRequires:  python-keystoneauth1 >= 2.1.0
 BuildRequires:  python-keystonemiddleware
+BuildRequires:  python-neutron-lib
 BuildRequires:  python-novaclient
 BuildRequires:  python-oslo-concurrency
 BuildRequires:  python-oslo-config
@@ -112,6 +113,7 @@ Requires:       python-keystoneclient >= 1.6.0
 Requires:       python-keystonemiddleware >= 2.0.0
 Requires:       python-netaddr >= 0.7.12
 Requires:       python-neutronclient >= 2.6.0
+Requires:       python-neutron-lib
 Requires:       python-novaclient >= 2.26.0
 Requires:       python-oslo-concurrency >= 2.3.0
 Requires:       python-oslo-config >= 2:2.1.0
