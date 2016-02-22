@@ -15,6 +15,7 @@ Source2:        %{service}-sudoers
 Source10:       neutron-server.service
 Source11:       neutron-linuxbridge-agent.service
 Source12:       neutron-openvswitch-agent.service
+Source13:       neutron-bgp-dragent.service
 Source15:       neutron-dhcp-agent.service
 Source16:       neutron-l3-agent.service
 Source17:       neutron-metadata-agent.service
@@ -176,6 +177,20 @@ Neutron provides an API to dynamically request and configure virtual
 networks.
 
 This package contains Neutron common files.
+
+
+%package bgp-dragent
+Summary:        Neutron BGP Dynamic Routing agent
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
+
+
+%description bgp-dragent
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the Neutron BGP Dynamic Routing agent that will host
+different BGP speaking drivers and makes the required BGP peering session/s for
+Neutron.
 
 
 %package linuxbridge
@@ -345,6 +360,7 @@ install -p -D -m 440 %{SOURCE2} %{buildroot}%{_sysconfdir}/sudoers.d/%{service}
 install -p -D -m 644 %{SOURCE10} %{buildroot}%{_unitdir}/neutron-server.service
 install -p -D -m 644 %{SOURCE11} %{buildroot}%{_unitdir}/neutron-linuxbridge-agent.service
 install -p -D -m 644 %{SOURCE12} %{buildroot}%{_unitdir}/neutron-openvswitch-agent.service
+install -p -D -m 644 %{SOURCE13} %{buildroot}%{_unitdir}/neutron-bgp-dragent.service
 install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/neutron-dhcp-agent.service
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/neutron-l3-agent.service
 install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/neutron-metadata-agent.service
@@ -384,7 +400,7 @@ mkdir -p %{buildroot}%{_datadir}/%{service}/server
 
 # Create configuration directories for all services that can be populated by users with custom *.conf files
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
-for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup; do
+for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup bgp-dragent; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
 for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic; do
@@ -425,6 +441,18 @@ exit 0
 %systemd_postun_with_restart neutron-l3-agent.service
 %systemd_postun_with_restart neutron-metadata-agent.service
 %systemd_postun_with_restart neutron-server.service
+
+
+%post bgp-dragent
+%systemd_post neutron-bgp-dragent.service
+
+
+%preun bgp-dragent
+%systemd_preun neutron-bgp-dragent.service
+
+
+%postun bgp-dragent
+%systemd_postun_with_restart neutron-bgp-dragent.service
 
 
 %post linuxbridge
@@ -577,6 +605,13 @@ fi
 %{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/l3.filters
+
+
+%files bgp-dragent
+%license LICENSE
+%{_bindir}/neutron-bgp-dragent
+%{_unitdir}/neutron-bgp-dragent.service
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-bgp-dragent
 
 
 %files linuxbridge
