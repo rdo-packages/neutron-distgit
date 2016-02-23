@@ -194,7 +194,7 @@ Neutron.
 
 
 %package linuxbridge
-Summary:        Neutron linuxbridge plugin
+Summary:        Neutron Linuxbridge agent
 Requires:       bridge-utils
 Requires:       ebtables
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -204,8 +204,8 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Neutron provides an API to dynamically request and configure virtual
 networks.
 
-This package contains the Neutron plugin that implements virtual
-networks as VLANs using Linux bridging.
+This package contains the Neutron agent that implements virtual
+networks using VLAN or VXLAN using Linuxbridge technology.
 
 
 %package ml2
