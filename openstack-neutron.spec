@@ -20,6 +20,7 @@ Source15:       neutron-dhcp-agent.service
 Source16:       neutron-l3-agent.service
 Source17:       neutron-metadata-agent.service
 Source18:       neutron-ovs-cleanup.service
+Source19:       neutron-macvtap-agent.service
 Source20:       neutron-metering-agent.service
 Source21:       neutron-sriov-nic-agent.service
 Source22:       neutron-netns-cleanup.service
@@ -208,6 +209,19 @@ This package contains the Neutron agent that implements virtual
 networks using VLAN or VXLAN using Linuxbridge technology.
 
 
+%package macvtap-agent
+Summary:        Neutron macvtap agent
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
+
+
+%description macvtap-agent
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains the Neutron agent that implements
+macvtap attachments for libvirt qemu/kvm instances.
+
+
 %package ml2
 Summary:        Neutron ML2 plugin
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -365,6 +379,7 @@ install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/neutron-dhcp-agent.serv
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/neutron-l3-agent.service
 install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/neutron-metadata-agent.service
 install -p -D -m 644 %{SOURCE18} %{buildroot}%{_unitdir}/neutron-ovs-cleanup.service
+install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-macvtap-agent.service
 install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-metering-agent.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
@@ -400,7 +415,7 @@ mkdir -p %{buildroot}%{_datadir}/%{service}/server
 
 # Create configuration directories for all services that can be populated by users with custom *.conf files
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
-for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup bgp-dragent; do
+for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup bgp-dragent macvtap-agent; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
 for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic; do
@@ -453,6 +468,18 @@ exit 0
 
 %postun bgp-dragent
 %systemd_postun_with_restart neutron-bgp-dragent.service
+
+
+%post macvtap-agent
+%systemd_post neutron-macvtap-agent.service
+
+
+%preun macvtap-agent
+%systemd_preun neutron-macvtap-agent.service
+
+
+%postun macvtap-agent
+%systemd_postun_with_restart neutron-macvtap-agent.service
 
 
 %post linuxbridge
@@ -622,6 +649,13 @@ fi
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-agent
+
+
+%files macvtap-agent
+%license LICENSE
+%{_bindir}/neutron-macvtap-agent
+%{_unitdir}/neutron-macvtap-agent.service
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-macvtap-agent
 
 
 %files ml2
