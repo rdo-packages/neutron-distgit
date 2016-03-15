@@ -43,6 +43,7 @@ clean() {
 	killall neutron-keepalived-state-change 2>/dev/null || :
 	kill $(ps ax | grep -e "keepalived.*\.pid-vrrp" | awk '{print $1}') 2>/dev/null || :
 	kill $(ps ax | grep -e "radvd.*\.pid\.radvd" | awk '{print $1}') 2>/dev/null || :
+	kill $(ps ax | grep -e "haproxy .*/conf .*/pid" | awk '{print $1}') 2>/dev/null || :
     fi
     return $?
 }
