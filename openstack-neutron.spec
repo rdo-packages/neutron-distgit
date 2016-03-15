@@ -157,7 +157,7 @@ This package contains the Neutron Python library.
 
 %package -n python-%{service}-tests
 Summary:        Neutron tests
-Requires:       openstack-%{service} = %{epoch}:%{version}-%{release}
+Requires:       python-%{service} = %{epoch}:%{version}-%{release}
 
 
 %description -n python-%{service}-tests
