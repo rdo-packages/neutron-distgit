@@ -4,15 +4,16 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	7.0.0
-Release:	4%{?milestone}%{?dist}
+Version:	7.0.1
+Release:	1%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
 License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
-Source0:        http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
+#Source0:        http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
+Source0:         http://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
 
 Source1:	%{service}.logrotate
@@ -844,6 +845,9 @@ fi
 
 
 %changelog
+* Mon Dec 21 2015 Haikel Guemar <hguemar@fedoraproject.org> 1:7.0.1-1
+- Update to 7.0.1
+
 * Wed Nov 18 2015 Ihar Hrachyshka <ihrachys@redhat.com> 1:7.0.0-4.el7
 - Don't set PBR_VERSION, it seems pbr does not really implement SemVer 3.0, rhbz#1281920
 
