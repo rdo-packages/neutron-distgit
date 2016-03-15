@@ -4,7 +4,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	7.0.1
+Version:	7.0.2
 Release:	1%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
@@ -845,6 +845,9 @@ fi
 
 
 %changelog
+* Tue Mar 15 2016 Alan Pevec <alan.pevec@redhat.com> 1:7.0.2-1
+- Update to 7.0.2
+
 * Mon Dec 21 2015 Haikel Guemar <hguemar@fedoraproject.org> 1:7.0.1-1
 - Update to 7.0.1
 
