@@ -1,15 +1,19 @@
+%define milestone .0rc1
 %global service neutron
 
+
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+
 Name:           openstack-%{service}
-Version:        XXX
-Release:        XXX
+Version:        8.0.0
+Release:        0.1%{?milestone}%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
 License:        ASL 2.0
 URL:            http://launchpad.net/%{service}/
 
-Source0:        http://tarballs.openstack.org/%{service}/%{service}-master.tar.gz
+Source0:        http://tarballs.openstack.org/%{service}/%{service}-%{version}%{?milestone}.tar.gz
 Source1:        %{service}.logrotate
 Source2:        %{service}-sudoers
 Source10:       neutron-server.service
@@ -701,3 +705,5 @@ fi
 
 
 %changelog
+* Thu Mar 24 2016 RDO <rdo-list@redhat.com> 8.0.0-0.1.0rc1
+- RC1 Rebuild for Mitaka rc1
