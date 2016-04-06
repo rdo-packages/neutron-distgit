@@ -4,7 +4,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	7.0.3
+Version:	7.0.4
 Release:	1%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
@@ -12,8 +12,7 @@ Summary:	OpenStack Networking Service
 License:	ASL 2.0
 URL:		http://launchpad.net/%{service}/
 
-#Source0:        http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
-Source0:         http://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
+Source0:	http://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
 
 Source1:	%{service}.logrotate
@@ -846,6 +845,9 @@ fi
 
 
 %changelog
+* Wed Apr 06 2016 Alan Pevec <alan.pevec@redhat.com> 1:7.0.4-1
+- Update to 7.0.4
+
 * Tue Mar 15 2016 Alan Pevec <alan.pevec@redhat.com> 1:7.0.3-1
 - Update to 7.0.3
 
