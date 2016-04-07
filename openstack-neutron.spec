@@ -1,4 +1,3 @@
-%define milestone .0rc3
 %global service neutron
 
 
@@ -6,7 +5,7 @@
 
 Name:           openstack-%{service}
 Version:        8.0.0
-Release:        0.2%{?milestone}%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -14,9 +13,6 @@ License:        ASL 2.0
 URL:            http://launchpad.net/%{service}/
 
 Source0:        http://tarballs.openstack.org/%{service}/%{service}-%{version}%{?milestone}.tar.gz
-#
-# patches_base=8.0.0.0rc3
-#
 
 Source1:        %{service}.logrotate
 Source2:        %{service}-sudoers
@@ -709,6 +705,9 @@ fi
 
 
 %changelog
+* Thu Apr  7 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 1:8.0.0-1
+- Upstream 8.0.0
+
 * Sat Apr 02 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:8.0.0-0.2.0rc1
 - Update to 8.0.0.0rc3
 
