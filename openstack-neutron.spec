@@ -52,7 +52,7 @@ BuildRequires:  python-oslo-messaging
 BuildRequires:  python-oslo-policy
 BuildRequires:  python-oslo-rootwrap
 BuildRequires:  python-oslo-service
-BuildRequires:  python-pbr
+BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
 BuildRequires:  systemd-units
@@ -105,38 +105,38 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 %package -n python-%{service}
 Summary:        Neutron Python libraries
 Requires:       python-alembic >= 0.8.0
-Requires:       python-debtcollector >= 0.3.0
+Requires:       python-debtcollector >= 1.2.0
 Requires:       python-eventlet >= 0.17.4
 Requires:       python-greenlet >= 0.3.2
 Requires:       python-httplib2 >= 0.7.5
 Requires:       python-jinja2 >= 2.6
 Requires:       python-keystoneauth1 >= 2.1.0
 Requires:       python-keystoneclient >= 1.6.0
-Requires:       python-keystonemiddleware >= 2.0.0
+Requires:       python-keystonemiddleware >= 4.0.0
 Requires:       python-netaddr >= 0.7.12
 Requires:       python-neutronclient >= 2.6.0
 Requires:       python-neutron-lib
-Requires:       python-novaclient >= 2.26.0
-Requires:       python-oslo-concurrency >= 2.3.0
-Requires:       python-oslo-config >= 2:2.1.0
+Requires:       python-novaclient >= 2.29.0
+Requires:       python-oslo-concurrency >= 3.5.0
+Requires:       python-oslo-config >= 2:3.7.0
 Requires:       python-oslo-context >= 0.2.0
-Requires:       python-oslo-db >= 2.0
+Requires:       python-oslo-db >= 4.1.0
 Requires:       python-oslo-i18n >= 1.5.0
 Requires:       python-oslo-log >= 1.8.0
-Requires:       python-oslo-messaging >= 1.16.0
-Requires:       python-oslo-middleware >= 2.4.0
+Requires:       python-oslo-messaging >= 4.0.0
+Requires:       python-oslo-middleware >= 3.0.0
 Requires:       python-oslo-policy >= 0.5.0
 Requires:       python-oslo-reports >= 0.6.0
 Requires:       python-oslo-rootwrap >= 2.0.0
-Requires:       python-oslo-serialization >= 1.4.0
-Requires:       python-oslo-service >= 0.6.0
-Requires:       python-oslo-utils >= 2.0.0
-Requires:       python-oslo-versionedobjects >= 0.6.0
+Requires:       python-oslo-serialization >= 1.10.0
+Requires:       python-oslo-service >= 1.0.0
+Requires:       python-oslo-utils >= 3.5.0
+Requires:       python-oslo-versionedobjects >= 1.5.0
 Requires:       python-oslo-context >= 0.2.0
 Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
 Requires:       python-pecan >= 1.0.0
-Requires:       python-pbr
+Requires:       python-pbr >= 1.6
 Requires:       python-requests >= 2.5.2
 Requires:       python-retrying >= 1.2.3
 Requires:       python-routes >= 1.12.3
