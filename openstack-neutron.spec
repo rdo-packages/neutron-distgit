@@ -162,6 +162,7 @@ This package contains the Neutron Python library.
 %package -n python-%{service}-tests
 Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
+Requires:       python-ddt >= 1.0.1
 
 
 %description -n python-%{service}-tests
