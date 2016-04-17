@@ -77,7 +77,6 @@ Requires:	keepalived
 Requires:	ipset
 Requires:	iptables
 
-Requires(pre): shadow-utils
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
@@ -156,6 +155,7 @@ This package contains Neutron test files.
 
 %package common
 Summary:	Neutron common files
+Requires(pre):	shadow-utils
 Requires:	python-%{service} = %{epoch}:%{version}-%{release}
 Requires:	sudo
 
