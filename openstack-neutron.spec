@@ -63,9 +63,8 @@ Requires:	conntrack-tools
 # agent
 Requires:	keepalived
 
-# those are not hard requirements, but are used to implement firewall
+# Those are not hard requirements, but are used to implement firewall
 # drivers.
-Requires:	ipset
 Requires:	iptables
 
 Requires(post): systemd
@@ -261,6 +260,8 @@ Provides:	openstack-quantum-linuxbridge = %{version}-%{release}
 Obsoletes:	openstack-quantum-linuxbridge < 2013.2-0.4.b3
 
 Requires:	bridge-utils
+Requires:	ipset
+Requires:	iptables
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
 
@@ -424,6 +425,8 @@ Requires:	openstack-%{service}-common = %{version}-%{release}
 # We require openvswitch when using vsctl to access ovsdb;
 # but if we use native access, then we just need python bindings.
 # since we don't know what users actually use, we depend on both.
+Requires:	ipset
+Requires:	iptables
 Requires:	openvswitch
 Requires:	python-openvswitch
 
@@ -492,6 +495,7 @@ networks using VMware NSX.
 Summary:	Neutron bandwidth metering agent
 Group:		Applications/System
 
+Requires:	iptables
 Requires:	openstack-%{service}-common = %{version}-%{release}
 
 
