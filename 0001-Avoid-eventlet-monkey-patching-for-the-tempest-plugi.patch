@@ -1,0 +1,113 @@
+From 16ca061abc6f4512b282ad2af7a38dbee02f2f7e Mon Sep 17 00:00:00 2001
+From: YAMAMOTO Takashi <yamamoto@midokura.com>
+Date: Tue, 26 Apr 2016 00:10:31 -0500
+Subject: [PATCH] Avoid eventlet monkey patching for the tempest plugin
+
+do the monkey patch for each modules instead.
+
+Closes-Bug: #1571486
+Change-Id: Ia698dcf99f3950aeabffc44d85e4b33f56714afd
+---
+ neutron/tests/__init__.py            | 15 ---------------
+ neutron/tests/common/__init__.py     | 16 ++++++++++++++++
+ neutron/tests/fullstack/__init__.py  | 16 ++++++++++++++++
+ neutron/tests/functional/__init__.py |  5 +++++
+ neutron/tests/unit/__init__.py       |  5 +++++
+ 5 files changed, 42 insertions(+), 15 deletions(-)
+
+diff --git a/neutron/tests/__init__.py b/neutron/tests/__init__.py
+index 1850daa..e69de29 100644
+--- a/neutron/tests/__init__.py
++++ b/neutron/tests/__init__.py
+@@ -1,15 +0,0 @@
+-# Licensed under the Apache License, Version 2.0 (the "License"); you may
+-# not use this file except in compliance with the License. You may obtain
+-# a copy of the License at
+-#
+-#      http://www.apache.org/licenses/LICENSE-2.0
+-#
+-# Unless required by applicable law or agreed to in writing, software
+-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+-# License for the specific language governing permissions and limitations
+-# under the License.
+-
+-from neutron.common import eventlet_utils
+-
+-eventlet_utils.monkey_patch()
+diff --git a/neutron/tests/common/__init__.py b/neutron/tests/common/__init__.py
+index e69de29..5c53d88 100644
+--- a/neutron/tests/common/__init__.py
++++ b/neutron/tests/common/__init__.py
+@@ -0,0 +1,16 @@
++# Licensed under the Apache License, Version 2.0 (the "License"); you may
++# not use this file except in compliance with the License. You may obtain
++# a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++# License for the specific language governing permissions and limitations
++# under the License.
++
++from neutron.common import eventlet_utils
++
++
++eventlet_utils.monkey_patch()
+diff --git a/neutron/tests/fullstack/__init__.py b/neutron/tests/fullstack/__init__.py
+index e69de29..5c53d88 100644
+--- a/neutron/tests/fullstack/__init__.py
++++ b/neutron/tests/fullstack/__init__.py
+@@ -0,0 +1,16 @@
++# Licensed under the Apache License, Version 2.0 (the "License"); you may
++# not use this file except in compliance with the License. You may obtain
++# a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++# License for the specific language governing permissions and limitations
++# under the License.
++
++from neutron.common import eventlet_utils
++
++
++eventlet_utils.monkey_patch()
+diff --git a/neutron/tests/functional/__init__.py b/neutron/tests/functional/__init__.py
+index a2a87e2..b66ed9e 100644
+--- a/neutron/tests/functional/__init__.py
++++ b/neutron/tests/functional/__init__.py
+@@ -20,6 +20,11 @@ discovery.
+ 
+ import os.path
+ 
++from neutron.common import eventlet_utils
++
++
++eventlet_utils.monkey_patch()
++
+ 
+ def load_tests(loader, tests, pattern):
+     this_dir = os.path.dirname(__file__)
+diff --git a/neutron/tests/unit/__init__.py b/neutron/tests/unit/__init__.py
+index faed26a..b6e11d0 100644
+--- a/neutron/tests/unit/__init__.py
++++ b/neutron/tests/unit/__init__.py
+@@ -15,5 +15,10 @@
+ 
+ from oslo_config import cfg
+ 
++from neutron.common import eventlet_utils
++
+ 
+ cfg.CONF.use_stderr = False
++
++
++eventlet_utils.monkey_patch()
+-- 
+2.5.5
+
