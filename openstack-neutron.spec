@@ -4,7 +4,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           openstack-%{service}
-Version:        8.0.0
+Version:        8.1.0
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -711,6 +711,9 @@ fi
 
 
 %changelog
+* Thu May 12 2016 Alan Pevec <alan.pevec@redhat.com> 1:8.1.0-1
+- Update to 8.1.0
+
 * Thu Apr  7 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 1:8.0.0-1
 - Upstream 8.0.0
 
