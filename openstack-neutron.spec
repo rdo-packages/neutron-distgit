@@ -258,19 +258,6 @@ This plugin implements Neutron v2 APIs with support for Mellanox embedded
 switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 
 
-%package midonet
-Summary:	Neutron MidoNet plugin
-Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description midonet
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using MidoNet from Midokura.
-
-
 %package ml2
 Summary:	Neutron ML2 plugin
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -760,13 +747,6 @@ fi
 %dir %{_sysconfdir}/%{service}/plugins/mlnx
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/mlnx/*.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-mlnx-agent
-
-
-%files midonet
-%license LICENSE
-#%doc %{service}/plugins/midonet/README
-%dir %{_sysconfdir}/%{service}/plugins/midonet
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/midonet/*.ini
 
 
 %files ml2
