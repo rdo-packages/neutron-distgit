@@ -38,6 +38,7 @@ BuildArch:      noarch
 
 BuildRequires:  git
 BuildRequires:  python2-devel
+BuildRequires:  python-babel
 BuildRequires:  python-d2to1
 BuildRequires:  python-keystoneauth1 >= 2.1.0
 BuildRequires:  python-keystonemiddleware
@@ -303,6 +304,8 @@ rm -rf neutron.egg-info
 %build
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py build
+# Generate i18n files
+%{__python2} setup.py compile_catalog -d build/lib/%{service}/locale
 
 # Generate configuration files
 PYTHONPATH=. tools/generate_config_file_samples.sh
@@ -416,6 +419,14 @@ for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
 
+# Install i18n .mo files (.po and .pot are not required)
+install -d -m 755 %{buildroot}%{_datadir}
+rm -f %{buildroot}%{python2_sitelib}/%{service}/locale/*/LC_*/%{service}*po
+rm -f %{buildroot}%{python2_sitelib}/%{service}/locale/*pot
+mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
+
+# Find language files
+%find_lang %{service} --all-name
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
@@ -588,7 +599,7 @@ fi
 %exclude %{python2_sitelib}/%{service}/tests
 
 
-%files common
+%files common -f %{service}.lang
 %license LICENSE
 %doc README.rst
 %{_bindir}/neutron-rootwrap
