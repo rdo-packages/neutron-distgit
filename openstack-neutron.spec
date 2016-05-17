@@ -55,6 +55,8 @@ BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
 BuildRequires:  systemd-units
+# Required to compile translation files
+BuildRequires:    python-babel
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
@@ -297,6 +299,20 @@ rm -rf neutron.egg-info
 
 
 %build
+
+# Generate a new egg-info directory
+%{__python2} setup.py egg_info
+# Generate i18n files
+%{__python2} setup.py compile_catalog
+echo >> neutron.egg-info/SOURCES.txt
+ls neutron/locale/*/LC_*/neutron*mo >> neutron.egg-info/SOURCES.txt
+sed -i '/neutron\/locale\/.*\/LC_.*\/neutron.*.po/d'  neutron.egg-info/SOURCES.txt
+sed -i '/neutron\/locale\/neutron.*.pot/d'  neutron.egg-info/SOURCES.txt
+
+# I need to remove .git to avoid egg-info regeneration on build
+rm -rf .git*
+
+# Build
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py build
 
@@ -411,6 +427,13 @@ done
 for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
+
+# Install i18n files
+install -d -m 755 %{buildroot}%{_datadir}
+mv %{buildroot}%{python2_sitelib}/neutron/locale %{buildroot}%{_datadir}/locale
+
+# Find language files
+%find_lang neutron
 
 
 %pre common
@@ -584,7 +607,7 @@ fi
 %exclude %{python2_sitelib}/%{service}/tests
 
 
-%files common
+%files common -f neutron.lang
 %license LICENSE
 %doc README.rst
 %{_bindir}/neutron-rootwrap
