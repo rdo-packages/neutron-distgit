@@ -55,6 +55,8 @@ BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
 BuildRequires:  systemd-units
+# Required to compile translation files
+BuildRequires:    python-babel
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
@@ -297,6 +299,13 @@ rm -rf neutron.egg-info
 
 
 %build
+
+# Generate a new egg-info directory
+%{__python2} setup.py egg_info
+# Generate i18n files
+%{__python2} setup.py compile_catalog
+
+# Build
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py build
 
@@ -412,6 +421,14 @@ for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
 
+# Install i18n .mo files (.po and .pot are not required)
+install -d -m 755 %{buildroot}%{_datadir}
+rm %{buildroot}%{python2_sitelib}/%{service}/locale/*/LC_*/%{service}*po
+rm %{buildroot}%{python2_sitelib}/%{service}/locale/*pot || #pot files are being removed from source git trees
+mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
+
+# Find language files
+%find_lang %{service} --all-name
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
@@ -584,7 +601,7 @@ fi
 %exclude %{python2_sitelib}/%{service}/tests
 
 
-%files common
+%files common -f %{service}.lang
 %license LICENSE
 %doc README.rst
 %{_bindir}/neutron-rootwrap
