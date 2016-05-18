@@ -104,6 +104,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 Summary:        Neutron Python libraries
 Requires:       python-alembic >= 0.8.0
 Requires:       python-debtcollector >= 1.2.0
+Requires:       python-designateclient
 Requires:       python-eventlet >= 0.17.4
 Requires:       python-greenlet >= 0.3.2
 Requires:       python-httplib2 >= 0.7.5
@@ -157,6 +158,7 @@ This package contains the Neutron Python library.
 Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python-ddt >= 1.0.1
+Requires:       python-tempest-lib
 
 
 %description -n python-%{service}-tests
