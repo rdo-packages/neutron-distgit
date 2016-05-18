@@ -46,6 +46,23 @@
       "revId": "4bfa159e485101a750f5e7a8e156dc4884460b17",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_83099297",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T14:57:15Z",
+      "side": 1,
+      "message": "Since you\u0027re in adding requirements, can you also add following?\n\n python-netifaces \u003e\u003d 0.10.4",
+      "revId": "4bfa159e485101a750f5e7a8e156dc4884460b17",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
