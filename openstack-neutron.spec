@@ -105,6 +105,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 Summary:        Neutron Python libraries
 Requires:       python-alembic >= 0.8.0
 Requires:       python-debtcollector >= 1.2.0
+Requires:       python-designateclient >= 1.5.0
 Requires:       python-eventlet >= 0.17.4
 Requires:       python-greenlet >= 0.3.2
 Requires:       python-httplib2 >= 0.7.5
@@ -113,6 +114,7 @@ Requires:       python-keystoneauth1 >= 2.1.0
 Requires:       python-keystoneclient >= 1.6.0
 Requires:       python-keystonemiddleware >= 4.0.0
 Requires:       python-netaddr >= 0.7.12
+Requires:       python-netifaces >= 0.10.4
 Requires:       python-neutronclient >= 2.6.0
 Requires:       python-neutron-lib
 Requires:       python-novaclient >= 2.29.0
