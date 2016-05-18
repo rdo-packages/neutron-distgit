@@ -57,6 +57,7 @@ BuildRequires:  python-setuptools
 BuildRequires:  systemd-units
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Requires:       python-designateclient
 
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
@@ -157,6 +158,7 @@ This package contains the Neutron Python library.
 Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python-ddt >= 1.0.1
+Requires:       python-tempest-lib
 
 
 %description -n python-%{service}-tests
