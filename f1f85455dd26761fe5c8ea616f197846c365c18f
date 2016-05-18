@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_831752a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "Resolves: rhbz#1334797",
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_a3761605",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "%{service}",
+      "range": {
+        "startLine": 307,
+        "startChar": 8,
+        "endLine": 307,
+        "endChar": 15
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_230c6694",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we generate any other filename than neutron.mo",
+      "range": {
+        "startLine": 308,
+        "startChar": 25,
+        "endLine": 308,
+        "endChar": 35
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_c3730a14",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "neutron-\u003e%{service}",
+      "range": {
+        "startLine": 308,
+        "startChar": 25,
+        "endLine": 308,
+        "endChar": 32
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_83651247",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "neutron -\u003e %{service}",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 72
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_837e72e3",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "Can\u0027t we first \"build\" and then \"compile_catalog\"?",
+      "range": {
+        "startLine": 312,
+        "startChar": 0,
+        "endLine": 313,
+        "endChar": 12
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e36c0e39",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "%{service}",
+      "range": {
+        "startLine": 433,
+        "startChar": 34,
+        "endLine": 433,
+        "endChar": 41
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_238306ce",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "%{service}",
+      "range": {
+        "startLine": 436,
+        "startChar": 11,
+        "endLine": 436,
+        "endChar": 18
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_43887ae7",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-18T15:19:05Z",
+      "side": 1,
+      "message": "%{service}",
+      "range": {
+        "startLine": 609,
+        "startChar": 17,
+        "endLine": 609,
+        "endChar": 24
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
