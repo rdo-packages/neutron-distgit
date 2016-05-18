@@ -63,6 +63,23 @@
       "revId": "4bfa159e485101a750f5e7a8e156dc4884460b17",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_239f8605",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 174
+      },
+      "writtenOn": "2016-05-18T22:14:02Z",
+      "side": 1,
+      "message": "Does python-tempest-lib package the out of tree tempest_lib, or the in-tree tempest.lib? Different Neutron branches need a different dependency.",
+      "revId": "4bfa159e485101a750f5e7a8e156dc4884460b17",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
