@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_e37bae27",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2016-05-18T13:51:34Z",
+      "side": 1,
+      "message": "Please move to line 104+ since it\u0027s a python dependency.",
+      "revId": "861bde5e06cf8f90e61c336a6f331cf02b0e5ad8",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
