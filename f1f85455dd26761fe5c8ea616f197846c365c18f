@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_834f5292",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-05-19T08:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_831752a3",
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_a3761605",
         "filename": "openstack-neutron.spec",
         "patchSetId": 2
@@ -88,6 +106,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_a357f625",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-05-19T08:53:32Z",
+      "side": 1,
+      "message": "Actually, there are some other neutron-log-*.po files that need to be added too. As soon as https://review.openstack.org/318507 is merged we\u0027ll get all files compiled.",
+      "parentUuid": "dabed58f_230c6694",
+      "range": {
+        "startLine": 308,
+        "startChar": 25,
+        "endLine": 308,
+        "endChar": 35
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_83651247",
         "filename": "openstack-neutron.spec",
         "patchSetId": 2
@@ -134,6 +176,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_23446673",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-05-19T08:53:32Z",
+      "side": 1,
+      "message": "I can remove this dirty hack as all files in locale are included in MANIFEST.in i don\u0027t need to modify SOURCES.txt.",
+      "parentUuid": "dabed58f_837e72e3",
+      "range": {
+        "startLine": 312,
+        "startChar": 0,
+        "endLine": 313,
+        "endChar": 12
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_e36c0e39",
         "filename": "openstack-neutron.spec",
         "patchSetId": 2
@@ -145,6 +211,30 @@
       "writtenOn": "2016-05-18T15:19:05Z",
       "side": 1,
       "message": "%{service}",
+      "range": {
+        "startLine": 433,
+        "startChar": 34,
+        "endLine": 433,
+        "endChar": 41
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_43495a8a",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-05-19T08:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_e36c0e39",
       "range": {
         "startLine": 433,
         "startChar": 34,
@@ -180,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_e35dee49",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-05-19T08:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_238306ce",
+      "range": {
+        "startLine": 436,
+        "startChar": 11,
+        "endLine": 436,
+        "endChar": 18
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_43887ae7",
         "filename": "openstack-neutron.spec",
         "patchSetId": 2
@@ -191,6 +305,30 @@
       "writtenOn": "2016-05-18T15:19:05Z",
       "side": 1,
       "message": "%{service}",
+      "range": {
+        "startLine": 609,
+        "startChar": 17,
+        "endLine": 609,
+        "endChar": 24
+      },
+      "revId": "f1f85455dd26761fe5c8ea616f197846c365c18f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_035b6255",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-05-19T08:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_43887ae7",
       "range": {
         "startLine": 609,
         "startChar": 17,
