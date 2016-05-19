@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_a32e16a4",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-05-19T10:27:28Z",
+      "side": 1,
+      "message": "We need to first compile_catalog and then build, so that the build (and install later) command take the .mo files created with compile_catalog",
+      "parentUuid": "dabed58f_e3240ec8",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 37
+      },
+      "revId": "94d8f86dde99695c4b284298291882aa05a8a671",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_43407a56",
         "filename": "openstack-neutron.spec",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-05-19T10:02:25Z",
       "side": 1,
       "message": "Missing colon ?",
+      "range": {
+        "startLine": 427,
+        "startChar": 59,
+        "endLine": 427,
+        "endChar": 60
+      },
+      "revId": "94d8f86dde99695c4b284298291882aa05a8a671",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_831d1276",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-05-19T10:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_43407a56",
       "range": {
         "startLine": 427,
         "startChar": 59,
