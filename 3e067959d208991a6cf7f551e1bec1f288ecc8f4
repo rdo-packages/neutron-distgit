@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_3e0ebd35",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-05-19T11:55:36Z",
+      "side": 1,
+      "message": "One nit: Maybe if you will do another respin, move this to L41 to keep alphabetical order.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 30
+      },
+      "revId": "3e067959d208991a6cf7f551e1bec1f288ecc8f4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
