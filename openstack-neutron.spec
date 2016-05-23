@@ -51,6 +51,7 @@ BuildRequires:  python-oslo-messaging
 BuildRequires:  python-oslo-policy
 BuildRequires:  python-oslo-rootwrap
 BuildRequires:  python-oslo-service
+BuildRequires:  python-osprofiler >= 1.3.0
 BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
@@ -131,6 +132,7 @@ Requires:       python-oslo-service >= 1.0.0
 Requires:       python-oslo-utils >= 3.5.0
 Requires:       python-oslo-versionedobjects >= 1.5.0
 Requires:       python-oslo-context >= 0.2.0
+Requires:       python-osprofiler >= 1.3.0
 Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
 Requires:       python-pecan >= 1.0.0
