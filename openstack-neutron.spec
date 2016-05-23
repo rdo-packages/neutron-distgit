@@ -672,3 +672,4 @@ fi
 
 
 %changelog
+# REMOVEME: error caused by commit 
