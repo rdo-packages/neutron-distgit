@@ -2,6 +2,7 @@
 Description=OpenStack Neutron Open vSwitch Agent
 After=syslog.target network.target network.service
 PartOf=network.service
+Requires=openvswitch.service
 
 [Service]
 Type=simple
