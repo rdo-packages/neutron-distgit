@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_289f5e05",
+        "filename": "neutron-openvswitch-agent.service",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2016-06-01T10:59:42Z",
+      "side": 1,
+      "message": "Should we also make the agent started *After* openvswitch is up and running? Otherwise they are started in parallel.",
+      "revId": "ecd488bdded396848d25811a6cb0fa49cb7a0d08",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
