@@ -16,6 +16,24 @@
       "revId": "ecd488bdded396848d25811a6cb0fa49cb7a0d08",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_68bc766d",
+        "filename": "neutron-openvswitch-agent.service",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2016-06-01T11:07:08Z",
+      "side": 1,
+      "message": "Good point. I think it will be safer to put it to After.",
+      "parentUuid": "dabed58f_289f5e05",
+      "revId": "ecd488bdded396848d25811a6cb0fa49cb7a0d08",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
