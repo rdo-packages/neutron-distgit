@@ -44,6 +44,7 @@ BuildRequires:  python-keystoneauth1 >= 2.1.0
 BuildRequires:  python-keystonemiddleware
 BuildRequires:  python-neutron-lib
 BuildRequires:  python-novaclient
+BuildRequires:  python-oslo-cache
 BuildRequires:  python-oslo-concurrency
 BuildRequires:  python-oslo-config
 BuildRequires:  python-oslo-db
@@ -119,6 +120,7 @@ Requires:       python-netifaces >= 0.10.4
 Requires:       python-neutronclient >= 2.6.0
 Requires:       python-neutron-lib
 Requires:       python-novaclient >= 2.29.0
+Requires:       python-oslo-cache >= 1.5.0
 Requires:       python-oslo-concurrency >= 3.5.0
 Requires:       python-oslo-config >= 2:3.7.0
 Requires:       python-oslo-context >= 0.2.0
