@@ -9,6 +9,8 @@ ExecStart=/usr/bin/neutron-server --config-file /usr/share/neutron/neutron-dist.
 PrivateTmp=true
 NotifyAccess=all
 KillMode=process
+Restart=on-failure
+TimeoutStartSec=infinity
 
 [Install]
 WantedBy=multi-user.target
