@@ -140,6 +140,7 @@ This package contains the Neutron Python library.
 %package -n python-%{service}-tests
 Summary:	Neutron tests
 Requires:	openstack-%{service} = %{epoch}:%{version}-%{release}
+Requires:	python-tempest-lib >= 0.8.0
 
 
 %description -n python-%{service}-tests
