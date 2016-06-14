@@ -9,6 +9,7 @@ ExecStart=/usr/bin/neutron-rpc-server --config-file /usr/share/neutron/neutron-d
 PrivateTmp=true
 NotifyAccess=all
 KillMode=process
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
