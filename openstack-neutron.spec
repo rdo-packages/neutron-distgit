@@ -53,6 +53,7 @@ BuildRequires:  python-oslo-messaging
 BuildRequires:  python-oslo-policy
 BuildRequires:  python-oslo-rootwrap
 BuildRequires:  python-oslo-service
+BuildRequires:  python-oslo-versionedobjects
 BuildRequires:  python-osprofiler >= 1.3.0
 BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-pecan
