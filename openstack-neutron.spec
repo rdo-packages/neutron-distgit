@@ -4,7 +4,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           openstack-%{service}
-Version:        8.1.1
+Version:        8.1.2
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -713,6 +713,9 @@ fi
 
 
 %changelog
+* Thu Jun 16 2016 Alan Pevec <alan.pevec@redhat.com> 1:8.1.2-1
+- Update to 8.1.2
+
 * Fri Jun 03 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:8.1.1-1
 - Update to 8.1.1
 - Fix OVS startup
