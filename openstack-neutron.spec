@@ -4,8 +4,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	7.0.4
-Release:	2%{?milestone}%{?dist}
+Version:	7.1.1
+Release:	1%{?milestone}%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
@@ -825,6 +825,9 @@ fi
 
 
 %changelog
+* Fri Jun 17 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:7.1.1-1
+- Update to 7.1.1
+
 * Fri Jun  3 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 1:7.0.4-2
 - Fix OVS startup
 
