@@ -10,7 +10,7 @@ PrivateTmp=true
 NotifyAccess=all
 KillMode=process
 Restart=on-failure
-TimeoutStartSec=infinity
+TimeoutStartSec="infinity"
 
 [Install]
 WantedBy=multi-user.target
