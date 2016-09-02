@@ -1,0 +1,41 @@
+From 791c7a32e995e9cad19b524eaf0acdea76c855a1 Mon Sep 17 00:00:00 2001
+From: Jakub Libosvar <libosvar@redhat.com>
+Date: Fri, 2 Sep 2016 16:39:17 +0200
+Subject: [PATCH] db migration: Alter column before setting a FK on column
+
+MySQL doesn't like foreign key columns to be modified,
+this adjusts the script to add all constraints and make
+modifications before setting up the foreign key relationship.
+
+Change-Id: I494758120c8a87fe584c781b928f8b9d3bac5291
+Closes-bug: 1619696
+---
+ .../versions/newton/contract/97c25b0d2353_add_name_desc.py          | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/neutron/db/migration/alembic_migrations/versions/newton/contract/97c25b0d2353_add_name_desc.py b/neutron/db/migration/alembic_migrations/versions/newton/contract/97c25b0d2353_add_name_desc.py
+index 8f0e2b8..94d3f95 100644
+--- a/neutron/db/migration/alembic_migrations/versions/newton/contract/97c25b0d2353_add_name_desc.py
++++ b/neutron/db/migration/alembic_migrations/versions/newton/contract/97c25b0d2353_add_name_desc.py
+@@ -72,15 +72,15 @@ def upgrade():
+                   sa.Column('name', sa.String(255),
+                             nullable=True))
+     update_existing_records()
++    op.alter_column(TBL, 'standard_attr_id', nullable=False,
++                    existing_type=sa.BigInteger(), existing_nullable=True,
++                    existing_server_default=False)
+     # add the constraint now that everything is populated on that table
+     op.create_foreign_key(
+         constraint_name=None, source_table=TBL,
+         referent_table='standardattributes',
+         local_cols=['standard_attr_id'], remote_cols=['id'],
+         ondelete='CASCADE')
+-    op.alter_column(TBL, 'standard_attr_id', nullable=False,
+-                    existing_type=sa.BigInteger(), existing_nullable=True,
+-                    existing_server_default=False)
+     op.create_unique_constraint(
+         constraint_name='uniq_%s0standard_attr_id' % TBL,
+         table_name=TBL, columns=['standard_attr_id'])
+-- 
+2.7.4
+

@@ -34,6 +34,8 @@ Source30:       %{service}-dist.conf
 Source31:       conf.README
 Source32:       neutron-linuxbridge-cleanup.service
 
+Patch0001:      0001-db-migration-Alter-column-before-setting-a-FK-on-col.patch
+
 BuildArch:      noarch
 
 BuildRequires:  git
