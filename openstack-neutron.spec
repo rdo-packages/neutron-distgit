@@ -165,6 +165,7 @@ This package contains the Neutron Python library.
 Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python-ddt >= 1.0.1
+Requires:       python-oslotest >= 1.10.0
 
 
 %description -n python-%{service}-tests
@@ -558,7 +559,6 @@ fi
 %{_bindir}/neutron-ns-metadata-proxy
 %{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-pd-notify
-%{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
@@ -592,6 +592,7 @@ fi
 
 %files -n python-%{service}-tests
 %license LICENSE
+%{_bindir}/neutron-sanity-check
 %{python2_sitelib}/%{service}/tests
 
 
