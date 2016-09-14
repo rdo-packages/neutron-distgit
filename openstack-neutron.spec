@@ -1,9 +1,10 @@
+%global milestone .0b3
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
 Name:           openstack-%{service}
-Version:        XXX
-Release:        XXX
+Version:        9.0.0
+Release:        0.1%{?milestone}%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -690,3 +691,6 @@ fi
 
 
 %changelog
+* Wed Sep 14 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:9.0.0-0.1
+- Update to 9.0.0.0b3
+
