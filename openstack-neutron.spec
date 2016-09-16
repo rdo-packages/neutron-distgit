@@ -11,7 +11,7 @@ Summary:        OpenStack Networking Service
 License:        ASL 2.0
 URL:            http://launchpad.net/%{service}/
 
-Source0:        http://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
+Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 #
 # patches_base=9.0.0.0rc1
 #
