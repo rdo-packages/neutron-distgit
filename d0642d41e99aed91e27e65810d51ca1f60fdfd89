@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "facab960_c5a4b659",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-09-21T14:42:52Z",
+      "side": 1,
+      "message": "release in changelog is wrong, issue with rdopkg?",
+      "range": {
+        "startLine": 698,
+        "startChar": 72,
+        "endLine": 698,
+        "endChar": 75
+      },
+      "revId": "d0642d41e99aed91e27e65810d51ca1f60fdfd89",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
