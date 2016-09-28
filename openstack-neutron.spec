@@ -161,6 +161,19 @@ This package contains the Neutron Python library.
 Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python-ddt >= 1.0.1
+Requires:       python-fixtures >= 1.3.1
+Requires:       python-mock >= 1.2
+Requires:       python-subunit >= 0.0.18
+Requires:       python-requests-mock >= 1.0
+Requires:       python-testrepository >= 0.0.18
+Requires:       python-testtools >= 1.4.0
+Requires:       python-testresources >= 0.2.4
+Requires:       python-testscenarios >= 0.4
+Requires:       python-oslotest >= 1.10.0
+Requires:       python-os-testr >= 0.7.0
+Requires:       python-PyMySQL >= 0.6.2
+Requires:       python-webtest
+
 
 # pstree is used during functional testing to ensure our internal
 # libraries managing processes work correctly.
