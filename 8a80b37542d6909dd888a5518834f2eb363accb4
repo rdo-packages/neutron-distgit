@@ -119,6 +119,24 @@
       "revId": "8a80b37542d6909dd888a5518834f2eb363accb4",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_c1fe8238",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-09-28T12:36:36Z",
+      "side": 1,
+      "message": "Yes. You mean python-tempest-lib? we still need openstack-tempest for the tests, so python-tempest-lib alone, won\u0027t be enough.",
+      "parentUuid": "dacfb570_c1220201",
+      "revId": "8a80b37542d6909dd888a5518834f2eb363accb4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
