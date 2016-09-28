@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dacfb570_c1220201",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-09-28T09:43:34Z",
+      "side": 1,
+      "message": "Does openstack-tempest is the hard requirements? if yes, what about using python-tempest?",
+      "revId": "8a80b37542d6909dd888a5518834f2eb363accb4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
