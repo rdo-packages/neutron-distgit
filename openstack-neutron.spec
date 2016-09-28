@@ -170,6 +170,20 @@ This package contains the Neutron Python library.
 Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python-ddt >= 1.0.1
+Requires:       python-fixtures >= 3.0.0
+Requires:       python-mock >= 2.0
+Requires:       python-subunit >= 0.0.18
+Requires:       python-requests-mock >= 1.0
+Requires:       python-testrepository >= 0.0.18
+Requires:       python-testtools >= 1.4.0
+Requires:       python-testresources >= 0.2.4
+Requires:       python-testscenarios >= 0.4
+Requires:       python-oslotest >= 1.10.0
+Requires:       python-os-testr >= 0.7.0
+Requires:       python-PyMySQL >= 0.6.2
+Requires:       python-tempest >= 12.1.0
+Requires:       python-webtest
+
 
 
 %description -n python-%{service}-tests
