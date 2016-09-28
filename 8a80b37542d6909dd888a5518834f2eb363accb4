@@ -137,6 +137,24 @@
       "revId": "8a80b37542d6909dd888a5518834f2eb363accb4",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_619f7604",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-09-28T12:39:35Z",
+      "side": 1,
+      "message": "Currently, openstack-tempest package also provides python-tempest subpackage from which you can use tempest as a python library and python-tempest-lib is deprecated after openstack-tempest \u003e 10.0.",
+      "parentUuid": "dacfb570_c1fe8238",
+      "revId": "8a80b37542d6909dd888a5518834f2eb363accb4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
