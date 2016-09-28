@@ -1,10 +1,10 @@
-%global milestone .0rc1
+%global milestone .0rc2
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
 Name:           openstack-%{service}
 Version:        9.0.0
-Release:        0.2%{?milestone}%{?dist}
+Release:        0.3%{?milestone}%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -13,7 +13,7 @@ URL:            http://launchpad.net/%{service}/
 
 Source0:        http://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 #
-# patches_base=9.0.0.0rc1
+# patches_base=9.0.0.0rc2
 #
 
 Source1:        %{service}.logrotate
@@ -695,6 +695,9 @@ fi
 
 
 %changelog
+* Thu Sep 29 2016 Alan Pevec <alan.pevec@redhat.com> 1:9.0.0-0.3.0rc2
+- Update to 9.0.0.0rc2
+
 * Wed Sep 21 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:9.0.0-0.2.0rc1
 - Update to 9.0.0.0rc1
 
