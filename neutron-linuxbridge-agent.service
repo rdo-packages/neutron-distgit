@@ -5,6 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 User=neutron
+ExecStartPre=/usr/bin/sh -c "/usr/sbin/modprobe br_netfilter || /usr/bin/true"
 ExecStart=/usr/bin/neutron-linuxbridge-agent --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/linuxbridge_agent.ini --config-dir /etc/neutron/conf.d/common --config-dir /etc/neutron/conf.d/neutron-linuxbridge-agent --log-file /var/log/neutron/linuxbridge-agent.log
 PrivateTmp=true
 KillMode=process
