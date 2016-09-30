@@ -33,6 +33,7 @@ Source29:	neutron-rpc-server.service
 
 Source30:	%{service}-dist.conf
 Source31:	conf.README
+Source33:       neutron-enable-bridge-firewall.sh
 
 BuildArch:	noarch
 
@@ -237,6 +238,9 @@ Requires:	bridge-utils
 Requires:	ebtables
 Requires:	ipset
 Requires:	iptables
+# kmod is needed to get access to /usr/sbin/modprobe needed by
+# neutron-enable-bridge-firewall.sh triggered by the service unit file
+Requires:       kmod
 Requires:	openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
@@ -327,6 +331,9 @@ Requires:	ipset
 Requires:	iptables
 Requires:	openvswitch
 Requires:	python-openvswitch
+# kmod is needed to get access to /usr/sbin/modprobe needed by
+# neutron-enable-bridge-firewall.sh triggered by the service unit file
+Requires:       kmod
 
 
 %description openvswitch
@@ -459,6 +466,9 @@ install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
 install -p -D -m 644 %{SOURCE28} %{buildroot}%{_unitdir}/neutron-dev-server.service
 install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.service
+
+# Install helper scripts
+install -p -D -m 755 %{SOURCE33} %{buildroot}%{_bindir}/neutron-enable-bridge-firewall.sh
 
 # Install scripts for pacemaker support
 install -p -D -m 755 %{SOURCE23} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
@@ -668,6 +678,9 @@ fi
 %files common
 %license LICENSE
 %doc README.rst
+# though this script is not exactly needed on all nodes but for ovs and
+# linuxbridge agents only, it's probably good enough to put it here
+%{_bindir}/neutron-enable-bridge-firewall.sh
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-daemon
 %{_bindir}/neutron-rootwrap-xen-dom0
