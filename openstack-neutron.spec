@@ -160,6 +160,7 @@ This package contains the Neutron Python library.
 Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python-ddt >= 1.0.1
+Requires:       python-tempest-lib >= 1.0.0
 
 
 %description -n python-%{service}-tests
