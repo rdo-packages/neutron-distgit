@@ -177,7 +177,7 @@ Requires:       python-oslotest >= 1.10.0
 Requires:       python-os-testr >= 0.7.0
 Requires:       python-PyMySQL >= 0.6.2
 Requires:       python-tempest >= 12.1.0
-Requires:       python-webtest
+Requires:       python-webtest >= 2.0
 
 
 
