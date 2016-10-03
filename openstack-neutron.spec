@@ -162,6 +162,10 @@ Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python-ddt >= 1.0.1
 
+# pstree is used during functional testing to ensure our internal
+# libraries managing processes work correctly.
+Requires:       psmisc
+
 
 %description -n python-%{service}-tests
 Neutron provides an API to dynamically request and configure virtual
