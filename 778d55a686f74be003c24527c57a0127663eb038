@@ -16,6 +16,24 @@
       "revId": "778d55a686f74be003c24527c57a0127663eb038",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_70cadea2",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2016-10-03T14:17:20Z",
+      "side": 1,
+      "message": "Isn\u0027t it?",
+      "parentUuid": "dacfb570_30d05653",
+      "revId": "778d55a686f74be003c24527c57a0127663eb038",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
