@@ -179,6 +179,10 @@ Requires:       python-PyMySQL >= 0.6.2
 Requires:       python-tempest >= 12.1.0
 Requires:       python-webtest
 
+# pstree is used during functional testing to ensure our internal
+# libraries managing processes work correctly.
+Requires:       pstree
+
 
 
 %description -n python-%{service}-tests
