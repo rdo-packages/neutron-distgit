@@ -142,6 +142,10 @@ This package contains the Neutron Python library.
 Summary:	Neutron tests
 Requires:	openstack-%{service} = %{epoch}:%{version}-%{release}
 
+# pstree is used during functional testing to ensure our internal
+# libraries managing processes work correctly.
+Requires:       psmisc
+
 
 %description -n python-%{service}-tests
 Neutron provides an API to dynamically request and configure virtual
