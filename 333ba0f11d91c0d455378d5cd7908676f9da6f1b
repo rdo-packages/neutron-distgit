@@ -16,6 +16,24 @@
       "revId": "333ba0f11d91c0d455378d5cd7908676f9da6f1b",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_36c76e14",
+        "filename": "neutron-enable-bridge-firewall.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2016-10-04T15:31:53Z",
+      "side": 1,
+      "message": "So what if something loaded the kernel modules before, but the default is wrong? Are we to leave it broken?",
+      "parentUuid": "dacfb570_5665d243",
+      "revId": "333ba0f11d91c0d455378d5cd7908676f9da6f1b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
