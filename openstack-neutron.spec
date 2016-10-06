@@ -1,10 +1,9 @@
-%global milestone .0rc3
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
 Name:           openstack-%{service}
 Version:        9.0.0
-Release:        0.4%{?milestone}%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -12,10 +11,6 @@ License:        ASL 2.0
 URL:            http://launchpad.net/%{service}/
 
 Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
-#
-# patches_base=9.0.0.0rc3
-#
-
 Source1:        %{service}.logrotate
 Source2:        %{service}-sudoers
 Source10:       neutron-server.service
@@ -725,6 +720,9 @@ fi
 
 
 %changelog
+* Thu Oct 06 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:9.0.0-1
+- Update to 9.0.0
+
 * Thu Sep 29 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:9.0.0-0.4.0rc3
 - Update to 9.0.0.0rc3
 
