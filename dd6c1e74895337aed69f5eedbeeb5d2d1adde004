@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dacfb570_bea43058",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "fixtures\u003c1.3.0,\u003e\u003d0.3.14",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 40
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_de8814c9",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "mock\u003c1.1.0,\u003e\u003d1.0",
+      "range": {
+        "startLine": 145,
+        "startChar": 16,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_3e9020ec",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "requests-mock\u003e\u003d0.6.0",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 147,
+        "endChar": 43
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_be7270e3",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "testtools!\u003d1.2.0,\u003c2.0.0,\u003e\u003d0.9.36",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 41
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_fe7318e5",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "No need as far as I know",
+      "range": {
+        "startLine": 150,
+        "startChar": 16,
+        "endLine": 150,
+        "endChar": 45
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_5e63241a",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "testscenarios\u003e\u003d0.4",
+      "range": {
+        "startLine": 151,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_1eaa7c19",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "oslotest\u003c1.6.0,\u003e\u003d1.5.1",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 41
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_deaf342a",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "testrepository\u003e\u003d0.0.18",
+      "range": {
+        "startLine": 153,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 40
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_7e68e8f5",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s needed",
+      "range": {
+        "startLine": 154,
+        "startChar": 16,
+        "endLine": 154,
+        "endChar": 39
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_7ec1c8e3",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "tempest-lib\u003c0.5.0,\u003e\u003d0.4.0",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 155,
+        "endChar": 40
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_5ebc046d",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 125
+      },
+      "writtenOn": "2016-10-06T14:30:49Z",
+      "side": 1,
+      "message": "WebTest\u003e\u003d2.0",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 30
+      },
+      "revId": "dd6c1e74895337aed69f5eedbeeb5d2d1adde004",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
