@@ -40,7 +40,7 @@ clean() {
     runuser -s /bin/bash neutron -c "$exec $cleanopts --log-file /var/log/$proj/netns-cleanup.log $configs_str &>/dev/null"
     if [ "x$1" == "x--force" ]; then
 	killall neutron-ns-metadata-proxy 2>/dev/null  || :
-	killall neutron-keepalived-state-change 2>/dev/null || :
+	kill $(pstree $(ps ax | grep -e 'python.*keepalived-state-change ' -m 1 | awk '{print $1}') -p -a -l | cut -d, -f2 | cut -d' ' -f1) 2>/dev/null || :
 	kill $(ps ax | grep -e "keepalived.*\.pid-vrrp" | awk '{print $1}') 2>/dev/null || :
 	kill $(ps ax | grep -e "radvd.*\.pid\.radvd" | awk '{print $1}') 2>/dev/null || :
 	kill $(ps ax | grep -e "haproxy .*/conf .*/pid" | awk '{print $1}') 2>/dev/null || :
