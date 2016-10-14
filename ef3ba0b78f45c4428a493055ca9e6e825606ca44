@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad9bd40_b301d03b",
+        "filename": "neutron-netns-cleanup.init",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2016-10-14T11:25:33Z",
+      "side": 1,
+      "message": "pstree requires psmisc to be installed.",
+      "revId": "ef3ba0b78f45c4428a493055ca9e6e825606ca44",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
