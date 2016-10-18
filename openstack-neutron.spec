@@ -5,7 +5,7 @@
 
 Name:		openstack-%{service}
 Version:	7.2.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
@@ -844,6 +844,9 @@ fi
 
 
 %changelog
+* Fri Nov 18 2016 Terry Wilson <twilson@redhat.com> 1:7.2.0-2
+- Don't fail if openvswitch shut down before ovs-cleanup runs rhbz#1316535
+
 * Fri Nov 04 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:7.2.0-1
 - Update to 7.2.0
 
