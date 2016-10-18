@@ -3,7 +3,7 @@
 
 Name:           openstack-%{service}
 Version:        9.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -720,6 +720,9 @@ fi
 
 
 %changelog
+* Tue Oct 18 2016 Terry Wilson <twilson@redhat.com> 1:9.0.0-2
+- Don't fail if openvswitch shut down before ovs-cleanup runs rhbz#1316535
+
 * Thu Oct 06 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:9.0.0-1
 - Update to 9.0.0
 
