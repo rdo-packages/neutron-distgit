@@ -60,6 +60,7 @@ BuildRequires:  python-osprofiler >= 1.3.0
 BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
+BuildRequires:  python-tenacity >= 3.1.1
 BuildRequires:  systemd-units
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -145,7 +146,7 @@ Requires:       python-paste-deploy >= 1.5.0
 Requires:       python-pecan >= 1.0.0
 Requires:       python-pbr >= 1.6
 Requires:       python-requests >= 2.5.2
-Requires:       python-retrying >= 1.2.3
+Requires:       python-tenacity >= 3.1.1
 Requires:       python-routes >= 1.12.3
 Requires:       python-ryu >= 3.30
 Requires:       python-six >= 1.9.0
