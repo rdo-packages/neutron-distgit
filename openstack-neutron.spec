@@ -24,11 +24,6 @@ Source19:       neutron-macvtap-agent.service
 Source20:       neutron-metering-agent.service
 Source21:       neutron-sriov-nic-agent.service
 Source22:       neutron-netns-cleanup.service
-Source23:       neutron-netns-cleanup.init
-Source24:       neutron-ovs-cleanup.init
-Source25:       NetnsCleanup.ocf_ra
-Source26:       OVSCleanup.ocf_ra
-Source27:       NeutronScale.ocf_ra
 Source29:       neutron-rpc-server.service
 
 Source30:       %{service}-dist.conf
@@ -413,13 +408,6 @@ install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cle
 
 # Install helper scripts
 install -p -D -m 755 %{SOURCE33} %{buildroot}%{_bindir}/neutron-enable-bridge-firewall.sh
-
-# Install scripts for pacemaker support
-install -p -D -m 755 %{SOURCE23} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-netns-cleanup
-install -p -D -m 755 %{SOURCE24} %{buildroot}%{_prefix}/lib/ocf/lib/neutron/neutron-ovs-cleanup
-install -p -D -m 755 %{SOURCE25} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NetnsCleanup
-install -p -D -m 755 %{SOURCE26} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/OVSCleanup
-install -p -D -m 755 %{SOURCE27} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
 
 # Install README file that describes how to configure services with custom configuration files
 install -p -D -m 755 %{SOURCE31} %{buildroot}%{_sysconfdir}/%{service}/conf.d/README
