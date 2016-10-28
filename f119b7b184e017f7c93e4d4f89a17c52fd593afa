@@ -16,6 +16,24 @@
       "revId": "f119b7b184e017f7c93e4d4f89a17c52fd593afa",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5adbc538_630f76e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-10-28T19:05:01Z",
+      "side": 1,
+      "message": "That would be tripleo HA",
+      "parentUuid": "5adbc538_e0fb7c45",
+      "revId": "f119b7b184e017f7c93e4d4f89a17c52fd593afa",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
