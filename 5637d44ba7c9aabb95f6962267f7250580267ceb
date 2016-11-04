@@ -103,6 +103,24 @@
       "revId": "5637d44ba7c9aabb95f6962267f7250580267ceb",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5adbc538_2c371bb2",
+        "filename": "neutron-netns-cleanup.init",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2016-11-04T13:19:17Z",
+      "side": 1,
+      "message": "Hmm, I didn\u0027t notice the -m1\n\nThat\u0027s right, we need to iterate over all of the partent processes, save the list of child pids, kill them, kill the child processes.",
+      "parentUuid": "5adbc538_ece61344",
+      "revId": "5637d44ba7c9aabb95f6962267f7250580267ceb",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
