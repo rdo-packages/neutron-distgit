@@ -2,7 +2,7 @@
 %global service neutron
 
 Name:           openstack-%{service}
-Version:        9.0.0
+Version:        9.1.0
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -720,6 +720,9 @@ fi
 
 
 %changelog
+* Fri Nov 04 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:9.1.0-1
+- Update to 9.1.0
+
 * Thu Oct 06 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:9.0.0-1
 - Update to 9.0.0
 
