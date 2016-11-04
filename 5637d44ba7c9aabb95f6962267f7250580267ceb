@@ -80,6 +80,29 @@
       "revId": "5637d44ba7c9aabb95f6962267f7250580267ceb",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5adbc538_ece61344",
+        "filename": "neutron-netns-cleanup.init",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-11-04T12:52:50Z",
+      "side": 1,
+      "message": "If there are not matching processes first awk will return 0 so in that case it will run \u0027pgrep -P -m 1\u0027 wich outputs error message. We should redirect stderr to /dev/null both for kill and pgrep commands to avoid ugly usage messages in that case.",
+      "range": {
+        "startLine": 43,
+        "startChar": 99,
+        "endLine": 43,
+        "endChar": 101
+      },
+      "revId": "5637d44ba7c9aabb95f6962267f7250580267ceb",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
