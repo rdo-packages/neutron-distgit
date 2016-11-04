@@ -4,8 +4,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-%{service}
-Version:	7.1.1
-Release:	2%{?milestone}%{?dist}
+Version:	7.2.0
+Release:	1%{?dist}
 Epoch:		1
 Summary:	OpenStack Networking Service
 
@@ -825,6 +825,9 @@ fi
 
 
 %changelog
+* Fri Nov 04 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:7.2.0-1
+- Update to 7.2.0
+
 * Mon Jun 20 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:7.1.1-2
 - Now neutron-server.service wait indefinitely for sd_notify
 
