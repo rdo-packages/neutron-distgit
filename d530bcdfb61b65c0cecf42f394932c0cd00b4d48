@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5adbc538_d78564ae",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 299
+      },
+      "writtenOn": "2016-11-07T14:14:39Z",
+      "side": 0,
+      "message": "Do we still need these as well?",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 419,
+        "endChar": 95
+      },
+      "revId": "d530bcdfb61b65c0cecf42f394932c0cd00b4d48",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
