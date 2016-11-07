@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5adbc538_f7750033",
+        "filename": "neutron-netns-cleanup.init",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2016-11-07T10:11:25Z",
+      "side": 1,
+      "message": "I believe you can just do \n\nfor pid in $@; do\n      ..\n\ndone\n\n\nand no need for local a\u003d$(\"$@\") / ${a[@]}\" expansion\n\n\n\n  $ function kk() {    for pid in $@; do echo pid: $pid; done; }\n  ajo@mbp-ajo:~$ kk \"1 2 3 4\"\n  pid: 1\n  pid: 2\n  pid: 3\n  pid: 4",
+      "revId": "6a077ccd7c1cdaf882d300c070472f3e0304e7dd",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
