@@ -1,6 +1,17 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
+%define py2_entrypoint() \
+egg_path=%{buildroot}%{python2_sitelib}/%{service}-*.egg-info \
+tempest_egg_path=%{buildroot}%{python2_sitelib}/%{service}_tests.egg-info \
+mkdir $tempest_egg_path \
+grep "tempest\\|Tempest" %{service}.egg-info/entry_points.txt >$tempest_egg_path/entry_points.txt \
+sed -i "/tempest\\|Tempest/d" $egg_path/entry_points.txt \
+cp -r $egg_path/PKG-INFO $tempest_egg_path \
+sed -i "s/%{service}/%{service}_tests/g" $tempest_egg_path/PKG-INFO \
+%nil
+
+
 Name:           openstack-%{service}
 Version:        XXX
 Release:        XXX
@@ -363,20 +374,6 @@ done < %{SOURCE30}
 %install
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
-# Create fake egg-info for the tempest plugin
-egg_path=%{buildroot}%{python2_sitelib}/%{service}-*.egg-info
-tempest_egg_path=%{buildroot}%{python2_sitelib}/%{service}_tests.egg-info
-mkdir $tempest_egg_path
-grep "tempest\|Tempest" %{service}.egg-info/entry_points.txt >$tempest_egg_path/entry_points.txt
-cat > $tempest_egg_path/PKG-INFO <<EOF
-Metadata-Version: 1.1
-Name: %{service}_tests
-Version: %{upstream_version}
-Summary: %{service} Tempest Plugin
-EOF
-# Remove any reference to Tempest plugin in the main package entry point
-sed -i "/tempest\|Tempest/d" $egg_path/entry_points.txt
-
 # Remove unused files
 rm -rf %{buildroot}%{python2_sitelib}/bin
 rm -rf %{buildroot}%{python2_sitelib}/doc
@@ -471,6 +468,9 @@ mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 
 # Find language files
 %find_lang %{service} --all-name
+
+# Create fake tempest entrypoint
+%py2_entrypoint
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
