@@ -64,11 +64,13 @@ BuildRequires:  python-oslo-db
 BuildRequires:  python-oslo-log
 BuildRequires:  python-oslo-messaging
 BuildRequires:  python-oslo-policy
+BuildRequires:  python-oslo-privsep
 BuildRequires:  python-oslo-rootwrap
 BuildRequires:  python-oslo-service
 BuildRequires:  python-oslo-versionedobjects
 BuildRequires:  python-osprofiler >= 1.3.0
 BuildRequires:  python-pbr >= 1.6
+BuildRequires:  python-pyroute2
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
 BuildRequires:  python-tenacity >= 3.1.1
@@ -145,6 +147,7 @@ Requires:       python-oslo-log >= 1.14.0
 Requires:       python-oslo-messaging >= 5.2.0
 Requires:       python-oslo-middleware >= 3.0.0
 Requires:       python-oslo-policy >= 1.9.0
+Requires:       python-oslo-privsep >= 1.9.0
 Requires:       python-oslo-reports >= 0.6.0
 Requires:       python-oslo-rootwrap >= 5.0.0
 Requires:       python-oslo-serialization >= 1.10.0
@@ -156,6 +159,7 @@ Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
 Requires:       python-pecan >= 1.0.0
 Requires:       python-pbr >= 1.6
+Requires:       python-pyroute2 >= 0.4.3 
 Requires:       python-requests >= 2.5.2
 Requires:       python-tenacity >= 3.1.1
 Requires:       python-routes >= 1.12.3
