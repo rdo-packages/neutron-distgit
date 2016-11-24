@@ -47,6 +47,8 @@ Source31:       conf.README
 Source32:       neutron-linuxbridge-cleanup.service
 Source33:       neutron-enable-bridge-firewall.sh
 
+Patch0001:      0001-PATCH-Revert-DHCP-agent-advertise-SLAAC-prefixes.patch
+
 BuildArch:      noarch
 
 BuildRequires:  git
