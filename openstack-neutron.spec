@@ -1,17 +1,6 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
-%define py2_entrypoint() \
-egg_path=%{buildroot}%{python2_sitelib}/%{1}-*.egg-info \
-tempest_egg_path=%{buildroot}%{python2_sitelib}/%{1}_tests.egg-info \
-mkdir $tempest_egg_path \
-grep "tempest\\|Tempest" %{1}.egg-info/entry_points.txt >$tempest_egg_path/entry_points.txt \
-sed -i "/tempest\\|Tempest/d" $egg_path/entry_points.txt \
-cp -r $egg_path/PKG-INFO $tempest_egg_path \
-sed -i "s/%{1}/%{1}_tests/g" $tempest_egg_path/PKG-INFO \
-%nil
-
-
 Name:           openstack-%{service}
 Version:        XXX
 Release:        XXX
@@ -458,7 +447,7 @@ mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 %find_lang %{service} --all-name
 
 # Create fake tempest entrypoint
-%py2_entrypoint %{service}
+%py2_entrypoint %{service} %{service}
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
