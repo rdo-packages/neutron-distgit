@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ae5cdf2_eaf19796",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-12-09T17:10:28Z",
+      "side": 1,
+      "message": "EOL space alert!",
+      "revId": "c9266a1239e3251969d827fea6387122ceb674ab",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
