@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ae5cdf2_105fd20f",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-12-13T23:46:15Z",
+      "side": 1,
+      "message": "Not available in Mitaka repo:\n...\n2016-12-13 22:27:27,466 INFO:dlrn-build:DEBUG:            Requires: python-requests-mock \u003e\u003d 1.0\n2016-12-13 22:27:27,466 INFO:dlrn-build:DEBUG:            Available: python-requests-mock-0.6.0-1.el7.noarch (delorean-mitaka-testing)\n\nUpstream Mitaka has it pinned to 0.7.0:\nhttps://github.com/openstack/requirements/blob/stable/mitaka/upper-constraints.txt#L320\n\nNeed to double-check if tagging requests-mock 1.0 works for Mitaka.",
+      "revId": "8620d2801f4a2db66804580c56d43bca6216b92a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
