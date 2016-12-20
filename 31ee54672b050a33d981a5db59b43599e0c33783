@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab399f4_202baeec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2016-12-20T16:49:32Z",
+      "side": 1,
+      "message": "Well, I don\u0027t know if we may update those with a more detailed description.",
+      "revId": "31ee54672b050a33d981a5db59b43599e0c33783",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
