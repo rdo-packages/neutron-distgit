@@ -16,6 +16,41 @@
       "revId": "31ee54672b050a33d981a5db59b43599e0c33783",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab399f4_a06c1e38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-12-20T22:24:05Z",
+      "side": 1,
+      "message": "You may, and even more, that would be very nice!\nE.g. replace commit link with the link to review.o.o change (TODO improve tooling to do that) and add more WHY if needed and upstream change commit message is not clear enough.",
+      "parentUuid": "fab399f4_202baeec",
+      "revId": "31ee54672b050a33d981a5db59b43599e0c33783",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab399f4_c0691227",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-12-20T22:24:05Z",
+      "side": 1,
+      "message": "You could also drop this b/c eventually this RDO Trunk repo will be GCed.",
+      "revId": "31ee54672b050a33d981a5db59b43599e0c33783",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
