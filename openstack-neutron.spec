@@ -384,7 +384,7 @@ for agent in dhcp l3 metadata metering
 do
   mv etc/${agent}_agent.ini %{buildroot}%{_sysconfdir}/%{service}/${agent}_agent.ini
 done
-for file in linuxbridge_agent ml2_conf ml2_conf_sriov openvswitch_agent sriov_agent
+for file in linuxbridge_agent ml2_conf openvswitch_agent sriov_agent
 do
   mv etc/%{service}/plugins/ml2/${file}.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2/${file}.ini
 done
