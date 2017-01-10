@@ -741,3 +741,4 @@ fi
 * Wed Sep 14 2016 Haikel Guemar <hguemar@fedoraproject.org> 1:9.0.0-0.1.0b3
 - Update to 9.0.0.0b3
 
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/neutron/commit/?id=f21bd077dc5698c9d2b66d26f1a35558ed187c8c
