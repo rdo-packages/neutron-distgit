@@ -34,6 +34,7 @@ Source33:       neutron-enable-bridge-firewall.sh
 BuildArch:      noarch
 
 BuildRequires:  git
+BuildRequires:  openstack-macros
 BuildRequires:  python2-devel
 BuildRequires:  python-babel
 BuildRequires:  python-d2to1
