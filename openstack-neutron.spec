@@ -110,17 +110,17 @@ Summary:        Neutron Python libraries
 Requires:       python-alembic >= 0.8.4
 Requires:       python-debtcollector >= 1.2.0
 Requires:       python-designateclient >= 1.5.0
-Requires:       python-eventlet >= 0.17.4
+Requires:       python-eventlet >= 0.18.2
 Requires:       python-greenlet >= 0.3.2
 Requires:       python-httplib2 >= 0.7.5
-Requires:       python-jinja2 >= 2.6
-Requires:       python-keystoneauth1 >= 2.10.0
+Requires:       python-jinja2 >= 2.8
+Requires:       python-keystoneauth1 >= 2.14.0
 Requires:       python-keystoneclient >= 1.6.0
-Requires:       python-keystonemiddleware >= 4.0.0
-Requires:       python-netaddr >= 0.7.12
+Requires:       python-keystonemiddleware >= 4.2.0
+Requires:       python-netaddr >= 0.7.13
 Requires:       python-netifaces >= 0.10.4
-Requires:       python-neutronclient >= 2.6.0
-Requires:       python-neutron-lib >= 0.4.0
+Requires:       python-neutronclient >= 5.1.0
+Requires:       python-neutron-lib >= 1.0.0
 Requires:       python-novaclient >= 2.29.0
 Requires:       python-oslo-cache >= 1.5.0
 Requires:       python-oslo-concurrency >= 3.8.0
@@ -128,16 +128,16 @@ Requires:       python-oslo-config >= 2:3.14.0
 Requires:       python-oslo-context >= 2.9.0
 Requires:       python-oslo-db >= 4.10.0
 Requires:       python-oslo-i18n >= 2.1.0
-Requires:       python-oslo-log >= 1.14.0
+Requires:       python-oslo-log >= 3.11.0
 Requires:       python-oslo-messaging >= 5.2.0
 Requires:       python-oslo-middleware >= 3.0.0
-Requires:       python-oslo-policy >= 1.9.0
+Requires:       python-oslo-policy >= 1.15.0
 Requires:       python-oslo-privsep >= 1.9.0
 Requires:       python-oslo-reports >= 0.6.0
 Requires:       python-oslo-rootwrap >= 5.0.0
 Requires:       python-oslo-serialization >= 1.10.0
-Requires:       python-oslo-service >= 1.0.0
-Requires:       python-oslo-utils >= 3.5.0
+Requires:       python-oslo-service >= 1.10.0
+Requires:       python-oslo-utils >= 3.18.0
 Requires:       python-oslo-versionedobjects >= 1.13.0
 Requires:       python-osprofiler >= 1.4.0
 Requires:       python-paste
@@ -145,14 +145,14 @@ Requires:       python-paste-deploy >= 1.5.0
 Requires:       python-pecan >= 1.0.0
 Requires:       python-pbr >= 1.6
 Requires:       python-pyroute2 >= 0.4.3
-Requires:       python-requests >= 2.5.2
+Requires:       python-requests >= 2.10.0
 Requires:       python-tenacity >= 3.1.1
 Requires:       python-routes >= 1.12.3
 Requires:       python-ryu >= 3.30
 Requires:       python-six >= 1.9.0
 Requires:       python-sqlalchemy >= 1.0.10
-Requires:       python-stevedore >= 1.16.0
-Requires:       python-webob >= 1.2.3
+Requires:       python-stevedore >= 1.17.1
+Requires:       python-webob >= 1.6.0
 
 
 
@@ -265,7 +265,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       ipset
 Requires:       iptables
 Requires:       openvswitch
-Requires:       python-openvswitch
+Requires:       python-openvswitch >= 2.6.1
 # kmod is needed to get access to /usr/sbin/modprobe needed by
 # neutron-enable-bridge-firewall.sh triggered by the service unit file
 Requires:       kmod
