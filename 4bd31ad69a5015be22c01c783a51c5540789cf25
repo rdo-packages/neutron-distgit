@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baada198_ac67bbe9",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2017-01-28T01:41:21Z",
+      "side": 1,
+      "message": "we have that in common-pending but looks like it breaks things, can you help debugging it?\nhttps://www.redhat.com/archives/rdo-list/2017-January/msg00073.html",
+      "revId": "4bd31ad69a5015be22c01c783a51c5540789cf25",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
