@@ -59,6 +59,7 @@ BuildRequires:  python-pyroute2
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
 BuildRequires:  python-tenacity >= 3.1.1
+BuildRequires:  python-weakrefmethod >= 1.0.2
 BuildRequires:  systemd-units
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -152,6 +153,7 @@ Requires:       python-ryu >= 3.30
 Requires:       python-six >= 1.9.0
 Requires:       python-sqlalchemy >= 1.0.10
 Requires:       python-stevedore >= 1.16.0
+Requires:       python-weakrefmethod >= 1.0.2
 Requires:       python-webob >= 1.2.3
 
 
