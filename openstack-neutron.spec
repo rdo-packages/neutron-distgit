@@ -1,10 +1,10 @@
-%global milestone .0rc1
+%global milestone .0rc2
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
 Name:           openstack-%{service}
 Version:        10.0.0
-Release:        0.1%{?milestone}%{?dist}
+Release:        0.2%{?milestone}%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -13,7 +13,7 @@ URL:            http://launchpad.net/%{service}/
 
 Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 #
-# patches_base=10.0.0.0rc1
+# patches_base=10.0.0.0rc2
 #
 
 Source1:        %{service}.logrotate
@@ -722,6 +722,9 @@ fi
 
 
 %changelog
+* Fri Feb 17 2017 Alfredo Moralejo <amoralej@redhat.com> 1:10.0.0-0.2.0rc2
+- Update to 10.0.0.0rc2
+
 * Thu Feb 16 2017 Alfredo Moralejo <amoralej@redhat.com> 1:10.0.0-0.1.0rc1
 - Update to 10.0.0.0rc1
 
