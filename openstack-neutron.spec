@@ -85,6 +85,9 @@ Requires:       conntrack-tools
 # agent
 Requires:       keepalived
 
+# haproxy implements metadata proxy process
+Requires:       haproxy
+
 # Those are not hard requirements, ipset is used by ipset-cleanup in the subpackage,
 # and iptables is used by the l3-agent which currently is not in a separate package.
 Requires:       ipset
@@ -582,7 +585,6 @@ fi
 %{_bindir}/neutron-linuxbridge-cleanup
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
-%{_bindir}/neutron-ns-metadata-proxy
 %{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-sanity-check
