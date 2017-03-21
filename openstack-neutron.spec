@@ -55,6 +55,7 @@ BuildRequires:  python-oslo-service
 BuildRequires:  python-oslo-versionedobjects
 BuildRequires:  python-osprofiler >= 1.3.0
 BuildRequires:  python-pbr >= 1.6
+BuildRequires:  python-psutil >= 3.2.2
 BuildRequires:  python-pyroute2
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
@@ -150,6 +151,7 @@ Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
 Requires:       python-pecan >= 1.0.0
 Requires:       python-pbr >= 1.6
+Requires:       python-psutil >= 3.2.2
 Requires:       python-pyroute2 >= 0.4.3
 Requires:       python-requests >= 2.10.0
 Requires:       python-tenacity >= 3.1.1
