@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa98f980_5b3b4feb",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2017-03-21T12:21:49Z",
+      "side": 1,
+      "message": "This will be also BR when %check running unit test is enabled.\n\nBut I do wonder if something under oslo_db.tests can be considered part of stable API, is that documented anywhere in Oslo project?",
+      "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
