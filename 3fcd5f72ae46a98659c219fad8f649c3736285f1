@@ -106,6 +106,24 @@
       "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_6c99376e",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2017-03-23T18:06:15Z",
+      "side": 1,
+      "message": "We usually don\u0027t set version requirements for BuildRequires, only for Requires",
+      "parentUuid": "fa98f980_0c734b4e",
+      "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
