@@ -16,6 +16,24 @@
       "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_cc914354",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-03-23T17:55:05Z",
+      "side": 1,
+      "message": "Should we limit it to the same version as python-oslo-db ?",
+      "parentUuid": "fa98f980_5b3b4feb",
+      "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
