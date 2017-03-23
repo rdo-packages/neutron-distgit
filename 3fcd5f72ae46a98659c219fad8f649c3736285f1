@@ -70,6 +70,24 @@
       "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_cc78632e",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-03-23T17:57:23Z",
+      "side": 1,
+      "message": "@jlibosva apparently we don\u0027t limit the python-oslo-db package version on this spec file https://review.rdoproject.org/r/#/c/5877/2/openstack-neutron.spec@48",
+      "parentUuid": "fa98f980_6c821702",
+      "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
