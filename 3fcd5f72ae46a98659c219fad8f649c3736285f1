@@ -34,6 +34,24 @@
       "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_0c9c2b69",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-03-23T17:55:22Z",
+      "side": 1,
+      "message": "Well, we use them from neutron unit tests, so we need them at least for now, I guess.",
+      "parentUuid": "fa98f980_5b3b4feb",
+      "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
