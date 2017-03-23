@@ -88,6 +88,24 @@
       "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_0c734b4e",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-03-23T18:00:41Z",
+      "side": 1,
+      "message": "You\u0027re looking at BuildRequires, you should look at https://review.rdoproject.org/r/#/c/5877/2/openstack-neutron.spec@137",
+      "parentUuid": "fa98f980_cc78632e",
+      "revId": "3fcd5f72ae46a98659c219fad8f649c3736285f1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
