@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa98f980_c7475c1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 192
+      },
+      "writtenOn": "2017-03-27T06:44:05Z",
+      "side": 1,
+      "message": "looks like it defaults to redmine so you may want to include full link to https://bugs.launchpad.net/tripleo/+bug/1671504",
+      "revId": "3b11e9a312d4ec2202f0d40e36ee845601023162",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
