@@ -550,7 +550,29 @@ fi
 
 
 %postun openvswitch
-%systemd_postun_with_restart neutron-openvswitch-agent.service
+if [ $1 -ge 1 ]; then
+    # We're upgrading
+
+    # Detect if the neutron-openvswitch-agent is running
+    ovs_agent_running=0
+    systemctl status neutron-openvswitch-agent > /dev/null 2>&1 && ovs_agent_running=1 || :
+
+    # If agent is running, stop it
+    [ $ovs_agent_running -eq 1 ] && systemctl stop neutron-openvswitch-agent > /dev/null 2>&1 || :
+
+    # Search all orphaned neutron-rootwrap-daemon processes and since all are triggered by sudo,
+    # get the actual rootwrap-daemon process.
+    for pid in $(ps -ef | awk '/^[^ ]+[ ]+[0-9]+[ ]+1[ ].*neutron-rootwrap-daemon/ { print $2 }'); do
+        kill $(ps --ppid $pid -o pid=)
+    done
+
+    # If agent was running, start it back with new code
+    [ $ovs_agent_running -eq 1 ] && systemctl start neutron-openvswitch-agent > /dev/null 2>&1 || :
+
+else
+    # Uninstalling
+    %systemd_postun_with_restart neutron-openvswitch-agent.service
+fi
 
 
 %post metering-agent
