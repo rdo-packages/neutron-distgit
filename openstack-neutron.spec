@@ -1,6 +1,13 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
+%define cleanup_orphan_rootwrap_daemons() \
+for pid in $(ps -f --ppid 1 | awk '/.*neutron-rootwrap-daemon/ { print $2 }'); do \
+   kill $(ps --ppid $pid -o pid=) \
+done \
+%nil
+
+
 Name:           openstack-%{service}
 Version:        10.0.0
 Release:        1%{?dist}
@@ -492,6 +499,7 @@ exit 0
 %systemd_postun_with_restart neutron-l3-agent.service
 %systemd_postun_with_restart neutron-metadata-agent.service
 %systemd_postun_with_restart neutron-server.service
+%cleanup_orphan_rootwrap_daemons
 
 
 %post macvtap-agent
@@ -539,13 +547,27 @@ if [ $1 -gt 1 ]; then
     fi
 fi
 
+if [ $1 -ge 2 ]; then
+    # We're upgrading
+
+    # Detect if the neutron-openvswitch-agent is running
+    ovs_agent_running=0
+    systemctl status neutron-openvswitch-agent > /dev/null 2>&1 && ovs_agent_running=1 || :
+
+    # If agent is running, stop it
+    [ $ovs_agent_running -eq 1 ] && systemctl stop neutron-openvswitch-agent > /dev/null 2>&1 || :
+
+    # Search all orphaned neutron-rootwrap-daemon processes and since all are triggered by sudo,
+    # get the actual rootwrap-daemon process.
+    %cleanup_orphan_rootwrap_daemons
+
+    # If agent was running, start it back with new code
+    [ $ovs_agent_running -eq 1 ] && systemctl start neutron-openvswitch-agent > /dev/null 2>&1 || :
+fi
+
 
 %preun openvswitch
 %systemd_preun neutron-openvswitch-agent.service
-
-
-%postun openvswitch
-%systemd_postun_with_restart neutron-openvswitch-agent.service
 
 
 %post metering-agent
