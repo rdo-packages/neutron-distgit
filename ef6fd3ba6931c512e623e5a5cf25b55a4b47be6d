@@ -39,6 +39,30 @@
       "revId": "ef6fd3ba6931c512e623e5a5cf25b55a4b47be6d",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_83b0e1de",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-03-30T14:40:34Z",
+      "side": 1,
+      "message": "So if try-restart is also called in postun, wouldn\u0027t we end up restarting twice?",
+      "parentUuid": "fa98f980_c37bc927",
+      "range": {
+        "startLine": 575,
+        "startChar": 0,
+        "endLine": 575,
+        "endChar": 66
+      },
+      "revId": "ef6fd3ba6931c512e623e5a5cf25b55a4b47be6d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
