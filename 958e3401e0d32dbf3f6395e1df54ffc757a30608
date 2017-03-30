@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa98f980_43eef98c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-03-30T19:27:39Z",
+      "side": 1,
+      "message": "Actually, it seems to me the issue may affect other components, as long as they rely on native interface.",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 10,
+        "endChar": 56
+      },
+      "revId": "958e3401e0d32dbf3f6395e1df54ffc757a30608",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_a3ede58d",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-03-30T19:27:39Z",
+      "side": 1,
+      "message": "can\u0027t orphaned daemons be left for other agents using native interface?",
+      "revId": "958e3401e0d32dbf3f6395e1df54ffc757a30608",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
