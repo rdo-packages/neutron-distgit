@@ -111,6 +111,30 @@
       "revId": "ef6fd3ba6931c512e623e5a5cf25b55a4b47be6d",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_432b59eb",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-03-30T15:24:07Z",
+      "side": 1,
+      "message": "if we keep it as before we\u0027d execute it twice, so we better remove it from postun",
+      "parentUuid": "fa98f980_c3d029fa",
+      "range": {
+        "startLine": 575,
+        "startChar": 0,
+        "endLine": 575,
+        "endChar": 66
+      },
+      "revId": "ef6fd3ba6931c512e623e5a5cf25b55a4b47be6d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
