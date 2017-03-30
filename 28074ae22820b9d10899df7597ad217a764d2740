@@ -45,6 +45,30 @@
       "revId": "28074ae22820b9d10899df7597ad217a764d2740",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_43d0b953",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-03-30T11:01:32Z",
+      "side": 1,
+      "message": "oh right",
+      "parentUuid": "fa98f980_a3f885e6",
+      "range": {
+        "startLine": 566,
+        "startChar": 8,
+        "endLine": 566,
+        "endChar": 13
+      },
+      "revId": "28074ae22820b9d10899df7597ad217a764d2740",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
