@@ -513,15 +513,6 @@ exit 0
 
 %post linuxbridge
 %systemd_post neutron-linuxbridge-agent.service
-oldconf=%{_sysconfdir}/%{service}/plugins/linuxbridge/linuxbridge_conf.ini
-newconf=%{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
-if [ $1 -gt 1 ]; then
-    if [ -e $oldconf ]; then
-        # Imitate noreplace
-        cp $newconf ${newconf}.rpmnew
-        cp $oldconf $newconf
-    fi
-fi
 
 
 %preun linuxbridge
@@ -534,15 +525,6 @@ fi
 
 %post openvswitch
 %systemd_post neutron-openvswitch-agent.service
-oldconf=%{_sysconfdir}/%{service}/plugins/openvswitch/ovs_neutron_plugin.ini
-newconf=%{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
-if [ $1 -gt 1 ]; then
-    if [ -e $oldconf ]; then
-        # Imitate noreplace
-        cp $newconf ${newconf}.rpmnew
-        cp $oldconf $newconf
-    fi
-fi
 
 
 %preun openvswitch
