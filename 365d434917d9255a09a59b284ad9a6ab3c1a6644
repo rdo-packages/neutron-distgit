@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa98f980_e3f52dcc",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-03-30T12:51:08Z",
+      "side": 1,
+      "message": "ok, this is not being triggered. \n\namoralejo is telling me (locally) that postun happens with the *OLD* rpm  scriptlet, this will be triggered when this new version is upgraded, we\u0027re checking. \n\nWe need to use the post",
+      "revId": "365d434917d9255a09a59b284ad9a6ab3c1a6644",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
