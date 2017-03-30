@@ -16,6 +16,29 @@
       "revId": "ef6fd3ba6931c512e623e5a5cf25b55a4b47be6d",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_c37bc927",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-03-30T13:35:19Z",
+      "side": 1,
+      "message": "Reading %systemd_postun_with_restart macro, it\u0027s intended for the upgrade case (it has [ $1 -ge 1 ]): \n\n-14: systemd_postun_with_restart\t\nif [ $1 -ge 1 ] ; then \n        # Package upgrade, not uninstall \n        systemctl try-restart %{?*} \u003e/dev/null 2\u003e\u00261 || : \nfi \n\nIf we are managing the restart for the upgrade in %post, this is not needed, we can totally remove it.",
+      "range": {
+        "startLine": 575,
+        "startChar": 0,
+        "endLine": 575,
+        "endChar": 66
+      },
+      "revId": "ef6fd3ba6931c512e623e5a5cf25b55a4b47be6d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
