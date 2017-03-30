@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa98f980_238d757c",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-03-30T10:29:40Z",
+      "side": 1,
+      "message": "I forgot about this bit",
+      "range": {
+        "startLine": 553,
+        "startChar": 9,
+        "endLine": 553,
+        "endChar": 11
+      },
+      "revId": "28074ae22820b9d10899df7597ad217a764d2740",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
