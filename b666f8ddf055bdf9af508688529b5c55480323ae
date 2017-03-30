@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fa98f980_63877d62",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-03-30T10:08:01Z",
+      "side": 1,
+      "message": "Oh, I looked at %post, good catch.",
+      "parentUuid": "fa98f980_0881708f",
+      "range": {
+        "startLine": 553,
+        "startChar": 9,
+        "endLine": 553,
+        "endChar": 11
+      },
+      "revId": "b666f8ddf055bdf9af508688529b5c55480323ae",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_a8178450",
         "filename": "openstack-neutron.spec",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-03-30T09:44:00Z",
       "side": 1,
       "message": "on my testing this leaves $? always as \"0\", I\u0027m looking for a different way of capturing it\n\nI\u0027ll use:\n\novs_agent_running\u003d0\nsystemctl status neutron-openvswitch-agent \u003e /dev/null 2\u003e\u00261  \u0026\u0026 ovs_agent_running\u003d1 || :",
+      "range": {
+        "startLine": 557,
+        "startChar": 64,
+        "endLine": 557,
+        "endChar": 68
+      },
+      "revId": "b666f8ddf055bdf9af508688529b5c55480323ae",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_43827953",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-03-30T10:08:01Z",
+      "side": 1,
+      "message": "I tested this and stopped service returned 3",
+      "parentUuid": "fa98f980_a8178450",
       "range": {
         "startLine": 557,
         "startChar": 64,
