@@ -87,6 +87,30 @@
       "revId": "ef6fd3ba6931c512e623e5a5cf25b55a4b47be6d",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_c3d029fa",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-03-30T15:01:01Z",
+      "side": 1,
+      "message": "But we won\u0027t if we\u0027d remove this change and keep it the same as before. Or am I missing something?",
+      "parentUuid": "fa98f980_c3c9095c",
+      "range": {
+        "startLine": 575,
+        "startChar": 0,
+        "endLine": 575,
+        "endChar": 66
+      },
+      "revId": "ef6fd3ba6931c512e623e5a5cf25b55a4b47be6d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
