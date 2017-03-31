@@ -75,6 +75,24 @@
       "revId": "958e3401e0d32dbf3f6395e1df54ffc757a30608",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_be397eda",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-03-31T08:14:19Z",
+      "side": 1,
+      "message": "The issue of orphaned daemons, yes.\n\nBut the issue of the daemon keeping a listening port open/busy no. Since neutron-dhcp-agent and neutron-l3-agent don\u0027t listen on ports.\n\nIt\u0027d be beneficial anyway to have a global %postun, or a macro which we could invoke on other agents to cleanup any orphan left around.\n\n\nI guess that we could also improve rootwrap daemon to self-die when it becomes orphan (ppid goes to 1)",
+      "parentUuid": "fa98f980_e308cd2f",
+      "revId": "958e3401e0d32dbf3f6395e1df54ffc757a30608",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
