@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa98f980_decd625f",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 9
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-03-31T14:02:16Z",
+      "side": 1,
+      "message": "I think this will be executed for dhcp-agent and l3-agent and metadata-agent only, but not e.g. for linuxbridge-agent, or macvtap-agent. Do we care about other services?",
+      "revId": "8ce7545ff2734fe7e345538a6468606a06e7745d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
