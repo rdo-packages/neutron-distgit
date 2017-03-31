@@ -57,6 +57,24 @@
       "revId": "958e3401e0d32dbf3f6395e1df54ffc757a30608",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_e308cd2f",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 6
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-03-31T04:19:43Z",
+      "side": 1,
+      "message": "Right, but what I mean is, can\u0027t other agents be affected by the same failure mode? Shouldn\u0027t we also recover them from the issue?\n\nThat probably depends on who actually uses of_interface\u003dnative. Is it only OVS agent?",
+      "parentUuid": "fa98f980_e3fe0d38",
+      "revId": "958e3401e0d32dbf3f6395e1df54ffc757a30608",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
