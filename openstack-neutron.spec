@@ -95,7 +95,7 @@ Requires:       conntrack-tools
 Requires:       keepalived
 
 # haproxy implements metadata proxy process
-Requires:       haproxy
+Requires:       haproxy >= 1.5.0
 
 # Those are not hard requirements, ipset is used by ipset-cleanup in the subpackage,
 # and iptables is used by the l3-agent which currently is not in a separate package.
