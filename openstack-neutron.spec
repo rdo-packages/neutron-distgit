@@ -9,7 +9,7 @@ done \
 
 
 Name:           openstack-%{service}
-Version:        10.0.0
+Version:        10.0.1
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -740,6 +740,9 @@ fi
 
 
 %changelog
+* Thu Apr 13 2017 Alfredo Moralejo <amoralej@redhat.com> 1:10.0.1-1
+- Update to 10.0.1
+
 * Wed Feb 22 2017 Alfredo Moralejo <amoralej@redhat.com> 1:10.0.0-1
 - Update to 10.0.0
 
