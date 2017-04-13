@@ -2,7 +2,7 @@
 %global service neutron
 
 Name:           openstack-%{service}
-Version:        9.3.0
+Version:        9.3.1
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -721,6 +721,9 @@ fi
 
 
 %changelog
+* Thu Apr 13 2017 Alfredo Moralejo <amoralej@redhat.com> 1:9.3.1-1
+- Update to 9.3.1
+
 * Wed Mar 29 2017 Alfredo Moralejo <amoralej@redhat.com> 1:9.3.0-1
 - Update to 9.3.0
 
