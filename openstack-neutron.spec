@@ -67,7 +67,7 @@ BuildRequires:  python-psutil >= 3.2.2
 BuildRequires:  python-pyroute2
 BuildRequires:  python-pecan
 BuildRequires:  python-setuptools
-BuildRequires:  python-tenacity >= 3.1.1
+BuildRequires:  python-tenacity >= 3.2.1
 BuildRequires:  python-weakrefmethod >= 1.0.2
 BuildRequires:  systemd-units
 
@@ -120,7 +120,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 %package -n python-%{service}
 Summary:        Neutron Python libraries
-Requires:       python-alembic >= 0.8.4
+Requires:       python-alembic >= 0.8.10
 Requires:       python-debtcollector >= 1.2.0
 Requires:       python-designateclient >= 1.5.0
 Requires:       python-eventlet >= 0.18.2
@@ -129,48 +129,49 @@ Requires:       python-httplib2 >= 0.7.5
 # Upstream jinja2 set to 2.8 due to Python 3 support.
 # CentOS repos currently don't have the packege rebased to 2.8.
 Requires:       python-jinja2 >= 2.7
-Requires:       python-keystoneauth1 >= 2.14.0
+Requires:       python-keystoneauth1 >= 2.18.0
 Requires:       python-keystoneclient >= 1.6.0
-Requires:       python-keystonemiddleware >= 4.2.0
+Requires:       python-keystonemiddleware >= 4.12.0
 Requires:       python-netaddr >= 0.7.13
 Requires:       python-netifaces >= 0.10.4
 Requires:       python-neutronclient >= 5.1.0
-Requires:       python-neutron-lib >= 1.0.0
-Requires:       python-novaclient >= 2.29.0
+Requires:       python-neutron-lib >= 1.4.0
+Requires:       python-novaclient >= 7.1.0
 Requires:       python-os-xenapi >= 0.1.1
 Requires:       python-oslo-cache >= 1.5.0
 Requires:       python-oslo-concurrency >= 3.8.0
-Requires:       python-oslo-config >= 2:3.14.0
-Requires:       python-oslo-context >= 2.9.0
-Requires:       python-oslo-db >= 4.10.0
+Requires:       python-oslo-config >= 2:3.22.0
+Requires:       python-oslo-context >= 2.12.0
+Requires:       python-oslo-db >= 4.19.0
 Requires:       python-oslo-i18n >= 2.1.0
-Requires:       python-oslo-log >= 3.11.0
-Requires:       python-oslo-messaging >= 5.2.0
-Requires:       python-oslo-middleware >= 3.0.0
-Requires:       python-oslo-policy >= 1.15.0
+Requires:       python-oslo-log >= 3.22.0
+Requires:       python-oslo-messaging >= 5.19.0
+Requires:       python-oslo-middleware >= 3.10.0
+Requires:       python-oslo-policy >= 1.17.0
 Requires:       python-oslo-privsep >= 1.9.0
 Requires:       python-oslo-reports >= 0.6.0
 Requires:       python-oslo-rootwrap >= 5.0.0
 Requires:       python-oslo-serialization >= 1.10.0
 Requires:       python-oslo-service >= 1.10.0
-Requires:       python-oslo-utils >= 3.18.0
-Requires:       python-oslo-versionedobjects >= 1.13.0
+Requires:       python-oslo-utils >= 3.20.0
+Requires:       python-oslo-versionedobjects >= 1.17.0
 Requires:       python-osprofiler >= 1.4.0
+Requires:       python-openvswitch >= 2.7.0
 Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
 Requires:       python-pecan >= 1.0.0
-Requires:       python-pbr >= 1.6
+Requires:       python-pbr >= 2.0.0
 Requires:       python-psutil >= 3.2.2
-Requires:       python-pyroute2 >= 0.4.3
+Requires:       python-pyroute2 >= 0.4.12
 Requires:       python-requests >= 2.10.0
-Requires:       python-tenacity >= 3.1.1
+Requires:       python-tenacity >= 3.2.1
 Requires:       python-routes >= 1.12.3
-Requires:       python-ryu >= 3.30
+Requires:       python-ryu >= 4.9
 Requires:       python-six >= 1.9.0
 Requires:       python-sqlalchemy >= 1.0.10
-Requires:       python-stevedore >= 1.17.1
+Requires:       python-stevedore >= 1.20.0
 Requires:       python-weakrefmethod >= 1.0.2
-Requires:       python-webob >= 1.6.0
+Requires:       python-webob >= 1.7.1
 
 
 
