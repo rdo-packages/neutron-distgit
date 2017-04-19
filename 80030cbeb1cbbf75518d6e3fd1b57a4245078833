@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa98f980_4a58c256",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-04-19T16:31:06Z",
+      "side": 1,
+      "message": "We updated webob to 1.7.2 for pike right today.",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 37
+      },
+      "revId": "80030cbeb1cbbf75518d6e3fd1b57a4245078833",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
