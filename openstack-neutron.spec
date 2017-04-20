@@ -588,6 +588,7 @@ fi
 
 %files
 %license LICENSE
+%{_bindir}/neutron-api
 %{_bindir}/neutron-db-manage
 %{_bindir}/neutron-debug
 %{_bindir}/neutron-dhcp-agent
