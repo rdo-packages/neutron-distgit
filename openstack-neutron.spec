@@ -62,6 +62,7 @@ BuildRequires:  python-oslo-rootwrap
 BuildRequires:  python-oslo-service
 BuildRequires:  python-oslo-versionedobjects
 BuildRequires:  python-osprofiler >= 1.3.0
+BuildRequires:  python-ovsdbapp
 BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-psutil >= 3.2.2
 BuildRequires:  python-pyroute2
@@ -285,6 +286,7 @@ Requires:       ipset
 Requires:       iptables
 Requires:       openvswitch
 Requires:       python-openvswitch >= 2.6.1
+Requires:       python-ovsdbapp
 # kmod is needed to get access to /usr/sbin/modprobe needed by
 # neutron-enable-bridge-firewall.sh triggered by the service unit file
 Requires:       kmod
