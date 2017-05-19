@@ -204,7 +204,9 @@ Requires:       python-webtest >= 2.0
 # pstree is used during functional testing to ensure our internal
 # libraries managing processes work correctly.
 Requires:       psmisc
-
+# nfs-utils is needed because it creates user with uid 65534 which
+# is required by neutron functional tests.
+Requires:       nfs-utils
 
 
 %description -n python-%{service}-tests
