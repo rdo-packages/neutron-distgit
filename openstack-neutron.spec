@@ -4,8 +4,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           openstack-%{service}
-Version:        8.3.0
-Release:        2%{?dist}
+Version:        8.4.0
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -726,6 +726,9 @@ fi
 
 
 %changelog
+* Tue May 23 2017 Alfredo Moralejo <amoralej@redhat.com> 1:8.4.0-1
+- Update to 8.4.0
+
 * Tue Oct 18 2016 Terry Wilson <twilson@redhat.com> 1:8.3.0-2
 - Don't fail if openvswitch shut down before ovs-cleanup runs rhbz#1316535
 
