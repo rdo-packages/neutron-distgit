@@ -1,0 +1,96 @@
+From 6deb16720306132a4d892851da14b8be6cd277f8 Mon Sep 17 00:00:00 2001
+From: Ihar Hrachyshka <ihrachys@redhat.com>
+Date: Tue, 6 Jun 2017 12:06:21 -0700
+Subject: [PATCH] Patch pyroute2 for eventlet for agents only
+
+There is no reason to patch for it for neutron-server because the
+library is not used there. Also, I hope this move may help us with the
+recent issues where neutron-server is hanging for long time processing
+simple requests (probably not yielding from some blocking threads).
+
+Related-Bug: #1696094
+Change-Id: I0fd844fd1f9aa6d77a099807d69d0d884f1d0edd
+---
+ neutron/cmd/eventlet/agents/__init__.py   | 15 +++++++++++++++
+ neutron/cmd/eventlet/plugins/__init__.py  | 15 +++++++++++++++
+ neutron/cmd/eventlet/services/__init__.py | 15 +++++++++++++++
+ neutron/common/eventlet_utils.py          |  3 +++
+ 4 files changed, 48 insertions(+)
+
+diff --git a/neutron/cmd/eventlet/agents/__init__.py b/neutron/cmd/eventlet/agents/__init__.py
+index e69de29..1e4b8ac 100644
+--- a/neutron/cmd/eventlet/agents/__init__.py
++++ b/neutron/cmd/eventlet/agents/__init__.py
+@@ -0,0 +1,15 @@
++#    Licensed under the Apache License, Version 2.0 (the "License"); you may
++#    not use this file except in compliance with the License. You may obtain
++#    a copy of the License at
++#
++#         http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing, software
++#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++#    License for the specific language governing permissions and limitations
++#    under the License.
++
++from neutron.common import eventlet_utils
++
++eventlet_utils.pyroute2_patch()
+diff --git a/neutron/cmd/eventlet/plugins/__init__.py b/neutron/cmd/eventlet/plugins/__init__.py
+index e69de29..1e4b8ac 100644
+--- a/neutron/cmd/eventlet/plugins/__init__.py
++++ b/neutron/cmd/eventlet/plugins/__init__.py
+@@ -0,0 +1,15 @@
++#    Licensed under the Apache License, Version 2.0 (the "License"); you may
++#    not use this file except in compliance with the License. You may obtain
++#    a copy of the License at
++#
++#         http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing, software
++#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++#    License for the specific language governing permissions and limitations
++#    under the License.
++
++from neutron.common import eventlet_utils
++
++eventlet_utils.pyroute2_patch()
+diff --git a/neutron/cmd/eventlet/services/__init__.py b/neutron/cmd/eventlet/services/__init__.py
+index e69de29..1e4b8ac 100644
+--- a/neutron/cmd/eventlet/services/__init__.py
++++ b/neutron/cmd/eventlet/services/__init__.py
+@@ -0,0 +1,15 @@
++#    Licensed under the Apache License, Version 2.0 (the "License"); you may
++#    not use this file except in compliance with the License. You may obtain
++#    a copy of the License at
++#
++#         http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing, software
++#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++#    License for the specific language governing permissions and limitations
++#    under the License.
++
++from neutron.common import eventlet_utils
++
++eventlet_utils.pyroute2_patch()
+diff --git a/neutron/common/eventlet_utils.py b/neutron/common/eventlet_utils.py
+index 5395128..5c880b6 100644
+--- a/neutron/common/eventlet_utils.py
++++ b/neutron/common/eventlet_utils.py
+@@ -21,6 +21,9 @@ from oslo_utils import importutils
+ 
+ def monkey_patch():
+     eventlet.monkey_patch()
++
++
++def pyroute2_patch():
+     if os.name != 'nt':
+         p_c_e = importutils.import_module('pyroute2.config.asyncio')
+         p_c_e.asyncio_config()
+-- 
+2.9.4
+

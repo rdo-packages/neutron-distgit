@@ -38,6 +38,9 @@ Source31:       conf.README
 Source32:       neutron-linuxbridge-cleanup.service
 Source33:       neutron-enable-bridge-firewall.sh
 
+# temporary patch until https://review.openstack.org/471446 is merged
+Patch0001:      0001-Patch-pyroute2-for-eventlet-for-agents-only.patch
+
 BuildArch:      noarch
 
 BuildRequires:  git
