@@ -356,7 +356,8 @@ rm -rf neutron.egg-info
 export SKIP_PIP_INSTALL=1
 %{__python2} setup.py build
 # Generate i18n files
-%{__python2} setup.py compile_catalog -d build/lib/%{service}/locale
+# (amoralej) we can remove '-D neutron' once https://review.openstack.org/#/c/485070/ is merged
+%{__python2} setup.py compile_catalog -d build/lib/%{service}/locale -D neutron
 
 # Generate configuration files
 PYTHONPATH=. tools/generate_config_file_samples.sh
