@@ -7,6 +7,14 @@ for pid in $(ps -f --ppid 1 | awk '/.*neutron-rootwrap-daemon/ { print $2 }'); d
 done \
 %nil
 
+%global common_desc \
+Neutron is a virtual network service for Openstack. Just like \
+OpenStack Nova provides an API to dynamically request and configure \
+virtual servers, Neutron provides an API to dynamically request and \
+configure virtual networks. These networks connect "interfaces" from \
+other OpenStack services (e.g., virtual NICs from Nova VMs). The \
+Neutron API supports extensions to provide advanced network \
+capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        XXX
@@ -110,13 +118,7 @@ Requires(postun): systemd
 Obsoletes:      openstack-%{service}-dev-server
 
 %description
-Neutron is a virtual network service for Openstack. Just like
-OpenStack Nova provides an API to dynamically request and configure
-virtual servers, Neutron provides an API to dynamically request and
-configure virtual networks. These networks connect "interfaces" from
-other OpenStack services (e.g., virtual NICs from Nova VMs). The
-Neutron API supports extensions to provide advanced network
-capabilities (e.g., QoS, ACLs, network monitoring, etc.)
+%{common_desc}
 
 
 %package -n python-%{service}
@@ -177,8 +179,7 @@ Requires:       python-webob >= 1.6.0
 
 
 %description -n python-%{service}
-Neutron provides an API to dynamically request and configure virtual
-networks.
+%{common_desc}
 
 This package contains the Neutron Python library.
 
@@ -210,8 +211,7 @@ Requires:       nfs-utils
 
 
 %description -n python-%{service}-tests
-Neutron provides an API to dynamically request and configure virtual
-networks.
+%{common_desc}
 
 This package contains Neutron test files.
 
@@ -224,8 +224,7 @@ Requires:       sudo
 
 
 %description common
-Neutron provides an API to dynamically request and configure virtual
-networks.
+%{common_desc}
 
 This package contains Neutron common files.
 
@@ -243,8 +242,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description linuxbridge
-Neutron provides an API to dynamically request and configure virtual
-networks.
+%{common_desc}
 
 This package contains the Neutron agent that implements virtual
 networks using VLAN or VXLAN using Linuxbridge technology.
@@ -256,8 +254,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description macvtap-agent
-Neutron provides an API to dynamically request and configure virtual
-networks.
+%{common_desc}
 
 This package contains the Neutron agent that implements
 macvtap attachments for libvirt qemu/kvm instances.
@@ -271,8 +268,7 @@ Requires:       python-ncclient
 
 
 %description ml2
-Neutron provides an API to dynamically request and configure virtual
-networks.
+%{common_desc}
 
 This package contains a Neutron plugin that allows the use of drivers
 to support separately extensible sets of network types and the mechanisms
@@ -295,8 +291,7 @@ Requires:       kmod
 
 
 %description openvswitch
-Neutron provides an API to dynamically request and configure virtual
-networks.
+%{common_desc}
 
 This package contains the Neutron plugin that implements virtual
 networks using Open vSwitch.
@@ -309,7 +304,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description metering-agent
-Neutron provides an API to measure bandwidth utilization
+%{common_desc}
 
 This package contains the Neutron agent responsible for generating bandwidth
 utilization notifications.
@@ -321,8 +316,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description rpc-server
-Neutron provides an API to dynamically request and configure virtual
-networks.
+%{common_desc}
 
 This package contains an alternative Neutron server that handles AMQP RPC
 workload only.
@@ -334,7 +328,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 
 %description sriov-nic-agent
-Neutron allows to run virtual instances using SR-IOV NIC hardware
+%{common_desc}
 
 This package contains the Neutron agent to support advanced features of
 SR-IOV network cards.
