@@ -1,0 +1,4 @@
+#!/bin/sh
+exec /sbin/modprobe -b bridge >/dev/null 2>&1
+exec /sbin/modprobe -b br_netfilter >/dev/null 2>&1
+exit 0
