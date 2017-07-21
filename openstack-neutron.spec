@@ -42,6 +42,11 @@ Source30:       %{service}-dist.conf
 Source31:       conf.README
 Source32:       neutron-linuxbridge-cleanup.service
 Source33:       neutron-enable-bridge-firewall.sh
+Source34:       neutron-l2-agent-sysctl.conf
+# We use the legacy service to load modules because it allows to gracefully
+# ignore a missing kernel module (f.e. br_netfilter on earlier kernels). It's
+# essentially because .modules files are shell scripts.
+Source35:       neutron-l2-agent.modules
 
 BuildArch:      noarch
 
@@ -427,6 +432,14 @@ install -p -D -m 755 %{SOURCE25} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutr
 install -p -D -m 755 %{SOURCE26} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/OVSCleanup
 install -p -D -m 755 %{SOURCE27} %{buildroot}%{_prefix}/lib/ocf/resource.d/neutron/NeutronScale
 
+# Install sysctl and modprobe config files to enable bridge firewalling
+# NOTE(ihrachys) we effectively duplicate same settings for each affected l2
+# agent. This can be revisited later.
+install -p -D -m 644 %{SOURCE34} %{buildroot}%{_sysctldir}/99-neutron-openvswitch-agent.conf
+install -p -D -m 644 %{SOURCE34} %{buildroot}%{_sysctldir}/99-neutron-linuxbridge-agent.conf
+install -p -D -m 755 %{SOURCE35} %{buildroot}%{_sysconfdir}/sysconfig/modules/neutron-openvswitch-agent.modules
+install -p -D -m 755 %{SOURCE35} %{buildroot}%{_sysconfdir}/sysconfig/modules/neutron-linuxbridge-agent.modules
+
 # Install README file that describes how to configure services with custom configuration files
 install -p -D -m 755 %{SOURCE31} %{buildroot}%{_sysconfdir}/%{service}/conf.d/README
 
@@ -691,6 +704,8 @@ fi
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-agent
+%{_sysctldir}/99-neutron-linuxbridge-agent.conf
+%{_sysconfdir}/sysconfig/modules/neutron-linuxbridge-agent.modules
 
 
 %files macvtap-agent
@@ -717,6 +732,8 @@ fi
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-openvswitch-agent
+%{_sysctldir}/99-neutron-openvswitch-agent.conf
+%{_sysconfdir}/sysconfig/modules/neutron-openvswitch-agent.modules
 
 
 %files metering-agent
