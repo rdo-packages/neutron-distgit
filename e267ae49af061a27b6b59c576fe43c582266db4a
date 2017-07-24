@@ -16,6 +16,24 @@
       "revId": "e267ae49af061a27b6b59c576fe43c582266db4a",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa7fdbe_0c531d18",
+        "filename": "neutron-enable-bridge-firewall.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-07-24T17:15:34Z",
+      "side": 1,
+      "message": "We can. Actually, I am working on something like that right now in scope of another bug.",
+      "parentUuid": "9aa7fdbe_6c13c95c",
+      "revId": "e267ae49af061a27b6b59c576fe43c582266db4a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
