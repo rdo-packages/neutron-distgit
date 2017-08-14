@@ -16,6 +16,24 @@
       "revId": "8522ad549de85f73ecd1b67339257690a1cc9b43",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a890539_e47b6e27",
+        "filename": "neutron-l2-agent.modules",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-08-14T15:47:28Z",
+      "side": 1,
+      "message": "I will fix it in a follow up in master.",
+      "parentUuid": "5a890539_a4ab2688",
+      "revId": "8522ad549de85f73ecd1b67339257690a1cc9b43",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
