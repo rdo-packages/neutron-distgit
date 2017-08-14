@@ -10,7 +10,7 @@ done \
 
 Name:           openstack-%{service}
 Version:        10.0.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -757,6 +757,9 @@ fi
 
 
 %changelog
+* Mon Aug 14 2017 Ihar Hrachyshka <ihrachys@redhat.com> 1:10.0.2-2
+- Seperate entrypoint for tempest plugin, rhbz#1479895
+
 * Thu Jun 01 2017 rdo-trunk <javier.pena@redhat.com> 1:10.0.2-1
 - Update to 10.0.2
 
