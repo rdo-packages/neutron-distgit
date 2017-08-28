@@ -9,8 +9,8 @@ done \
 
 
 Name:           openstack-%{service}
-Version:        10.0.2
-Release:        2%{?dist}
+Version:        10.0.3
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -757,6 +757,9 @@ fi
 
 
 %changelog
+* Mon Aug 28 2017 rdo-trunk <javier.pena@redhat.com> 1:10.0.3-1
+- Update to 10.0.3
+
 * Mon Aug 14 2017 Ihar Hrachyshka <ihrachys@redhat.com> 1:10.0.2-2
 - Enable bridge firewalling on platform level, rhbz#1474116
 
