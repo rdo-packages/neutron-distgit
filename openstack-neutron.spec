@@ -1,4 +1,3 @@
-%global milestone .0rc3
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
@@ -19,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        11.0.0
-Release:        0.3%{?milestone}%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -27,8 +26,6 @@ License:        ASL 2.0
 URL:            http://launchpad.net/%{service}/
 
 Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
-#
-# patches_base=11.0.0.0rc3
 #
 
 Source1:        %{service}.logrotate
@@ -751,6 +748,9 @@ fi
 
 
 %changelog
+* Wed Aug 30 2017 rdo-trunk <javier.pena@redhat.com> 1:11.0.0-1
+- Update to 11.0.0
+
 * Fri Aug 25 2017 rdo-trunk <javier.pena@redhat.com> 1:11.0.0-0.3.0rc3
 - Update to 11.0.0.0rc3
 
