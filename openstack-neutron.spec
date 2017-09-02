@@ -80,7 +80,7 @@ BuildRequires:  python-osprofiler >= 1.3.0
 BuildRequires:  python-ovsdbapp
 BuildRequires:  python-pbr >= 2.0.0
 BuildRequires:  python-psutil >= 3.2.2
-BuildRequires:  python-pyroute2
+BuildRequires:  python-pyroute2 >= 0.4.19
 BuildRequires:  python-pecan
 BuildRequires:  python-tenacity >= 3.2.1
 BuildRequires:  python-weakrefmethod >= 1.0.2
