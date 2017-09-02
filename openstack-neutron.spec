@@ -18,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        11.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -748,6 +748,9 @@ fi
 
 
 %changelog
+* Sat Sep 2 2017 Assaf Muller <amuller@redhat.com> 1:11.0.0-2
+- Bump python-pyroute2, rhbz 1487766
+
 * Wed Aug 30 2017 rdo-trunk <javier.pena@redhat.com> 1:11.0.0-1
 - Update to 11.0.0
 
