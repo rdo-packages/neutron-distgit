@@ -18,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        11.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -748,6 +748,9 @@ fi
 
 
 %changelog
+* Mon Sep  4 2017 Haïkel Guémar <hguemar@fedoraproject.org> - 1:11.0.0-3
+- Bump python-pyroute2 (rhbz#1487766)
+
 * Sat Sep 2 2017 Assaf Muller <amuller@redhat.com> 1:11.0.0-2
 - Bump python-pyroute2, rhbz 1487766
 
