@@ -22,6 +22,30 @@
       "revId": "ecafbcb0132c582cd6ec5dfc04d03766401df1b2",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a890539_6edbb9ed",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2017-09-05T08:38:29Z",
+      "side": 1,
+      "message": "That\u0027s what I said in https://review.rdoproject.org/r/#/c/9219/1/openstack-neutron.spec@81 ...",
+      "parentUuid": "5a890539_4e3b5d3a",
+      "range": {
+        "startLine": 173,
+        "startChar": 39,
+        "endLine": 173,
+        "endChar": 41
+      },
+      "revId": "ecafbcb0132c582cd6ec5dfc04d03766401df1b2",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
