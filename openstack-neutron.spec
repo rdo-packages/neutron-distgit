@@ -115,9 +115,7 @@ Requires:       haproxy >= 1.5.0
 Requires:       ipset
 Requires:       iptables
 
-Requires(post): systemd
-Requires(preun): systemd
-Requires(postun): systemd
+%{?systemd_requires}
 
 Obsoletes:      openstack-%{service}-dev-server
 
