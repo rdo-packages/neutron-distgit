@@ -12,8 +12,3 @@
 # attempt to load it, but don't fail if it's missing (f.e. when running against
 # an older kernel version)
 /usr/sbin/modprobe br_netfilter 2>> /dev/null || :
-
-# now enable the firewall in case it's disabled (f.e. rhel 7.2 and earlier)
-for proto in ip ip6; do
-    /usr/sbin/sysctl -w net.bridge.bridge-nf-call-${proto}tables=1
-done

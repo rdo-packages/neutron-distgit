@@ -532,6 +532,7 @@ exit 0
 
 %post linuxbridge
 %systemd_post neutron-linuxbridge-agent.service
+%sysctl_apply 99-neutron-linuxbridge-agent.conf
 
 
 %preun linuxbridge
@@ -544,6 +545,7 @@ exit 0
 
 %post openvswitch
 %systemd_post neutron-openvswitch-agent.service
+%sysctl_apply 99-neutron-openvswitch-agent.conf
 
 if [ $1 -ge 2 ]; then
     # We're upgrading
