@@ -44,7 +44,6 @@ Source29:       neutron-rpc-server.service
 Source30:       %{service}-dist.conf
 Source31:       conf.README
 Source32:       neutron-linuxbridge-cleanup.service
-Source33:       neutron-enable-bridge-firewall.sh
 Source34:       neutron-l2-agent-sysctl.conf
 # We use the legacy service to load modules because it allows to gracefully
 # ignore a missing kernel module (f.e. br_netfilter on earlier kernels). It's
@@ -237,7 +236,7 @@ Requires:       ebtables
 Requires:       ipset
 Requires:       iptables
 # kmod is needed to get access to /usr/sbin/modprobe needed by
-# neutron-enable-bridge-firewall.sh triggered by the service unit file
+# neutron-l2-agent.modules
 Requires:       kmod
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
@@ -287,7 +286,7 @@ Requires:       iptables
 Requires:       openvswitch
 Requires:       python-openvswitch >= 2.6.1
 # kmod is needed to get access to /usr/sbin/modprobe needed by
-# neutron-enable-bridge-firewall.sh triggered by the service unit file
+# neutron-l2-agent.modules
 Requires:       kmod
 
 
@@ -430,9 +429,6 @@ install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.s
 install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.service
 install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cleanup.service
 
-# Install helper scripts
-install -p -D -m 755 %{SOURCE33} %{buildroot}%{_bindir}/neutron-enable-bridge-firewall.sh
-
 # Install sysctl and modprobe config files to enable bridge firewalling
 # NOTE(ihrachys) we effectively duplicate same settings for each affected l2
 # agent. This can be revisited later.
@@ -533,6 +529,7 @@ exit 0
 %post linuxbridge
 %systemd_post neutron-linuxbridge-agent.service
 %sysctl_apply 99-neutron-linuxbridge-agent.conf
+%{_sysconfdir}/sysconfig/modules/neutron-linuxbridge-agent.modules
 
 
 %preun linuxbridge
@@ -546,6 +543,7 @@ exit 0
 %post openvswitch
 %systemd_post neutron-openvswitch-agent.service
 %sysctl_apply 99-neutron-openvswitch-agent.conf
+%{_sysconfdir}/sysconfig/modules/neutron-openvswitch-agent.modules
 
 if [ $1 -ge 2 ]; then
     # We're upgrading
@@ -652,9 +650,6 @@ fi
 %files common -f %{service}.lang
 %license LICENSE
 %doc README.rst
-# though this script is not exactly needed on all nodes but for ovs and
-# linuxbridge agents only, it's probably good enough to put it here
-%{_bindir}/neutron-enable-bridge-firewall.sh
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-daemon
 %{_bindir}/neutron-rootwrap-xen-dom0
