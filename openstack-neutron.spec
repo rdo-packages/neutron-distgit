@@ -17,8 +17,8 @@ Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
-Version:        11.0.0
-Release:        3%{?dist}
+Version:        11.0.1
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -748,6 +748,9 @@ fi
 
 
 %changelog
+* Mon Sep 25 2017 rdo-trunk <javier.pena@redhat.com> 1:11.0.1-1
+- Update to 11.0.1
+
 * Mon Sep  4 2017 Haïkel Guémar <hguemar@fedoraproject.org> - 1:11.0.0-3
 - Bump python-pyroute2 (rhbz#1487766)
 
