@@ -131,9 +131,7 @@ Requires:       python-designateclient >= 1.5.0
 Requires:       python-eventlet >= 0.18.2
 Requires:       python-greenlet >= 0.3.2
 Requires:       python-httplib2 >= 0.7.5
-# Upstream jinja2 set to 2.8 due to Python 3 support.
-# CentOS repos currently don't have the packege rebased to 2.8.
-Requires:       python-jinja2 >= 2.7
+Requires:       python-jinja2 >= 2.8
 Requires:       python-keystoneauth1 >= 3.1.0
 Requires:       python-keystonemiddleware >= 4.12.0
 Requires:       python-netaddr >= 0.7.13
