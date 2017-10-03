@@ -18,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        11.0.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -756,6 +756,9 @@ fi
 
 
 %changelog
+* Thu Jan 04 2018 Jakub Libosvar <jlibosva@redhat.com> - 1:11.0.2-3
+- Remove timeout for neutron-ovs-cleanup stop/start
+
 * Tue Nov 21 2017 Jakub Libosvar <jlibosva@redhat.com> 1:11.0.2-2
 - Destroy patch ports only if canary flow is not present (rhbz#1511988)
 
