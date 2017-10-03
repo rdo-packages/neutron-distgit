@@ -10,7 +10,7 @@ done \
 
 Name:           openstack-%{service}
 Version:        10.0.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -757,6 +757,9 @@ fi
 
 
 %changelog
+* Thu Jan 04 2018 Jakub Libosvar <jlibosva@redhat.com> - 1:10.0.4-2
+- Remove timeout for neutron-ovs-cleanup stop/start
+
 * Mon Sep 25 2017 rdo-trunk <javier.pena@redhat.com> 1:10.0.4-1
 - Update to 10.0.4
 
