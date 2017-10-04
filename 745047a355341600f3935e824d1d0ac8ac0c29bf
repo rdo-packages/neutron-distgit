@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa81d914_b11fff08",
+        "filename": "neutron-ovs-cleanup.service",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-10-04T08:13:16Z",
+      "side": 1,
+      "message": "It\u0027s interesting it works for you. From man page for TimeoutStartSec: \"Defaults to DefaultTimeoutStartSec\u003d from the manager configuration file, except when Type\u003doneshot is used, in which case the timeout is disabled by default\"\n\nThis service is oneshot.",
+      "revId": "745047a355341600f3935e824d1d0ac8ac0c29bf",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
