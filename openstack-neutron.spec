@@ -18,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        11.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -52,6 +52,9 @@ Source34:       neutron-l2-agent-sysctl.conf
 # ignore a missing kernel module (f.e. br_netfilter on earlier kernels). It's
 # essentially because .modules files are shell scripts.
 Source35:       neutron-l2-agent.modules
+Source36:       neutron-destroy-patch-ports.service
+
+Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
 
 BuildArch:      noarch
 
@@ -433,6 +436,7 @@ install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
 install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.service
 install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cleanup.service
+install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-ports.service
 
 # Install helper scripts
 install -p -D -m 755 %{SOURCE33} %{buildroot}%{_bindir}/neutron-enable-bridge-firewall.sh
@@ -548,6 +552,7 @@ exit 0
 
 %post openvswitch
 %systemd_post neutron-openvswitch-agent.service
+%systemd_post neutron-destroy-patch-ports.service
 
 if [ $1 -ge 2 ]; then
     # We're upgrading
@@ -570,6 +575,7 @@ fi
 
 %preun openvswitch
 %systemd_preun neutron-openvswitch-agent.service
+%systemd_preun neutron-destroy-patch-ports.service
 
 
 %post metering-agent
@@ -715,7 +721,9 @@ fi
 %files openvswitch
 %license LICENSE
 %{_bindir}/neutron-openvswitch-agent
+%{_bindir}/neutron-destroy-patch-ports
 %{_unitdir}/neutron-openvswitch-agent.service
+%{_unitdir}/neutron-destroy-patch-ports.service
 %{_datarootdir}/%{service}/rootwrap/openvswitch-plugin.filters
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
@@ -748,6 +756,9 @@ fi
 
 
 %changelog
+* Wed Oct 18 2017 Jakub Libosvar <jlibosva@redhat.com> 1:11.0.1-2
+- Create destroy-patch-ports systemd service file (rhbz#1490281)
+
 * Mon Sep 25 2017 rdo-trunk <javier.pena@redhat.com> 1:11.0.1-1
 - Update to 11.0.1
 

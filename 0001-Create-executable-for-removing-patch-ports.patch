@@ -1,0 +1,235 @@
+From 102fcabc129b04d235163ee094ac72e0ea0fa787 Mon Sep 17 00:00:00 2001
+From: Jakub Libosvar <libosvar@redhat.com>
+Date: Thu, 12 Oct 2017 15:19:31 +0000
+Subject: [PATCH] Create executable for removing patch ports
+
+Nodes using provider bridges for internal traffic like amqp can cause an
+ARP storm when at least two nodes were shutdown ungracefully and are
+brought up at once. It's caused by having patch-ports between provider
+bridges and integration bridge, hence the integration bridge passes ARP
+broadcast packets from one provider bridge to another.
+
+This patch introduces a cleanup script that scans Neutron config and
+removes patch ports from integration bridge and bridges defined in
+bridge_mappings option. Such script can be executed when node is booted.
+
+Closes-bug: #1720766
+
+Change-Id: I774cefac2951343a30f882791abf12598bc99603
+---
+ neutron/cmd/destroy_patch_ports.py                 | 64 ++++++++++++++++
+ .../drivers/openvswitch/agent/ovs_neutron_agent.py | 14 +++-
+ .../functional/cmd/test_destroy_patch_ports.py     | 85 ++++++++++++++++++++++
+ setup.cfg                                          |  1 +
+ 4 files changed, 160 insertions(+), 4 deletions(-)
+ create mode 100644 neutron/cmd/destroy_patch_ports.py
+ create mode 100644 neutron/tests/functional/cmd/test_destroy_patch_ports.py
+
+diff --git a/neutron/cmd/destroy_patch_ports.py b/neutron/cmd/destroy_patch_ports.py
+new file mode 100644
+index 0000000..ef1ef12
+--- /dev/null
++++ b/neutron/cmd/destroy_patch_ports.py
+@@ -0,0 +1,64 @@
++# Copyright 2017 Red Hat, Inc.
++# All Rights Reserved.
++#
++#    Licensed under the Apache License, Version 2.0 (the "License"); you may
++#    not use this file except in compliance with the License. You may obtain
++#    a copy of the License at
++#
++#         http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing, software
++#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++#    License for the specific language governing permissions and limitations
++#    under the License.
++
++import sys
++
++from neutron_lib.utils import helpers
++from oslo_config import cfg
++from oslo_log import log as logging
++
++from neutron.agent.common import ovs_lib
++from neutron.common import config as common_config
++from neutron.conf.plugins.ml2.drivers import ovs_conf
++from neutron.plugins.ml2.drivers.openvswitch.agent import (
++    ovs_neutron_agent as ovs_agent)
++
++LOG = logging.getLogger(__name__)
++
++
++class PatchPortCleaner(object):
++    def __init__(self, config):
++        mappings = helpers.parse_mappings(config.OVS.bridge_mappings)
++        self.bridges = [ovs_lib.OVSBridge(bridge)
++                        for bridge in mappings.values()]
++        self.int_br = ovs_lib.OVSBridge(config.OVS.integration_bridge)
++
++    def destroy_patch_ports(self):
++        if not self.int_br.bridge_exists(self.int_br.br_name):
++            # integration bridge hasn't been created by agent yet, nothing to
++            # clean
++            return
++        for bridge in self.bridges:
++            try:
++                self._remove_patch_ports_from_int_br(bridge)
++            except Exception as e:
++                LOG.error("Failed to remove patch port from bridge %s: %s",
++                          bridge.br_name, e)
++
++    def _remove_patch_ports_from_int_br(self, bridge):
++        int_if_name, phys_if_name = ovs_agent.get_patch_port_names(
++            bridge.br_name)
++        int_type = self.int_br.db_get_val(
++            "Interface", int_if_name, "type", log_errors=False)
++        if int_type == 'patch':
++            self.int_br.delete_port(int_if_name)
++            bridge.delete_port(phys_if_name)
++
++
++def main():
++    common_config.init(sys.argv[1:])
++    ovs_conf.register_ovs_agent_opts()
++    port_cleaner = PatchPortCleaner(cfg.CONF)
++    port_cleaner.destroy_patch_ports()
+diff --git a/neutron/plugins/ml2/drivers/openvswitch/agent/ovs_neutron_agent.py b/neutron/plugins/ml2/drivers/openvswitch/agent/ovs_neutron_agent.py
+index 68c97eb..15db1bb 100644
+--- a/neutron/plugins/ml2/drivers/openvswitch/agent/ovs_neutron_agent.py
++++ b/neutron/plugins/ml2/drivers/openvswitch/agent/ovs_neutron_agent.py
+@@ -85,6 +85,15 @@ class OVSPluginApi(agent_rpc.CacheBackedPluginApi):
+     pass
+ 
+ 
++def get_patch_port_names(bridge_name):
++    int_if_name = p_utils.get_interface_name(
++        bridge_name, prefix=constants.PEER_INTEGRATION_PREFIX)
++    phys_if_name = p_utils.get_interface_name(
++        bridge_name, prefix=constants.PEER_PHYSICAL_PREFIX)
++
++    return int_if_name, phys_if_name
++
++
+ def has_zero_prefixlen_address(ip_addresses):
+     return any(netaddr.IPNetwork(ip).prefixlen == 0 for ip in ip_addresses)
+ 
+@@ -1121,10 +1130,7 @@ class OVSNeutronAgent(l2population_rpc.L2populationRpcCallBackTunnelMixin,
+             self.phys_brs[physical_network] = br
+ 
+             # interconnect physical and integration bridges using veth/patches
+-            int_if_name = p_utils.get_interface_name(
+-                bridge, prefix=constants.PEER_INTEGRATION_PREFIX)
+-            phys_if_name = p_utils.get_interface_name(
+-                bridge, prefix=constants.PEER_PHYSICAL_PREFIX)
++            int_if_name, phys_if_name = get_patch_port_names(bridge)
+             # Interface type of port for physical and integration bridges must
+             # be same, so check only one of them.
+             # Not logging error here, as the interface may not exist yet.
+diff --git a/neutron/tests/functional/cmd/test_destroy_patch_ports.py b/neutron/tests/functional/cmd/test_destroy_patch_ports.py
+new file mode 100644
+index 0000000..d6e69be
+--- /dev/null
++++ b/neutron/tests/functional/cmd/test_destroy_patch_ports.py
+@@ -0,0 +1,85 @@
++# Copyright 2017 Red Hat, Inc.
++# All Rights Reserved.
++#
++#    Licensed under the Apache License, Version 2.0 (the "License"); you may
++#    not use this file except in compliance with the License. You may obtain
++#    a copy of the License at
++#
++#         http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing, software
++#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++#    License for the specific language governing permissions and limitations
++#    under the License.
++
++from neutron_lib import constants as n_const
++from oslo_config import cfg
++
++from neutron.cmd import destroy_patch_ports
++from neutron.common import utils
++from neutron.conf.plugins.ml2.drivers import ovs_conf
++from neutron.plugins.ml2.drivers.openvswitch.agent import (
++    ovs_neutron_agent as ovs_agent)
++from neutron.plugins.ml2.drivers.openvswitch.agent.common import constants
++from neutron.tests.common import net_helpers
++from neutron.tests.functional import base
++
++
++class TestDestroyPatchPorts(base.BaseSudoTestCase):
++    def setUp(self):
++        super(TestDestroyPatchPorts, self).setUp()
++        self.int_br = self.useFixture(net_helpers.OVSBridgeFixture()).bridge
++        bridge_mappings = {}
++        self.bridges = []
++        for network in ('foo', 'bar'):
++            bridge = self.useFixture(net_helpers.OVSBridgeFixture()).bridge
++            self._create_patch_ports_to_int_br(bridge)
++            self.bridges.append(bridge)
++            bridge_mappings[network] = bridge.br_name
++        self.config = self._create_config_file(bridge_mappings)
++
++    def _create_config_file(self, bridge_mappings):
++        config = cfg.ConfigOpts()
++        ovs_conf.register_ovs_agent_opts(config)
++        config.set_override('integration_bridge', self.int_br.br_name, "OVS")
++        config.set_override(
++            'bridge_mappings',
++            ','.join(["%s:%s" % (net, br)
++                      for net, br in bridge_mappings.items()]),
++            "OVS")
++
++        return config
++
++    def _create_patch_ports_to_int_br(self, bridge):
++        int_if_name, phys_if_name = ovs_agent.get_patch_port_names(
++            bridge.br_name)
++        self.int_br.add_patch_port(
++            int_if_name, constants.NONEXISTENT_PEER)
++        bridge.add_patch_port(
++            phys_if_name, constants.NONEXISTENT_PEER)
++        self.int_br.set_db_attribute(
++            'Interface', int_if_name, 'options', {'peer': phys_if_name})
++        bridge.set_db_attribute(
++            'Interface', phys_if_name, 'options', {'peer': int_if_name})
++
++    def _has_patch_ports(self, bridge):
++        int_if_name, phys_if_name = ovs_agent.get_patch_port_names(
++            bridge.br_name)
++        return (bridge.port_exists(phys_if_name) and
++                self.int_br.port_exists(int_if_name))
++
++    def test_destroy_patch_ports(self):
++        self.assertTrue(all(self._has_patch_ports(bridge)
++                            for bridge in self.bridges))
++        cleaner = destroy_patch_ports.PatchPortCleaner(self.config)
++        cleaner.destroy_patch_ports()
++        self.assertFalse(any(self._has_patch_ports(bridge)
++                             for bridge in self.bridges))
++
++    def test_destroy_patch_ports_no_int_br(self):
++        name = utils.get_rand_name(
++            max_length=n_const.DEVICE_NAME_MAX_LEN)
++        self.config.set_override('integration_bridge', name, "OVS")
++        cleaner = destroy_patch_ports.PatchPortCleaner(self.config)
++        cleaner.destroy_patch_ports()
+diff --git a/setup.cfg b/setup.cfg
+index fa331f0..56cd450 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -47,6 +47,7 @@ console_scripts =
+ 	neutron-db-manage = neutron.db.migration.cli:main
+ 	neutron-debug = neutron.debug.shell:main
+ 	neutron-dhcp-agent = neutron.cmd.eventlet.agents.dhcp:main
++	neutron-destroy-patch-ports = neutron.cmd.destroy_patch_ports:main
+ 	neutron-keepalived-state-change = neutron.cmd.keepalived_state_change:main
+ 	neutron-ipset-cleanup = neutron.cmd.ipset_cleanup:main
+ 	neutron-l3-agent = neutron.cmd.eventlet.agents.l3:main
+-- 
+1.8.3.1
+
