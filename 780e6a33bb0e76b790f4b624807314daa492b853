@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa81d914_ec6ef195",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-10-16T17:19:02Z",
+      "side": 1,
+      "message": "Please explain why you go with a custom patch here that is not contributed to upstream.",
+      "revId": "780e6a33bb0e76b790f4b624807314daa492b853",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa81d914_0c6c259c",
+        "filename": "neutron-destroy-patch-ports.service",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-10-16T17:19:02Z",
+      "side": 1,
+      "message": "you should probably also have a conf.d entry for the script to maintain same configuration interface other services do have. Also, loading neutron.conf is expected for all services. For example, it contains root wrapper configuration.",
+      "revId": "780e6a33bb0e76b790f4b624807314daa492b853",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
