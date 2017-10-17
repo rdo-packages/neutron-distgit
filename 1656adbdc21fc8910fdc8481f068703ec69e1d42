@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa81d914_e7c0ca7e",
+        "filename": "0001-Create-executable-for-removing-patch-ports.patch",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2017-10-17T19:12:54Z",
+      "side": 1,
+      "message": "I am concerned that this change will leave wide area to get a build error, when a patch conflict will land in upstream. Couldn\u0027t we leave the code untouched, and introduce get_patch_port_names in the new executable, so that we don\u0027t touch any existing files? Touching setup.cfg could also be avoided, instead we could install the script as part of dist-git.",
+      "revId": "1656adbdc21fc8910fdc8481f068703ec69e1d42",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
