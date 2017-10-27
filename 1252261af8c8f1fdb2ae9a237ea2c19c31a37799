@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa81d914_2efc763e",
+        "filename": "0001-Create-executable-for-removing-patch-ports.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 382
+      },
+      "writtenOn": "2017-10-27T15:30:49Z",
+      "side": 1,
+      "message": "Strange all these spaces turned up.",
+      "revId": "1252261af8c8f1fdb2ae9a237ea2c19c31a37799",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
