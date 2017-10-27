@@ -1,4 +1,4 @@
-From 102fcabc129b04d235163ee094ac72e0ea0fa787 Mon Sep 17 00:00:00 2001
+From 894a978e6c4afeec0efaa3301ebf6239c20fbf60 Mon Sep 17 00:00:00 2001
 From: Jakub Libosvar <libosvar@redhat.com>
 Date: Thu, 12 Oct 2017 15:19:31 +0000
 Subject: [PATCH] Create executable for removing patch ports
@@ -13,24 +13,23 @@ This patch introduces a cleanup script that scans Neutron config and
 removes patch ports from integration bridge and bridges defined in
 bridge_mappings option. Such script can be executed when node is booted.
 
+Resolves: rhbz#1490281
 Closes-bug: #1720766
 
 Change-Id: I774cefac2951343a30f882791abf12598bc99603
 ---
- neutron/cmd/destroy_patch_ports.py                 | 64 ++++++++++++++++
- .../drivers/openvswitch/agent/ovs_neutron_agent.py | 14 +++-
- .../functional/cmd/test_destroy_patch_ports.py     | 85 ++++++++++++++++++++++
- setup.cfg                                          |  1 +
- 4 files changed, 160 insertions(+), 4 deletions(-)
+ neutron/cmd/destroy_patch_ports.py                 | 73 +++++++++++++++++++
+ .../functional/cmd/test_destroy_patch_ports.py     | 83 ++++++++++++++++++++++
+ 2 files changed, 156 insertions(+)
  create mode 100644 neutron/cmd/destroy_patch_ports.py
  create mode 100644 neutron/tests/functional/cmd/test_destroy_patch_ports.py
 
 diff --git a/neutron/cmd/destroy_patch_ports.py b/neutron/cmd/destroy_patch_ports.py
 new file mode 100644
-index 0000000..ef1ef12
+index 0000000..d2c5e67
 --- /dev/null
 +++ b/neutron/cmd/destroy_patch_ports.py
-@@ -0,0 +1,64 @@
+@@ -0,0 +1,73 @@
 +# Copyright 2017 Red Hat, Inc.
 +# All Rights Reserved.
 +#
@@ -55,10 +54,19 @@ index 0000000..ef1ef12
 +from neutron.agent.common import ovs_lib
 +from neutron.common import config as common_config
 +from neutron.conf.plugins.ml2.drivers import ovs_conf
-+from neutron.plugins.ml2.drivers.openvswitch.agent import (
-+    ovs_neutron_agent as ovs_agent)
++from neutron.plugins.common import utils as p_utils
++from neutron.plugins.ml2.drivers.openvswitch.agent.common import constants
 +
 +LOG = logging.getLogger(__name__)
++
++
++def get_patch_port_names(bridge_name):
++    int_if_name = p_utils.get_interface_name(
++        bridge_name, prefix=constants.PEER_INTEGRATION_PREFIX)
++    phys_if_name = p_utils.get_interface_name(
++        bridge_name, prefix=constants.PEER_PHYSICAL_PREFIX)
++
++    return int_if_name, phys_if_name
 +
 +
 +class PatchPortCleaner(object):
@@ -81,7 +89,7 @@ index 0000000..ef1ef12
 +                          bridge.br_name, e)
 +
 +    def _remove_patch_ports_from_int_br(self, bridge):
-+        int_if_name, phys_if_name = ovs_agent.get_patch_port_names(
++        int_if_name, phys_if_name = get_patch_port_names(
 +            bridge.br_name)
 +        int_type = self.int_br.db_get_val(
 +            "Interface", int_if_name, "type", log_errors=False)
@@ -95,44 +103,12 @@ index 0000000..ef1ef12
 +    ovs_conf.register_ovs_agent_opts()
 +    port_cleaner = PatchPortCleaner(cfg.CONF)
 +    port_cleaner.destroy_patch_ports()
-diff --git a/neutron/plugins/ml2/drivers/openvswitch/agent/ovs_neutron_agent.py b/neutron/plugins/ml2/drivers/openvswitch/agent/ovs_neutron_agent.py
-index 68c97eb..15db1bb 100644
---- a/neutron/plugins/ml2/drivers/openvswitch/agent/ovs_neutron_agent.py
-+++ b/neutron/plugins/ml2/drivers/openvswitch/agent/ovs_neutron_agent.py
-@@ -85,6 +85,15 @@ class OVSPluginApi(agent_rpc.CacheBackedPluginApi):
-     pass
- 
- 
-+def get_patch_port_names(bridge_name):
-+    int_if_name = p_utils.get_interface_name(
-+        bridge_name, prefix=constants.PEER_INTEGRATION_PREFIX)
-+    phys_if_name = p_utils.get_interface_name(
-+        bridge_name, prefix=constants.PEER_PHYSICAL_PREFIX)
-+
-+    return int_if_name, phys_if_name
-+
-+
- def has_zero_prefixlen_address(ip_addresses):
-     return any(netaddr.IPNetwork(ip).prefixlen == 0 for ip in ip_addresses)
- 
-@@ -1121,10 +1130,7 @@ class OVSNeutronAgent(l2population_rpc.L2populationRpcCallBackTunnelMixin,
-             self.phys_brs[physical_network] = br
- 
-             # interconnect physical and integration bridges using veth/patches
--            int_if_name = p_utils.get_interface_name(
--                bridge, prefix=constants.PEER_INTEGRATION_PREFIX)
--            phys_if_name = p_utils.get_interface_name(
--                bridge, prefix=constants.PEER_PHYSICAL_PREFIX)
-+            int_if_name, phys_if_name = get_patch_port_names(bridge)
-             # Interface type of port for physical and integration bridges must
-             # be same, so check only one of them.
-             # Not logging error here, as the interface may not exist yet.
 diff --git a/neutron/tests/functional/cmd/test_destroy_patch_ports.py b/neutron/tests/functional/cmd/test_destroy_patch_ports.py
 new file mode 100644
-index 0000000..d6e69be
+index 0000000..9c92edf
 --- /dev/null
 +++ b/neutron/tests/functional/cmd/test_destroy_patch_ports.py
-@@ -0,0 +1,85 @@
+@@ -0,0 +1,83 @@
 +# Copyright 2017 Red Hat, Inc.
 +# All Rights Reserved.
 +#
@@ -154,8 +130,6 @@ index 0000000..d6e69be
 +from neutron.cmd import destroy_patch_ports
 +from neutron.common import utils
 +from neutron.conf.plugins.ml2.drivers import ovs_conf
-+from neutron.plugins.ml2.drivers.openvswitch.agent import (
-+    ovs_neutron_agent as ovs_agent)
 +from neutron.plugins.ml2.drivers.openvswitch.agent.common import constants
 +from neutron.tests.common import net_helpers
 +from neutron.tests.functional import base
@@ -187,7 +161,7 @@ index 0000000..d6e69be
 +        return config
 +
 +    def _create_patch_ports_to_int_br(self, bridge):
-+        int_if_name, phys_if_name = ovs_agent.get_patch_port_names(
++        int_if_name, phys_if_name = destroy_patch_ports.get_patch_port_names(
 +            bridge.br_name)
 +        self.int_br.add_patch_port(
 +            int_if_name, constants.NONEXISTENT_PEER)
@@ -199,7 +173,7 @@ index 0000000..d6e69be
 +            'Interface', phys_if_name, 'options', {'peer': int_if_name})
 +
 +    def _has_patch_ports(self, bridge):
-+        int_if_name, phys_if_name = ovs_agent.get_patch_port_names(
++        int_if_name, phys_if_name = destroy_patch_ports.get_patch_port_names(
 +            bridge.br_name)
 +        return (bridge.port_exists(phys_if_name) and
 +                self.int_br.port_exists(int_if_name))
@@ -218,18 +192,3 @@ index 0000000..d6e69be
 +        self.config.set_override('integration_bridge', name, "OVS")
 +        cleaner = destroy_patch_ports.PatchPortCleaner(self.config)
 +        cleaner.destroy_patch_ports()
-diff --git a/setup.cfg b/setup.cfg
-index fa331f0..56cd450 100644
---- a/setup.cfg
-+++ b/setup.cfg
-@@ -47,6 +47,7 @@ console_scripts =
- 	neutron-db-manage = neutron.db.migration.cli:main
- 	neutron-debug = neutron.debug.shell:main
- 	neutron-dhcp-agent = neutron.cmd.eventlet.agents.dhcp:main
-+	neutron-destroy-patch-ports = neutron.cmd.destroy_patch_ports:main
- 	neutron-keepalived-state-change = neutron.cmd.keepalived_state_change:main
- 	neutron-ipset-cleanup = neutron.cmd.ipset_cleanup:main
- 	neutron-l3-agent = neutron.cmd.eventlet.agents.l3:main
--- 
-1.8.3.1
-
