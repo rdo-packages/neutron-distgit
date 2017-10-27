@@ -1,0 +1,9 @@
+Code-Review+2: Ihar Hrachyshka <ihrachys@redhat.com>
+Workflow+1: Ihar Hrachyshka <ihrachys@redhat.com>
+Code-Review+1: Brian Haley <haleyb.dev@gmail.com>
+Verified+2: Jenkins CI <admin@rpmfactory.beta.rdoproject.org>
+Submitted-by: Jenkins CI <admin@rpmfactory.beta.rdoproject.org>
+Submitted-at: Fri, 27 Oct 2017 15:37:41 +0000
+Reviewed-on: https://review.rdoproject.org/r/10323
+Project: openstack/neutron-distgit
+Branch: refs/heads/pike-rdo
