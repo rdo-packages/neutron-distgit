@@ -721,7 +721,6 @@ fi
 %files openvswitch
 %license LICENSE
 %{_bindir}/neutron-openvswitch-agent
-%{_bindir}/neutron-destroy-patch-ports
 %{_unitdir}/neutron-openvswitch-agent.service
 %{_unitdir}/neutron-destroy-patch-ports.service
 %{_datarootdir}/%{service}/rootwrap/openvswitch-plugin.filters
