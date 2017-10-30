@@ -1,4 +1,4 @@
-From 894a978e6c4afeec0efaa3301ebf6239c20fbf60 Mon Sep 17 00:00:00 2001
+From 9238592fcb2238bfd34d9c0b414573cb6f3d9582 Mon Sep 17 00:00:00 2001
 From: Jakub Libosvar <libosvar@redhat.com>
 Date: Thu, 12 Oct 2017 15:19:31 +0000
 Subject: [PATCH] Create executable for removing patch ports
@@ -18,18 +18,18 @@ Closes-bug: #1720766
 
 Change-Id: I774cefac2951343a30f882791abf12598bc99603
 ---
- neutron/cmd/destroy_patch_ports.py                 | 73 +++++++++++++++++++
+ neutron/cmd/destroy_patch_ports.py                 | 77 ++++++++++++++++++++
  .../functional/cmd/test_destroy_patch_ports.py     | 83 ++++++++++++++++++++++
- 2 files changed, 156 insertions(+)
+ 2 files changed, 160 insertions(+)
  create mode 100644 neutron/cmd/destroy_patch_ports.py
  create mode 100644 neutron/tests/functional/cmd/test_destroy_patch_ports.py
 
 diff --git a/neutron/cmd/destroy_patch_ports.py b/neutron/cmd/destroy_patch_ports.py
 new file mode 100644
-index 0000000..d2c5e67
+index 0000000..d6fb4b3
 --- /dev/null
 +++ b/neutron/cmd/destroy_patch_ports.py
-@@ -0,0 +1,73 @@
+@@ -0,0 +1,77 @@
 +# Copyright 2017 Red Hat, Inc.
 +# All Rights Reserved.
 +#
@@ -103,6 +103,10 @@ index 0000000..d2c5e67
 +    ovs_conf.register_ovs_agent_opts()
 +    port_cleaner = PatchPortCleaner(cfg.CONF)
 +    port_cleaner.destroy_patch_ports()
++
++
++if __name__ == "__main__":
++    main()
 diff --git a/neutron/tests/functional/cmd/test_destroy_patch_ports.py b/neutron/tests/functional/cmd/test_destroy_patch_ports.py
 new file mode 100644
 index 0000000..9c92edf
