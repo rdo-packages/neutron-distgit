@@ -18,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        11.0.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -755,6 +755,10 @@ fi
 
 
 %changelog
+* Wed Nov 8 2017 Jakub Libosvar <jlibosva@redhat.com> 1:11.0.1-3
+- Keep code change from upstream as minimal as possible (rhbz#1490281)
+- Call main() in destroy-patch-ports script (rhbz#1490281)
+
 * Wed Oct 18 2017 Jakub Libosvar <jlibosva@redhat.com> 1:11.0.1-2
 - Create destroy-patch-ports systemd service file (rhbz#1490281)
 
