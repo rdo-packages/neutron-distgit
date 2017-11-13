@@ -1,0 +1,81 @@
+From 20e704e066c5b6beed78828e662f8562a6db1e63 Mon Sep 17 00:00:00 2001
+From: Jakub Libosvar <libosvar@redhat.com>
+Date: Fri, 10 Nov 2017 16:12:10 +0000
+Subject: [PATCH] Destroy patch ports only if canary flow is not present
+
+Because of containers management do not have any dependency system,
+we need to call destroy-patch-ports command before
+neutron-openvswitch-agent process is started in the container. This
+patch adds functionality to avoid destroying the patch ports in case
+canary flow is present on the integration bridge. This is to avoid cases
+where container is stopped and started, which would cause a data plane
+disruption due to removing patch ports when it's not necessary. Patch
+ports are needed to be removed only in cases where node was ungracefully
+taken down.
+
+Change-Id: I5ef0f54741abce40bedd0c958befc9cb39cd21c4
+Resolves: rhbz/1511988
+---
+ neutron/cmd/destroy_patch_ports.py                       | 12 +++++++++---
+ neutron/tests/functional/cmd/test_destroy_patch_ports.py | 12 +++++++++++-
+ 2 files changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/neutron/cmd/destroy_patch_ports.py b/neutron/cmd/destroy_patch_ports.py
+index d6fb4b3..8c3ea98 100644
+--- a/neutron/cmd/destroy_patch_ports.py
++++ b/neutron/cmd/destroy_patch_ports.py
+@@ -45,9 +45,10 @@ class PatchPortCleaner(object):
+         self.int_br = ovs_lib.OVSBridge(config.OVS.integration_bridge)
+ 
+     def destroy_patch_ports(self):
+-        if not self.int_br.bridge_exists(self.int_br.br_name):
+-            # integration bridge hasn't been created by agent yet, nothing to
+-            # clean
++        if (not self.int_br.bridge_exists(self.int_br.br_name) or
++                self.flows_configured()):
++            # integration bridge hasn't been created by agent yet or it's been
++            # already configured by the agent
+             return
+         for bridge in self.bridges:
+             try:
+@@ -65,6 +66,11 @@ class PatchPortCleaner(object):
+             self.int_br.delete_port(int_if_name)
+             bridge.delete_port(phys_if_name)
+ 
++    def flows_configured(self):
++        """Return True if the integration bridge has flows already configured.
++        """
++        return bool(self.int_br.dump_flows_for(table=constants.CANARY_TABLE))
++
+ 
+ def main():
+     common_config.init(sys.argv[1:])
+diff --git a/neutron/tests/functional/cmd/test_destroy_patch_ports.py b/neutron/tests/functional/cmd/test_destroy_patch_ports.py
+index 9c92edf..b53f1b8 100644
+--- a/neutron/tests/functional/cmd/test_destroy_patch_ports.py
++++ b/neutron/tests/functional/cmd/test_destroy_patch_ports.py
+@@ -67,9 +67,12 @@ class TestDestroyPatchPorts(base.BaseSudoTestCase):
+         return (bridge.port_exists(phys_if_name) and
+                 self.int_br.port_exists(int_if_name))
+ 
+-    def test_destroy_patch_ports(self):
++    def _assert_has_all_ports(self):
+         self.assertTrue(all(self._has_patch_ports(bridge)
+                             for bridge in self.bridges))
++
++    def test_destroy_patch_ports(self):
++        self._assert_has_all_ports()
+         cleaner = destroy_patch_ports.PatchPortCleaner(self.config)
+         cleaner.destroy_patch_ports()
+         self.assertFalse(any(self._has_patch_ports(bridge)
+@@ -81,3 +84,10 @@ class TestDestroyPatchPorts(base.BaseSudoTestCase):
+         self.config.set_override('integration_bridge', name, "OVS")
+         cleaner = destroy_patch_ports.PatchPortCleaner(self.config)
+         cleaner.destroy_patch_ports()
++
++    def test_destroy_patch_ports_canary_flow_on_int_br(self):
++        self.int_br.add_flow(table=constants.CANARY_TABLE, actions="drop")
++        self._assert_has_all_ports()
++        cleaner = destroy_patch_ports.PatchPortCleaner(self.config)
++        cleaner.destroy_patch_ports()
++        self._assert_has_all_ports()
