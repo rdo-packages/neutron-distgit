@@ -53,6 +53,7 @@ Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
+Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
 
 BuildArch:      noarch
 
