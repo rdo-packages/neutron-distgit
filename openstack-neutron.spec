@@ -18,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        11.0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -55,6 +55,7 @@ Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
+Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
 
 BuildArch:      noarch
 
@@ -755,6 +756,9 @@ fi
 
 
 %changelog
+* Mon Nov 13 2017 Jakub Libosvar <libosvar@redhat.com> 1:11.0.1-4
+- Destroy patch ports only if canary flow is not present
+
 * Wed Nov 8 2017 Jakub Libosvar <jlibosva@redhat.com> 1:11.0.1-3
 - Keep code change from upstream as minimal as possible (rhbz#1490281)
 - Call main() in destroy-patch-ports script (rhbz#1490281)
