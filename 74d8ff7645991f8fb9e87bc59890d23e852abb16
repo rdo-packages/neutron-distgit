@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da86d52c_cb9f5c4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-11-20T16:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da86d52c_eb750033",
+      "range": {
+        "startLine": 10,
+        "startChar": 55,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "74d8ff7645991f8fb9e87bc59890d23e852abb16",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da86d52c_0b73344e",
         "filename": "0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-20T15:56:32Z",
       "side": 1,
       "message": "I dont know if this is an extra space or if it\u0027s even a concern.",
+      "revId": "74d8ff7645991f8fb9e87bc59890d23e852abb16",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da86d52c_aba22898",
+        "filename": "0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 172
+      },
+      "writtenOn": "2017-11-20T16:05:02Z",
+      "side": 1,
+      "message": "It\u0027s not a concern, this is generated patch by \"rdopkg patch\" command and the patch file contains white spaces. The code itself in an RPM doesn\u0027t contain this space. There must have been a \"+\" sign at the beginning of the line to include it in the code.",
+      "parentUuid": "da86d52c_0b73344e",
       "revId": "74d8ff7645991f8fb9e87bc59890d23e852abb16",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
