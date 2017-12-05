@@ -481,9 +481,6 @@ mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 # Find language files
 %find_lang %{service} --all-name
 
-# Create fake tempest entrypoint
-%py2_entrypoint %{service} %{service}
-
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
 getent passwd %{service} >/dev/null || \
@@ -643,7 +640,6 @@ fi
 %files -n python-%{service}-tests
 %license LICENSE
 %{python2_sitelib}/%{service}/tests
-%{python2_sitelib}/%{service}_tests.egg-info
 
 %files -n python-%{service}
 %license LICENSE
