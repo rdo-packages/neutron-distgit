@@ -202,7 +202,6 @@ Requires:       python-oslotest >= 1.10.0
 Requires:       python-oslo-db-tests >= 4.10.0
 Requires:       python-os-testr >= 0.7.0
 Requires:       python-PyMySQL >= 0.6.2
-Requires:       python-tempest >= 12.1.0
 Requires:       python-webtest >= 2.0
 
 # pstree is used during functional testing to ensure our internal
@@ -481,9 +480,6 @@ mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 # Find language files
 %find_lang %{service} --all-name
 
-# Create fake tempest entrypoint
-%py2_entrypoint %{service} %{service}
-
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
 getent passwd %{service} >/dev/null || \
@@ -643,7 +639,6 @@ fi
 %files -n python-%{service}-tests
 %license LICENSE
 %{python2_sitelib}/%{service}/tests
-%{python2_sitelib}/%{service}_tests.egg-info
 
 %files -n python-%{service}
 %license LICENSE
