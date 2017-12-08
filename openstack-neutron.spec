@@ -342,8 +342,6 @@ SR-IOV network cards.
 
 find %{service} -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
-# Remove tempest plugin entrypoint as a workaround
-sed -i '/tempest/d' setup.cfg
 # Let's handle dependencies ourseleves
 %py_req_cleanup
 
