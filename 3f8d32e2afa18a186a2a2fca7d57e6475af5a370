@@ -1,0 +1,9 @@
+Code-Review+2: Alan Pevec <alan.pevec@redhat.com>
+Code-Review+2: Terry Wilson <terry@logivox.net>
+Workflow+1: Terry Wilson <terry@logivox.net>
+Verified+2: Jenkins CI <admin@rpmfactory.beta.rdoproject.org>
+Submitted-by: Jenkins CI <admin@rpmfactory.beta.rdoproject.org>
+Submitted-at: Thu, 04 Jan 2018 16:37:17 +0000
+Reviewed-on: https://review.rdoproject.org/r/11166
+Project: openstack/neutron-distgit
+Branch: refs/heads/pike-rdo
