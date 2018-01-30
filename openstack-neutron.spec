@@ -86,7 +86,7 @@ BuildRequires:  python-pyroute2 >= 0.4.19
 BuildRequires:  python-pecan
 BuildRequires:  python-tenacity >= 3.2.1
 BuildRequires:  python-weakrefmethod >= 1.0.2
-BuildRequires:  systemd-units
+BuildRequires:  systemd
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
