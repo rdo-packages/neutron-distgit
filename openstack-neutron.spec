@@ -60,32 +60,32 @@ BuildArch:      noarch
 BuildRequires:  git
 BuildRequires:  openstack-macros
 BuildRequires:  python2-devel
-BuildRequires:  python-babel
+BuildRequires:  python2-babel
 BuildRequires:  python-d2to1
-BuildRequires:  python-keystoneauth1 >= 3.1.0
-BuildRequires:  python-keystonemiddleware
-BuildRequires:  python-neutron-lib
-BuildRequires:  python-novaclient
-BuildRequires:  python-os-xenapi
-BuildRequires:  python-oslo-cache
-BuildRequires:  python-oslo-concurrency
-BuildRequires:  python-oslo-config
-BuildRequires:  python-oslo-db
-BuildRequires:  python-oslo-log
-BuildRequires:  python-oslo-messaging
-BuildRequires:  python-oslo-policy
-BuildRequires:  python-oslo-privsep
-BuildRequires:  python-oslo-rootwrap
-BuildRequires:  python-oslo-service
-BuildRequires:  python-oslo-versionedobjects
-BuildRequires:  python-osprofiler >= 1.3.0
-BuildRequires:  python-ovsdbapp
-BuildRequires:  python-pbr >= 2.0.0
-BuildRequires:  python-psutil >= 3.2.2
-BuildRequires:  python-pyroute2 >= 0.4.19
-BuildRequires:  python-pecan
-BuildRequires:  python-tenacity >= 3.2.1
-BuildRequires:  python-weakrefmethod >= 1.0.2
+BuildRequires:  python2-keystoneauth1 >= 3.3.0
+BuildRequires:  python2-keystonemiddleware
+BuildRequires:  python2-neutron-lib
+BuildRequires:  python2-novaclient
+BuildRequires:  python2-os-xenapi
+BuildRequires:  python2-oslo-cache
+BuildRequires:  python2-oslo-concurrency
+BuildRequires:  python2-oslo-config
+BuildRequires:  python2-oslo-db
+BuildRequires:  python2-oslo-log
+BuildRequires:  python2-oslo-messaging
+BuildRequires:  python2-oslo-policy
+BuildRequires:  python2-oslo-privsep
+BuildRequires:  python2-oslo-rootwrap
+BuildRequires:  python2-oslo-service
+BuildRequires:  python2-oslo-versionedobjects
+BuildRequires:  python2-osprofiler >= 1.3.0
+BuildRequires:  python2-ovsdbapp
+BuildRequires:  python2-pbr >= 2.0.0
+BuildRequires:  python2-psutil >= 3.2.2
+BuildRequires:  python2-pyroute2 >= 0.4.21
+BuildRequires:  python2-pecan
+BuildRequires:  python2-tenacity >= 3.2.1
+BuildRequires:  python2-weakrefmethod >= 1.0.2
 BuildRequires:  systemd
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
@@ -129,54 +129,54 @@ Obsoletes:      openstack-%{service}-dev-server
 
 %package -n python-%{service}
 Summary:        Neutron Python libraries
-Requires:       python-alembic >= 0.8.7
-Requires:       python-debtcollector >= 1.2.0
-Requires:       python-designateclient >= 1.5.0
-Requires:       python-eventlet >= 0.18.2
-Requires:       python-greenlet >= 0.3.2
-Requires:       python-httplib2 >= 0.7.5
-Requires:       python-jinja2 >= 2.8
-Requires:       python-keystoneauth1 >= 3.1.0
-Requires:       python-keystonemiddleware >= 4.12.0
-Requires:       python-netaddr >= 0.7.13
+Requires:       python2-alembic >= 0.8.10
+Requires:       python2-debtcollector >= 1.2.0
+Requires:       python2-designateclient >= 2.7.0
+Requires:       python2-eventlet >= 0.18.2
+Requires:       python2-greenlet >= 0.4.10
+Requires:       python-httplib2 >= 0.9.1
+Requires:       python2-jinja2 >= 2.8
+Requires:       python2-keystoneauth1 >= 3.3.0
+Requires:       python2-keystonemiddleware >= 4.17.0
+Requires:       python2-netaddr >= 0.7.18
 Requires:       python-netifaces >= 0.10.4
-Requires:       python-neutronclient >= 6.3.0
-Requires:       python-neutron-lib >= 1.11.0
-Requires:       python-novaclient >= 9.0.0
-Requires:       python-os-xenapi >= 0.2.0
-Requires:       python-oslo-cache >= 1.5.0
-Requires:       python-oslo-concurrency >= 3.8.0
-Requires:       python-oslo-config >= 2:4.0.0
-Requires:       python-oslo-context >= 2.14.0
-Requires:       python-oslo-db >= 4.24.0
-Requires:       python-oslo-i18n >= 2.1.0
-Requires:       python-oslo-log >= 3.22.0
-Requires:       python-oslo-messaging >= 5.24.2
-Requires:       python-oslo-middleware >= 3.27.0
-Requires:       python-oslo-policy >= 1.23.0
-Requires:       python-oslo-privsep >= 1.9.0
-Requires:       python-oslo-reports >= 0.6.0
-Requires:       python-oslo-rootwrap >= 5.0.0
-Requires:       python-oslo-serialization >= 1.10.0
-Requires:       python-oslo-service >= 1.10.0
-Requires:       python-oslo-utils >= 3.20.0
-Requires:       python-oslo-versionedobjects >= 1.17.0
-Requires:       python-osprofiler >= 1.4.0
-Requires:       python-ovsdbapp
+Requires:       python2-neutronclient >= 6.3.0
+Requires:       python2-neutron-lib >= 1.13.0
+Requires:       python2-novaclient >= 9.1.0
+Requires:       python2-os-xenapi >= 0.3.1
+Requires:       python2-oslo-cache >= 1.26.0
+Requires:       python2-oslo-concurrency >= 3.25.0
+Requires:       python2-oslo-config >= 2:5.1.0
+Requires:       python2-oslo-context >= 2.19.2
+Requires:       python2-oslo-db >= 4.27.0
+Requires:       python2-oslo-i18n >= 3.15.3
+Requires:       python2-oslo-log >= 3.36.0
+Requires:       python2-oslo-messaging >= 5.29.0
+Requires:       python2-oslo-middleware >= 3.31.0
+Requires:       python2-oslo-policy >= 1.30.0
+Requires:       python2-oslo-privsep >= 1.23.0
+Requires:       python2-oslo-reports >= 1.18.0
+Requires:       python2-oslo-rootwrap >= 5.8.0
+Requires:       python2-oslo-serialization >= 2.18.0
+Requires:       python2-oslo-service >= 1.24.0
+Requires:       python2-oslo-utils >= 3.33.0
+Requires:       python2-oslo-versionedobjects >= 1.31.2
+Requires:       python2-osprofiler >= 1.4.0
+Requires:       python2-ovsdbapp
 Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
-Requires:       python-pecan >= 1.0.0
-Requires:       python-pbr >= 2.0.0
-Requires:       python-psutil >= 3.2.2
-Requires:       python-pyroute2 >= 0.4.19
-Requires:       python-requests >= 2.10.0
-Requires:       python-tenacity >= 3.2.1
-Requires:       python-routes >= 2.3.1
-Requires:       python-ryu >= 4.14
-Requires:       python-six >= 1.9.0
-Requires:       python-sqlalchemy >= 1.0.10
-Requires:       python-stevedore >= 1.20.0
-Requires:       python-weakrefmethod >= 1.0.2
+Requires:       python2-pecan >= 1.0.0
+Requires:       python2-pbr >= 2.0.0
+Requires:       python2-psutil >= 3.2.2
+Requires:       python2-pyroute2 >= 0.4.21
+Requires:       python2-requests >= 2.14.2
+Requires:       python2-tenacity >= 3.2.1
+Requires:       python2-routes >= 2.3.1
+Requires:       python2-ryu >= 4.14
+Requires:       python2-six >= 1.10.0
+Requires:       python2-sqlalchemy >= 1.0.10
+Requires:       python2-stevedore >= 1.20.0
+Requires:       python2-weakrefmethod >= 1.0.2
 Requires:       python-webob >= 1.7.1
 
 
@@ -190,19 +190,19 @@ This package contains the Neutron Python library.
 %package -n python-%{service}-tests
 Summary:        Neutron tests
 Requires:       python-%{service} = %{epoch}:%{version}-%{release}
-Requires:       python-ddt >= 1.0.1
-Requires:       python-fixtures >= 3.0.0
-Requires:       python-mock >= 2.0
-Requires:       python-subunit >= 0.0.18
-Requires:       python-testrepository >= 0.0.18
-Requires:       python-testtools >= 1.4.0
-Requires:       python-testresources >= 0.2.4
-Requires:       python-testscenarios >= 0.4
-Requires:       python-oslotest >= 1.10.0
-Requires:       python-oslo-db-tests >= 4.10.0
-Requires:       python-os-testr >= 0.7.0
-Requires:       python-PyMySQL >= 0.6.2
-Requires:       python-tempest >= 12.1.0
+Requires:       python2-ddt >= 1.0.1
+Requires:       python2-fixtures >= 3.0.0
+Requires:       python2-mock >= 2.0
+Requires:       python2-subunit >= 0.0.18
+Requires:       python2-testrepository >= 0.0.18
+Requires:       python2-testtools >= 1.4.0
+Requires:       python2-testresources >= 0.2.4
+Requires:       python2-testscenarios >= 0.4
+Requires:       python2-oslotest >= 1.10.0
+Requires:       python2-oslo-db-tests >= 4.10.0
+Requires:       python2-os-testr >= 0.7.0
+Requires:       python2-PyMySQL >= 0.6.2
+Requires:       python2-tempest >= 12.1.0
 Requires:       python-webtest >= 2.0
 
 # pstree is used during functional testing to ensure our internal
@@ -267,7 +267,7 @@ macvtap attachments for libvirt qemu/kvm instances.
 Summary:        Neutron ML2 plugin
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 # needed for brocade and cisco drivers
-Requires:       python-ncclient
+Requires:       python2-ncclient
 
 
 %description ml2
@@ -287,7 +287,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       ipset
 Requires:       iptables
 Requires:       openvswitch
-Requires:       python-openvswitch >= 2.6.1
+Requires:       python-openvswitch >= 2.8.0
 # kmod is needed to get access to /usr/sbin/modprobe needed by
 # neutron-enable-bridge-firewall.sh triggered by the service unit file
 Requires:       kmod
