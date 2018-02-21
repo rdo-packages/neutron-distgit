@@ -96,8 +96,8 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
 # dnsmasq is not a hard requirement, but is currently the only option
 # when neutron-dhcp-agent is deployed.
-Requires:       dnsmasq
-Requires:       dnsmasq-utils
+Requires:       dnsmasq >= 2.76
+Requires:       dnsmasq-utils >= 2.76
 
 # radvd is not a hard requirement, but is currently the only option
 # for IPv6 deployments.
