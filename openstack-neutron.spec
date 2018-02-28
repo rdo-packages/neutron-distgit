@@ -1,4 +1,3 @@
-%global milestone .0rc2
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
@@ -19,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        12.0.0
-Release:        0.1%{?milestone}%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -53,8 +52,6 @@ Source34:       neutron-l2-agent-sysctl.conf
 Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 
-#
-# patches_base=12.0.0.0rc2
 #
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
 Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
@@ -750,6 +747,9 @@ fi
 
 
 %changelog
+* Wed Feb 28 2018 RDO <dev@lists.rdoproject.org> 1:12.0.0-1
+- Update to 12.0.0
+
 * Mon Feb 19 2018 RDO <dev@lists.rdoproject.org> 1:12.0.0-0.1.0rc2
 - Update to 12.0.0.0rc2
 
