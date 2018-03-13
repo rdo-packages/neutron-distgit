@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab14d0d_c7e19100",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2018-03-13T10:46:47Z",
+      "side": 1,
+      "message": "nitpick: here we should link to the upstream change\neither as RDO \"magic keyword\"\n Upstream-Id: I7f8c55f63d1c5a85a6a92062e918426f7d2d3c35\nor direct link to the review\n https://review.openstack.org/506142",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "f1a4ee5af8530044a9714efcbf99466535e1f9bf",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
