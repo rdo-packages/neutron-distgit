@@ -17,8 +17,8 @@ Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
-Version:        11.0.2
-Release:        3%{?dist}
+Version:        11.0.3
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -756,6 +756,9 @@ fi
 
 
 %changelog
+* Mon Mar 19 2018 RDO <dev@lists.rdoproject.org> 1:11.0.3-1
+- Update to 11.0.3
+
 * Thu Jan 04 2018 Jakub Libosvar <jlibosva@redhat.com> - 1:11.0.2-3
 - Remove timeout for neutron-ovs-cleanup stop/start
 
