@@ -43,6 +43,9 @@ Source34:       neutron-l2-agent-sysctl.conf
 # essentially because .modules files are shell scripts.
 Source35:       neutron-l2-agent.modules
 
+# https://review.openstack.org/566912
+Patch0001: 0001-DNM-Improve-DbListCommand-operation-from-O-n-2-to-O-.patch
+
 BuildArch:      noarch
 
 BuildRequires:  git
