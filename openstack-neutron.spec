@@ -45,6 +45,11 @@ Source35:       neutron-l2-agent.modules
 
 # https://review.openstack.org/566912
 Patch0001: 0001-DNM-Improve-DbListCommand-operation-from-O-n-2-to-O-.patch
+# https://bugs.launchpad.net/neutron/+bug/1767422
+#  https://review.openstack.org/567885
+#  https://review.openstack.org/567901
+Patch0002: 0001-Don-t-delete-flows-on-ports-which-were-on-dead-vlan-.patch
+Patch0003: 0002-Avoid-agents-adding-ports-as-trunk-by-default.patch
 
 BuildArch:      noarch
 

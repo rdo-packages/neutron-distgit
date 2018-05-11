@@ -1,0 +1,234 @@
+From 94f2a79ed5a5d317d062a553d7bc0b8a2c70110c Mon Sep 17 00:00:00 2001
+From: Miguel Angel Ajo <majopela@redhat.com>
+Date: Fri, 27 Apr 2018 18:05:48 +0200
+Subject: [PATCH 2/2] Avoid agents adding ports as trunk by default.
+
+Agent OVS interface code adds ports without a vlan tag,
+if neutron-openvswitch-agent fails to set the tag, or takes
+too long, the port will be a trunk port, receiving
+traffic from the external network or any other port
+sending traffic on br-int.
+
+Also, those kinds of ports are triggering a code path
+on the ovs-vswitchd revalidator thread which can eventually
+hog the CPU of the host (that's a bug under investigation [1])
+
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=1558336
+
+Conflicts:
+    neutron/tests/functional/agent/test_ovs_lib.py
+
+    needed the addition of the following import:
+from neutron.plugins.ml2.drivers.openvswitch.agent.common import (
+    constants as agent_const)
+
+Co-Authored-By: Slawek Kaplonski <skaplons@redhat.com>
+Change-Id: I024bbbdf7059835b2f23c264b48478c71633a43c
+Closes-Bug: 1767422
+(cherry picked from commit 88f5e11d8bf820b0124be0f6ec3c2d96011592d9)
+(cherry picked from commit 2b1d413ee90dfe2e9ae41c35ab37253df53fc6cd)
+---
+ neutron/agent/common/ovs_lib.py                | 13 ++++++++++++
+ neutron/agent/l3/router_info.py                |  9 +++++++++
+ neutron/agent/linux/interface.py               | 15 ++++++++++++++
+ neutron/tests/common/net_helpers.py            |  4 ++++
+ neutron/tests/functional/agent/l2/base.py      |  8 +++++++-
+ neutron/tests/functional/agent/l3/framework.py | 28 ++++++++++++++++++++++++--
+ neutron/tests/functional/agent/test_ovs_lib.py |  4 ++++
+ 7 files changed, 78 insertions(+), 3 deletions(-)
+
+diff --git a/neutron/agent/common/ovs_lib.py b/neutron/agent/common/ovs_lib.py
+index bf53de801d..c10322f3bb 100644
+--- a/neutron/agent/common/ovs_lib.py
++++ b/neutron/agent/common/ovs_lib.py
+@@ -268,6 +268,19 @@ class OVSBridge(BaseOVS):
+         with self.ovsdb.transaction() as txn:
+             txn.add(self.ovsdb.add_port(self.br_name, port_name,
+                                         may_exist=False))
++            # NOTE(mangelajo): Port is added to dead vlan (4095) by default
++            # until it's handled by the neutron-openvswitch-agent. Otherwise it
++            # becomes a trunk port on br-int (receiving traffic for all vlans),
++            # and also triggers issues on ovs-vswitchd related to the
++            # datapath flow revalidator thread, see lp#1767422
++            txn.add(self.ovsdb.db_set(
++                    'Port', port_name, ('tag', constants.DEAD_VLAN_TAG)))
++
++            # TODO(mangelajo): We could accept attr tuples for the Port too
++            # but, that could potentially break usage of this function in
++            # stable branches (where we need to backport).
++            # https://review.openstack.org/#/c/564825/4/neutron/agent/common/
++            # ovs_lib.py@289
+             if interface_attr_tuples:
+                 txn.add(self.ovsdb.db_set('Interface', port_name,
+                                           *interface_attr_tuples))
+diff --git a/neutron/agent/l3/router_info.py b/neutron/agent/l3/router_info.py
+index 90d4120d50..19721f4342 100644
+--- a/neutron/agent/l3/router_info.py
++++ b/neutron/agent/l3/router_info.py
+@@ -618,6 +618,15 @@ class RouterInfo(object):
+                          namespace=ns_name,
+                          prefix=EXTERNAL_DEV_PREFIX,
+                          mtu=ex_gw_port.get('mtu'))
++        if self.agent_conf.external_network_bridge:
++            # NOTE(slaweq): for OVS implementations remove the DEAD VLAN tag
++            # on ports. DEAD VLAN tag is added to each newly created port
++            # and should be removed by L2 agent but if
++            # external_network_bridge is set than external gateway port is
++            # created in this bridge and will not be touched by L2 agent.
++            # This is related to lp#1767422
++            self.driver.remove_vlan_tag(
++                self.agent_conf.external_network_bridge, interface_name)
+ 
+     def _get_external_gw_ips(self, ex_gw_port):
+         gateway_ips = []
+diff --git a/neutron/agent/linux/interface.py b/neutron/agent/linux/interface.py
+index 1f1ed392dc..c83dc22ea5 100644
+--- a/neutron/agent/linux/interface.py
++++ b/neutron/agent/linux/interface.py
+@@ -238,6 +238,17 @@ class LinuxInterfaceDriver(object):
+     def get_device_name(self, port):
+         return (self.DEV_NAME_PREFIX + port.id)[:self.DEV_NAME_LEN]
+ 
++    def remove_vlan_tag(self, bridge, interface_name):
++        """Remove vlan tag from given interface.
++
++        This method is necessary only for the case when deprecated
++        option 'external_network_bridge' is used in L3 agent as
++        external gateway port is then created in this external bridge
++        directly and it will have DEAD_VLAN_TAG added by default.
++        """
++        # TODO(slaweq): remove it when external_network_bridge option will be
++        # removed
++
+     @staticmethod
+     def configure_ipv6_ra(namespace, dev_name, value):
+         """Configure handling of IPv6 Router Advertisements on an
+@@ -345,6 +356,10 @@ class OVSInterfaceDriver(LinuxInterfaceDriver):
+         ovs = ovs_lib.OVSBridge(bridge)
+         ovs.replace_port(device_name, *attrs)
+ 
++    def remove_vlan_tag(self, bridge, interface):
++        ovs = ovs_lib.OVSBridge(bridge)
++        ovs.clear_db_attribute("Port", interface, "tag")
++
+     def plug_new(self, network_id, port_id, device_name, mac_address,
+                  bridge=None, namespace=None, prefix=None, mtu=None):
+         """Plug in the interface."""
+diff --git a/neutron/tests/common/net_helpers.py b/neutron/tests/common/net_helpers.py
+index 46c31bcf7e..92968313d9 100644
+--- a/neutron/tests/common/net_helpers.py
++++ b/neutron/tests/common/net_helpers.py
+@@ -769,6 +769,10 @@ class OVSPortFixture(PortFixture):
+             self.mac,
+             bridge=self.bridge.br_name,
+             namespace=self.namespace)
++        # NOTE(mangelajo): for OVS implementations remove the DEAD VLAN tag
++        # on ports that we intend to use as fake vm interfaces, they
++        # need to be flat. This is related to lp#1767422
++        self.bridge.clear_db_attribute("Port", port_name, "tag")
+         self.addCleanup(self.bridge.delete_port, port_name)
+         self.port = ip_lib.IPDevice(port_name, self.namespace)
+ 
+diff --git a/neutron/tests/functional/agent/l2/base.py b/neutron/tests/functional/agent/l2/base.py
+index f5055391d2..0980d7301c 100644
+--- a/neutron/tests/functional/agent/l2/base.py
++++ b/neutron/tests/functional/agent/l2/base.py
+@@ -393,7 +393,13 @@ class OVSAgentTestFramework(base.BaseOVSLinuxTestCase):
+         self._plug_ports(network, ports, self.agent, bridge=phys_br,
+                          namespace=namespace)
+ 
+-        if phys_segmentation_id and network_type == 'vlan':
++        if network_type == 'flat':
++            # NOTE(slaweq): for OVS implementations remove the DEAD VLAN tag
++            # on ports that belongs to flat network. DEAD VLAN tag is added
++            # to each newly created port. This is related to lp#1767422
++            for port in ports:
++                phys_br.clear_db_attribute("Port", port['vif_name'], "tag")
++        elif phys_segmentation_id and network_type == 'vlan':
+             for port in ports:
+                 phys_br.set_db_attribute(
+                     "Port", port['vif_name'], "tag", phys_segmentation_id)
+diff --git a/neutron/tests/functional/agent/l3/framework.py b/neutron/tests/functional/agent/l3/framework.py
+index 4927365723..97cd026aea 100644
+--- a/neutron/tests/functional/agent/l3/framework.py
++++ b/neutron/tests/functional/agent/l3/framework.py
+@@ -32,6 +32,7 @@ from neutron.agent.l3 import namespaces
+ from neutron.agent.l3 import router_info as l3_router_info
+ from neutron.agent import l3_agent as l3_agent_main
+ from neutron.agent.linux import external_process
++from neutron.agent.linux import interface
+ from neutron.agent.linux import ip_lib
+ from neutron.agent.linux import keepalived
+ from neutron.common import constants as n_const
+@@ -44,13 +45,15 @@ from neutron.tests.functional import base
+ 
+ _uuid = uuidutils.generate_uuid
+ 
++OVS_INTERFACE_DRIVER = 'neutron.agent.linux.interface.OVSInterfaceDriver'
++
+ 
+ def get_ovs_bridge(br_name):
+     return ovs_lib.OVSBridge(br_name)
+ 
+ 
+ class L3AgentTestFramework(base.BaseSudoTestCase):
+-    INTERFACE_DRIVER = 'neutron.agent.linux.interface.OVSInterfaceDriver'
++    INTERFACE_DRIVER = OVS_INTERFACE_DRIVER
+     NESTED_NAMESPACE_SEPARATOR = '@'
+ 
+     def setUp(self):
+@@ -318,7 +321,28 @@ class L3AgentTestFramework(base.BaseSudoTestCase):
+ 
+     def manage_router(self, agent, router):
+         self.addCleanup(agent._safe_router_removed, router['id'])
+-        agent._process_added_router(router)
++
++        # NOTE(mangelajo): Neutron functional for l3 don't rely on openvswitch
++        #                  agent tagging ports, and all ports remain untagged
++        #                  during test execution.
++        #                  Workaround related to lp#1767422 plugs new ports as
++        #                  dead vlan (4095) to avoid issues, we need to remove
++        #                  such tag during functional l3 testing.
++        original_plug_new = interface.OVSInterfaceDriver.plug_new
++
++        def new_ovs_plug(self, *args, **kwargs):
++            original_plug_new(self, *args, **kwargs)
++            bridge = (kwargs.get('bridge') or args[4] or
++                      self.conf.ovs_integration_bridge)
++            device_name = kwargs.get('device_name') or args[2]
++            ovsbr = ovs_lib.OVSBridge(bridge)
++            ovsbr.clear_db_attribute('Port', device_name, 'tag')
++
++        with mock.patch(OVS_INTERFACE_DRIVER + '.plug_new', autospec=True) as (
++                ovs_plug):
++            ovs_plug.side_effect = new_ovs_plug
++            agent._process_added_router(router)
++
+         return agent.router_info[router['id']]
+ 
+     def _delete_router(self, agent, router_id):
+diff --git a/neutron/tests/functional/agent/test_ovs_lib.py b/neutron/tests/functional/agent/test_ovs_lib.py
+index 1ca131386b..9261fcd3c4 100644
+--- a/neutron/tests/functional/agent/test_ovs_lib.py
++++ b/neutron/tests/functional/agent/test_ovs_lib.py
+@@ -23,6 +23,8 @@ from neutron.agent.common import ovs_lib
+ from neutron.agent.linux import ip_lib
+ from neutron.agent.ovsdb.native import idlutils
+ from neutron.common import utils
++from neutron.plugins.ml2.drivers.openvswitch.agent.common import (
++    constants as agent_const)
+ from neutron.tests.common.exclusive_resources import port
+ from neutron.tests.common import net_helpers
+ from neutron.tests.functional.agent.linux import base
+@@ -88,6 +90,8 @@ class OVSBridgeTestCase(OVSBridgeTestBase):
+         self.assertTrue(self.br.port_exists(port_name))
+         self.assertEqual('test', self.br.db_get_val('Interface', port_name,
+                                                     'external_ids')['test'])
++        self.assertEqual(agent_const.DEAD_VLAN_TAG,
++                         self.br.db_get_val('Port', port_name, 'tag'))
+ 
+     def test_attribute_lifecycle(self):
+         (port_name, ofport) = self.create_ovs_port()
+-- 
+2.14.3
+
