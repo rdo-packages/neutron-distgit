@@ -178,6 +178,7 @@ Requires:       python2-sqlalchemy >= 1.0.10
 Requires:       python2-stevedore >= 1.20.0
 Requires:       python2-weakrefmethod >= 1.0.2
 Requires:       python-webob >= 1.7.1
+Requires:       python2-backports-functools-lru-cache
 
 
 
