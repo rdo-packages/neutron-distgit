@@ -9,7 +9,7 @@ done \
 
 
 Name:           openstack-%{service}
-Version:        10.0.6
+Version:        10.0.7
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -760,6 +760,9 @@ fi
 
 
 %changelog
+* Mon Jun 18 2018 RDO <dev@lists.rdoproject.org> 1:10.0.7-1
+- Update to 10.0.7
+
 * Tue May 08 2018 RDO <dev@lists.rdoproject.org> 1:10.0.6-1
 - Update to 10.0.6
 
