@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab921fb_f441b13a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2018-06-26T21:23:08Z",
+      "side": 1,
+      "message": "... this one merged",
+      "revId": "582aff696b275cc357232a93ff8fd60649d52047",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab921fb_d43eadb7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2018-06-26T21:23:08Z",
+      "side": 1,
+      "message": "...and this one is in the gate",
+      "revId": "582aff696b275cc357232a93ff8fd60649d52047",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
