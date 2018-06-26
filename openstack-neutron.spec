@@ -45,6 +45,8 @@ Source35:       neutron-l2-agent.modules
 
 # https://review.openstack.org/566912
 Patch0001: 0001-DNM-Improve-DbListCommand-operation-from-O-n-2-to-O-.patch
+# https://review.openstack.org/575774
+Patch0002: 0001-OVS-Add-mac-table-size-to-be-set-on-each-ovs-bridge.patch
 
 BuildArch:      noarch
 

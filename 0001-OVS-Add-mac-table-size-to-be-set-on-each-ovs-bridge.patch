@@ -1,0 +1,131 @@
+From 33e259f921c47ac341f55147e3ade78485d1eb93 Mon Sep 17 00:00:00 2001
+From: Slawek Kaplonski <skaplons@redhat.com>
+Date: Fri, 8 Jun 2018 15:37:39 +0200
+Subject: [PATCH] [OVS] Add mac-table-size to be set on each ovs bridge
+
+By default number of MAC addresses which ovs stores in memory
+is quite low - 2048.
+
+Any eviction of a MAC learning table entry triggers revalidation.
+Such revalidation is very costly so it cause high CPU usage by
+ovs-vswitchd process.
+
+To workaround this problem, higher value of mac-table-size
+option can be set for bridge. Then this revalidation will happen
+less often and CPU usage will be lower.
+This patch adds config option for neutron-openvswitch-agent to allow
+users tune this setting in bridges managed by agent.
+By default this value is set to 50000 which should be enough for most
+systems.
+
+Change-Id: If628f52d75c2b5fec87ad61e0219b3286423468c
+Closes-Bug: #1775797
+(cherry picked from commit 1f8378e0ac4b8c3fc4670144e6efc51940d796ad)
+---
+ neutron/agent/common/ovs_lib.py                            |  5 +++++
+ neutron/conf/agent/ovs_conf.py                             |  7 +++++++
+ neutron/tests/functional/agent/test_ovs_lib.py             | 11 ++++++++++-
+ .../ovs-mac-table-size-config-option-d255d5208650f34b.yaml | 14 ++++++++++++++
+ 4 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100644 releasenotes/notes/ovs-mac-table-size-config-option-d255d5208650f34b.yaml
+
+diff --git a/neutron/agent/common/ovs_lib.py b/neutron/agent/common/ovs_lib.py
+index bf53de801d..b1581e6810 100644
+--- a/neutron/agent/common/ovs_lib.py
++++ b/neutron/agent/common/ovs_lib.py
+@@ -232,6 +232,8 @@ class OVSBridge(BaseOVS):
+                           'protocols', *protocols).execute(check_error=True)
+ 
+     def create(self, secure_mode=False):
++        other_config = {
++            'mac-table-size': str(cfg.CONF.bridge_mac_table_size)}
+         with self.ovsdb.transaction() as txn:
+             txn.add(
+                 self.ovsdb.add_br(self.br_name,
+@@ -243,6 +245,9 @@ class OVSBridge(BaseOVS):
+             txn.add(
+                 self.ovsdb.db_add('Bridge', self.br_name,
+                                   'protocols', constants.OPENFLOW10))
++            txn.add(
++                self.ovsdb.db_set('Bridge', self.br_name,
++                                  ('other_config', other_config)))
+             if secure_mode:
+                 txn.add(self.ovsdb.set_fail_mode(self.br_name,
+                                                  FAILMODE_SECURE))
+diff --git a/neutron/conf/agent/ovs_conf.py b/neutron/conf/agent/ovs_conf.py
+index 85a5ab6549..8ee64483b5 100644
+--- a/neutron/conf/agent/ovs_conf.py
++++ b/neutron/conf/agent/ovs_conf.py
+@@ -26,6 +26,13 @@ OPTS = [
+                help=_('Timeout in seconds for ovs-vsctl commands. '
+                       'If the timeout expires, ovs commands will fail with '
+                       'ALARMCLOCK error.')),
++    cfg.IntOpt('bridge_mac_table_size',
++               default=50000,
++               help=_('The maximum number of MAC addresses to learn on '
++                      'a bridge managed by the Neutron OVS agent. Values '
++                      'outside a reasonable range (10 to 1,000,000) might be '
++                      'overridden by Open vSwitch according to the '
++                      'documentation.')),
+ ]
+ 
+ 
+diff --git a/neutron/tests/functional/agent/test_ovs_lib.py b/neutron/tests/functional/agent/test_ovs_lib.py
+index 1ca131386b..5f6bbf65ed 100644
+--- a/neutron/tests/functional/agent/test_ovs_lib.py
++++ b/neutron/tests/functional/agent/test_ovs_lib.py
+@@ -18,6 +18,8 @@ import uuid
+ 
+ import mock
+ from neutron_lib import constants as const
++from oslo_config import cfg
++import six
+ 
+ from neutron.agent.common import ovs_lib
+ from neutron.agent.linux import ip_lib
+@@ -527,7 +529,9 @@ class OVSLibTestCase(base.BaseOVSLinuxTestCase):
+         self.assertTrue(set(self.ovs.get_bridges()).issuperset(bridges))
+ 
+     def test_bridge_lifecycle_ovsbridge(self):
+-        name = utils.get_rand_name(prefix=net_helpers.BR_PREFIX)
++        name = six.text_type(utils.get_rand_name(prefix=net_helpers.BR_PREFIX))
++        mac_table_size = 12345
++        cfg.CONF.set_override('bridge_mac_table_size', mac_table_size)
+         br = ovs_lib.OVSBridge(name)
+         self.assertEqual(br.br_name, name)
+         # Make sure that instantiating an OVSBridge does not actually create
+@@ -535,6 +539,11 @@ class OVSLibTestCase(base.BaseOVSLinuxTestCase):
+         self.addCleanup(self.ovs.delete_bridge, name)
+         br.create()
+         self.assertTrue(self.ovs.bridge_exists(name))
++        br_other_config = self.ovs.ovsdb.db_find(
++            'Bridge', ('name', '=', name), columns=['other_config']
++        ).execute()[0]['other_config']
++        self.assertEqual(str(mac_table_size),
++                         br_other_config['mac-table-size'])
+         br.destroy()
+         self.assertFalse(self.ovs.bridge_exists(name))
+ 
+diff --git a/releasenotes/notes/ovs-mac-table-size-config-option-d255d5208650f34b.yaml b/releasenotes/notes/ovs-mac-table-size-config-option-d255d5208650f34b.yaml
+new file mode 100644
+index 0000000000..1294c11f3b
+--- /dev/null
++++ b/releasenotes/notes/ovs-mac-table-size-config-option-d255d5208650f34b.yaml
+@@ -0,0 +1,14 @@
++---
++features:
++  - |
++    A new config option ``bridge_mac_table_size`` has been added for
++    Neutron OVS agent.
++    This value will be set on every Open vSwitch bridge managed by the
++    openvswitch-neutron-agent in ``other_config:mac-table-size`` column
++    in ovsdb.
++    Default value for this new option is set to 50000 and it should be enough
++    for most systems.
++    More details about this option can be found in `Open vSwitch documentation
++    <http://www.openvswitch.org/support/dist-docs/ovs-vswitchd.conf.db.5.html>`_
++    For more information see bug
++    `1775797 <https://bugs.launchpad.net/neutron/+bug/1775797>`_.
+-- 
+2.14.4
+
