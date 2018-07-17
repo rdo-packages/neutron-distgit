@@ -54,6 +54,7 @@ Source36:       neutron-destroy-patch-ports.service
 
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
 Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
+Patch0003: 0003-use-plugin-utils-from-neutron-lib.patch
 
 BuildArch:      noarch
 
