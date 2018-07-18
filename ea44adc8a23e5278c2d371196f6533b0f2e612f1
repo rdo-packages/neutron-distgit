@@ -1,0 +1,10 @@
+Code-Review+1: Brian Haley <brianphaley@gmail.com>
+Code-Review+1: Bernard Cafarelli <bcafarel@redhat.com>
+Code-Review+2: Alan Pevec <alan.pevec@redhat.com>
+Workflow+1: Alan Pevec <alan.pevec@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Wed, 18 Jul 2018 23:47:52 +0000
+Reviewed-on: https://review.rdoproject.org/r/14763
+Project: openstack/neutron-distgit
+Branch: refs/heads/rpm-master
