@@ -63,7 +63,7 @@ BuildRequires:  openstack-macros
 BuildRequires:  python2-devel
 BuildRequires:  python2-babel
 BuildRequires:  python-d2to1
-BuildRequires:  python2-keystoneauth1 >= 3.3.0
+BuildRequires:  python2-keystoneauth1 >= 3.4.0
 BuildRequires:  python2-keystonemiddleware
 BuildRequires:  python2-neutron-lib
 BuildRequires:  python2-novaclient
@@ -85,7 +85,7 @@ BuildRequires:  python2-pbr >= 2.0.0
 BuildRequires:  python2-psutil >= 3.2.2
 BuildRequires:  python2-pyroute2 >= 0.4.21
 BuildRequires:  python2-pecan
-BuildRequires:  python2-tenacity >= 3.2.1
+BuildRequires:  python2-tenacity >= 4.4.0
 BuildRequires:  python2-weakrefmethod >= 1.0.2
 BuildRequires:  systemd
 
@@ -130,24 +130,24 @@ Obsoletes:      openstack-%{service}-dev-server
 
 %package -n python-%{service}
 Summary:        Neutron Python libraries
-Requires:       python2-alembic >= 0.8.10
+Requires:       python2-alembic >= 0.9.6
 Requires:       python2-debtcollector >= 1.2.0
 Requires:       python2-designateclient >= 2.7.0
 Requires:       python2-eventlet >= 0.18.2
 Requires:       python2-greenlet >= 0.4.10
 Requires:       python-httplib2 >= 0.9.1
-Requires:       python2-jinja2 >= 2.8
-Requires:       python2-keystoneauth1 >= 3.3.0
+Requires:       python2-jinja2 >= 2.10
+Requires:       python2-keystoneauth1 >= 3.4.0
 Requires:       python2-keystonemiddleware >= 4.17.0
 Requires:       python2-netaddr >= 0.7.18
 Requires:       python-netifaces >= 0.10.4
-Requires:       python2-neutronclient >= 6.3.0
-Requires:       python2-neutron-lib >= 1.13.0
+Requires:       python2-neutronclient >= 6.7.0
+Requires:       python2-neutron-lib >= 1.18.0
 Requires:       python2-novaclient >= 9.1.0
 Requires:       python2-os-xenapi >= 0.3.1
 Requires:       python2-oslo-cache >= 1.26.0
-Requires:       python2-oslo-concurrency >= 3.25.0
-Requires:       python2-oslo-config >= 2:5.1.0
+Requires:       python2-oslo-concurrency >= 3.26.0
+Requires:       python2-oslo-config >= 2:5.2.0
 Requires:       python2-oslo-context >= 2.19.2
 Requires:       python2-oslo-db >= 4.27.0
 Requires:       python2-oslo-i18n >= 3.15.3
@@ -166,16 +166,16 @@ Requires:       python2-osprofiler >= 1.4.0
 Requires:       python2-ovsdbapp
 Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
-Requires:       python2-pecan >= 1.0.0
+Requires:       python2-pecan >= 1.1.1
 Requires:       python2-pbr >= 2.0.0
 Requires:       python2-psutil >= 3.2.2
 Requires:       python2-pyroute2 >= 0.4.21
 Requires:       python2-requests >= 2.14.2
-Requires:       python2-tenacity >= 3.2.1
+Requires:       python2-tenacity >= 4.4.0
 Requires:       python2-routes >= 2.3.1
-Requires:       python2-ryu >= 4.14
+Requires:       python2-ryu >= 4.24
 Requires:       python2-six >= 1.10.0
-Requires:       python2-sqlalchemy >= 1.0.10
+Requires:       python2-sqlalchemy >= 1.2.0
 Requires:       python2-stevedore >= 1.20.0
 Requires:       python2-weakrefmethod >= 1.0.2
 Requires:       python-webob >= 1.7.1
