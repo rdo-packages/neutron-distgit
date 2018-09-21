@@ -1,3 +1,16 @@
+# Macros for py2/py3 compatibility
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global pyver %{python3_pkgversion}
+%else
+%global pyver 2
+%endif
+
+%global pyver_bin python%{pyver}
+%global pyver_sitelib %python%{pyver}_sitelib
+%global pyver_install %py%{pyver}_install
+%global pyver_build %py%{pyver}_build
+# End of macros for py2/py3 compatibility
+
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
@@ -60,34 +73,40 @@ BuildArch:      noarch
 
 BuildRequires:  git
 BuildRequires:  openstack-macros
-BuildRequires:  python2-devel
-BuildRequires:  python2-babel
-BuildRequires:  python-d2to1
-BuildRequires:  python2-keystoneauth1 >= 3.4.0
-BuildRequires:  python2-keystonemiddleware
-BuildRequires:  python2-neutron-lib
-BuildRequires:  python2-novaclient
-BuildRequires:  python2-os-xenapi
-BuildRequires:  python2-oslo-cache
-BuildRequires:  python2-oslo-concurrency
-BuildRequires:  python2-oslo-config
-BuildRequires:  python2-oslo-db
-BuildRequires:  python2-oslo-log
-BuildRequires:  python2-oslo-messaging
-BuildRequires:  python2-oslo-policy
-BuildRequires:  python2-oslo-privsep
-BuildRequires:  python2-oslo-rootwrap
-BuildRequires:  python2-oslo-service
-BuildRequires:  python2-oslo-versionedobjects
-BuildRequires:  python2-osprofiler >= 1.3.0
-BuildRequires:  python2-ovsdbapp
-BuildRequires:  python2-pbr >= 2.0.0
-BuildRequires:  python2-psutil >= 3.2.2
-BuildRequires:  python2-pyroute2 >= 0.4.21
-BuildRequires:  python2-pecan
-BuildRequires:  python2-tenacity >= 4.4.0
-BuildRequires:  python2-weakrefmethod >= 1.0.2
+BuildRequires:  python%{pyver}-devel
+BuildRequires:  python%{pyver}-babel
+BuildRequires:  python%{pyver}-keystoneauth1 >= 3.4.0
+BuildRequires:  python%{pyver}-keystonemiddleware
+BuildRequires:  python%{pyver}-neutron-lib
+BuildRequires:  python%{pyver}-novaclient
+BuildRequires:  python%{pyver}-os-xenapi
+BuildRequires:  python%{pyver}-oslo-cache
+BuildRequires:  python%{pyver}-oslo-concurrency
+BuildRequires:  python%{pyver}-oslo-config
+BuildRequires:  python%{pyver}-oslo-db
+BuildRequires:  python%{pyver}-oslo-log
+BuildRequires:  python%{pyver}-oslo-messaging
+BuildRequires:  python%{pyver}-oslo-policy
+BuildRequires:  python%{pyver}-oslo-privsep
+BuildRequires:  python%{pyver}-oslo-rootwrap
+BuildRequires:  python%{pyver}-oslo-service
+BuildRequires:  python%{pyver}-oslo-versionedobjects
+BuildRequires:  python%{pyver}-osprofiler >= 1.3.0
+BuildRequires:  python%{pyver}-ovsdbapp
+BuildRequires:  python%{pyver}-pbr >= 2.0.0
+BuildRequires:  python%{pyver}-psutil >= 3.2.2
+BuildRequires:  python%{pyver}-pyroute2 >= 0.4.21
+BuildRequires:  python%{pyver}-pecan
+BuildRequires:  python%{pyver}-tenacity >= 4.4.0
+BuildRequires:  python%{pyver}-weakrefmethod >= 1.0.2
 BuildRequires:  systemd
+# Handle python2 exception
+%if %{pyver} == 2
+BuildRequires:  python-d2to1
+%else
+BuildRequires:  python%{pyver}-d2to1
+%endif
+
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
@@ -128,83 +147,101 @@ Obsoletes:      openstack-%{service}-dev-server
 %{common_desc}
 
 
-%package -n python-%{service}
+%package -n python%{pyver}-%{service}
 Summary:        Neutron Python libraries
-Requires:       python2-alembic >= 0.9.6
-Requires:       python2-debtcollector >= 1.2.0
-Requires:       python2-designateclient >= 2.7.0
-Requires:       python2-eventlet >= 0.18.2
-Requires:       python2-greenlet >= 0.4.10
+%{?python_provide:%python_provide python%{pyver}-%{service}}
+Requires:       python%{pyver}-alembic >= 0.9.6
+Requires:       python%{pyver}-debtcollector >= 1.2.0
+Requires:       python%{pyver}-designateclient >= 2.7.0
+Requires:       python%{pyver}-eventlet >= 0.18.2
+Requires:       python%{pyver}-greenlet >= 0.4.10
+Requires:       python%{pyver}-jinja2 >= 2.10
+Requires:       python%{pyver}-keystoneauth1 >= 3.4.0
+Requires:       python%{pyver}-keystonemiddleware >= 4.17.0
+Requires:       python%{pyver}-netaddr >= 0.7.18
+Requires:       python%{pyver}-neutronclient >= 6.7.0
+Requires:       python%{pyver}-neutron-lib >= 1.18.0
+Requires:       python%{pyver}-novaclient >= 9.1.0
+Requires:       python%{pyver}-os-xenapi >= 0.3.1
+Requires:       python%{pyver}-oslo-cache >= 1.26.0
+Requires:       python%{pyver}-oslo-concurrency >= 3.26.0
+Requires:       python%{pyver}-oslo-config >= 2:5.2.0
+Requires:       python%{pyver}-oslo-context >= 2.19.2
+Requires:       python%{pyver}-oslo-db >= 4.27.0
+Requires:       python%{pyver}-oslo-i18n >= 3.15.3
+Requires:       python%{pyver}-oslo-log >= 3.36.0
+Requires:       python%{pyver}-oslo-messaging >= 5.29.0
+Requires:       python%{pyver}-oslo-middleware >= 3.31.0
+Requires:       python%{pyver}-oslo-policy >= 1.30.0
+Requires:       python%{pyver}-oslo-privsep >= 1.23.0
+Requires:       python%{pyver}-oslo-reports >= 1.18.0
+Requires:       python%{pyver}-oslo-rootwrap >= 5.8.0
+Requires:       python%{pyver}-oslo-serialization >= 2.18.0
+Requires:       python%{pyver}-oslo-service >= 1.24.0
+Requires:       python%{pyver}-oslo-utils >= 3.33.0
+Requires:       python%{pyver}-oslo-versionedobjects >= 1.31.2
+Requires:       python%{pyver}-osprofiler >= 1.4.0
+Requires:       python%{pyver}-ovsdbapp
+Requires:       python%{pyver}-pecan >= 1.1.1
+Requires:       python%{pyver}-pbr >= 2.0.0
+Requires:       python%{pyver}-psutil >= 3.2.2
+Requires:       python%{pyver}-pyroute2 >= 0.4.21
+Requires:       python%{pyver}-requests >= 2.14.2
+Requires:       python%{pyver}-tenacity >= 4.4.0
+Requires:       python%{pyver}-routes >= 2.3.1
+Requires:       python%{pyver}-ryu >= 4.24
+Requires:       python%{pyver}-six >= 1.10.0
+Requires:       python%{pyver}-sqlalchemy >= 1.2.0
+Requires:       python%{pyver}-stevedore >= 1.20.0
+Requires:       python%{pyver}-weakrefmethod >= 1.0.2
+Requires:       python%{pyver}-webob >= 1.7.1
+
+# Handle python2 exception
+%if %{pyver} == 2
 Requires:       python-httplib2 >= 0.9.1
-Requires:       python2-jinja2 >= 2.10
-Requires:       python2-keystoneauth1 >= 3.4.0
-Requires:       python2-keystonemiddleware >= 4.17.0
-Requires:       python2-netaddr >= 0.7.18
 Requires:       python-netifaces >= 0.10.4
-Requires:       python2-neutronclient >= 6.7.0
-Requires:       python2-neutron-lib >= 1.18.0
-Requires:       python2-novaclient >= 9.1.0
-Requires:       python2-os-xenapi >= 0.3.1
-Requires:       python2-oslo-cache >= 1.26.0
-Requires:       python2-oslo-concurrency >= 3.26.0
-Requires:       python2-oslo-config >= 2:5.2.0
-Requires:       python2-oslo-context >= 2.19.2
-Requires:       python2-oslo-db >= 4.27.0
-Requires:       python2-oslo-i18n >= 3.15.3
-Requires:       python2-oslo-log >= 3.36.0
-Requires:       python2-oslo-messaging >= 5.29.0
-Requires:       python2-oslo-middleware >= 3.31.0
-Requires:       python2-oslo-policy >= 1.30.0
-Requires:       python2-oslo-privsep >= 1.23.0
-Requires:       python2-oslo-reports >= 1.18.0
-Requires:       python2-oslo-rootwrap >= 5.8.0
-Requires:       python2-oslo-serialization >= 2.18.0
-Requires:       python2-oslo-service >= 1.24.0
-Requires:       python2-oslo-utils >= 3.33.0
-Requires:       python2-oslo-versionedobjects >= 1.31.2
-Requires:       python2-osprofiler >= 1.4.0
-Requires:       python2-ovsdbapp
 Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
-Requires:       python2-pecan >= 1.1.1
-Requires:       python2-pbr >= 2.0.0
-Requires:       python2-psutil >= 3.2.2
-Requires:       python2-pyroute2 >= 0.4.21
-Requires:       python2-requests >= 2.14.2
-Requires:       python2-tenacity >= 4.4.0
-Requires:       python2-routes >= 2.3.1
-Requires:       python2-ryu >= 4.24
-Requires:       python2-six >= 1.10.0
-Requires:       python2-sqlalchemy >= 1.2.0
-Requires:       python2-stevedore >= 1.20.0
-Requires:       python2-weakrefmethod >= 1.0.2
-Requires:       python-webob >= 1.7.1
+%else
+Requires:       python%{pyver}-httplib2 >= 0.9.1
+Requires:       python%{pyver}-netifaces >= 0.10.4
+Requires:       python%{pyver}-paste
+Requires:       python%{pyver}-paste-deploy >= 1.5.0
+%endif
 
 
 
-%description -n python-%{service}
+%description -n python%{pyver}-%{service}
 %{common_desc}
 
 This package contains the Neutron Python library.
 
 
-%package -n python-%{service}-tests
+%package -n python%{pyver}-%{service}-tests
 Summary:        Neutron tests
-Requires:       python-%{service} = %{epoch}:%{version}-%{release}
-Requires:       python2-ddt >= 1.0.1
-Requires:       python2-fixtures >= 3.0.0
-Requires:       python2-mock >= 2.0
-Requires:       python2-subunit >= 0.0.18
-Requires:       python2-testrepository >= 0.0.18
-Requires:       python2-testtools >= 1.4.0
-Requires:       python2-testresources >= 0.2.4
-Requires:       python2-testscenarios >= 0.4
-Requires:       python2-oslotest >= 1.10.0
-Requires:       python2-oslo-db-tests >= 4.10.0
-Requires:       python2-os-testr >= 0.7.0
-Requires:       python2-PyMySQL >= 0.6.2
-Requires:       python2-tempest >= 12.1.0
+%{?python_provide:%python_provide python%{pyver}-%{service}-tests}
+Requires:       python%{pyver}-%{service} = %{epoch}:%{version}-%{release}
+Requires:       python%{pyver}-ddt >= 1.0.1
+Requires:       python%{pyver}-fixtures >= 3.0.0
+Requires:       python%{pyver}-mock >= 2.0
+Requires:       python%{pyver}-subunit >= 0.0.18
+Requires:       python%{pyver}-testrepository >= 0.0.18
+Requires:       python%{pyver}-testtools >= 1.4.0
+Requires:       python%{pyver}-testresources >= 0.2.4
+Requires:       python%{pyver}-testscenarios >= 0.4
+Requires:       python%{pyver}-oslotest >= 1.10.0
+Requires:       python%{pyver}-oslo-db-tests >= 4.10.0
+Requires:       python%{pyver}-os-testr >= 0.7.0
+Requires:       python%{pyver}-PyMySQL >= 0.6.2
+Requires:       python%{pyver}-tempest >= 12.1.0
+
+# Handle python2 exception
+%if %{pyver} == 2
 Requires:       python-webtest >= 2.0
+%else
+Requires:       python%{pyver}-webtest >= 2.0
+%endif
+
 
 # pstree is used during functional testing to ensure our internal
 # libraries managing processes work correctly.
@@ -214,7 +251,7 @@ Requires:       psmisc
 Requires:       nfs-utils
 
 
-%description -n python-%{service}-tests
+%description -n python%{pyver}-%{service}-tests
 %{common_desc}
 
 This package contains Neutron test files.
@@ -223,7 +260,7 @@ This package contains Neutron test files.
 %package common
 Summary:        Neutron common files
 Requires(pre): shadow-utils
-Requires:       python-%{service} = %{epoch}:%{version}-%{release}
+Requires:       python%{pyver}-%{service} = %{epoch}:%{version}-%{release}
 Requires:       sudo
 
 
@@ -268,7 +305,7 @@ macvtap attachments for libvirt qemu/kvm instances.
 Summary:        Neutron ML2 plugin
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 # needed for brocade and cisco drivers
-Requires:       python2-ncclient
+Requires:       python%{pyver}-ncclient
 
 
 %description ml2
@@ -288,7 +325,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       ipset
 Requires:       iptables
 Requires:       openvswitch
-Requires:       python-openvswitch >= 2.8.0
+Requires:       python%{pyver}-openvswitch >= 2.8.0
 # kmod is needed to get access to /usr/sbin/modprobe needed by
 # neutron-enable-bridge-firewall.sh triggered by the service unit file
 Requires:       kmod
@@ -352,10 +389,10 @@ rm -rf neutron.egg-info
 
 %build
 export SKIP_PIP_INSTALL=1
-%{__python2} setup.py build
+%{pyver_build}
 # Generate i18n files
 # (amoralej) we can remove '-D neutron' once https://review.openstack.org/#/c/485070/ is merged
-%{__python2} setup.py compile_catalog -d build/lib/%{service}/locale -D neutron
+%{pyver_bin} setup.py compile_catalog -d build/lib/%{service}/locale -D neutron
 
 # Generate configuration files
 PYTHONPATH=. tools/generate_config_file_samples.sh
@@ -383,12 +420,12 @@ while read name eq value; do
 done < %{SOURCE30}
 
 %install
-%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
+%{pyver_install}
 
 # Remove unused files
-rm -rf %{buildroot}%{python2_sitelib}/bin
-rm -rf %{buildroot}%{python2_sitelib}/doc
-rm -rf %{buildroot}%{python2_sitelib}/tools
+rm -rf %{buildroot}%{pyver_sitelib}/bin
+rm -rf %{buildroot}%{pyver_sitelib}/doc
+rm -rf %{buildroot}%{pyver_sitelib}/tools
 
 # Move rootwrap files to proper location
 install -d -m 755 %{buildroot}%{_datarootdir}/%{service}/rootwrap
@@ -475,9 +512,9 @@ done
 
 # Install i18n .mo files (.po and .pot are not required)
 install -d -m 755 %{buildroot}%{_datadir}
-rm -f %{buildroot}%{python2_sitelib}/%{service}/locale/*/LC_*/%{service}*po
-rm -f %{buildroot}%{python2_sitelib}/%{service}/locale/*pot
-mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
+rm -f %{buildroot}%{pyver_sitelib}/%{service}/locale/*/LC_*/%{service}*po
+rm -f %{buildroot}%{pyver_sitelib}/%{service}/locale/*pot
+mv %{buildroot}%{pyver_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
 
 # Find language files
 %find_lang %{service} --all-name
@@ -638,15 +675,15 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-cleanup
 
 
-%files -n python-%{service}-tests
+%files -n python%{pyver}-%{service}-tests
 %license LICENSE
-%{python2_sitelib}/%{service}/tests
+%{pyver_sitelib}/%{service}/tests
 
-%files -n python-%{service}
+%files -n python%{pyver}-%{service}
 %license LICENSE
-%{python2_sitelib}/%{service}
-%{python2_sitelib}/%{service}-*.egg-info
-%exclude %{python2_sitelib}/%{service}/tests
+%{pyver_sitelib}/%{service}
+%{pyver_sitelib}/%{service}-*.egg-info
+%exclude %{pyver_sitelib}/%{service}/tests
 
 
 %files common -f %{service}.lang
