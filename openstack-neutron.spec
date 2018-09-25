@@ -84,7 +84,7 @@ BuildRequires:  python2-ovsdbapp
 BuildRequires:  python2-pbr >= 2.0.0
 BuildRequires:  python2-psutil >= 3.2.2
 BuildRequires:  python2-pyroute2 >= 0.4.21
-BuildRequires:  python2-pecan
+BuildRequires:  python2-pecan >= 1.3.2
 BuildRequires:  python2-tenacity >= 4.4.0
 BuildRequires:  python2-weakrefmethod >= 1.0.2
 BuildRequires:  systemd
@@ -166,7 +166,7 @@ Requires:       python2-osprofiler >= 1.4.0
 Requires:       python2-ovsdbapp
 Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
-Requires:       python2-pecan >= 1.1.1
+Requires:       python2-pecan >= 1.3.2
 Requires:       python2-pbr >= 2.0.0
 Requires:       python2-psutil >= 3.2.2
 Requires:       python2-pyroute2 >= 0.4.21
