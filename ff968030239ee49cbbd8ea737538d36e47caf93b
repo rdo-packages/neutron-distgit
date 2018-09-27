@@ -1,0 +1,8 @@
+Code-Review+2: Javier Peña <jpena@redhat.com>
+Workflow+1: Javier Peña <jpena@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Thu, 27 Sep 2018 09:09:02 +0000
+Reviewed-on: https://review.rdoproject.org/r/16366
+Project: openstack/neutron-distgit
+Branch: refs/heads/rpm-master
