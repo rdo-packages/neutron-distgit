@@ -328,7 +328,12 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       ipset
 Requires:       iptables
 Requires:       openvswitch
+# Handle python2 exception
+%if %{pyver} == 2
+Requires:       python-openvswitch >= 2.8.0
+%else
 Requires:       python%{pyver}-openvswitch >= 2.8.0
+%endif
 # kmod is needed to get access to /usr/sbin/modprobe needed by
 # neutron-enable-bridge-firewall.sh triggered by the service unit file
 Requires:       kmod
