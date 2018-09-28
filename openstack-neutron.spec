@@ -385,6 +385,7 @@ SR-IOV network cards.
 
 %prep
 %autosetup -n %{service}-%{upstream_version} -S git
+sed -i 's/\/usr\/bin\/python/\/usr\/bin\/python%{pyver}/' %{SOURCE36}
 
 find %{service} -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
