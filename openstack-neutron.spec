@@ -96,7 +96,7 @@ BuildRequires:  python%{pyver}-ovsdbapp
 BuildRequires:  python%{pyver}-pbr >= 2.0.0
 BuildRequires:  python%{pyver}-psutil >= 3.2.2
 BuildRequires:  python%{pyver}-pyroute2 >= 0.4.21
-BuildRequires:  python%{pyver}-pecan
+BuildRequires:  python%{pyver}-pecan >= 1.3.2
 BuildRequires:  python%{pyver}-tenacity >= 4.4.0
 BuildRequires:  systemd
 # Handle python2 exception
@@ -182,7 +182,7 @@ Requires:       python%{pyver}-oslo-utils >= 3.33.0
 Requires:       python%{pyver}-oslo-versionedobjects >= 1.31.2
 Requires:       python%{pyver}-osprofiler >= 1.4.0
 Requires:       python%{pyver}-ovsdbapp
-Requires:       python%{pyver}-pecan >= 1.1.1
+Requires:       python%{pyver}-pecan >= 1.3.2
 Requires:       python%{pyver}-pbr >= 2.0.0
 Requires:       python%{pyver}-psutil >= 3.2.2
 Requires:       python%{pyver}-pyroute2 >= 0.4.21
