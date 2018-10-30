@@ -90,6 +90,7 @@ BuildRequires:  python%{pyver}-oslo-policy
 BuildRequires:  python%{pyver}-oslo-privsep
 BuildRequires:  python%{pyver}-oslo-rootwrap
 BuildRequires:  python%{pyver}-oslo-service
+BuildRequires:  python%{pyver}-oslo-upgradecheck
 BuildRequires:  python%{pyver}-oslo-versionedobjects
 BuildRequires:  python%{pyver}-osprofiler >= 1.3.0
 BuildRequires:  python%{pyver}-ovsdbapp
@@ -178,6 +179,7 @@ Requires:       python%{pyver}-oslo-reports >= 1.18.0
 Requires:       python%{pyver}-oslo-rootwrap >= 5.8.0
 Requires:       python%{pyver}-oslo-serialization >= 2.18.0
 Requires:       python%{pyver}-oslo-service >= 1.24.0
+Requires:       python%{pyver}-oslo-upgradecheck >= 0.1.0
 Requires:       python%{pyver}-oslo-utils >= 3.33.0
 Requires:       python%{pyver}-oslo-versionedobjects >= 1.31.2
 Requires:       python%{pyver}-osprofiler >= 1.4.0
@@ -662,6 +664,7 @@ fi
 %{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-sanity-check
+%{_bindir}/neutron-status
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_unitdir}/neutron-dhcp-agent.service
