@@ -662,6 +662,7 @@ fi
 %{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-sanity-check
+%{_bindir}/neutron-status
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_unitdir}/neutron-dhcp-agent.service
