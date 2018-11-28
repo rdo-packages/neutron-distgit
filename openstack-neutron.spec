@@ -18,7 +18,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        12.0.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -672,14 +672,7 @@ fi
 %dir %attr(0750, %{service}, %{service}) %{_localstatedir}/log/%{service}
 %dir %{_datarootdir}/%{service}
 %dir %{_datarootdir}/%{service}/rootwrap
-%{_datarootdir}/%{service}/rootwrap/debug.filters
-%{_datarootdir}/%{service}/rootwrap/dhcp.filters
-%{_datarootdir}/%{service}/rootwrap/dibbler.filters
-%{_datarootdir}/%{service}/rootwrap/ebtables.filters
-%{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
-%{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
-%{_datarootdir}/%{service}/rootwrap/l3.filters
-%{_datarootdir}/%{service}/rootwrap/netns-cleanup.filters
+%{_datarootdir}/%{service}/rootwrap/*
 
 
 %files linuxbridge
@@ -767,4 +760,3 @@ fi
 
 * Mon Feb 19 2018 RDO <dev@lists.rdoproject.org> 1:12.0.0-0.1.0rc2
 - Update to 12.0.0.0rc2
-
