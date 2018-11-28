@@ -681,14 +681,7 @@ fi
 %dir %attr(0750, %{service}, %{service}) %{_localstatedir}/log/%{service}
 %dir %{_datarootdir}/%{service}
 %dir %{_datarootdir}/%{service}/rootwrap
-%{_datarootdir}/%{service}/rootwrap/debug.filters
-%{_datarootdir}/%{service}/rootwrap/dhcp.filters
-%{_datarootdir}/%{service}/rootwrap/dibbler.filters
-%{_datarootdir}/%{service}/rootwrap/ebtables.filters
-%{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
-%{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
-%{_datarootdir}/%{service}/rootwrap/l3.filters
-%{_datarootdir}/%{service}/rootwrap/netns-cleanup.filters
+%{_datarootdir}/%{service}/rootwrap/*
 
 
 %files linuxbridge
@@ -804,4 +797,3 @@ fi
 
 * Tue Aug 22 2017 Alfredo Moralejo <amoralej@redhat.com> 1:11.0.0-0.1.0rc1
 - Update to 11.0.0.0rc1
-
