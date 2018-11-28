@@ -805,3 +805,4 @@ fi
 * Tue Aug 22 2017 Alfredo Moralejo <amoralej@redhat.com> 1:11.0.0-0.1.0rc1
 - Update to 11.0.0.0rc1
 
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/neutron/commit/?id=d7d80c59146ce502ae82ad9ee93ab6409a3353f2
