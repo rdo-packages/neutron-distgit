@@ -140,7 +140,11 @@ Requires:       haproxy >= 1.5.0
 Requires:       ipset
 Requires:       iptables
 
+%if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
+%else
+%{?systemd_ordering} # does not exist on EL7
+%endif
 
 Obsoletes:      openstack-%{service}-dev-server
 
