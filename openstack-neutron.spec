@@ -681,7 +681,6 @@ fi
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/l3_agent.ini
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/metadata_agent.ini
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/policy.json
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-dhcp-agent
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-l3-agent
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-metadata-agent
