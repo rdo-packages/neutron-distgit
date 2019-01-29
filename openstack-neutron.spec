@@ -278,7 +278,6 @@ This package contains Neutron common files.
 
 %package linuxbridge
 Summary:        Neutron Linuxbridge agent
-Requires:       bridge-utils
 Requires:       ebtables
 Requires:       ipset
 Requires:       iptables
