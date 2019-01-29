@@ -278,9 +278,9 @@ This package contains Neutron common files.
 
 %package linuxbridge
 Summary:        Neutron Linuxbridge agent
-Requires:       bridge-utils
 Requires:       ebtables
 Requires:       ipset
+Requires:       iproute
 Requires:       iptables
 # kmod is needed to get access to /usr/sbin/modprobe needed by
 # neutron-enable-bridge-firewall.sh triggered by the service unit file
