@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_767ed3af",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 197
+      },
+      "writtenOn": "2019-01-31T08:50:56Z",
+      "side": 1,
+      "message": "It just calls \"ip\" command directly right now, also the bridge_lib.py ends up in python-neutron package right? This one already has pyroute2 dep",
+      "range": {
+        "startLine": 281,
+        "startChar": 31,
+        "endLine": 281,
+        "endChar": 39
+      },
+      "revId": "d0bb4e34597d29d391d5824a96e16f602eb8ef5b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
