@@ -278,7 +278,7 @@ This package contains Neutron common files.
 
 %package linuxbridge
 Summary:        Neutron Linuxbridge agent
-Requires:       bridge-utils
+Requires:       python%{pyver}-pyroute2 >= 0.4.21
 Requires:       ebtables
 Requires:       ipset
 Requires:       iptables
