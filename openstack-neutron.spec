@@ -137,9 +137,20 @@ Requires:       keepalived
 Requires:       haproxy >= 1.5.0
 
 # Those are not hard requirements, ipset is used by ipset-cleanup in the subpackage,
-# and iptables is used by the l3-agent which currently is not in a separate package.
+# iptables is used by the l3-agent which currently is not in a separate package,
+# iputils provides tools like arping which are used by l3-agent and iproute-tc
+# (or iproute in case of CentOS 7 and RHEL 7), provides tc binary which is
+# used by e.g. l3-agent and openvswitch-agent when QoS extension is enabled
+# in agent's config.
 Requires:       ipset
 Requires:       iptables
+Requires:       iputils
+# In Centos 7 "tc" library is provided by iproute package
+%if 0%{?fedora} || 0%{?rhel} > 7
+Requires:       iproute-tc
+%else
+Requires:       iproute
+%endif
 
 %if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
