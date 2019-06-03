@@ -99,6 +99,7 @@ BuildRequires:  python%{pyver}-psutil >= 3.2.2
 BuildRequires:  python%{pyver}-pyroute2 >= 0.4.21
 BuildRequires:  python%{pyver}-pecan >= 1.3.2
 BuildRequires:  python%{pyver}-tenacity >= 4.4.0
+BuildRequires:  python%{pyver}-os-vif
 BuildRequires:  systemd
 # Handle python2 exception
 %if %{pyver} == 2
@@ -334,6 +335,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       ipset
 Requires:       iptables
 Requires:       openvswitch
+Requires:       python%{pyver}-os-vif >= 1.15.1
 # Handle python2 exception
 %if %{pyver} == 2
 Requires:       python-openvswitch >= 2.8.0
