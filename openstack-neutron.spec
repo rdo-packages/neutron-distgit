@@ -99,6 +99,7 @@ BuildRequires:  python%{pyver}-psutil >= 3.2.2
 BuildRequires:  python%{pyver}-pyroute2 >= 0.4.21
 BuildRequires:  python%{pyver}-pecan >= 1.3.2
 BuildRequires:  python%{pyver}-tenacity >= 4.4.0
+BuildRequires:  python%{pyver}-stestr
 BuildRequires:  python%{pyver}-os-vif
 BuildRequires:  systemd
 # Handle python2 exception
@@ -539,6 +540,10 @@ mv %{buildroot}%{pyver_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
 
 # Find language files
 %find_lang %{service} --all-name
+
+%check
+export PYTHON=%{pyver_bin}
+stestr-%{pyver} run
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
