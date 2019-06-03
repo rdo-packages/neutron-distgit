@@ -73,6 +73,8 @@ BuildArch:      noarch
 
 BuildRequires:  git
 BuildRequires:  openstack-macros
+BuildRequires:  python%{pyver}-ddt
+BuildRequires:  python%{pyver}-flake8
 BuildRequires:  python%{pyver}-devel
 BuildRequires:  python%{pyver}-babel
 BuildRequires:  python%{pyver}-keystoneauth1 >= 3.4.0
@@ -88,6 +90,7 @@ BuildRequires:  python%{pyver}-oslo-log
 BuildRequires:  python%{pyver}-oslo-messaging
 BuildRequires:  python%{pyver}-oslo-policy
 BuildRequires:  python%{pyver}-oslo-privsep
+BuildRequires:  python%{pyver}-oslo-reports
 BuildRequires:  python%{pyver}-oslo-rootwrap
 BuildRequires:  python%{pyver}-oslo-service
 BuildRequires:  python%{pyver}-oslo-upgradecheck
@@ -99,6 +102,16 @@ BuildRequires:  python%{pyver}-psutil >= 3.2.2
 BuildRequires:  python%{pyver}-pyroute2 >= 0.4.21
 BuildRequires:  python%{pyver}-pecan >= 1.3.2
 BuildRequires:  python%{pyver}-tenacity >= 4.4.0
+BuildRequires:  python%{pyver}-oslotest
+BuildRequires:  python%{pyver}-hacking
+BuildRequires:  python%{pyver}-stestr
+BuildRequires:  python%{pyver}-testresources
+BuildRequires:  python%{pyver}-testscenarios
+BuildRequires:  python%{pyver}-designateclient
+BuildRequires:  python%{pyver}-ironicclient
+BuildRequires:  python%{pyver}-neutronclient
+BuildRequires:  python%{pyver}-neutron-lib-tests
+BuildRequires:  python%{pyver}-os-ken
 BuildRequires:  python%{pyver}-os-vif
 BuildRequires:  systemd
 # Handle python2 exception
@@ -539,6 +552,10 @@ mv %{buildroot}%{pyver_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
 
 # Find language files
 %find_lang %{service} --all-name
+
+%check
+export PYTHON=%{pyver_bin}
+stestr-%{pyver} run
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
