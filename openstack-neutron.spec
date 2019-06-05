@@ -694,6 +694,7 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-netns-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovs-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-cleanup
+%dir %{_sysconfdir}/%{service}/kill_scripts
 
 
 %files -n python%{pyver}-%{service}-tests
