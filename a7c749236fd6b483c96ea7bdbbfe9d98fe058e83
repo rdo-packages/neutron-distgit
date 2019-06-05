@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a64759bb_9ed42b49",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 303
+      },
+      "writtenOn": "2019-06-05T14:13:31Z",
+      "side": 1,
+      "message": "oh you need an install -D line somewhere around L466",
+      "revId": "a7c749236fd6b483c96ea7bdbbfe9d98fe058e83",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
