@@ -511,6 +511,7 @@ install -d -m 755 %{buildroot}%{_datadir}/%{service}
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{service}
 install -d -m 755 %{buildroot}%{_localstatedir}/log/%{service}
 install -d -m 755 %{buildroot}%{_localstatedir}/run/%{service}
+install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}/kill_scripts
 
 # Install dist conf
 install -p -D -m 640 %{SOURCE30} %{buildroot}%{_datadir}/%{service}/%{service}-dist.conf
@@ -694,6 +695,7 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-netns-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovs-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-cleanup
+%dir %{_sysconfdir}/%{service}/kill_scripts
 
 
 %files -n python%{pyver}-%{service}-tests
