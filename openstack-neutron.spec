@@ -168,6 +168,7 @@ Requires:       python%{pyver}-netaddr >= 0.7.18
 Requires:       python%{pyver}-neutronclient >= 6.7.0
 Requires:       python%{pyver}-neutron-lib >= 1.25.0
 Requires:       python%{pyver}-novaclient >= 9.1.0
+Requires:       python%{pyver}-os-vif >= 1.15.1
 Requires:       python%{pyver}-os-xenapi >= 0.3.1
 Requires:       python%{pyver}-oslo-cache >= 1.26.0
 Requires:       python%{pyver}-oslo-concurrency >= 3.26.0
@@ -335,7 +336,6 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       ipset
 Requires:       iptables
 Requires:       openvswitch
-Requires:       python%{pyver}-os-vif >= 1.15.1
 # Handle python2 exception
 %if %{pyver} == 2
 Requires:       python-openvswitch >= 2.8.0
