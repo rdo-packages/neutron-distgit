@@ -201,7 +201,6 @@ Requires:       python2-testtools >= 1.4.0
 Requires:       python2-testresources >= 0.2.4
 Requires:       python2-testscenarios >= 0.4
 Requires:       python2-oslotest >= 1.10.0
-Requires:       python2-oslo-db-tests >= 4.10.0
 Requires:       python2-os-testr >= 0.7.0
 Requires:       python2-PyMySQL >= 0.6.2
 Requires:       python2-tempest >= 12.1.0
