@@ -238,7 +238,6 @@ Requires:       python%{pyver}-testtools >= 1.4.0
 Requires:       python%{pyver}-testresources >= 0.2.4
 Requires:       python%{pyver}-testscenarios >= 0.4
 Requires:       python%{pyver}-oslotest >= 1.10.0
-Requires:       python%{pyver}-oslo-db-tests >= 4.37.0
 Requires:       python%{pyver}-os-testr >= 0.7.0
 Requires:       python%{pyver}-PyMySQL >= 0.6.2
 Requires:       python%{pyver}-tempest >= 12.1.0
