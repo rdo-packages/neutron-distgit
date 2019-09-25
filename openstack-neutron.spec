@@ -177,7 +177,7 @@ Requires:       python%{pyver}-keystoneauth1 >= 3.4.0
 Requires:       python%{pyver}-keystonemiddleware >= 4.17.0
 Requires:       python%{pyver}-netaddr >= 0.7.18
 Requires:       python%{pyver}-neutronclient >= 6.7.0
-Requires:       python%{pyver}-neutron-lib >= 1.25.0
+Requires:       python%{pyver}-neutron-lib >= 1.29.1
 Requires:       python%{pyver}-novaclient >= 9.1.0
 Requires:       python%{pyver}-os-vif >= 1.15.1
 Requires:       python%{pyver}-os-xenapi >= 0.3.1
@@ -198,8 +198,8 @@ Requires:       python%{pyver}-oslo-serialization >= 2.18.0
 Requires:       python%{pyver}-oslo-service >= 1.24.0
 Requires:       python%{pyver}-oslo-upgradecheck >= 0.1.0
 Requires:       python%{pyver}-oslo-utils >= 3.33.0
-Requires:       python%{pyver}-oslo-versionedobjects >= 1.31.2
-Requires:       python%{pyver}-osprofiler >= 1.4.0
+Requires:       python%{pyver}-oslo-versionedobjects >= 1.35.1
+Requires:       python%{pyver}-osprofiler >= 2.3.0
 Requires:       python%{pyver}-ovsdbapp
 Requires:       python%{pyver}-pecan >= 1.3.2
 Requires:       python%{pyver}-pbr >= 4.0.0
@@ -213,6 +213,7 @@ Requires:       python%{pyver}-six >= 1.10.0
 Requires:       python%{pyver}-sqlalchemy >= 1.2.0
 Requires:       python%{pyver}-stevedore >= 1.20.0
 Requires:       python%{pyver}-webob >= 1.8.2
+Requires:       python%{pyver}-openstacksdk >= 0.31.2
 
 # Handle python2 exception
 %if %{pyver} == 2
@@ -221,11 +222,13 @@ Requires:       python-netifaces >= 0.10.4
 Requires:       python-paste
 Requires:       python-paste-deploy >= 1.5.0
 Requires:       python%{pyver}-weakrefmethod >= 1.0.2
+Requires:       python-decorator >= 3.4.0
 %else
 Requires:       python%{pyver}-httplib2 >= 0.9.1
 Requires:       python%{pyver}-netifaces >= 0.10.4
 Requires:       python%{pyver}-paste
 Requires:       python%{pyver}-paste-deploy >= 1.5.0
+Requires:       python%{pyver}-decorator >= 3.4.0
 %endif
 
 
