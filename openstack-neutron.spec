@@ -1,4 +1,4 @@
-%global milestone .0rc1
+%global milestone .0rc2
 # Macros for py2/py3 compatibility
 %if 0%{?fedora} || 0%{?rhel} > 7
 %global pyver %{python3_pkgversion}
@@ -32,7 +32,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        15.0.0
-Release:        0.1%{?milestone}%{?dist}
+Release:        0.2%{?milestone}%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -67,7 +67,7 @@ Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 
 #
-# patches_base=15.0.0.0rc1
+# patches_base=15.0.0.0rc2
 #
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
 Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
@@ -825,6 +825,9 @@ fi
 
 
 %changelog
+* Fri Oct 11 2019 RDO <dev@lists.rdoproject.org> 1:15.0.0-0.2.0rc1
+- Update to 15.0.0.0rc2
+
 * Mon Sep 30 2019 RDO <dev@lists.rdoproject.org> 1:15.0.0-0.1.0rc1
 - Update to 15.0.0.0rc1
 
