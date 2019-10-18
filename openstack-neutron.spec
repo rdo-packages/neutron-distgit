@@ -104,10 +104,7 @@ BuildRequires:  python%{pyver}-os-vif
 BuildRequires:  systemd
 # Handle python2 exception
 %if %{pyver} == 2
-BuildRequires:  python-d2to1
 BuildRequires:  python%{pyver}-weakrefmethod >= 1.0.2
-%else
-BuildRequires:  python%{pyver}-d2to1
 %endif
 
 
