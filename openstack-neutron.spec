@@ -64,6 +64,7 @@ Source34:       neutron-l2-agent-sysctl.conf
 # essentially because .modules files are shell scripts.
 Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
+Source37:       neutron-ovn-metadata-agent.service
 
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
 Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
@@ -169,6 +170,7 @@ Requires:       python%{pyver}-debtcollector >= 1.2.0
 Requires:       python%{pyver}-designateclient >= 2.7.0
 Requires:       python%{pyver}-eventlet >= 0.18.2
 Requires:       python%{pyver}-greenlet >= 0.4.10
+Requires:       python%{pyver}-futurist >= 1.12.0
 Requires:       python%{pyver}-jinja2 >= 2.10
 Requires:       python%{pyver}-keystoneauth1 >= 3.4.0
 Requires:       python%{pyver}-keystonemiddleware >= 4.17.0
@@ -209,6 +211,7 @@ Requires:       python%{pyver}-os-ken >= 0.3.1
 Requires:       python%{pyver}-six >= 1.10.0
 Requires:       python%{pyver}-sqlalchemy >= 1.2.0
 Requires:       python%{pyver}-stevedore >= 1.20.0
+Requires:       python%{pyver}-tooz >= 1.58.0
 Requires:       python%{pyver}-webob >= 1.8.2
 Requires:       python%{pyver}-openstacksdk >= 0.31.2
 
@@ -401,6 +404,21 @@ This package contains the Neutron agent to support advanced features of
 SR-IOV network cards.
 
 
+%package ovn-metadata-agent
+Summary:        OVN metadata agent
+BuildRequires:  systemd
+Requires:       python-%{pkgname} = %{version}-%{release}
+Requires:       openvswitch >= 2.8.0
+%{?systemd_requires}
+
+%description ovn-metadata-agent
+OVN provides virtual networking for Open vSwitch and is a component of the
+Open vSwitch project.
+
+This package contains the agent that implements the metadata proxy so that VM's
+can retrieve metadata from OpenStack Nova.
+
+
 %prep
 %autosetup -n %{service}-%{upstream_version} -S git
 sed -i 's/\/usr\/bin\/python/\/usr\/bin\/python%{pyver}/' %{SOURCE36}
@@ -501,6 +519,7 @@ install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.s
 install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.service
 install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cleanup.service
 install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-ports.service
+install -p -D -m 644 %{SOURCE17} %{buildroot}%{_unitdir}/neutron-ovn-metadata-agent.service
 
 # Install helper scripts
 install -p -D -m 755 %{SOURCE33} %{buildroot}%{_bindir}/neutron-enable-bridge-firewall.sh
@@ -538,7 +557,7 @@ mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
 for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup macvtap-agent; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
-for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic; do
+for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic ovn-metadata; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
 
@@ -666,6 +685,18 @@ fi
 %cleanup_orphan_rootwrap_daemons
 
 
+%post ovn-metadata-agent
+%systemd_post neutron-ovn-metadata-agent.service
+
+
+%preun ovn-metadata-agent
+%systemd_preun neutron-ovn-metadata-agent.service
+
+
+%postun ovn-metadata-agent
+%systemd_postun_with_restart neutron-ovn-metadata-agent.service
+
+
 %files
 %license LICENSE
 %{_bindir}/neutron-api
@@ -684,6 +715,7 @@ fi
 %{_bindir}/neutron-status
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
+%{_bindir}/neutron-ovn-metadata-agent
 %{_unitdir}/neutron-dhcp-agent.service
 %{_unitdir}/neutron-l3-agent.service
 %{_unitdir}/neutron-metadata-agent.service
@@ -815,6 +847,14 @@ fi
 %{_bindir}/neutron-sriov-nic-agent
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/sriov_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-sriov-nic-agent
+
+
+%files ovn-metadata-agent
+%license LICENSE
+%{_bindir}/neutron-ovn-metadata-agent
+%{_unitdir}/neutron-ovn-metadata-agent.service
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/neutron-ovn-metadata-agent.ini
+%dir %{_sysconfdir}/neutron/conf.d/neutron-ovn-metadata-agent
 
 
 %changelog
