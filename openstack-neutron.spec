@@ -159,8 +159,10 @@ Requires:       iproute
 Obsoletes:      openstack-%{service}-dev-server
 Obsoletes:      python%{pyver}-networking-ovn
 Obsoletes:      python%{pyver}-networking-ovn-metadata-agent
+Obsoletes:      python%{pyver}-networking-ovn-migration-tool
 Provides:       python%{pyver}-networking-ovn = %{epoch}:%{version}-%{release}
 Provides:       python%{pyver}-networking-ovn-metadata-agent = %{epoch}:%{version}-%{release}
+Provides:       python%{pyver}-networking-ovn-migration-tool = %{epoch}:%{version}-%{release}
 
 %description
 %{common_desc}
@@ -421,6 +423,16 @@ Open vSwitch project.
 
 This package contains the agent that implements the metadata proxy so that VM's
 can retrieve metadata from OpenStack Nova.
+
+
+%package ovn-migration-tool
+Summary:        networking-ovn ML2/OVS to OVN migration tool
+Requires:       python%{pyver}-%{service} = %{epoch}:%{version}-%{release}
+
+%description ovn-migration-tool
+
+This package provides the necessary tools to update an existing ML2/OVS
+OpenStack to OVN based backend.
 
 
 %prep
@@ -859,6 +871,13 @@ fi
 %{_unitdir}/neutron-ovn-metadata-agent.service
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/neutron_ovn_metadata_agent.ini
 %dir %{_sysconfdir}/neutron/conf.d/neutron-ovn-metadata-agent
+
+
+%files ovn-migration-tool
+%license LICENSE
+%{_bindir}/neutron-ovn-migration-mtu
+%{_bindir}/ovn_migration.sh
+%{_datadir}/ansible/neutron-ovn-migration/playbooks/
 
 
 %changelog
