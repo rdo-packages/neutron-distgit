@@ -16,6 +16,29 @@
       "revId": "e778b48ab983b6420c8ebbe2945a5d4c3377ae81",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67824f56_f368f825",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 7
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2020-01-15T10:14:02Z",
+      "side": 1,
+      "message": "try with neutron_ovn_metadata_agent.ini. Generated file is using _ instead of -",
+      "range": {
+        "startLine": 860,
+        "startChar": 75,
+        "endLine": 860,
+        "endChar": 105
+      },
+      "revId": "e778b48ab983b6420c8ebbe2945a5d4c3377ae81",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
