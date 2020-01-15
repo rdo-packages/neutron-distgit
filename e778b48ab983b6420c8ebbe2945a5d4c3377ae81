@@ -39,6 +39,30 @@
       "revId": "e778b48ab983b6420c8ebbe2945a5d4c3377ae81",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "349b54a9_02a5635e",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 7
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2020-01-15T10:14:42Z",
+      "side": 1,
+      "message": "https://review.opendev.org/#/c/701366/4/etc/oslo-config-generator/neutron_ovn_metadata_agent.ini",
+      "parentUuid": "67824f56_f368f825",
+      "range": {
+        "startLine": 860,
+        "startChar": 75,
+        "endLine": 860,
+        "endChar": 105
+      },
+      "revId": "e778b48ab983b6420c8ebbe2945a5d4c3377ae81",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
