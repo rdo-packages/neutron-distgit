@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e5e9a6b_2b403d93",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 8
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2020-01-15T10:19:09Z",
+      "side": 1,
+      "message": "wrt my prev comment, adding neutron_ovn_metadata to this list should be enough",
+      "revId": "c1de038ebc8925a26d70a254b16bbd49a15ab0ec",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
