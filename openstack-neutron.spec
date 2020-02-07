@@ -681,6 +681,9 @@ fi
 %{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-sanity-check
+%{_bindir}/neutron-ovn-db-sync-util
+%{_bindir}/neutron-ovn-metadata-agent
+%{_bindir}/neutron-ovn-migration-mtu
 %{_bindir}/neutron-status
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
@@ -727,7 +730,6 @@ fi
 %{_bindir}/neutron-enable-bridge-firewall.sh
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-daemon
-%{_bindir}/neutron-rootwrap-xen-dom0
 %dir %{_sysconfdir}/%{service}
 %{_sysconfdir}/%{service}/conf.d/README
 %dir %{_sysconfdir}/%{service}/conf.d
