@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e57562c_563593be",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 11
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2020-03-16T18:25:37Z",
+      "side": 1,
+      "message": "Jobs failing with:\n\nError: Could not set \u0027present\u0027 on ensure: No such file or directory @ rb_sysopen - /etc/neutron/plugins/networking-ovn/networking-ovn-metadata-agent.ini \n\nThis is a different location for config file which breaks backward compatibility, may we keep current location at least as a symlink until puppet modules (and maybe other deployment tools) are fixed?",
+      "range": {
+        "startLine": 860,
+        "startChar": 49,
+        "endLine": 860,
+        "endChar": 105
+      },
+      "revId": "ca7046c581a503e00b7ec1a83b32c00077a74095",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
