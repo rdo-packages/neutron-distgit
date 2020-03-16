@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc97e2ab_d6b45268",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 283
+      },
+      "writtenOn": "2020-03-16T21:27:05Z",
+      "side": 1,
+      "message": "So we\u0027re not handling the metadata agent subpackage in this patch. Shall we also take ovn.ini into account for the main config of the plugin?",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 45
+      },
+      "revId": "45d6c62f7f4ba0baf9d25c96d837da9779ca7fd1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
