@@ -22,6 +22,30 @@
       "revId": "b8007c1ab70f7eff2480123620f92e0118e24766",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8f7ca4b_1084eede",
+        "filename": "neutron-ovn-metadata-agent.service",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2020-03-17T10:06:00Z",
+      "side": 1,
+      "message": "Should be harmless. Once we move to neutron-ovn-metadata-agent we can remove the symlink and this alias. I think everything should keep working. systemd is quite smart with symlinks and goes to the backing file and even if we enable/star/stop networking- under the hood it\u0027s aware of neutron- *",
+      "parentUuid": "dbc54b76_4732093e",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "b8007c1ab70f7eff2480123620f92e0118e24766",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
