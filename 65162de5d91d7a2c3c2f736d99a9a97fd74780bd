@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b09e9ed_912e26f4",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-03-17T06:49:01Z",
+      "side": 1,
+      "message": "will revert last PS as ovn is being handled in https://review.rdoproject.org/r/#/c/24462/ and https://review.rdoproject.org/r/#/c/24555/",
+      "revId": "65162de5d91d7a2c3c2f736d99a9a97fd74780bd",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
