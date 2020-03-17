@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc54b76_4732093e",
+        "filename": "neutron-ovn-metadata-agent.service",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 283
+      },
+      "writtenOn": "2020-03-17T09:52:54Z",
+      "side": 1,
+      "message": "So now we\u0027re going to have two files (neutron-ovn-metadata-agent.service and a symbolink link to it networking-ovn-metadata-agent.service) both containing this Alias line. Would that work?\n\nI understand that initially systemd will try to start networking-ovn-metadata-agent so it should work, but when we move to the new unit name, we must remove this Alias at the same time or it\u0027s harmless?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "b8007c1ab70f7eff2480123620f92e0118e24766",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
