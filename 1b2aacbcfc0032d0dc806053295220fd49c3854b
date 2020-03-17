@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "485734ff_c301794d",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 19
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 283
+      },
+      "writtenOn": "2020-03-17T11:06:02Z",
+      "side": 1,
+      "message": "Alfredo++ thanks for clarifying this on IRC: We need the symlink because systemd enable operation doesn\u0027t honor the alias. So this patch is creating a symlink to cover both names for the systemd unit.\nI wonder if we still need the alias but doesn\u0027t hurt :)",
+      "revId": "1b2aacbcfc0032d0dc806053295220fd49c3854b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
