@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33b792bd_9f73ef70",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 21
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2020-03-18T08:55:38Z",
+      "side": 1,
+      "message": "Yes, at least initially. Kolla has remove python3-networking-ovn-metadata-agent package from neutron-metadata-agent-ovn image in https://github.com/openstack/kolla/commit/7f0baa6e2ced941c19d3e6a8b7c86e8cbad9a206, so we need to get metadata executable in main neutron package until the metadata package is back to the container.\n\n@dalvarez, please make sure to add the new metadata package into the dockerfile.",
+      "parentUuid": "e07efccf_4592e2cc",
+      "range": {
+        "startLine": 749,
+        "startChar": 0,
+        "endLine": 750,
+        "endChar": 40
+      },
+      "revId": "92b4eea04d7807cd8aa17e57c976b337c06cc43b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c3225c3_87125eb1",
         "filename": "openstack-neutron.spec",
         "patchSetId": 21
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-18T07:46:00Z",
       "side": 1,
       "message": "%{_sysconfdir}",
+      "range": {
+        "startLine": 895,
+        "startChar": 0,
+        "endLine": 895,
+        "endChar": 4
+      },
+      "revId": "92b4eea04d7807cd8aa17e57c976b337c06cc43b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9559bb0_1c991dd1",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 21
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2020-03-18T08:55:38Z",
+      "side": 1,
+      "message": "let\u0027s clean it in follow-up, we need this asap",
+      "parentUuid": "5c3225c3_87125eb1",
       "range": {
         "startLine": 895,
         "startChar": 0,
