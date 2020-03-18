@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e07efccf_4592e2cc",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 21
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-03-18T07:46:00Z",
+      "side": 1,
+      "message": "also need to include in main package along with ovn-metadata sub package?",
+      "range": {
+        "startLine": 749,
+        "startChar": 0,
+        "endLine": 750,
+        "endChar": 40
+      },
+      "revId": "92b4eea04d7807cd8aa17e57c976b337c06cc43b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c3225c3_87125eb1",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 21
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-03-18T07:46:00Z",
+      "side": 1,
+      "message": "%{_sysconfdir}",
+      "range": {
+        "startLine": 895,
+        "startChar": 0,
+        "endLine": 895,
+        "endChar": 4
+      },
+      "revId": "92b4eea04d7807cd8aa17e57c976b337c06cc43b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
