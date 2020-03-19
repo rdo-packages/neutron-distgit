@@ -157,8 +157,6 @@ Requires:       iproute
 %endif
 
 Obsoletes:      openstack-%{service}-dev-server
-Obsoletes:      python%{pyver}-networking-ovn
-Provides:       python%{pyver}-networking-ovn = %{epoch}:%{version}-%{release}
 
 %description
 %{common_desc}
@@ -233,6 +231,8 @@ Requires:       python%{pyver}-paste-deploy >= 1.5.0
 Requires:       python%{pyver}-decorator >= 3.4.0
 %endif
 
+Obsoletes:      python%{pyver}-networking-ovn
+Provides:       python%{pyver}-networking-ovn = %{epoch}:%{version}-%{release}
 
 
 %description -n python%{pyver}-%{service}
