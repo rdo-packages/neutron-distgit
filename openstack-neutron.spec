@@ -899,6 +899,8 @@ fi
 %files ovn-migration-tool
 %license LICENSE
 %{_bindir}/neutron-ovn-migration-mtu
+%{_bindir}/ovn_migration.sh
+%{_datadir}/ansible/neutron-ovn-migration/
 
 %changelog
 
