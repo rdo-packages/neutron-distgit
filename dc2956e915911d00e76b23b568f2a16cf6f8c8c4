@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07938911_2267b864",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2020-04-28T17:50:49Z",
+      "side": 1,
+      "message": "This conditional also can be removed, this will only be built in rhel.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 13
+      },
+      "revId": "dc2956e915911d00e76b23b568f2a16cf6f8c8c4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
