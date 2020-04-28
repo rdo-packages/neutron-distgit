@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc2376d_8f709079",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-04-28T14:47:55Z",
+      "side": 1,
+      "message": "3.14.0",
+      "range": {
+        "startLine": 67,
+        "startChar": 41,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "ec9b6523a3499bcba9e06c403e7ef4dbfaa48c0c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9793c1ec_7a02380c",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-04-28T14:47:55Z",
+      "side": 1,
+      "message": "cleanup conditions for 7",
+      "revId": "ec9b6523a3499bcba9e06c403e7ef4dbfaa48c0c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dbdb7fc_36427061",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-04-28T14:47:55Z",
+      "side": 1,
+      "message": "this can also be cleaned up for 7",
+      "revId": "ec9b6523a3499bcba9e06c403e7ef4dbfaa48c0c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "353a0c31_16fd4bd8",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-04-28T14:47:55Z",
+      "side": 1,
+      "message": "1.19.0",
+      "range": {
+        "startLine": 153,
+        "startChar": 41,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "ec9b6523a3499bcba9e06c403e7ef4dbfaa48c0c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f626f5a_d1ed2db3",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-04-28T14:47:55Z",
+      "side": 1,
+      "message": "3.14.0",
+      "range": {
+        "startLine": 159,
+        "startChar": 41,
+        "endLine": 159,
+        "endChar": 46
+      },
+      "revId": "ec9b6523a3499bcba9e06c403e7ef4dbfaa48c0c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
