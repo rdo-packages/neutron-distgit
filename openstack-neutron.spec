@@ -57,6 +57,7 @@ Source37:       neutron-ovn-metadata-agent.service
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
 Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
 Patch0003: 0003-use-plugin-utils-from-neutron-lib.patch
+Patch0004: 0004-Adjust-logging-for-removing-patch-ports.patch
 
 BuildArch:      noarch
 
