@@ -837,3 +837,4 @@ fi
 * Mon Sep 30 2019 RDO <dev@lists.rdoproject.org> 1:15.0.0-0.1.0rc1
 - Update to 15.0.0.0rc1
 
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/neutron/commit/?id=f3afbc1e059f21b547d3d290ac4905cb6f787f2f
