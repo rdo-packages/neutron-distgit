@@ -19,7 +19,7 @@ Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
-Version:        16.0.0
+Version:        17.0.0
 Release:        0.1%{?milestone}%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -55,9 +55,7 @@ Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 Source37:       neutron-ovn-metadata-agent.service
 
-#
-# patches_base=16.0.0.0rc1
-#
+# patches_base=17.0.0.0rc1
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
 Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
 Patch0003: 0003-use-plugin-utils-from-neutron-lib.patch
@@ -864,6 +862,9 @@ fi
 %{_datadir}/ansible/neutron-ovn-migration/
 
 %changelog
+* Mon Sep 28 2020 RDO <dev@lists.rdoproject.org> 1:17.0.0-0.1.0rc1
+- Update to 17.0.0.0rc1
+
 * Fri Sep 25 2020 RDO <dev@lists.rdoproject.org> 1:16.0.0-0.1.0rc1
 - Update to 16.0.0.0rc1
 
