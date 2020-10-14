@@ -1,3 +1,5 @@
+%{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
+%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
@@ -53,6 +55,11 @@ Source34:       neutron-l2-agent-sysctl.conf
 Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 Source37:       neutron-ovn-metadata-agent.service
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
+Source102:        https://releases.openstack.org/_static/%{sources_gpg_sign}.txt
+%endif
 
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
 Patch0002: 0002-Destroy-patch-ports-only-if-canary-flow-is-not-prese.patch
@@ -60,6 +67,11 @@ Patch0003: 0003-use-plugin-utils-from-neutron-lib.patch
 Patch0004: 0004-Adjust-logging-for-removing-patch-ports.patch
 
 BuildArch:      noarch
+
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+BuildRequires:  /usr/bin/gpgv2
+%endif
 
 BuildRequires:  git
 BuildRequires:  openstack-macros
@@ -393,6 +405,10 @@ OpenStack to OVN based backend.
 
 
 %prep
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+%{gpgverify}  --keyring=%{SOURCE102} --signature=%{SOURCE101} --data=%{SOURCE0}
+%endif
 %autosetup -n %{service}-%{upstream_version} -S git
 sed -i 's/\/usr\/bin\/python/\/usr\/bin\/python3/' %{SOURCE36}
 
