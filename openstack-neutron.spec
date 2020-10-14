@@ -1,4 +1,6 @@
 %global milestone .0rc2
+%{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
+%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
@@ -54,6 +56,11 @@ Source34:       neutron-l2-agent-sysctl.conf
 Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 Source37:       neutron-ovn-metadata-agent.service
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
+Source102:        https://releases.openstack.org/_static/%{sources_gpg_sign}.txt
+%endif
 
 # patches_base=17.0.0.0rc2
 Patch0001: 0001-Create-executable-for-removing-patch-ports.patch
@@ -62,6 +69,11 @@ Patch0003: 0003-use-plugin-utils-from-neutron-lib.patch
 Patch0004: 0004-Adjust-logging-for-removing-patch-ports.patch
 
 BuildArch:      noarch
+
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+BuildRequires:  /usr/bin/gpgv2
+%endif
 
 BuildRequires:  git
 BuildRequires:  openstack-macros
@@ -395,6 +407,10 @@ OpenStack to OVN based backend.
 
 
 %prep
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+%{gpgverify}  --keyring=%{SOURCE102} --signature=%{SOURCE101} --data=%{SOURCE0}
+%endif
 %autosetup -n %{service}-%{upstream_version} -S git
 sed -i 's/\/usr\/bin\/python/\/usr\/bin\/python3/' %{SOURCE36}
 
@@ -862,6 +878,9 @@ fi
 %{_datadir}/ansible/neutron-ovn-migration/
 
 %changelog
+* Wed Oct 14 2020 Joel Capitao <jcapitao@redhat.com> 1:17.0.0-0.2.0rc1
+- Enable sources tarball validation using GPG signature.
+
 * Thu Oct 08 2020 RDO <dev@lists.rdoproject.org> 1:17.0.0-0.2.0rc1
 - Update to 17.0.0.0rc2
 
