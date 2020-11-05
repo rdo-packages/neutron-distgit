@@ -414,6 +414,9 @@ sed -i 's/\/usr\/bin\/python/\/usr\/bin\/python3/' %{SOURCE36}
 
 find %{service} -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
+# Apply patch until https://review.opendev.org/#/c/759673/ is merged
+grep -q net-mtu-writable neutron/common/ovn/extensions.py ||sed -i "/net-mtu/a\    'net-mtu-writable'," neutron/common/ovn/extensions.py
+
 # Let's handle dependencies ourseleves
 %py_req_cleanup
 
