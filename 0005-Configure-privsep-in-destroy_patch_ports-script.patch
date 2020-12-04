@@ -1,0 +1,18 @@
+--- a/neutron/cmd/destroy_patch_ports.py
++++ b/neutron/cmd/destroy_patch_ports.py
+@@ -22,6 +22,7 @@ from oslo_log import log as logging
+
+ from neutron.agent.common import ovs_lib
+ from neutron.common import config as common_config
++from neutron.conf.agent import common as agent_config
+ from neutron.conf.plugins.ml2.drivers import ovs_conf
+ from neutron.plugins.ml2.drivers.openvswitch.agent.common import constants
+
+@@ -80,6 +81,7 @@ def main():
+     common_config.init(sys.argv[1:])
+     ovs_conf.register_ovs_agent_opts()
+     common_config.setup_logging()
++    agent_config.setup_privsep()
+     port_cleaner = PatchPortCleaner(cfg.CONF)
+     port_cleaner.destroy_patch_ports()
+
