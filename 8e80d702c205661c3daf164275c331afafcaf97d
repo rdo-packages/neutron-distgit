@@ -46,6 +46,30 @@
       "revId": "8e80d702c205661c3daf164275c331afafcaf97d",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "703cab85_c3ca8652",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2020-12-04T14:24:16Z",
+      "side": 1,
+      "message": "It\u0027s been 3 years since that patch, so I guess it would be a good idea to revisit the reasons (mainly to avoid technical debt).\n\n+1 to the osp patch, it\u0027s needed there as well.",
+      "parentUuid": "30993825_77a5103d",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 69
+      },
+      "revId": "8e80d702c205661c3daf164275c331afafcaf97d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
