@@ -1,0 +1,21 @@
+From 41b2ce9a008d1c28e8b05ee35b1d95e7fc6ca4b5 Mon Sep 17 00:00:00 2001
+From: Slawek Kaplonski <skaplons@redhat.com>
+Date: Fri, 4 Dec 2020 12:14:27 +0100
+Subject: [PATCH] Configure privsep in destroy_patch_ports script
+
+---
+ neutron/cmd/destroy_patch_ports.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/neutron/cmd/destroy_patch_ports.py b/neutron/cmd/destroy_patch_ports.py
+index f720218..8dfbcfe 100644
+--- a/neutron/cmd/destroy_patch_ports.py
++++ b/neutron/cmd/destroy_patch_ports.py
+@@ -80,6 +80,7 @@ def main():
+     common_config.init(sys.argv[1:])
+     ovs_conf.register_ovs_agent_opts()
+     common_config.setup_logging()
++    common_config.setup_privsep()
+     port_cleaner = PatchPortCleaner(cfg.CONF)
+     port_cleaner.destroy_patch_ports()
+
