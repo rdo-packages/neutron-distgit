@@ -20,7 +20,7 @@ Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
-Version:        17.0.0
+Version:        17.1.0
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -876,6 +876,9 @@ fi
 %{_datadir}/ansible/neutron-ovn-migration/
 
 %changelog
+* Thu Jan 28 2021 RDO <dev@lists.rdoproject.org> 1:17.1.0-1
+- Update to 17.1.0
+
 * Wed Oct 14 2020 RDO <dev@lists.rdoproject.org> 1:17.0.0-1
 - Update to 17.0.0
 - Enable sources tarball validation using GPG signature.
