@@ -780,7 +780,6 @@ fi
 %{_datarootdir}/%{service}/rootwrap/debug.filters
 %{_datarootdir}/%{service}/rootwrap/dhcp.filters
 %{_datarootdir}/%{service}/rootwrap/dibbler.filters
-%{_datarootdir}/%{service}/rootwrap/ebtables.filters
 %{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/l3.filters
