@@ -76,7 +76,6 @@ BuildRequires:  python3-keystoneauth1 >= 3.14.0
 BuildRequires:  python3-keystonemiddleware
 BuildRequires:  python3-neutron-lib
 BuildRequires:  python3-novaclient
-BuildRequires:  python3-os-xenapi
 BuildRequires:  python3-oslo-cache
 BuildRequires:  python3-oslo-concurrency
 BuildRequires:  python3-oslo-config
@@ -153,43 +152,42 @@ Summary:        Neutron Python libraries
 Requires:       python3-alembic >= 0.9.6
 Requires:       python3-debtcollector >= 1.19.0
 Requires:       python3-designateclient >= 2.7.0
-Requires:       python3-eventlet >= 0.21.0
+Requires:       python3-eventlet >= 0.22.1
 Requires:       python3-greenlet >= 0.4.10
 Requires:       python3-futurist >= 1.10.0
 Requires:       python3-jinja2 >= 2.10
 Requires:       python3-keystoneauth1 >= 3.14.0
-Requires:       python3-keystonemiddleware >= 4.17.0
+Requires:       python3-keystonemiddleware >= 5.1.0
 Requires:       python3-netaddr >= 0.7.18
 Requires:       python3-neutronclient >= 6.7.0
-Requires:       python3-neutron-lib >= 2.6.0
+Requires:       python3-neutron-lib >= 2.9.0
 Requires:       python3-novaclient >= 9.1.0
 Requires:       python3-os-vif >= 1.15.1
-Requires:       python3-os-xenapi >= 0.3.1
 Requires:       python3-oslo-cache >= 1.26.0
 Requires:       python3-oslo-concurrency >= 3.26.0
-Requires:       python3-oslo-config >= 2:5.2.0
-Requires:       python3-oslo-context >= 2.20.0
+Requires:       python3-oslo-config >= 2:8.0.0
+Requires:       python3-oslo-context >= 2.22.0
 Requires:       python3-oslo-db >= 4.44.0
 Requires:       python3-oslo-i18n >= 3.20.0
-Requires:       python3-oslo-log >= 4.2.1
+Requires:       python3-oslo-log >= 4.3.0
 Requires:       python3-oslo-messaging >= 7.0.0
 Requires:       python3-oslo-middleware >= 3.31.0
-Requires:       python3-oslo-policy >= 1.30.0
+Requires:       python3-oslo-policy >= 3.6.2
 Requires:       python3-oslo-privsep >= 2.3.0
 Requires:       python3-oslo-reports >= 1.18.0
 Requires:       python3-oslo-rootwrap >= 5.8.0
 Requires:       python3-oslo-serialization >= 2.25.0
-Requires:       python3-oslo-service >= 1.24.0
-Requires:       python3-oslo-upgradecheck >= 0.1.0
-Requires:       python3-oslo-utils >= 4.4.0
+Requires:       python3-oslo-service >= 1.31.0
+Requires:       python3-oslo-upgradecheck >= 1.3.0
+Requires:       python3-oslo-utils >= 4.5.0
 Requires:       python3-oslo-versionedobjects >= 1.35.1
 Requires:       python3-osprofiler >= 2.3.0
 Requires:       python3-ovsdbapp
 Requires:       python3-pecan >= 1.3.2
 Requires:       python3-pbr >= 4.0.0
-Requires:       python3-psutil >= 3.2.2
+Requires:       python3-psutil >= 5.3.0
 Requires:       python3-pyroute2 >= 0.5.13
-Requires:       python3-requests >= 2.14.2
+Requires:       python3-requests >= 2.18.0
 Requires:       python3-tenacity >= 6.0.0
 Requires:       python3-routes >= 2.3.1
 Requires:       python3-os-ken >= 0.3.1
@@ -198,7 +196,8 @@ Requires:       python3-stevedore >= 1.20.0
 Requires:       python3-tooz >= 1.58.0
 Requires:       python3-webob >= 1.8.2
 Requires:       python3-openstacksdk >= 0.31.2
-Requires:       python3-pyOpenSSL >= 17.1.0
+Requires:       python3-pyOpenSSL >= 17.1.1
+Requires:       python3-packaging >= 20.4
 
 Requires:       python3-httplib2 >= 0.9.1
 Requires:       python3-netifaces >= 0.10.4
@@ -321,7 +320,7 @@ Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       ipset
 Requires:       iptables
 Requires:       openvswitch
-Requires:       python3-openvswitch >= 2.8.0
+Requires:       python3-openvswitch >= 2.10.0
 # kmod is needed to get access to /usr/sbin/modprobe needed by
 # neutron-enable-bridge-firewall.sh triggered by the service unit file
 Requires:       kmod
@@ -375,7 +374,7 @@ SR-IOV network cards.
 Summary:        OVN metadata agent
 BuildRequires:  systemd
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
-Requires:       openvswitch >= 2.8.0
+Requires:       openvswitch >= 2.10.0
 Obsoletes:      python3-networking-ovn-metadata-agent
 Provides:       python3-networking-ovn-metadata-agent = %{epoch}:%{version}-%{release}
 %{?systemd_requires}
