@@ -1,0 +1,10 @@
+Code-Review+2: Sławek Kapłoński <skaplons@redhat.com>
+Code-Review+1: Rodolfo Alonso <ralonsoh@redhat.com>
+Code-Review+2: Javier Peña <jpena@redhat.com>
+Workflow+1: Javier Peña <jpena@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Mon, 15 Mar 2021 09:29:41 +0000
+Reviewed-on: https://review.rdoproject.org/r/32376
+Project: openstack/neutron-distgit
+Branch: refs/heads/train-rdo
