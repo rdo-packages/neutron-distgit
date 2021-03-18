@@ -154,7 +154,7 @@ Requires:       python3-debtcollector >= 1.19.0
 Requires:       python3-designateclient >= 2.7.0
 Requires:       python3-eventlet >= 0.22.1
 Requires:       python3-greenlet >= 0.4.10
-Requires:       python3-futurist >= 1.10.0
+Requires:       python3-futurist >= 1.2.0
 Requires:       python3-jinja2 >= 2.10
 Requires:       python3-keystoneauth1 >= 3.14.0
 Requires:       python3-keystonemiddleware >= 5.1.0
@@ -182,7 +182,7 @@ Requires:       python3-oslo-upgradecheck >= 1.3.0
 Requires:       python3-oslo-utils >= 4.5.0
 Requires:       python3-oslo-versionedobjects >= 1.35.1
 Requires:       python3-osprofiler >= 2.3.0
-Requires:       python3-ovsdbapp
+Requires:       python3-ovsdbapp >= 1.7.0
 Requires:       python3-pecan >= 1.3.2
 Requires:       python3-pbr >= 4.0.0
 Requires:       python3-psutil >= 5.3.0
@@ -190,18 +190,18 @@ Requires:       python3-pyroute2 >= 0.5.13
 Requires:       python3-requests >= 2.18.0
 Requires:       python3-tenacity >= 6.0.0
 Requires:       python3-routes >= 2.3.1
-Requires:       python3-os-ken >= 0.3.1
+Requires:       python3-os-ken >= 0.3.0
 Requires:       python3-sqlalchemy >= 1.2.0
 Requires:       python3-stevedore >= 1.20.0
 Requires:       python3-tooz >= 1.58.0
 Requires:       python3-webob >= 1.8.2
 Requires:       python3-openstacksdk >= 0.31.2
-Requires:       python3-pyOpenSSL >= 17.1.1
+Requires:       python3-pyOpenSSL >= 17.1.0
 Requires:       python3-packaging >= 20.4
 
 Requires:       python3-httplib2 >= 0.9.1
 Requires:       python3-netifaces >= 0.10.4
-Requires:       python3-paste
+Requires:       python3-paste >= 2.0.2
 Requires:       python3-paste-deploy >= 1.5.0
 Requires:       python3-decorator >= 3.4.0
 
