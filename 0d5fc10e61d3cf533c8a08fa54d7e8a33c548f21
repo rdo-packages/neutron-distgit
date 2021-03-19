@@ -1,0 +1,9 @@
+Code-Review+2: Alfredo Moralejo <amoralej@redhat.com>
+Code-Review+2: Sławek Kapłoński <skaplons@redhat.com>
+Workflow+1: Sławek Kapłoński <skaplons@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Fri, 19 Mar 2021 07:28:34 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/neutron-distgit/+/32569
+Project: openstack/neutron-distgit
+Branch: refs/heads/rpm-master
