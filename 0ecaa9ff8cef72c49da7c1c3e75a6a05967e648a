@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9ef015a_d233db61",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2021-04-13T14:57:23Z",
+      "side": 1,
+      "message": "Both the linuxbridge and openvswitch subpackages require openstack-neutron-common, which also declares the rootwrap.filters file. I think it would be better to remove it from the other subpackages, to avoid potential conflicts.",
+      "revId": "0ecaa9ff8cef72c49da7c1c3e75a6a05967e648a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
+    }
+  ]
+}
