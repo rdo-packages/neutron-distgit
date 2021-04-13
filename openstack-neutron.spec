@@ -776,19 +776,14 @@ fi
 %dir %attr(0750, %{service}, %{service}) %{_localstatedir}/log/%{service}
 %dir %{_datarootdir}/%{service}
 %dir %{_datarootdir}/%{service}/rootwrap
-%{_datarootdir}/%{service}/rootwrap/debug.filters
-%{_datarootdir}/%{service}/rootwrap/dhcp.filters
-%{_datarootdir}/%{service}/rootwrap/dibbler.filters
-%{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
-%{_datarootdir}/%{service}/rootwrap/l3.filters
-%{_datarootdir}/%{service}/rootwrap/privsep.filters
+%{_datarootdir}/%{service}/rootwrap/rootwrap.filters
 
 
 %files linuxbridge
 %license LICENSE
 %{_bindir}/neutron-linuxbridge-agent
 %{_unitdir}/neutron-linuxbridge-agent.service
-%{_datarootdir}/%{service}/rootwrap/linuxbridge-plugin.filters
+%{_datarootdir}/%{service}/rootwrap/rootwrap.filters
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-agent
@@ -817,7 +812,7 @@ fi
 %{_bindir}/neutron-openvswitch-agent
 %{_unitdir}/neutron-openvswitch-agent.service
 %{_unitdir}/neutron-destroy-patch-ports.service
-%{_datarootdir}/%{service}/rootwrap/openvswitch-plugin.filters
+%{_datarootdir}/%{service}/rootwrap/rootwrap.filters
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-openvswitch-agent
