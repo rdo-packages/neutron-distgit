@@ -16,6 +16,24 @@
       "revId": "0ecaa9ff8cef72c49da7c1c3e75a6a05967e648a",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d839b82_1114a6d7",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2021-04-13T15:59:29Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "e9ef015a_d233db61",
+      "revId": "0ecaa9ff8cef72c49da7c1c3e75a6a05967e648a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
     }
   ]
 }
