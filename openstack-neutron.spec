@@ -776,12 +776,7 @@ fi
 %dir %attr(0750, %{service}, %{service}) %{_localstatedir}/log/%{service}
 %dir %{_datarootdir}/%{service}
 %dir %{_datarootdir}/%{service}/rootwrap
-%{_datarootdir}/%{service}/rootwrap/debug.filters
-%{_datarootdir}/%{service}/rootwrap/dhcp.filters
-%{_datarootdir}/%{service}/rootwrap/dibbler.filters
-%{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
-%{_datarootdir}/%{service}/rootwrap/l3.filters
-%{_datarootdir}/%{service}/rootwrap/privsep.filters
+%{_datarootdir}/%{service}/rootwrap/rootwrap.filters
 
 
 %files linuxbridge
