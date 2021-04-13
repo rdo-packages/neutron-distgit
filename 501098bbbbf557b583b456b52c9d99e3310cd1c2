@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d26c2363_a37b34c6",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2021-04-13T13:47:24Z",
+      "side": 1,
+      "message": "That one does not exist anymore, should be rootwrap.filters",
+      "range": {
+        "startLine": 786,
+        "startChar": 0,
+        "endLine": 786,
+        "endChar": 1
+      },
+      "revId": "501098bbbbf557b583b456b52c9d99e3310cd1c2",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb43e4ef_4ec502aa",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2021-04-13T13:47:24Z",
+      "side": 1,
+      "message": "ditto, should be rootwrap.filters",
+      "range": {
+        "startLine": 815,
+        "startChar": 0,
+        "endLine": 815,
+        "endChar": 1
+      },
+      "revId": "501098bbbbf557b583b456b52c9d99e3310cd1c2",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
+    }
+  ]
+}
