@@ -18,7 +18,7 @@ Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
-Version:        16.3.1
+Version:        16.3.2
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -860,6 +860,9 @@ fi
 %{_datadir}/ansible/neutron-ovn-migration/
 
 %changelog
+* Mon May 10 2021 RDO <dev@lists.rdoproject.org> 1:16.3.2-1
+- Update to 16.3.2
+
 * Thu Mar 18 2021 RDO <dev@lists.rdoproject.org> 1:16.3.1-1
 - Update to 16.3.1
 
