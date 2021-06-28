@@ -397,6 +397,15 @@ Provides:       python3-networking-ovn-migration-tool = %{epoch}:%{version}-%{re
 This package provides the necessary tools to update an existing ML2/OVS
 OpenStack to OVN based backend.
 
+%package ml2ovn-trace
+Summary:        ML2 OVN trace tool
+Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
+Provides:       python3-neutron-ml2ovn-trace = %{epoch}:%{version}-%{release}
+
+%description ml2ovn-trace
+
+This package provides tool that allows one to pass in OpenStack objects
+to fill in the eth/ip src/dst data when running ovn-trace.
 
 %prep
 # Required for tarball sources verification
@@ -859,6 +868,10 @@ fi
 %{_bindir}/neutron-ovn-migration-mtu
 %{_bindir}/ovn_migration.sh
 %{_datadir}/ansible/neutron-ovn-migration/
+
+%files ml2ovn-trace
+%license LICENSE
+%{_bindir}/ml2ovn-trace
 
 %changelog
 
