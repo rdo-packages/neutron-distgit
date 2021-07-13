@@ -191,6 +191,7 @@ Requires:       python3-requests >= 2.18.0
 Requires:       python3-tenacity >= 6.0.0
 Requires:       python3-routes >= 2.3.1
 Requires:       python3-os-ken >= 0.3.0
+Requires:	python3-os-resource-classes >= 1.0.0 
 Requires:       python3-sqlalchemy >= 1.2.0
 Requires:       python3-stevedore >= 1.20.0
 Requires:       python3-tooz >= 1.58.0
