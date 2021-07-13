@@ -76,6 +76,7 @@ BuildRequires:  python3-keystoneauth1 >= 3.14.0
 BuildRequires:  python3-keystonemiddleware
 BuildRequires:  python3-neutron-lib
 BuildRequires:  python3-novaclient
+BuildRequires:  python3-os-resource-classes
 BuildRequires:  python3-oslo-cache
 BuildRequires:  python3-oslo-concurrency
 BuildRequires:  python3-oslo-config
@@ -191,6 +192,7 @@ Requires:       python3-requests >= 2.18.0
 Requires:       python3-tenacity >= 6.0.0
 Requires:       python3-routes >= 2.3.1
 Requires:       python3-os-ken >= 0.3.0
+Requires:       python3-os-resource-classes >= 0.2.0
 Requires:       python3-sqlalchemy >= 1.2.0
 Requires:       python3-stevedore >= 1.20.0
 Requires:       python3-tooz >= 1.58.0
