@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04d4a0d_282b8263",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2021-07-13T13:07:50Z",
+      "side": 1,
+      "message": "0.2.0 https://github.com/openstack/neutron/blob/master/requirements.txt#L47, also remove extra space and TAB at Requires:",
+      "range": {
+        "startLine": 194,
+        "startChar": 41,
+        "endLine": 194,
+        "endChar": 46
+      },
+      "revId": "372b3c47b12b8ce5be790ce48c3504c5e4be28ea",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
+    }
+  ]
+}
