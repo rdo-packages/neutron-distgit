@@ -685,6 +685,7 @@ fi
 %{_bindir}/neutron-status
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
+%{_bindir}/neutron-sanitize-port-mac-addresses
 %{_unitdir}/neutron-dhcp-agent.service
 %{_unitdir}/neutron-l3-agent.service
 %{_unitdir}/neutron-metadata-agent.service
