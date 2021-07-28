@@ -685,6 +685,13 @@ fi
 %{_bindir}/neutron-status
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
+<<<<<<< HEAD   (360cfd openstack-neutron-15.3.4-1)
+=======
+%{_bindir}/neutron-ovn-metadata-agent
+%{_bindir}/neutron-sanitize-port-mac-addresses
+%{_bindir}/networking-ovn-metadata-agent
+%{_bindir}/neutron-ovn-db-sync-util
+>>>>>>> CHANGE (c14f86 Add new binary neutron-sanitize-port-mac-addresses)
 %{_unitdir}/neutron-dhcp-agent.service
 %{_unitdir}/neutron-l3-agent.service
 %{_unitdir}/neutron-metadata-agent.service
