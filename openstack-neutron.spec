@@ -42,6 +42,7 @@ Source19:       neutron-macvtap-agent.service
 Source20:       neutron-metering-agent.service
 Source21:       neutron-sriov-nic-agent.service
 Source22:       neutron-netns-cleanup.service
+Source23:       neutron-sanitize-port-mac-addresses.service
 Source29:       neutron-rpc-server.service
 
 Source30:       %{service}-dist.conf
@@ -522,6 +523,7 @@ install -p -D -m 644 %{SOURCE19} %{buildroot}%{_unitdir}/neutron-macvtap-agent.s
 install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-metering-agent.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
+install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/neutron-sanitize-port-mac-addresses.service
 install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.service
 install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cleanup.service
 install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-ports.service
@@ -564,7 +566,7 @@ mkdir -p %{buildroot}%{_datadir}/%{service}/server
 
 # Create configuration directories for all services that can be populated by users with custom *.conf files
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
-for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup macvtap-agent; do
+for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup macvtap-agent neutron-sanitize-port-mac-addresses; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
 for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic ovn-metadata; do
@@ -596,7 +598,7 @@ exit 0
 %systemd_post neutron-netns-cleanup.service
 %systemd_post neutron-ovs-cleanup.service
 %systemd_post neutron-linuxbridge-cleanup.service
-
+%systemd_post neutron-sanitize-port-mac-addresses.service
 
 %preun
 %systemd_preun neutron-dhcp-agent.service
@@ -606,6 +608,7 @@ exit 0
 %systemd_preun neutron-netns-cleanup.service
 %systemd_preun neutron-ovs-cleanup.service
 %systemd_preun neutron-linuxbridge-cleanup.service
+%systemd_preun neutron-sanitize-port-mac-addresses.service
 
 
 %postun
@@ -726,6 +729,7 @@ fi
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_bindir}/neutron-ovn-metadata-agent
+%{_bindir}/neutron-sanitize-port-mac-addresses
 %{_bindir}/networking-ovn-metadata-agent
 %{_bindir}/neutron-ovn-db-sync-util
 %{_unitdir}/neutron-dhcp-agent.service
@@ -735,6 +739,7 @@ fi
 %{_unitdir}/neutron-netns-cleanup.service
 %{_unitdir}/neutron-ovs-cleanup.service
 %{_unitdir}/neutron-linuxbridge-cleanup.service
+%{_unitdir}/neutron-sanitize-port-mac-addresses.service
 %attr(-, root, %{service}) %{_datadir}/%{service}/api-paste.ini
 %dir %{_datadir}/%{service}/l3_agent
 %dir %{_datadir}/%{service}/server
@@ -749,6 +754,7 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-netns-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovs-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-cleanup
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-sanitize-port-mac-addresses
 %dir %{_sysconfdir}/%{service}/kill_scripts
 
 
