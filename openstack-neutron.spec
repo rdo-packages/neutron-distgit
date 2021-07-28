@@ -597,7 +597,6 @@ exit 0
 %systemd_post neutron-ovs-cleanup.service
 %systemd_post neutron-linuxbridge-cleanup.service
 
-
 %preun
 %systemd_preun neutron-dhcp-agent.service
 %systemd_preun neutron-l3-agent.service
@@ -726,6 +725,7 @@ fi
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_bindir}/neutron-ovn-metadata-agent
+%{_bindir}/neutron-sanitize-port-mac-addresses
 %{_bindir}/networking-ovn-metadata-agent
 %{_bindir}/neutron-ovn-db-sync-util
 %{_unitdir}/neutron-dhcp-agent.service
@@ -749,6 +749,7 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-netns-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovs-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-cleanup
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-sanitize-port-mac-addresses
 %dir %{_sysconfdir}/%{service}/kill_scripts
 
 
