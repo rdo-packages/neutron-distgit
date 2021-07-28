@@ -11,6 +11,10 @@
 %global pyver_build %{expand:%{py%{pyver}_build}}
 # End of macros for py2/py3 compatibility
 
+# guard for Red Hat OpenStack Platform supported neutron
+# (Train only)
+%global rhosp 0
+
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
 
@@ -685,6 +689,9 @@ fi
 %{_bindir}/neutron-status
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
+%if 0%{?rhosp}
+%{_bindir}/neutron-sanitize-port-mac-addresses
+%endif
 %{_unitdir}/neutron-dhcp-agent.service
 %{_unitdir}/neutron-l3-agent.service
 %{_unitdir}/neutron-metadata-agent.service
