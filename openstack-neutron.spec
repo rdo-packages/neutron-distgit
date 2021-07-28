@@ -19,6 +19,10 @@ other OpenStack services (e.g., virtual NICs from Nova VMs). The \
 Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
+# guard for Red Hat OpenStack Platform supported neutron
+# (Wallaby only)
+%global rhosp 0
+
 Name:           openstack-%{service}
 Version:        18.4.0
 Release:        1%{?dist}
@@ -716,6 +720,9 @@ fi
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_bindir}/neutron-ovn-metadata-agent
+%if 0%{?rhosp}
+%{_bindir}/neutron-sanitize-port-mac-addresses
+%endif
 %{_bindir}/networking-ovn-metadata-agent
 %{_bindir}/neutron-ovn-db-sync-util
 %{_unitdir}/neutron-dhcp-agent.service
