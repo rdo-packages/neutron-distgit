@@ -477,7 +477,6 @@ mv %{buildroot}/usr/etc/%{service}/rootwrap.d/*.filters %{buildroot}%{_datarootd
 # Move config files to proper location
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}
 mv %{buildroot}/usr/etc/%{service}/* %{buildroot}%{_sysconfdir}/%{service}
-mv %{buildroot}%{_sysconfdir}/%{service}/api-paste.ini %{buildroot}%{_datadir}/%{service}/api-paste.ini
 
 # The generated config files are not moved automatically by setup.py
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
@@ -736,10 +735,10 @@ fi
 %{_unitdir}/neutron-netns-cleanup.service
 %{_unitdir}/neutron-ovs-cleanup.service
 %{_unitdir}/neutron-linuxbridge-cleanup.service
-%attr(-, root, %{service}) %{_datadir}/%{service}/api-paste.ini
 %dir %{_datadir}/%{service}/l3_agent
 %dir %{_datadir}/%{service}/server
 %{_datadir}/%{service}/l3_agent/*.conf
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/api-paste.ini
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/l3_agent.ini
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/metadata_agent.ini
