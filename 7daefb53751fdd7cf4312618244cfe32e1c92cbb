@@ -70,6 +70,30 @@
       "revId": "7daefb53751fdd7cf4312618244cfe32e1c92cbb",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc43c88_7753eca1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 415
+      },
+      "writtenOn": "2021-08-05T07:30:38Z",
+      "side": 1,
+      "message": "We can\u0027t drop the oslo.config hack before changing other services like this (which was the case that resulted in those BZs). I\u0027ll propose a few follow-ups later.",
+      "parentUuid": "e0b4ea0f_f49d0a89",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "7daefb53751fdd7cf4312618244cfe32e1c92cbb",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
     }
   ]
 }
