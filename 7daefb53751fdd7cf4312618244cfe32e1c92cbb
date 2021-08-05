@@ -46,6 +46,30 @@
       "revId": "7daefb53751fdd7cf4312618244cfe32e1c92cbb",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b4ea0f_f49d0a89",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2021-08-05T07:15:45Z",
+      "side": 1,
+      "message": "Ok Thanks for sharing, with this i recalled i had to do similar when testing neutron with wsgi in past https://review.opendev.org/c/openstack/puppet-neutron/+/624694/7/manifests/init.pp.\n\n\nI am not sure about removing oslo.config hack, i recall in past we have seen issue when oslo.config hack was missed. https://bugzilla.redhat.com/show_bug.cgi?id\u003d1751718, https://bugzilla.redhat.com/show_bug.cgi?id\u003d1796098\n\nAlso sees a concern from Alex in the CIX: So this is a very broad impact (it\u0027s not just heat). We need to make\nsure that when we update all the openstack service packages, we do it\nin a way that doesn\u0027t break the previous overriding behavior.  the\n*-dist.confs were always lower precedence than the main config. I\u0027m\nuncertain that moving them into *.conf.d/ would maintain that.\n\nNot saying not to change this but should consider past bugs and concerns.",
+      "parentUuid": "b323dc00_19b2e5aa",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "7daefb53751fdd7cf4312618244cfe32e1c92cbb",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
     }
   ]
 }
