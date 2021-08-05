@@ -22,6 +22,30 @@
       "revId": "7daefb53751fdd7cf4312618244cfe32e1c92cbb",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b323dc00_19b2e5aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 415
+      },
+      "writtenOn": "2021-08-05T06:20:28Z",
+      "side": 1,
+      "message": "We\u0027ve a hack[1] in oslo.config package to use the files in /usr/share. But it does not work with neutron as it has a hacky way of using the config file when deployed with apache[2].\n\nI encountered the issue when trying to deploy neutron with httpd and has to do [3] in THT to get around it.\n\nWe should also change other projects and get rid of the oslo.config hack as there is nothing dist specific we\u0027re using AFAICT.\n\n[1] https://github.com/rdo-packages/oslo-config-distgit/blob/rpm-master/0001-add-usr-share-project-dist.conf-to-the-default-confi.patch\n\n[2] https://github.com/openstack/neutron/blob/master/neutron/server/__init__.py#L38-L49\n\n[3] https://review.opendev.org/c/openstack/tripleo-heat-templates/+/800422/10/deployment/neutron/neutron-api-container-puppet.yaml#336",
+      "parentUuid": "e0053828_b518144a",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "7daefb53751fdd7cf4312618244cfe32e1c92cbb",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
     }
   ]
 }
