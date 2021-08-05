@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0053828_b518144a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2021-08-05T05:16:49Z",
+      "side": 1,
+      "message": "Looks fine to me, noticed only glance/heat apart from neutron shipping to /usr/share but with different name[1]. I see it\u0027s shipped in this path from long so wondering what made it issue now may be you can add some reference like bug / patch etc for background. The change itself shouldn\u0027t be an issue unless and until someone relying on the /usr/share path.\n\nAlso example-distgit needs to be fixed.\n\n\n[1] https://review.rdoproject.org/codesearch/?q\u003ddatadir.*api.*paste.*.ini\u0026i\u003dnope\u0026files\u003d.spec%24\u0026repos\u003d",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "7daefb53751fdd7cf4312618244cfe32e1c92cbb",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": true
+    }
+  ]
+}
