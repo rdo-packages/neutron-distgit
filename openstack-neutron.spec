@@ -725,6 +725,7 @@ fi
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_bindir}/neutron-ovn-metadata-agent
+%{_bindir}/neutron-sanitize-port-binding-profile-allocation
 %{_bindir}/neutron-sanitize-port-mac-addresses
 %{_bindir}/networking-ovn-metadata-agent
 %{_bindir}/neutron-ovn-db-sync-util
