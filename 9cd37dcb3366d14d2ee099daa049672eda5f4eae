@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e6f35cd_0034b176",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2022-01-19T15:22:50Z",
+      "side": 1,
+      "message": "\u003e Patch Set 1:\n\u003e \n\u003e \u003e Patch Set 1:\n\u003e \u003e \n\u003e \u003e pyroute2 is being promoted https://review.rdoproject.org/r/c/rdoinfo/+/38210\n\u003e \n\u003e pyroute2 bump is reverted due to missing dep in centos8 https://review.rdoproject.org/r/c/rdoinfo/+/38240, so would need to be fixed before updating again\n\nRe added with https://review.rdoproject.org/r/c/rdoinfo/+/38270, will update the patch",
+      "revId": "9cd37dcb3366d14d2ee099daa049672eda5f4eae",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
