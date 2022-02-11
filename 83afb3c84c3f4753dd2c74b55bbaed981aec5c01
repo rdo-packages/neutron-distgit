@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2736fef1_b78847b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2022-02-11T22:06:03Z",
+      "side": 1,
+      "message": "\u003e - DLRN-rpmbuild-centos8 https://review.rdoproject.org/zuul/build/d1e1362e64db44c882629a0d2ef699da : FAILURE in 4m 04s\n\nLooks like this jobs has run in the middle of Stream push:\nErrors during downloading metadata for repository \u0027Stream-BaseOS\u0027",
+      "revId": "83afb3c84c3f4753dd2c74b55bbaed981aec5c01",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
