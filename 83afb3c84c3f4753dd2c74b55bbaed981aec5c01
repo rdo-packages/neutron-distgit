@@ -67,6 +67,24 @@
       "message": "Comment removed by: Alan Pevec; Reason: obsolete",
       "revId": "83afb3c84c3f4753dd2c74b55bbaed981aec5c01",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fe494fb_e26b2046",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2022-02-14T11:25:21Z",
+      "side": 1,
+      "message": "uhm nm, I see this is \"Train only\"",
+      "parentUuid": "9cc9f920_0a22da00",
+      "revId": "83afb3c84c3f4753dd2c74b55bbaed981aec5c01",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
