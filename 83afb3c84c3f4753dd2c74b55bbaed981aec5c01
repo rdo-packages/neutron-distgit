@@ -50,6 +50,23 @@
       "message": "recheck Errors during downloading metadata for repository \u0027Stream-BaseOS\u0027",
       "revId": "83afb3c84c3f4753dd2c74b55bbaed981aec5c01",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cc9f920_0a22da00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2022-02-14T11:22:02Z",
+      "side": 1,
+      "message": "Comment removed by: Alan Pevec; Reason: obsolete",
+      "revId": "83afb3c84c3f4753dd2c74b55bbaed981aec5c01",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
