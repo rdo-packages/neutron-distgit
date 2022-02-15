@@ -85,6 +85,24 @@
       "parentUuid": "9cc9f920_0a22da00",
       "revId": "83afb3c84c3f4753dd2c74b55bbaed981aec5c01",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04594c48_24191c83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2022-02-15T09:05:09Z",
+      "side": 1,
+      "message": "Hi Alan. This change is in Train only for now and master. The OSP17 (Wallaby) D/S patch is still under review.",
+      "parentUuid": "4fe494fb_e26b2046",
+      "revId": "83afb3c84c3f4753dd2c74b55bbaed981aec5c01",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
