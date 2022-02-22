@@ -757,6 +757,9 @@ fi
 %{_datarootdir}/%{service}/rootwrap/ipset-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/iptables-firewall.filters
 %{_datarootdir}/%{service}/rootwrap/l3.filters
+%if 0%{?rhosp}
+%{_datarootdir}/%{service}/rootwrap/netns-cleanup.filters
+%endif
 %{_datarootdir}/%{service}/rootwrap/privsep.filters
 
 
