@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95ca4211_200836b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 197
+      },
+      "writtenOn": "2022-02-25T10:27:40Z",
+      "side": 1,
+      "message": "Can be abandoned \"Error: Failed to download metadata for repo \u0027centos-nfv-ovs\u0027\"",
+      "revId": "e7afd199b8a64afd32873d39a9e015307afe7b30",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
