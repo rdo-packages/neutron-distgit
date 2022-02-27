@@ -449,17 +449,10 @@ done
 # Loop through values in neutron-dist.conf and make sure that the values
 # are substituted into the neutron.conf as comments. Some of these values
 # will have been uncommented as a way of upstream setting defaults outside
-# of the code. For notification_driver, there are commented examples
-# above uncommented settings, so this specifically skips those comments
-# and instead comments out the actual settings and substitutes the
-# correct default values.
+# of the code.
 while read name eq value; do
   test "$name" && test "$value" || continue
-  if [ "$name" = "notification_driver" ]; then
-    sed -ri "0,/^$name *=/{s!^$name *=.*!# $name = $value!}" etc/%{service}.conf
-  else
-    sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/%{service}.conf
-  fi
+  sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/%{service}.conf
 done < %{SOURCE30}
 
 %install
