@@ -18,6 +18,41 @@
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc4596f8_06ee83eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2022-03-29T09:04:00Z",
+      "side": 1,
+      "message": "Are we waiting for specific Tempest tag or is there rdoinfo review bumping the Tempest commit on master?\n\nCC @mkopec @chkumar",
+      "parentUuid": "ebe65b2d_024f1f00",
+      "revId": "ce54aa13ee6ac6682a94bd7453a492709b9f708f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c74006af_f193b1ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2022-03-29T09:04:00Z",
+      "side": 1,
+      "message": "Let\u0027s update to rc2 as Slawek suggested",
+      "revId": "ce54aa13ee6ac6682a94bd7453a492709b9f708f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d61288a6_d6d8fab2",
