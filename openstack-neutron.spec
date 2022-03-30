@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
+%global sources_gpg_sign 0x01527a34f0d0080f8a5db8d6eb6c5df21b4b6363
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
@@ -20,8 +20,8 @@ Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
-Version:        XXX
-Release:        XXX
+Version:        20.0.0
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -877,4 +877,7 @@ fi
 %{_bindir}/ml2ovn-trace
 
 %changelog
+* Wed Mar 30 2022 RDO <dev@lists.rdoproject.org> 1:20.0.0-1
+- Update to 20.0.0
+
 
