@@ -16,6 +16,23 @@
       "message": "unclear why DLRN created this FTBFS, rpmbuild worked, it failed somewhere later...TBD",
       "revId": "1273be7ae716c23dfa31f8c6777e6562093156f6",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "562300a7_4db78323",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2022-04-02T01:57:55Z",
+      "side": 1,
+      "message": "closing, NOTABUG in Neutron: it turned out that rsync to trunk.r.o failed and DLRN marks that as a total build failure but recovery was not clean, leaving broken repo and symlink on trunk-primary\n\nTBD what to fix in DLRN",
+      "revId": "1273be7ae716c23dfa31f8c6777e6562093156f6",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
