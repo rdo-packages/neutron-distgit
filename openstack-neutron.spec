@@ -888,3 +888,4 @@ fi
 - Update to 18.0.0.0rc1
 
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/neutron/commit/e8614e9f367dff7b77e91058ec8314763772b151
