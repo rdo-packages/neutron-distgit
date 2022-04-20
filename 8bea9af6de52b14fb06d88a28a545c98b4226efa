@@ -16,6 +16,24 @@
       "message": "Looks like an infra issue on the logs?\n\nDEBUG util.py:444:  Errors during downloading metadata for repository \u0027Stream-AppStream\u0027:\nDEBUG util.py:444:    - Status code: 404 for http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/repodata/32d8eda84d3e18f298083241d2130703275058aded9c577cc2f474159365a5d7-primary.xml.gz (IP: 67.220.193.10)\nDEBUG util.py:444:    - Status code: 404 for http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/repodata/4b0ee8983fb6dfa72a93dbb06af9c87e7facb175fdb1a16c50b8f5823062c453-filelists.xml.gz (IP: 67.220.193.10)\nDEBUG util.py:444:  Error: Failed to download metadata for repo \u0027Stream-AppStream\u0027: Yum repo downloading error: Downloading error(s): repodata/32d8eda84d3e18f298083241d2130703275058aded9c577cc2f474159365a5d7-primary.xml.gz - Cannot download, all mirrors were already tried without success;",
       "revId": "8bea9af6de52b14fb06d88a28a545c98b4226efa",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff0d7498_a6cbbab4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2022-04-20T16:29:13Z",
+      "side": 1,
+      "message": "yes, it\u0027s infra issue, i\u0027ll retry it in dlrn",
+      "parentUuid": "a8cfefae_272a2c5b",
+      "revId": "8bea9af6de52b14fb06d88a28a545c98b4226efa",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
