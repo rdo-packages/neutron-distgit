@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f7e40bf_1d55628c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2022-06-27T14:02:22Z",
+      "side": 1,
+      "message": "Dlrn tripleo failing as needs promotion, and also i think we need to remove c8 jobs as master only supports c9?",
+      "revId": "6fbc2222d99f3a005100a913e71e786eb1858e54",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
