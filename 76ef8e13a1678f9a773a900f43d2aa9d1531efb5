@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b4c809_1fa46f02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 534
+      },
+      "writtenOn": "2022-06-27T15:13:53Z",
+      "side": 1,
+      "message": "and even removed with https://review.opendev.org/c/openstack/neutron/+/837286 already 😊",
+      "revId": "76ef8e13a1678f9a773a900f43d2aa9d1531efb5",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
