@@ -151,7 +151,7 @@ Obsoletes:      openstack-%{service}-dev-server
 %package -n python3-%{service}
 Summary:        Neutron Python libraries
 %{?python_provide:%python_provide python3-%{service}}
-Requires:       python3-alembic >= 1.4.3
+Requires:       python3-alembic >= 1.6.5
 Requires:       python3-debtcollector >= 1.19.0
 Requires:       python3-designateclient >= 2.7.0
 Requires:       python3-eventlet >= 0.25.1
@@ -184,17 +184,17 @@ Requires:       python3-oslo-upgradecheck >= 1.3.0
 Requires:       python3-oslo-utils >= 4.5.0
 Requires:       python3-oslo-versionedobjects >= 1.35.1
 Requires:       python3-osprofiler >= 2.3.0
-Requires:       python3-ovsdbapp >= 1.11.0
+Requires:       python3-ovsdbapp >= 1.12.1
 Requires:       python3-pecan >= 1.3.2
 Requires:       python3-pbr >= 4.0.0
 Requires:       python3-psutil >= 5.3.0
-Requires:       python3-pyroute2 >= 0.5.14
+Requires:       python3-pyroute2 >= 0.6.6
 Requires:       python3-requests >= 2.18.0
 Requires:       python3-tenacity >= 6.0.0
 Requires:       python3-routes >= 2.3.1
 Requires:       python3-os-ken >= 2.0.0
 Requires:       python3-os-resource-classes >= 1.1.0
-Requires:       python3-sqlalchemy >= 1.3.2
+Requires:       python3-sqlalchemy >= 1.3.23
 Requires:       python3-stevedore >= 1.20.0
 Requires:       python3-tooz >= 1.58.0
 Requires:       python3-webob >= 1.8.2
