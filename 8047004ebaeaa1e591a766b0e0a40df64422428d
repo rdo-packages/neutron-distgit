@@ -1,0 +1,10 @@
+Code-Review+2: Sławek Kapłoński <skaplons@redhat.com>
+Code-Review+1: Bernard Cafarelli <bcafarel@redhat.com>
+Code-Review+2: Alfredo Moralejo <amoralej@redhat.com>
+Workflow+1: Alfredo Moralejo <amoralej@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Wed, 29 Jun 2022 17:09:07 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/neutron-distgit/+/43776
+Project: openstack/neutron-distgit
+Branch: refs/heads/wallaby-rdo
