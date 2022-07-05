@@ -70,6 +70,30 @@
       },
       "revId": "8afe7d0442bc0bd2a14761af4b74075a131f0a39",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51fc0bcb_80f9e431",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2022-07-05T09:17:38Z",
+      "side": 1,
+      "message": "This project is used both for RDO and RHOS. Then this check is correct.",
+      "parentUuid": "47b848ee_f53032ac",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "8afe7d0442bc0bd2a14761af4b74075a131f0a39",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
