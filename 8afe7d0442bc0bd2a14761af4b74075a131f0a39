@@ -46,6 +46,30 @@
       },
       "revId": "8afe7d0442bc0bd2a14761af4b74075a131f0a39",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47b848ee_f53032ac",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2022-07-05T08:55:37Z",
+      "side": 1,
+      "message": "That\u0027s my point: if this patch is for Wallaby only, why this check?",
+      "parentUuid": "0d662f59_f84abf29",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "8afe7d0442bc0bd2a14761af4b74075a131f0a39",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
