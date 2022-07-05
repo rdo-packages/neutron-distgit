@@ -22,6 +22,30 @@
       },
       "revId": "8afe7d0442bc0bd2a14761af4b74075a131f0a39",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d662f59_f84abf29",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2022-07-05T08:42:46Z",
+      "side": 1,
+      "message": "@rodolfo actually rhosp conditional is not in rpm-master branch, hence added wallaby only, same is done for Train backport https://review.rdoproject.org/r/c/openstack/neutron-distgit/+/39334",
+      "parentUuid": "348b3151_e0a2f203",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "8afe7d0442bc0bd2a14761af4b74075a131f0a39",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
