@@ -24,7 +24,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 %global rhosp 0
 
 Name:           openstack-%{service}
-Version:        18.4.0
+Version:        18.5.0
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -876,6 +876,9 @@ fi
 %{_datadir}/ansible/neutron-ovn-migration/
 
 %changelog
+* Thu Jul 21 2022 RDO <dev@lists.rdoproject.org> 1:18.5.0-1
+- Update to 18.5.0
+
 * Wed May 25 2022 RDO <dev@lists.rdoproject.org> 1:18.4.0-1
 - Update to 18.4.0
 
