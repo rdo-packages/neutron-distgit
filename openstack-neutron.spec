@@ -715,6 +715,9 @@ fi
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-pd-notify
+%if 0%{?dlrn}
+%{_bindir}/neutron-remove-duplicated-port-bindings
+%endif
 %{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-status
 %{_bindir}/neutron-server
