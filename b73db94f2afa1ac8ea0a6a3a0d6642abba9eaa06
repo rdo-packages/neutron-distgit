@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b99b09f4_28d71b8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2022-08-24T06:42:33Z",
+      "side": 1,
+      "message": "New cmd added neutron-remove-duplicated-port-bindings ",
+      "revId": "b73db94f2afa1ac8ea0a6a3a0d6642abba9eaa06",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
