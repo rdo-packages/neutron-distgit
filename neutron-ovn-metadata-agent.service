@@ -15,4 +15,4 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 # (TODO) - Backwards compatibility in systemd service
-Alias=networking-ovn-metadata-agent
+Alias=networking-ovn-metadata-agent.service
