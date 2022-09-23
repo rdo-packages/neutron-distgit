@@ -21,7 +21,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        19.4.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -877,6 +877,9 @@ fi
 %{_bindir}/ml2ovn-trace
 
 %changelog
+* Fri Sep 23 2022 Alfredo Moralejo <amoralej@redhat.com> 1:19.4.0-2
+- Fix incomplete alias name for networking-ovn-metadata-agent systemd unit
+
 * Thu Jul 21 2022 RDO <dev@lists.rdoproject.org> 1:19.4.0-1
 - Update to 19.4.0
 
