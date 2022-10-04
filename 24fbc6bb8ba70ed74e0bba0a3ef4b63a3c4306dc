@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25d42884_34f62f55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2022-10-04T15:14:04Z",
+      "side": 1,
+      "message": "Fixed in https://review.rdoproject.org/r/c/openstack/neutron-distgit/+/45466",
+      "revId": "24fbc6bb8ba70ed74e0bba0a3ef4b63a3c4306dc",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
