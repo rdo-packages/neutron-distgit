@@ -1,4 +1,3 @@
-%global milestone .0rc2
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
 %global sources_gpg_sign 0xa63ea142678138d1bb15f2e303bdfd64dd164087
 
@@ -22,7 +21,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        21.0.0
-Release:        0.2%{?milestone}%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -30,7 +29,6 @@ License:        ASL 2.0
 URL:            http://launchpad.net/%{service}/
 
 Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
-# patches_base=21.0.0.0rc2
 
 Source1:        %{service}.logrotate
 Source2:        %{service}-sudoers
@@ -874,6 +872,9 @@ fi
 %{_bindir}/ml2ovn-trace
 
 %changelog
+* Wed Oct 05 2022 RDO <dev@lists.rdoproject.org> 1:21.0.0-1
+- Update to 21.0.0
+
 * Thu Sep 29 2022 RDO <dev@lists.rdoproject.org> 1:21.0.0-0.2.0rc1
 - Update to 21.0.0.0rc2
 
