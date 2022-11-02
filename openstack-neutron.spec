@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0xa63ea142678138d1bb15f2e303bdfd64dd164087
+%global sources_gpg_sign 0xa7475c5f2122fec3f90343223fe3bf5aad1080e4
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
@@ -24,8 +24,8 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 %global rhosp 0
 
 Name:           openstack-%{service}
-Version:        18.5.0
-Release:        2%{?dist}
+Version:        18.6.0
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -716,9 +716,7 @@ fi
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ovs-cleanup
 %{_bindir}/neutron-pd-notify
-%if 0%{?dlrn}
 %{_bindir}/neutron-remove-duplicated-port-bindings
-%endif
 %{_bindir}/neutron-sanity-check
 %{_bindir}/neutron-status
 %{_bindir}/neutron-server
@@ -880,6 +878,9 @@ fi
 %{_datadir}/ansible/neutron-ovn-migration/
 
 %changelog
+* Wed Nov 02 2022 RDO <dev@lists.rdoproject.org> 1:18.6.0-1
+- Update to 18.6.0
+
 * Fri Sep 23 2022 Alfredo Moralejo <amoralej@redhat.com> 1:18.5.0-2
 - Fix incomplete alias name for networking-ovn-metadata-agent systemd unit
 
