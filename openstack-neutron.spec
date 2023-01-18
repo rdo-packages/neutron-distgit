@@ -70,6 +70,7 @@ BuildRequires:  /usr/bin/gpgv2
 
 BuildRequires:  git-core
 BuildRequires:  openstack-macros
+BuildRequires:  python3-ddt
 BuildRequires:  python3-devel
 BuildRequires:  python3-babel
 BuildRequires:  python3-keystoneauth1 >= 3.14.0
@@ -77,6 +78,7 @@ BuildRequires:  python3-keystonemiddleware
 BuildRequires:  python3-neutron-lib
 BuildRequires:  python3-novaclient
 BuildRequires:  python3-os-resource-classes
+BuildRequires:  python3-os-xenapi
 BuildRequires:  python3-oslo-cache
 BuildRequires:  python3-oslo-concurrency
 BuildRequires:  python3-oslo-config
@@ -85,6 +87,7 @@ BuildRequires:  python3-oslo-log
 BuildRequires:  python3-oslo-messaging
 BuildRequires:  python3-oslo-policy
 BuildRequires:  python3-oslo-privsep
+BuildRequires:  python3-oslo-reports
 BuildRequires:  python3-oslo-rootwrap
 BuildRequires:  python3-oslo-service
 BuildRequires:  python3-oslo-upgradecheck
@@ -96,7 +99,19 @@ BuildRequires:  python3-psutil >= 3.2.2
 BuildRequires:  python3-pyroute2 >= 0.6.4
 BuildRequires:  python3-pecan >= 1.3.2
 BuildRequires:  python3-tenacity >= 4.4.0
+BuildRequires:  python3-oslotest
+BuildRequires:  python3-hacking
+BuildRequires:  python3-stestr
+BuildRequires:  python3-testresources
+BuildRequires:  python3-testscenarios
+BuildRequires:  python3-designateclient
+BuildRequires:  python3-neutronclient
+BuildRequires:  python3-neutron-lib-tests
+BuildRequires:  python3-openstacksdk
+BuildRequires:  python3-os-ken
 BuildRequires:  python3-os-vif
+BuildRequires:  python3-tooz
+BuildRequires:  python3-webtest
 BuildRequires:  systemd
 
 
@@ -425,6 +440,8 @@ find %{service} -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 # Kill egg-info in order to generate new SOURCES.txt
 rm -rf neutron.egg-info
 
+# Needs pyroute >=0.7.1
+rm -rf neutron/tests/unit/agent/linux/test_devlink.py
 
 %build
 export SKIP_PIP_INSTALL=1
@@ -571,6 +588,10 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 
 # Find language files
 %find_lang %{service} --all-name
+
+%check
+export PYTHON=%{__python3}
+stestr-3 run
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
