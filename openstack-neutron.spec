@@ -866,6 +866,7 @@ fi
 %{_bindir}/ovn_migration.sh
 %{_datadir}/ansible/neutron-ovn-migration/
 
+
 %files ml2ovn-trace
 %license LICENSE
 %{_bindir}/ml2ovn-trace
