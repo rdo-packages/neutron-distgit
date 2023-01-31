@@ -93,7 +93,7 @@ BuildRequires:  python3-osprofiler >= 1.3.0
 BuildRequires:  python3-ovsdbapp
 BuildRequires:  python3-pbr >= 4.0.0
 BuildRequires:  python3-psutil >= 3.2.2
-BuildRequires:  python3-pyroute2 >= 0.6.4
+BuildRequires:  python3-pyroute2 >= 0.7.3
 BuildRequires:  python3-pecan >= 1.3.2
 BuildRequires:  python3-tenacity >= 4.4.0
 BuildRequires:  python3-os-vif
@@ -187,7 +187,7 @@ Requires:       python3-ovsdbapp >= 1.16.0
 Requires:       python3-pecan >= 1.3.2
 Requires:       python3-pbr >= 4.0.0
 Requires:       python3-psutil >= 5.3.0
-Requires:       python3-pyroute2 >= 0.6.6
+Requires:       python3-pyroute2 >= 0.7.3
 Requires:       python3-requests >= 2.18.0
 Requires:       python3-tenacity >= 6.0.0
 Requires:       python3-routes >= 2.3.1
