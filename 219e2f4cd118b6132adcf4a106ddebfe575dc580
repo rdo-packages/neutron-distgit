@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0113d51_a7fb4439",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2023-02-01T06:27:54Z",
+      "side": 1,
+      "message": "no longer required as pyroute2-0.7.3 available in antelope, will remove.",
+      "range": {
+        "startLine": 443,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 53
+      },
+      "revId": "219e2f4cd118b6132adcf4a106ddebfe575dc580",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
