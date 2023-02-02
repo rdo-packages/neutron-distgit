@@ -16,6 +16,24 @@
       "message": "I would need some help with those errors, please.",
       "revId": "df2a255f77b7fc7b84753750ed256164a04b37d5",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fc4ecfd_602df501",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2023-02-02T09:13:03Z",
+      "side": 1,
+      "message": "Ok, the error is in https://logserver.rdoproject.org/56/46856/2/check/DLRN-rpmbuild-centos9/7b6824c/buildset/centos9/repos/22/02/2202cc1d89d95b368c65f4968003fd4e0e139af2_dev/build.log.gz\n\n+ mv etc/neutron/plugins/ml2/ovn_agent.ini /builddir/build/BUILDROOT/openstack-neutron-21.1.0-0.20230202090145.2202cc1.el9.x86_64/etc/neutron/plugins/ml2/ovn_agent.ini\nmv: cannot stat \u0027etc/neutron/plugins/ml2/ovn_agent.ini\u0027: No such file or directory",
+      "parentUuid": "a563637c_b27f26da",
+      "revId": "df2a255f77b7fc7b84753750ed256164a04b37d5",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
