@@ -55,6 +55,7 @@ Source34:       neutron-l2-agent-sysctl.conf
 Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 Source37:       neutron-ovn-metadata-agent.service
+Source38:       neutron-ovn-agent.service
 # Required for tarball sources verification
 %if 0%{?sources_gpg} == 1
 Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
@@ -403,6 +404,22 @@ Open vSwitch project.
 This package contains the agent that implements the metadata proxy so that VM's
 can retrieve metadata from OpenStack Nova.
 
+
+%package ovn-agent
+Summary:        Neutron OVN agent
+BuildRequires:  systemd
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
+Requires:       openvswitch >= 2.10.0
+%{?systemd_requires}
+
+%description ovn-agent
+OVN provides virtual networking for Open vSwitch and is a component of the
+Open vSwitch project.
+
+This package contains the agent that implements any functionality not provided
+by the ovn-controller service.
+
+
 %package ovn-migration-tool
 Summary:        networking-ovn ML2/OVS to OVN migration tool
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
@@ -494,7 +511,7 @@ for agent in dhcp l3 metadata metering neutron_ovn_metadata
 do
   mv etc/${agent}_agent.ini %{buildroot}%{_sysconfdir}/%{service}/${agent}_agent.ini
 done
-for file in linuxbridge_agent ml2_conf openvswitch_agent sriov_agent
+for file in linuxbridge_agent ml2_conf openvswitch_agent sriov_agent ovn_agent
 do
   mv etc/%{service}/plugins/ml2/${file}.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2/${file}.ini
 done
@@ -532,6 +549,7 @@ install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.serv
 install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cleanup.service
 install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-ports.service
 install -p -D -m 644 %{SOURCE37} %{buildroot}%{_unitdir}/neutron-ovn-metadata-agent.service
+install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-ovn-agent.service
 
 # (TODO) - Backwards compatibility for systemd unit networking-ovn-metadata-agent
 
@@ -573,7 +591,7 @@ mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
 for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup macvtap-agent; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
-for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic ovn-metadata; do
+for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic ovn-metadata ovn; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
 
@@ -717,6 +735,18 @@ fi
 %systemd_postun_with_restart neutron-ovn-metadata-agent.service
 
 
+%post ovn-agent
+%systemd_post neutron-ovn-agent.service
+
+
+%preun ovn-agent
+%systemd_preun neutron-ovn-agent.service
+
+
+%postun ovn-agent
+%systemd_postun_with_restart neutron-ovn-agent.service
+
+
 %files
 %license LICENSE
 %{_bindir}/neutron-api
@@ -737,6 +767,7 @@ fi
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_bindir}/neutron-ovn-metadata-agent
+%{_bindir}/neutron-ovn-agent
 %{_bindir}/neutron-sanitize-port-binding-profile-allocation
 %{_bindir}/neutron-sanitize-port-mac-addresses
 %{_bindir}/networking-ovn-metadata-agent
@@ -876,6 +907,14 @@ fi
 %{_sysconfdir}/neutron/plugins/networking-ovn/networking-ovn-metadata-agent.ini
 /etc/neutron/plugins/networking-ovn/networking-ovn.ini
 %dir %{_sysconfdir}/neutron/conf.d/neutron-ovn-metadata-agent
+
+
+%files ovn-agent
+%license LICENSE
+%{_bindir}/neutron-ovn-agent
+%{_unitdir}/neutron-ovn-agent.service
+%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/ovn_agent.ini
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovn-agent
 
 
 %files ovn-migration-tool
