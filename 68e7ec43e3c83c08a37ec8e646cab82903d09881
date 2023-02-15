@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edc0759c_c0caebaf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2023-02-15T08:54:38Z",
+      "side": 1,
+      "message": "I rechecked it in trunk, it\u0027s currently building it",
+      "revId": "68e7ec43e3c83c08a37ec8e646cab82903d09881",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
