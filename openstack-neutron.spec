@@ -20,7 +20,7 @@ Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
-Version:        19.5.0
+Version:        19.6.0
 Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
@@ -878,6 +878,9 @@ fi
 %{_bindir}/ml2ovn-trace
 
 %changelog
+* Tue Mar 14 2023 RDO <dev@lists.rdoproject.org> 1:19.6.0-1
+- Update to 19.6.0
+
 * Fri Feb 03 2023 RDO <dev@lists.rdoproject.org> 1:19.5.0-1
 - Update to 19.5.0
 
