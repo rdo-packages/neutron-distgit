@@ -607,7 +607,9 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 
 %check
 export PYTHON=%{__python3}
-stestr-3 run
+# Run tests in sets to avoid failure https://bugs.launchpad.net/neutron/+bug/2024674
+stestr-3 run 'neutron.tests.unit.(objects|extensions)'
+stestr-3 run --combine --exclude-regex 'neutron.tests.unit.(objects|extensions)'
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
