@@ -606,7 +606,8 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 
 %check
 export PYTHON=%{__python3}
-stestr-3 run
+# Use half of the available CPUs to avoid failures on a loaded system
+stestr-3 run --concurrency=$(($(nproc) / 2))
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
