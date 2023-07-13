@@ -79,7 +79,6 @@ BuildRequires:  python3-keystonemiddleware
 BuildRequires:  python3-neutron-lib
 BuildRequires:  python3-novaclient
 BuildRequires:  python3-os-resource-classes
-BuildRequires:  python3-os-xenapi
 BuildRequires:  python3-oslo-cache
 BuildRequires:  python3-oslo-concurrency
 BuildRequires:  python3-oslo-config
