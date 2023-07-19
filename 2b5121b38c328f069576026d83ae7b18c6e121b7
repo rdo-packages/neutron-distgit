@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55633ec9_2ec6375c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2023-07-19T07:34:23Z",
+      "side": 1,
+      "message": "@takashi Where is this issue seen? As we don\u0027t ship victoria packages for EL9.",
+      "revId": "2b5121b38c328f069576026d83ae7b18c6e121b7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
