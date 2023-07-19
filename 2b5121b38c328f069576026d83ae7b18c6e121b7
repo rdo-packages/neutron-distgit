@@ -34,6 +34,24 @@
       "parentUuid": "55633ec9_2ec6375c",
       "revId": "2b5121b38c328f069576026d83ae7b18c6e121b7",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38faae5e_4c85f9f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2023-07-19T15:03:11Z",
+      "side": 1,
+      "message": "Ok Thanks Takashi for confirming it was never an issue from functional point of view before CentOS9/RHEL9. Merging it shouldn\u0027t hurt so fine by me.",
+      "parentUuid": "2bd6ed1a_6f65bbb3",
+      "revId": "2b5121b38c328f069576026d83ae7b18c6e121b7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
