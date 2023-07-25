@@ -24,6 +24,30 @@
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30620c22_314496ef",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 687
+      },
+      "writtenOn": "2023-07-25T14:16:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f95a109b_1acc22ad",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 11
+      },
+      "revId": "3707674dbf3ec7e8e0833d34a01d45c368d0bb90",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de19a529_17d8496b",
@@ -60,6 +84,30 @@
       "writtenOn": "2023-07-25T14:11:20Z",
       "side": 0,
       "message": "To be clear, os-testr was created as a wrapper to stestr when openstack moved to stestr but i\u0027d say it\u0027s better to directly require python3-stestr instead.",
+      "parentUuid": "de19a529_17d8496b",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 13
+      },
+      "revId": "3707674dbf3ec7e8e0833d34a01d45c368d0bb90",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bffcb7d4_ff37f9ca",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 687
+      },
+      "writtenOn": "2023-07-25T14:16:23Z",
+      "side": 0,
+      "message": "Oh, right (https://review.opendev.org/c/openstack/neutron/+/570008)",
       "parentUuid": "de19a529_17d8496b",
       "range": {
         "startLine": 248,
