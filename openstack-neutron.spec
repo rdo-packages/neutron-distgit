@@ -2,8 +2,6 @@
 %global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
-# we are excluding some BRs from automatic generator
-%global excluded_brs doc8 bandit pre-commit hacking flake8-import-order bashate sphinx openstackdocstheme
 %global service neutron
 
 %define cleanup_orphan_rootwrap_daemons() \
@@ -27,7 +25,7 @@ Release:        XXX
 Epoch:          1
 Summary:        OpenStack Networking Service
 
-License:        Apache-2.0
+License:        ASL 2.0
 URL:            http://launchpad.net/%{service}/
 
 Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
@@ -73,10 +71,49 @@ BuildRequires:  /usr/bin/gpgv2
 
 BuildRequires:  git-core
 BuildRequires:  openstack-macros
+BuildRequires:  python3-ddt
 BuildRequires:  python3-devel
-BuildRequires:  pyproject-rpm-macros
+BuildRequires:  python3-babel
+BuildRequires:  python3-keystoneauth1 >= 3.14.0
+BuildRequires:  python3-keystonemiddleware
+BuildRequires:  python3-neutron-lib
+BuildRequires:  python3-novaclient
+BuildRequires:  python3-os-resource-classes
+BuildRequires:  python3-oslo-cache
+BuildRequires:  python3-oslo-concurrency
+BuildRequires:  python3-oslo-config
+BuildRequires:  python3-oslo-db
+BuildRequires:  python3-oslo-log
+BuildRequires:  python3-oslo-messaging
+BuildRequires:  python3-oslo-policy
+BuildRequires:  python3-oslo-privsep
+BuildRequires:  python3-oslo-reports
+BuildRequires:  python3-oslo-rootwrap
+BuildRequires:  python3-oslo-service
+BuildRequires:  python3-oslo-upgradecheck
+BuildRequires:  python3-oslo-versionedobjects
+BuildRequires:  python3-osprofiler >= 1.3.0
+BuildRequires:  python3-ovsdbapp
+BuildRequires:  python3-pbr >= 4.0.0
+BuildRequires:  python3-psutil >= 3.2.2
+BuildRequires:  python3-pyroute2 >= 0.7.3
+BuildRequires:  python3-pecan >= 1.3.2
+BuildRequires:  python3-tenacity >= 4.4.0
+BuildRequires:  python3-oslotest
+BuildRequires:  python3-hacking
+BuildRequires:  python3-stestr
+BuildRequires:  python3-testresources
+BuildRequires:  python3-testscenarios
+BuildRequires:  python3-designateclient
+BuildRequires:  python3-neutronclient
 BuildRequires:  python3-neutron-lib-tests
+BuildRequires:  python3-openstacksdk
+BuildRequires:  python3-os-ken
+BuildRequires:  python3-os-vif
+BuildRequires:  python3-tooz
+BuildRequires:  python3-webtest
 BuildRequires:  systemd
+
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
@@ -119,12 +156,72 @@ Requires:       iproute-tc
 %{?systemd_ordering}
 
 
+Obsoletes:      openstack-%{service}-dev-server
+
 %description
 %{common_desc}
 
 
 %package -n python3-%{service}
 Summary:        Neutron Python libraries
+%{?python_provide:%python_provide python3-%{service}}
+Requires:       python3-alembic >= 1.6.5
+Requires:       python3-debtcollector >= 1.19.0
+Requires:       python3-designateclient >= 2.7.0
+Requires:       python3-eventlet >= 0.26.1
+Requires:       python3-greenlet >= 0.4.10
+Requires:       python3-futurist >= 1.2.0
+Requires:       python3-jinja2 >= 2.10
+Requires:       python3-keystoneauth1 >= 3.14.0
+Requires:       python3-keystonemiddleware >= 5.1.0
+Requires:       python3-netaddr >= 0.7.18
+Requires:       python3-neutronclient >= 7.8.0
+Requires:       python3-neutron-lib >= 3.4.0
+Requires:       python3-novaclient >= 9.1.0
+Requires:       python3-os-vif >= 3.1.0
+Requires:       python3-oslo-cache >= 1.26.0
+Requires:       python3-oslo-concurrency >= 3.26.0
+Requires:       python3-oslo-config >= 2:9.0.0
+Requires:       python3-oslo-context >= 2.22.0
+Requires:       python3-oslo-db >= 4.44.0
+Requires:       python3-oslo-i18n >= 3.20.0
+Requires:       python3-oslo-log >= 4.5.0
+Requires:       python3-oslo-messaging >= 7.0.0
+Requires:       python3-oslo-middleware >= 3.31.0
+Requires:       python3-oslo-policy >= 3.12.0
+Requires:       python3-oslo-privsep >= 2.3.0
+Requires:       python3-oslo-reports >= 1.18.0
+Requires:       python3-oslo-rootwrap >= 5.15.0
+Requires:       python3-oslo-serialization >= 2.25.0
+Requires:       python3-oslo-service >= 2.8.0
+Requires:       python3-oslo-upgradecheck >= 1.3.0
+Requires:       python3-oslo-utils >= 4.8.0
+Requires:       python3-oslo-versionedobjects >= 1.35.1
+Requires:       python3-osprofiler >= 2.3.0
+Requires:       python3-ovsdbapp >= 1.16.0
+Requires:       python3-pecan >= 1.4.0
+Requires:       python3-pbr >= 4.0.0
+Requires:       python3-psutil >= 5.3.0
+Requires:       python3-pyroute2 >= 0.7.3
+Requires:       python3-requests >= 2.18.0
+Requires:       python3-tenacity >= 6.0.0
+Requires:       python3-routes >= 2.3.1
+Requires:       python3-os-ken >= 2.2.0
+Requires:       python3-os-resource-classes >= 1.1.0
+Requires:       python3-sqlalchemy >= 1.4.23
+Requires:       python3-stevedore >= 2.0.1
+Requires:       python3-tooz >= 1.58.0
+Requires:       python3-webob >= 1.8.2
+Requires:       python3-openstacksdk >= 0.31.2
+Requires:       python3-pyOpenSSL >= 17.1.0
+Requires:       python3-packaging >= 20.4
+
+Requires:       python3-httplib2 >= 0.9.1
+Requires:       python3-netifaces >= 0.10.4
+Requires:       python3-paste >= 2.0.2
+Requires:       python3-paste-deploy >= 1.5.0
+Requires:       python3-decorator >= 4.1.0
+
 Obsoletes:      python3-networking-ovn
 Provides:       python3-networking-ovn = %{epoch}:%{version}-%{release}
 
@@ -137,6 +234,7 @@ This package contains the Neutron Python library.
 
 %package -n python3-%{service}-tests
 Summary:        Neutron tests
+%{?python_provide:%python_provide python3-%{service}-tests}
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python3-ddt >= 1.0.1
 Requires:       python3-fixtures >= 3.0.0
@@ -149,7 +247,9 @@ Requires:       python3-oslotest >= 1.10.0
 Requires:       python3-PyMySQL >= 0.6.2
 Requires:       python3-stestr >= 1.0.0
 Requires:       python3-tempest >= 12.1.0
+
 Requires:       python3-webtest >= 2.0
+
 
 # pstree is used during functional testing to ensure our internal
 # libraries managing processes work correctly.
@@ -212,6 +312,12 @@ macvtap attachments for libvirt qemu/kvm instances.
 %package ml2
 Summary:        Neutron ML2 plugin
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
+# needed for brocade and cisco drivers
+#(TODO) ncclient is not in reuirement projects so it should be requirement in neutron
+# plugin packages, not in main neutron. Remove this lines completely if everythin keeps
+# working.
+#Requires:       python3-ncclient
+
 
 %description ml2
 %{common_desc}
@@ -343,40 +449,21 @@ sed -i 's/\/usr\/bin\/python/\/usr\/bin\/python3/' %{SOURCE36}
 
 find %{service} -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
-# do not run linters
-rm -f neutron/hacking/checks.py
-rm -f neutron/tests/unit/hacking/test_checks.py
+# Let's handle dependencies ourseleves
+%py_req_cleanup
 
-sed -i /^[[:space:]]*-c{env:.*_CONSTRAINTS_FILE.*/d tox.ini
-sed -i "s/^deps = -c{env:.*_CONSTRAINTS_FILE.*/deps =/" tox.ini
-sed -i /^minversion.*/d tox.ini
-sed -i /^requires.*virtualenv.*/d tox.ini
-sed -i '/^  hacking.*/d' tox.ini
-
-# Exclude some bad-known BRs
-for pkg in %{excluded_brs}; do
-  for reqfile in doc/requirements.txt test-requirements.txt; do
-    if [ -f $reqfile ]; then
-      sed -i /^${pkg}.*/d $reqfile
-    fi
-  done
-done
-
-%generate_buildrequires
-%pyproject_buildrequires -t -e %{default_toxenv}
+# Kill egg-info in order to generate new SOURCES.txt
+rm -rf neutron.egg-info
 
 %build
 export SKIP_PIP_INSTALL=1
-%pyproject_wheel
-
-%install
-%pyproject_install
-
+%{py3_build}
 # Generate i18n files
-%{__python3} setup.py compile_catalog -d %{buildroot}%{python3_sitelib}/%{service}/locale -D neutron
+# (amoralej) we can remove '-D neutron' once https://review.openstack.org/#/c/485070/ is merged
+%{__python3} setup.py compile_catalog -d build/lib/%{service}/locale -D neutron
 
 # Generate configuration files
-export PYTHONPATH="%{buildroot}/%{python3_sitelib}"
+PYTHONPATH=.
 for file in `ls etc/oslo-config-generator/*`; do
     oslo-config-generator --config-file=$file
 done
@@ -396,6 +483,9 @@ while read name eq value; do
   test "$name" && test "$value" || continue
   sed -ri "0,/^(#)? *$name *=/{s!^(#)? *$name *=.*!# $name = $value!}" etc/%{service}.conf
 done < %{SOURCE30}
+
+%install
+%{py3_install}
 
 # Remove unused files
 rm -rf %{buildroot}%{python3_sitelib}/bin
@@ -513,9 +603,10 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 %find_lang %{service} --all-name
 
 %check
+export PYTHON=%{__python3}
 # Run tests in sets to avoid failure https://bugs.launchpad.net/neutron/+bug/2024674
-%tox -e %{default_toxenv} -- -- 'neutron.tests.unit.(objects|extensions)'
-%tox -e %{default_toxenv} -- -- --combine --exclude-regex 'neutron.tests.unit.(objects|extensions)'
+stestr-3 run 'neutron.tests.unit.(objects|extensions)'
+stestr-3 run --combine --exclude-regex 'neutron.tests.unit.(objects|extensions)'
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
@@ -711,7 +802,7 @@ fi
 %files -n python3-%{service}
 %license LICENSE
 %{python3_sitelib}/%{service}
-%{python3_sitelib}/%{service}-*.dist-info
+%{python3_sitelib}/%{service}-*.egg-info
 %exclude %{python3_sitelib}/%{service}/tests
 
 
