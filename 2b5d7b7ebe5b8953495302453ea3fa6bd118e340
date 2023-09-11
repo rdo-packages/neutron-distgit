@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "2b5d7b7ebe5b8953495302453ea3fa6bd118e340",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95dcbb95_e172f53d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2023-09-11T15:58:16Z",
+      "side": 1,
+      "message": "missing BRs\n\nDEBUG: ModuleNotFoundError: No module named \u0027openstack\u0027",
+      "revId": "2b5d7b7ebe5b8953495302453ea3fa6bd118e340",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
