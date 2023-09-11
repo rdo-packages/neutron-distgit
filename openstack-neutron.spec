@@ -101,6 +101,9 @@ BuildRequires:  python3-pyroute2 >= 0.5.13
 BuildRequires:  python3-pecan >= 1.3.2
 BuildRequires:  python3-tenacity >= 4.4.0
 BuildRequires:  python3-os-vif
+BuildRequires:  python3-openstacksdk
+BuildRequires:  python3-oslo-reports
+BuildRequires:  python3-os-ken
 BuildRequires:  systemd
 
 
@@ -429,7 +432,7 @@ export SKIP_PIP_INSTALL=1
 %{__python3} setup.py compile_catalog -d build/lib/%{service}/locale -D neutron
 
 # Generate configuration files
-PYTHONPATH=.
+export PYTHONPATH=.
 for file in `ls etc/oslo-config-generator/*`; do
     oslo-config-generator --config-file=$file
 done
