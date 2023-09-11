@@ -465,7 +465,7 @@ export SKIP_PIP_INSTALL=1
 %{__python3} setup.py compile_catalog -d build/lib/%{service}/locale -D neutron
 
 # Generate configuration files
-PYTHONPATH=.
+export PYTHONPATH=.
 for file in `ls etc/oslo-config-generator/*`; do
     oslo-config-generator --config-file=$file
 done
