@@ -169,6 +169,7 @@ This package contains Neutron test files.
 Summary:        Neutron common files
 Requires(pre): shadow-utils
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
+Requires:       openstack-neutron-ml2 = %{epoch}:%{version}-%{release}
 Requires:       sudo
 
 
@@ -414,7 +415,6 @@ mv %{buildroot}/usr/etc/%{service}/* %{buildroot}%{_sysconfdir}/%{service}
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2
 
 mv etc/%{service}.conf %{buildroot}%{_sysconfdir}/%{service}/%{service}.conf
-mv etc/neutron/ovn.ini %{buildroot}%{_sysconfdir}/%{service}/ovn.ini
 for agent in dhcp l3 metadata metering neutron_ovn_metadata
 do
   mv etc/${agent}_agent.ini %{buildroot}%{_sysconfdir}/%{service}/${agent}_agent.ini
@@ -431,6 +431,7 @@ ln -s /etc/neutron/neutron_ovn_metadata_agent.ini %{buildroot}%{_sysconfdir}/%{s
 
 # (TODO) Backwards compatibility for ovn.ini
 ln -s /etc/neutron/ovn.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/networking-ovn/networking-ovn.ini
+ln -s /etc/neutron/plugins/ml2/ml2_conf.ini %{buildroot}%{_sysconfdir}/%{service}/ovn.ini
 
 # (TODO) Backwards compatibility for networking-ovn-metadata-agent executable
 ln -s %{_bindir}/neutron-ovn-metadata-agent  %{buildroot}%{_bindir}/networking-ovn-metadata-agent
@@ -730,7 +731,7 @@ fi
 %dir %{_sysconfdir}/%{service}/plugins
 %attr(-, root, %{service}) %{_datadir}/%{service}/%{service}-dist.conf
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/%{service}.conf
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/ovn.ini
+%{_sysconfdir}/%{service}/ovn.ini
 %{_sysconfdir}/%{service}/plugins/networking-ovn/networking-ovn.ini
 %config(noreplace) %{_sysconfdir}/%{service}/rootwrap.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
