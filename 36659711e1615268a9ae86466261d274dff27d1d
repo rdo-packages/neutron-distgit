@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "36659711e1615268a9ae86466261d274dff27d1d",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db3d73a6_720f0553",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2023-09-22T07:14:40Z",
+      "side": 1,
+      "message": "deployment jobs are failing, i\u0027m debugging the issue, seems related to this patch",
+      "revId": "36659711e1615268a9ae86466261d274dff27d1d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
