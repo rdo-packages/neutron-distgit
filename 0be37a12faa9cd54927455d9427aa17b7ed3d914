@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3e50659_c14f7122",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2023-09-22T09:46:32Z",
+      "side": 1,
+      "message": "this part should be removed",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "0be37a12faa9cd54927455d9427aa17b7ed3d914",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
