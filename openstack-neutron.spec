@@ -1,4 +1,3 @@
-%global milestone .0rc2
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
 %global sources_gpg_sign 0x815AFEC729392386480E076DCC0DFE2D21C023C9
 
@@ -24,7 +23,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        23.0.0
-Release:        0.2%{?milestone}%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -32,7 +31,6 @@ License:        Apache-2.0
 URL:            http://launchpad.net/%{service}/
 
 Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
-# patches_base=23.0.0.0rc2
 
 Source1:        %{service}.logrotate
 Source2:        %{service}-sudoers
@@ -840,6 +838,9 @@ fi
 %{_bindir}/ml2ovn-trace
 
 %changelog
+* Wed Oct 04 2023 RDO <dev@lists.rdoproject.org> 1:23.0.0-1
+- Update to 23.0.0
+
 * Fri Sep 29 2023 RDO <dev@lists.rdoproject.org> 1:23.0.0-0.2.0rc1
 - Update to 23.0.0.0rc2
 
