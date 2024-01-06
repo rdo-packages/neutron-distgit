@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x815AFEC729392386480E076DCC0DFE2D21C023C9
+%global sources_gpg_sign 0x815afec729392386480e076dcc0dfe2d21c023c9
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global service neutron
@@ -947,3 +947,4 @@ fi
 - Update to 22.0.0.0rc1
 
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/neutron/commit/be09dd089a10604b85c290889287e4508ccab43c
