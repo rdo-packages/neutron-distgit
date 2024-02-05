@@ -70,6 +70,24 @@
       "parentUuid": "66eb32d5_581005cc",
       "revId": "44af2739125b700be02100ea5ad31e56d0267687",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d40291a5_37367ac9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2024-02-05T16:52:50Z",
+      "side": 1,
+      "message": "From [1]\n\nDEBUG: Provides: python-neutron-lib \u003d 3.8.1-0.20240126082831.72d3c7b.el9 python3-neutron-lib \u003d 3.8.1-0.20240126082831.72d3c7b.el9 python3.9-neutron-lib \u003d 3.8.1-0.20240126082831.72d3c7b.el9 **python3.9dist(neutron-lib) \u003d 3.8.1~~dev2 python3dist(neutron-lib) \u003d 3.8.1~~dev2**\n\n[1] https://trunk.rdoproject.org/centos9-bobcat/component/network/72/d3/72d3c7b470a774fad3fe0e54761f0f9f8c92a6d8_301d8e1b/rpmbuild.log",
+      "parentUuid": "cd73284e_80091f6b",
+      "revId": "44af2739125b700be02100ea5ad31e56d0267687",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
