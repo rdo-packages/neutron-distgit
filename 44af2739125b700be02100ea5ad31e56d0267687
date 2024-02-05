@@ -88,6 +88,24 @@
       "parentUuid": "cd73284e_80091f6b",
       "revId": "44af2739125b700be02100ea5ad31e56d0267687",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7d550a9_60d20b18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2024-02-05T17:02:55Z",
+      "side": 1,
+      "message": "Actually, 72d3 is not 3.8.1 tag. The tag is in 2224f23c. I\u0027m not sure what may be happening, maybe the tag has been moved or something. I think the best option is to remove the sources repo in the dlrn repo and force it to reclone it.\n\nee506ead (HEAD -\u003e stable/2023.2, upstream/stable/2023.2) Add api-ref about SG rule bulk create\n2224f23c (tag: 3.8.1) Add the \"cancellable\" flag to the ``CallbacksManager`` events\n72d3c7b4 Update TOX_CONSTRAINTS_FILE for stable/2023.2",
+      "parentUuid": "d40291a5_37367ac9",
+      "revId": "44af2739125b700be02100ea5ad31e56d0267687",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
