@@ -21,7 +21,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        22.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -391,8 +391,9 @@ SR-IOV network cards.
 %package ovn-metadata-agent
 Summary:        OVN metadata agent
 BuildRequires:  systemd
-Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       openvswitch >= 2.10.0
+Requires:       haproxy >= 1.5.0
 Obsoletes:      python3-networking-ovn-metadata-agent
 Provides:       python3-networking-ovn-metadata-agent = %{epoch}:%{version}-%{release}
 %{?systemd_requires}
@@ -931,6 +932,9 @@ fi
 %{_bindir}/ml2ovn-trace
 
 %changelog
+* Tue Feb 27 2024 Alfredo Moralejo <amoralej@redhat.com> 1:22.1.0-2
+- Add haproxy and neutron-common runtime dependency for ovn-metadata-agent
+
 * Tue Jan 16 2024 RDO <dev@lists.rdoproject.org> 1:22.1.0-1
 - Update to 22.1.0
 
