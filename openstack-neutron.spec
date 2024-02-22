@@ -284,7 +284,9 @@ SR-IOV network cards.
 Summary:        OVN metadata agent
 BuildRequires:  systemd
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       openvswitch >= 2.10.0
+Requires:       haproxy >= 1.5.0
 Obsoletes:      python3-networking-ovn-metadata-agent
 Provides:       python3-networking-ovn-metadata-agent = %{epoch}:%{version}-%{release}
 %{?systemd_requires}
