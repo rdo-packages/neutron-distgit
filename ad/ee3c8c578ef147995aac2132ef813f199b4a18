@@ -1,0 +1,9 @@
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Workflow+1: Yatin Karel <ykarel@redhat.com>
+Code-Review+2: Yatin Karel <ykarel@redhat.com>
+Code-Review+2: Sławek Kapłoński <skaplons@redhat.com>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Mon, 26 Feb 2024 13:54:35 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/neutron-distgit/+/51787
+Project: openstack/neutron-distgit
+Branch: refs/heads/rpm-master
