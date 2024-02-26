@@ -16,6 +16,24 @@
       "message": "Can drop Requires:       python3-%{service} \u003d %{epoch}:%{version}-%{release} now as that\u0027s dep of openstack-%{service}-common",
       "revId": "3932b1a21ba12b670386f9aa5218f97b2d9c926b",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f73c4b75_05fda471",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2024-02-26T12:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4540bbad_29dc054a",
+      "revId": "3932b1a21ba12b670386f9aa5218f97b2d9c926b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
