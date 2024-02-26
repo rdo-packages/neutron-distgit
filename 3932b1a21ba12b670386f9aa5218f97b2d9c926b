@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4540bbad_29dc054a",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2024-02-26T11:45:56Z",
+      "side": 1,
+      "message": "Can drop Requires:       python3-%{service} \u003d %{epoch}:%{version}-%{release} now as that\u0027s dep of openstack-%{service}-common",
+      "revId": "3932b1a21ba12b670386f9aa5218f97b2d9c926b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
