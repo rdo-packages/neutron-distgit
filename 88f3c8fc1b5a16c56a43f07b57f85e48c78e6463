@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "88f3c8fc1b5a16c56a43f07b57f85e48c78e6463",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc102718_e62098f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 757
+      },
+      "writtenOn": "2024-03-04T16:37:57Z",
+      "side": 1,
+      "message": "https://review.opendev.org/q/topic:%22bug/2054324%22",
+      "revId": "88f3c8fc1b5a16c56a43f07b57f85e48c78e6463",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
