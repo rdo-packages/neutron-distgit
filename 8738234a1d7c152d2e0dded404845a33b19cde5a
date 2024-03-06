@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59836aa4_6fa1f7bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-03-06T08:55:28Z",
+      "side": 1,
+      "message": "Slawek has already solved this issue [1]. Once merged, we can re-check again.\n\n[1]https://review.opendev.org/c/openstack/neutron/+/911154",
+      "revId": "8738234a1d7c152d2e0dded404845a33b19cde5a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
