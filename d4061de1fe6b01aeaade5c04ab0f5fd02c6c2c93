@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "771ed730_db51d3fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2024-04-25T03:32:54Z",
+      "side": 1,
+      "message": "Need https://review.opendev.org/c/openstack/neutron/+/911605",
+      "revId": "d4061de1fe6b01aeaade5c04ab0f5fd02c6c2c93",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
