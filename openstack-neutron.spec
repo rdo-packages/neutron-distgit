@@ -21,7 +21,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        22.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -173,7 +173,7 @@ Requires:       python3-designateclient >= 2.7.0
 Requires:       python3-eventlet >= 0.26.1
 Requires:       python3-greenlet >= 0.4.10
 Requires:       python3-futurist >= 1.2.0
-Requires:       python3-jinja2 >= 2.10
+Requires:       python3-jinja2 >= 3.0.0
 Requires:       python3-keystoneauth1 >= 3.14.0
 Requires:       python3-keystonemiddleware >= 5.1.0
 Requires:       python3-netaddr >= 0.7.18
@@ -931,6 +931,9 @@ fi
 %{_bindir}/ml2ovn-trace
 
 %changelog
+* Tue May 21 2024 Tobias Urdin <tobias.urdin@binero.com> 1:22.1.0-2
+- Fix jinja2 requires
+
 * Tue Jan 16 2024 RDO <dev@lists.rdoproject.org> 1:22.1.0-1
 - Update to 22.1.0
 
