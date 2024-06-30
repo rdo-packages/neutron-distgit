@@ -58,6 +58,7 @@ Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 Source37:       neutron-ovn-metadata-agent.service
 Source38:       neutron-ovn-agent.service
+Source39:       neutron-periodic-workers.service
 # Required for tarball sources verification
 %if 0%{?sources_gpg} == 1
 Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
@@ -313,6 +314,18 @@ This package contains the agent that implements any functionality not provided
 by the ovn-controller service.
 
 
+%package periodic-workers
+Summary:        Neutron periodic workers service
+BuildRequires:  systemd
+%{?systemd_requires}
+
+%description periodic-workers
+%{common_desc}
+
+This package contains an alternative Neutron server that handles the plugin
+services only.
+
+
 %package ovn-migration-tool
 Summary:        networking-ovn ML2/OVS to OVN migration tool
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
@@ -459,6 +472,7 @@ install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cle
 install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-ports.service
 install -p -D -m 644 %{SOURCE37} %{buildroot}%{_unitdir}/neutron-ovn-metadata-agent.service
 install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-ovn-agent.service
+install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-periodic-workers.service
 
 # (TODO) - Backwards compatibility for systemd unit networking-ovn-metadata-agent
 
@@ -657,6 +671,18 @@ fi
 %systemd_postun_with_restart neutron-ovn-agent.service
 
 
+%post periodic-workers
+%systemd_post neutron-periodic-workers.service
+
+
+%preun periodic-workers
+%systemd_preun neutron-periodic-workers.service
+
+
+%postun periodic-workers
+%systemd_postun_with_restart neutron-periodic-workers.service
+
+
 %files
 %license LICENSE
 %{_bindir}/neutron-api
@@ -677,6 +703,7 @@ fi
 %{_bindir}/neutron-usage-audit
 %{_bindir}/neutron-ovn-metadata-agent
 %{_bindir}/neutron-ovn-agent
+%{_bindir}/neutron-periodic-workers
 %{_bindir}/neutron-sanitize-port-binding-profile-allocation
 %{_bindir}/neutron-sanitize-port-mac-addresses
 %{_bindir}/networking-ovn-metadata-agent
@@ -824,6 +851,13 @@ fi
 %{_unitdir}/neutron-ovn-agent.service
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/ovn_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovn-agent
+
+
+%files periodic-workers
+%license LICENSE
+%{_bindir}/neutron-periodic-workers
+%{_unitdir}/neutron-periodic-workers.service
+%dir %{_sysconfdir}/%{service}/conf.d/%{service}-periodic-workers
 
 
 %files ovn-migration-tool
