@@ -24,6 +24,30 @@
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16422ff8_81d3a03e",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-01T14:18:16Z",
+      "side": 1,
+      "message": "right",
+      "parentUuid": "925ab127_dec32d55",
+      "range": {
+        "startLine": 345,
+        "startChar": 13,
+        "endLine": 345,
+        "endChar": 30
+      },
+      "revId": "b0cf5cb14c5f296335c94176fbd6412768bed13c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b527423c_f74b9632",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-07-01T13:44:38Z",
       "side": 1,
       "message": "is it needed only with ML2/ovn backend or for other backends too?",
+      "revId": "b0cf5cb14c5f296335c94176fbd6412768bed13c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "770a6743_dfdb0dd0",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-01T14:18:16Z",
+      "side": 1,
+      "message": "For any backend, this is why I didn\u0027t specify one in particular.",
+      "parentUuid": "b527423c_f74b9632",
       "revId": "b0cf5cb14c5f296335c94176fbd6412768bed13c",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
