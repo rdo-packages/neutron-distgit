@@ -669,6 +669,7 @@ fi
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ovs-cleanup
+%{_bindir}/neutron-periodic-workers
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-remove-duplicated-port-bindings
 %{_bindir}/neutron-sanity-check
