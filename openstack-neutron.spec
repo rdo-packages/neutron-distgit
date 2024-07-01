@@ -58,6 +58,7 @@ Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 Source37:       neutron-ovn-metadata-agent.service
 Source38:       neutron-ovn-agent.service
+Source39:       neutron-periodic-workers.service
 # Required for tarball sources verification
 %if 0%{?sources_gpg} == 1
 Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
@@ -334,6 +335,17 @@ Provides:       python3-neutron-ml2ovn-trace = %{epoch}:%{version}-%{release}
 This package provides tool that allows one to pass in OpenStack objects
 to fill in the eth/ip src/dst data when running ovn-trace.
 
+%package neutron-periodic-workers
+Summary:        Neutron API periodic workers service
+Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
+Provides:       python3-neutron-periodic-workers = %{epoch}:%{version}-%{release}
+
+%description neutron-periodic-workers
+
+This package provides the Neutron API process that executes the ML2
+plugin periodic workers. This process is needed when using the Neutron API
+WSGI module.
+
 %prep
 # Required for tarball sources verification
 %if 0%{?sources_gpg} == 1
@@ -459,6 +471,7 @@ install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cle
 install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-ports.service
 install -p -D -m 644 %{SOURCE37} %{buildroot}%{_unitdir}/neutron-ovn-metadata-agent.service
 install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-ovn-agent.service
+install -p -D -m 644 %{SOURCE39} %{buildroot}%{_unitdir}/neutron-periodic-workers.service
 
 # (TODO) - Backwards compatibility for systemd unit networking-ovn-metadata-agent
 
@@ -669,6 +682,7 @@ fi
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ovs-cleanup
+%{_bindir}/neutron-periodic-workers
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-remove-duplicated-port-bindings
 %{_bindir}/neutron-sanity-check
@@ -836,6 +850,12 @@ fi
 %files ml2ovn-trace
 %license LICENSE
 %{_bindir}/ml2ovn-trace
+
+
+%files neutron-periodic-workers
+%license LICENSE
+%{_bindir}/neutron-periodic-workers
+%{_unitdir}/neutron-periodic-workers.service
 
 %changelog
 
