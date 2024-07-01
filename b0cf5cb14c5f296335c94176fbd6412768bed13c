@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "925ab127_dec32d55",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 534
+      },
+      "writtenOn": "2024-07-01T13:44:38Z",
+      "side": 1,
+      "message": "nit: I think it should be either \u0027provides\u0027 or \u0027contains\u0027 but not both",
+      "range": {
+        "startLine": 345,
+        "startChar": 13,
+        "endLine": 345,
+        "endChar": 30
+      },
+      "revId": "b0cf5cb14c5f296335c94176fbd6412768bed13c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b527423c_f74b9632",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 534
+      },
+      "writtenOn": "2024-07-01T13:44:38Z",
+      "side": 1,
+      "message": "is it needed only with ML2/ovn backend or for other backends too?",
+      "revId": "b0cf5cb14c5f296335c94176fbd6412768bed13c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
