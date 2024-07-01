@@ -1,0 +1,15 @@
+[Unit]
+Description=OpenStack Neutron Periodic Workers
+After=syslog.target network.target
+
+[Service]
+Type=notify
+User=neutron
+ExecStart=/usr/bin/neutron-periodic-workers --config-file /usr/share/neutron/neutron-dist.conf --config-dir /usr/share/neutron/server --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugin.ini --config-dir /etc/neutron/conf.d/common --config-dir /etc/neutron/conf.d/neutron-server --log-file /var/log/neutron/periodic-workers.log
+PrivateTmp=true
+NotifyAccess=all
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
