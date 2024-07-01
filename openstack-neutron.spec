@@ -58,6 +58,8 @@ Source35:       neutron-l2-agent.modules
 Source36:       neutron-destroy-patch-ports.service
 Source37:       neutron-ovn-metadata-agent.service
 Source38:       neutron-ovn-agent.service
+Source39:       neutron-periodic-workers.service
+Source40:       neutron-ovn-maintenance-worker.service
 # Required for tarball sources verification
 %if 0%{?sources_gpg} == 1
 Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
@@ -334,6 +336,26 @@ Provides:       python3-neutron-ml2ovn-trace = %{epoch}:%{version}-%{release}
 This package provides tool that allows one to pass in OpenStack objects
 to fill in the eth/ip src/dst data when running ovn-trace.
 
+%package neutron-periodic-workers
+Summary:        Neutron periodic workers service
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
+
+%description neutron-periodic-workers
+
+This package provides the Neutron process that executes the ML2 plugin
+periodic workers. This process is needed when using the Neutron API
+WSGI module.
+
+%package neutron-ovn-maintenance-worker
+Summary:        Neutron OVN maintenance worker service
+Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
+
+%description neutron-ovn-maintenance-worker
+
+This package provides the Neutron process that executes the ML2/OVN
+mechanism driver maintenance worker. This process is only needed when using
+the Neutron API WSGI module.
+
 %prep
 # Required for tarball sources verification
 %if 0%{?sources_gpg} == 1
@@ -459,6 +481,8 @@ install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cle
 install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-ports.service
 install -p -D -m 644 %{SOURCE37} %{buildroot}%{_unitdir}/neutron-ovn-metadata-agent.service
 install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-ovn-agent.service
+install -p -D -m 644 %{SOURCE39} %{buildroot}%{_unitdir}/neutron-periodic-workers.service
+install -p -D -m 644 %{SOURCE39} %{buildroot}%{_unitdir}/neutron-ovn-maintenance-worker.service
 
 # (TODO) - Backwards compatibility for systemd unit networking-ovn-metadata-agent
 
@@ -657,6 +681,30 @@ fi
 %systemd_postun_with_restart neutron-ovn-agent.service
 
 
+%post neutron-periodic-workers
+%systemd_post neutron-periodic-workers.service
+
+
+%preun neutron-periodic-workers
+%systemd_preun neutron-periodic-workers.service
+
+
+%postun neutron-periodic-workers
+%systemd_postun_with_restart neutron-periodic-workers.service
+
+
+%post neutron-ovn-maintenance-worker
+%systemd_post neutron-ovn-maintenance-worker.service
+
+
+%preun neutron-ovn-maintenance-worker
+%systemd_preun neutron-ovn-maintenance-worker.service
+
+
+%postun neutron-ovn-maintenance-worker
+%systemd_postun_with_restart neutron-ovn-maintenance-worker.service
+
+
 %files
 %license LICENSE
 %{_bindir}/neutron-api
@@ -669,6 +717,7 @@ fi
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ovs-cleanup
+%{_bindir}/neutron-periodic-workers
 %{_bindir}/neutron-pd-notify
 %{_bindir}/neutron-remove-duplicated-port-bindings
 %{_bindir}/neutron-sanity-check
@@ -677,6 +726,7 @@ fi
 %{_bindir}/neutron-usage-audit
 %{_bindir}/neutron-ovn-metadata-agent
 %{_bindir}/neutron-ovn-agent
+%{_bindir}/neutron-ovn-maintenance-worker
 %{_bindir}/neutron-sanitize-port-binding-profile-allocation
 %{_bindir}/neutron-sanitize-port-mac-addresses
 %{_bindir}/networking-ovn-metadata-agent
@@ -836,6 +886,18 @@ fi
 %files ml2ovn-trace
 %license LICENSE
 %{_bindir}/ml2ovn-trace
+
+
+%files neutron-periodic-workers
+%license LICENSE
+%{_bindir}/neutron-periodic-workers
+%{_unitdir}/neutron-periodic-workers.service
+
+
+%files neutron-ovn-maintenance-worker
+%license LICENSE
+%{_bindir}/neutron-ovn-maintenance-worker
+%{_unitdir}/neutron-ovn-maintenance-worker.service
 
 %changelog
 
