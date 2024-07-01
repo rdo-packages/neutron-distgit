@@ -16,6 +16,24 @@
       "message": "We need to create a new service, I\u0027m updating the patch right now",
       "revId": "05178ce918a41c336189f00ae6a012064d3536ca",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "def16849_47e91e6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2024-07-01T13:03:25Z",
+      "side": 1,
+      "message": "Thank you Rodolfo LGTM 👍",
+      "parentUuid": "1a503812_9c6acb2e",
+      "revId": "05178ce918a41c336189f00ae6a012064d3536ca",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
