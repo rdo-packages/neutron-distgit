@@ -24,6 +24,30 @@
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0098bb53_070f0310",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-02T14:12:49Z",
+      "side": 1,
+      "message": "It is part of the Neutron API, this is why I would keep as is now.",
+      "parentUuid": "fbfcabb7_d143c855",
+      "range": {
+        "startLine": 339,
+        "startChar": 24,
+        "endLine": 339,
+        "endChar": 27
+      },
+      "revId": "27f6aba95a431c98b0f9f88e2b71bc414d097cac",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52533180_98d4f95e",
@@ -47,6 +71,30 @@
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da045a7a_c7ae404e",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-02T14:12:49Z",
+      "side": 1,
+      "message": "Yes, I copy/paste that from the ml2-ovn package. I\u0027ll remove it then.",
+      "parentUuid": "52533180_98d4f95e",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 81
+      },
+      "revId": "27f6aba95a431c98b0f9f88e2b71bc414d097cac",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2c1498e_3ac00b5b",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-07-02T14:08:57Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 345,
+        "startChar": 34,
+        "endLine": 345,
+        "endChar": 37
+      },
+      "revId": "27f6aba95a431c98b0f9f88e2b71bc414d097cac",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29d56a3b_79d15a4f",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-02T14:12:49Z",
+      "side": 1,
+      "message": "Same answer",
+      "parentUuid": "d2c1498e_3ac00b5b",
       "range": {
         "startLine": 345,
         "startChar": 34,
