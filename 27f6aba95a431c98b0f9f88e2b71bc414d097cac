@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbfcabb7_d143c855",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2024-07-02T14:08:57Z",
+      "side": 1,
+      "message": "This service is not really API service so I\u0027d prefer removing \"API\".",
+      "range": {
+        "startLine": 339,
+        "startChar": 24,
+        "endLine": 339,
+        "endChar": 27
+      },
+      "revId": "27f6aba95a431c98b0f9f88e2b71bc414d097cac",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52533180_98d4f95e",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2024-07-02T14:08:57Z",
+      "side": 1,
+      "message": "This is not required because python3-neutron-periodic-workers package has never existed. Probably you copied it from ml2-ovn package ? (which was separate from neutron in old versions)",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 81
+      },
+      "revId": "27f6aba95a431c98b0f9f88e2b71bc414d097cac",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2c1498e_3ac00b5b",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2024-07-02T14:08:57Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 345,
+        "startChar": 34,
+        "endLine": 345,
+        "endChar": 37
+      },
+      "revId": "27f6aba95a431c98b0f9f88e2b71bc414d097cac",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
