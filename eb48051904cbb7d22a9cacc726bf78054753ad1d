@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffc57b31_aa1289a8",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2024-07-02T08:37:12Z",
+      "side": 1,
+      "message": "typo, it should be openstack-%{service}-common",
+      "range": {
+        "startLine": 340,
+        "startChar": 16,
+        "endLine": 340,
+        "endChar": 41
+      },
+      "revId": "eb48051904cbb7d22a9cacc726bf78054753ad1d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
