@@ -24,6 +24,30 @@
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a59db24_522d8672",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-02T08:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90298bd7_f8053082",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 12
+      },
+      "revId": "efbb6dd1b59b93811af35e21ff7247983875850e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7872527_c1f2e19d",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-07-02T07:10:39Z",
       "side": 1,
       "message": "You should also add %preun %post and %postun tasks for this new systemd service",
+      "range": {
+        "startLine": 858,
+        "startChar": 0,
+        "endLine": 858,
+        "endChar": 10
+      },
+      "revId": "efbb6dd1b59b93811af35e21ff7247983875850e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e20d6186_5f54a42f",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-02T08:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7872527_c1f2e19d",
       "range": {
         "startLine": 858,
         "startChar": 0,
