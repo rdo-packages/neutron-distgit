@@ -16,6 +16,24 @@
       "message": "a new patch generating a FTBFS was merged in the meantime https://review.opendev.org/c/openstack/neutron/+/922074",
       "revId": "ca731dcc8a98c5618c114bda6776a12254e032a9",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "066b76e3_34190bd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-04T08:48:38Z",
+      "side": 1,
+      "message": "Yeah, this is mine too... I\u0027ll update this patch to cover both new services.",
+      "parentUuid": "b9b77e5c_300b0bf9",
+      "revId": "ca731dcc8a98c5618c114bda6776a12254e032a9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
