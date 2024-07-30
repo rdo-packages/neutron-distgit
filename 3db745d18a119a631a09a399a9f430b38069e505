@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c9c3d57_0f569639",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-07-30T13:41:10Z",
+      "side": 1,
+      "message": "I don\u0027t think the related patch is causing the error. According to the logs, the problem was during the download of baseos repository (from [1]):\n```\nErrors during downloading metadata for repository \u0027baseos\u0027:\n  - Status code: 502 for https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/repodata/repomd.xml (IP: 13.33.165.55)\n```\n\n[1]https://trunk.rdoproject.org/centos9-caracal/component/network/28/46/28466f849c48b1a506afba0d3b6e870dbbef485e_24f72f1b/rpmbuild.log",
+      "revId": "3db745d18a119a631a09a399a9f430b38069e505",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
