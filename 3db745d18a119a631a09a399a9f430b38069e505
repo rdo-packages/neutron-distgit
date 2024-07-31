@@ -33,6 +33,23 @@
       "message": "recheck",
       "revId": "3db745d18a119a631a09a399a9f430b38069e505",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05569f16_870780dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 757
+      },
+      "writtenOn": "2024-07-31T10:25:25Z",
+      "side": 1,
+      "message": "it\u0027s false positive, related to temporal infra issue",
+      "revId": "3db745d18a119a631a09a399a9f430b38069e505",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
