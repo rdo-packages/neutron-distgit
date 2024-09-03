@@ -336,21 +336,21 @@ Provides:       python3-neutron-ml2ovn-trace = %{epoch}:%{version}-%{release}
 This package provides tool that allows one to pass in OpenStack objects
 to fill in the eth/ip src/dst data when running ovn-trace.
 
-%package neutron-periodic-workers
+%package periodic-workers
 Summary:        Neutron periodic workers service
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
-%description neutron-periodic-workers
+%description periodic-workers
 
 This package provides the Neutron process that executes the ML2 plugin
 periodic workers. This process is needed when using the Neutron API
 WSGI module.
 
-%package neutron-ovn-maintenance-worker
+%package ovn-maintenance-worker
 Summary:        Neutron OVN maintenance worker service
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
-%description neutron-ovn-maintenance-worker
+%description ovn-maintenance-worker
 
 This package provides the Neutron process that executes the ML2/OVN
 mechanism driver maintenance worker. This process is only needed when using
@@ -681,27 +681,27 @@ fi
 %systemd_postun_with_restart neutron-ovn-agent.service
 
 
-%post neutron-periodic-workers
+%post periodic-workers
 %systemd_post neutron-periodic-workers.service
 
 
-%preun neutron-periodic-workers
+%preun periodic-workers
 %systemd_preun neutron-periodic-workers.service
 
 
-%postun neutron-periodic-workers
+%postun periodic-workers
 %systemd_postun_with_restart neutron-periodic-workers.service
 
 
-%post neutron-ovn-maintenance-worker
+%post ovn-maintenance-worker
 %systemd_post neutron-ovn-maintenance-worker.service
 
 
-%preun neutron-ovn-maintenance-worker
+%preun ovn-maintenance-worker
 %systemd_preun neutron-ovn-maintenance-worker.service
 
 
-%postun neutron-ovn-maintenance-worker
+%postun ovn-maintenance-worker
 %systemd_postun_with_restart neutron-ovn-maintenance-worker.service
 
 
@@ -888,13 +888,13 @@ fi
 %{_bindir}/ml2ovn-trace
 
 
-%files neutron-periodic-workers
+%files periodic-workers
 %license LICENSE
 %{_bindir}/neutron-periodic-workers
 %{_unitdir}/neutron-periodic-workers.service
 
 
-%files neutron-ovn-maintenance-worker
+%files ovn-maintenance-worker
 %license LICENSE
 %{_bindir}/neutron-ovn-maintenance-worker
 %{_unitdir}/neutron-ovn-maintenance-worker.service
