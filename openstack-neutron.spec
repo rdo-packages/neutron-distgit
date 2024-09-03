@@ -336,21 +336,21 @@ Provides:       python3-neutron-ml2ovn-trace = %{epoch}:%{version}-%{release}
 This package provides tool that allows one to pass in OpenStack objects
 to fill in the eth/ip src/dst data when running ovn-trace.
 
-%package neutron-periodic-workers
+%package periodic-workers
 Summary:        Neutron periodic workers service
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
-%description neutron-periodic-workers
+%description periodic-workers
 
 This package provides the Neutron process that executes the ML2 plugin
 periodic workers. This process is needed when using the Neutron API
 WSGI module.
 
-%package neutron-ovn-maintenance-worker
+%package ovn-maintenance-worker
 Summary:        Neutron OVN maintenance worker service
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 
-%description neutron-ovn-maintenance-worker
+%description ovn-maintenance-worker
 
 This package provides the Neutron process that executes the ML2/OVN
 mechanism driver maintenance worker. This process is only needed when using
