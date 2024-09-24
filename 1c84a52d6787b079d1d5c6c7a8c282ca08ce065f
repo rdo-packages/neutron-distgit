@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13adcbb9_49e3e295",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2024-09-24T11:32:58Z",
+      "side": 1,
+      "message": "error: Installed (but unpackaged) file(s) found:\n   /usr/bin/neutron-ovn-migration-mtu\n   \nWe need to figure out what to do with neutron-ovn-migration-mtu, remove it upstream or move it to other rpm subpackage ?",
+      "revId": "1c84a52d6787b079d1d5c6c7a8c282ca08ce065f",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
