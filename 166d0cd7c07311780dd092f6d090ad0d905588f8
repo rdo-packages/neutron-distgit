@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a450913_4777e074",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2024-09-24T12:25:50Z",
+      "side": 1,
+      "message": "I didn\u0027t drop this script because it is not very specific to TripleO, but I want to hear some opinions from neutron folks about this, in case anyone think we should drop this instead.",
+      "range": {
+        "startLine": 766,
+        "startChar": 0,
+        "endLine": 766,
+        "endChar": 36
+      },
+      "revId": "166d0cd7c07311780dd092f6d090ad0d905588f8",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
