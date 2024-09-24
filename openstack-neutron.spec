@@ -129,7 +129,7 @@ Requires:       iproute-tc
 Summary:        Neutron Python libraries
 Obsoletes:      python3-networking-ovn
 Provides:       python3-networking-ovn = %{epoch}:%{version}-%{release}
-
+Obsoletes:      ovn-migration-tool
 
 %description -n python3-%{service}
 %{common_desc}
@@ -314,17 +314,6 @@ Open vSwitch project.
 This package contains the agent that implements any functionality not provided
 by the ovn-controller service.
 
-
-%package ovn-migration-tool
-Summary:        networking-ovn ML2/OVS to OVN migration tool
-Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
-Obsoletes:      python3-networking-ovn-migration-tool
-Provides:       python3-networking-ovn-migration-tool = %{epoch}:%{version}-%{release}
-
-%description ovn-migration-tool
-
-This package provides the necessary tools to update an existing ML2/OVS
-OpenStack to OVN based backend.
 
 %package ml2ovn-trace
 Summary:        ML2 OVN trace tool
@@ -774,6 +763,7 @@ fi
 %{_bindir}/neutron-enable-bridge-firewall.sh
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-daemon
+%{_bindir}/neutron-ovn-migration-mtu
 %dir %{_sysconfdir}/%{service}
 %{_sysconfdir}/%{service}/conf.d/README
 %dir %{_sysconfdir}/%{service}/conf.d
@@ -874,13 +864,6 @@ fi
 %{_unitdir}/neutron-ovn-agent.service
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/ovn_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovn-agent
-
-
-%files ovn-migration-tool
-%license LICENSE
-%{_bindir}/neutron-ovn-migration-mtu
-%{_bindir}/ovn_migration.sh
-%{_datadir}/ansible/neutron-ovn-migration/
 
 
 %files ml2ovn-trace
