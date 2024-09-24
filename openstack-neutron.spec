@@ -315,17 +315,6 @@ This package contains the agent that implements any functionality not provided
 by the ovn-controller service.
 
 
-%package ovn-migration-tool
-Summary:        networking-ovn ML2/OVS to OVN migration tool
-Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
-Obsoletes:      python3-networking-ovn-migration-tool
-Provides:       python3-networking-ovn-migration-tool = %{epoch}:%{version}-%{release}
-
-%description ovn-migration-tool
-
-This package provides the necessary tools to update an existing ML2/OVS
-OpenStack to OVN based backend.
-
 %package ml2ovn-trace
 Summary:        ML2 OVN trace tool
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
@@ -874,13 +863,6 @@ fi
 %{_unitdir}/neutron-ovn-agent.service
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/ovn_agent.ini
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovn-agent
-
-
-%files ovn-migration-tool
-%license LICENSE
-%{_bindir}/neutron-ovn-migration-mtu
-%{_bindir}/ovn_migration.sh
-%{_datadir}/ansible/neutron-ovn-migration/
 
 
 %files ml2ovn-trace
