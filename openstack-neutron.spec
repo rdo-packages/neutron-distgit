@@ -1,4 +1,3 @@
-%global milestone .0rc2
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
 %global sources_gpg_sign 0xf8675126e2411e7748dd46662fc2093e4682645f
 
@@ -24,7 +23,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        25.0.0
-Release:        0.2%{?milestone}%{?dist}
+Release:        1%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -32,7 +31,6 @@ License:        Apache-2.0
 URL:            http://launchpad.net/%{service}/
 
 Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
-# patches_base=25.0.0.0rc2
 
 Source1:        %{service}.logrotate
 Source2:        %{service}-sudoers
@@ -903,6 +901,9 @@ fi
 %{_unitdir}/neutron-ovn-maintenance-worker.service
 
 %changelog
+* Wed Oct 02 2024 RDO <dev@lists.rdoproject.org> 1:25.0.0-1
+- Update to 25.0.0
+
 * Wed Sep 25 2024 RDO <dev@lists.rdoproject.org> 1:25.0.0-0.2.0rc1
 - Update to 25.0.0.0rc2
 
