@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22f89114_08889e86",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2024-10-04T16:24:35Z",
+      "side": 1,
+      "message": "would also need to bump Release and add changelog",
+      "revId": "28e90129a5cfe27eeee6ebe8a8b0800a518d80d7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
