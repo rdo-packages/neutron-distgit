@@ -471,7 +471,7 @@ install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-p
 install -p -D -m 644 %{SOURCE37} %{buildroot}%{_unitdir}/neutron-ovn-metadata-agent.service
 install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-ovn-agent.service
 install -p -D -m 644 %{SOURCE39} %{buildroot}%{_unitdir}/neutron-periodic-workers.service
-install -p -D -m 644 %{SOURCE39} %{buildroot}%{_unitdir}/neutron-ovn-maintenance-worker.service
+install -p -D -m 644 %{SOURCE40} %{buildroot}%{_unitdir}/neutron-ovn-maintenance-worker.service
 
 # (TODO) - Backwards compatibility for systemd unit networking-ovn-metadata-agent
 
