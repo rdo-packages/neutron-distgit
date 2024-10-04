@@ -16,6 +16,24 @@
       "message": "need to fix day",
       "revId": "117ec83567884c77f331f22dfbe3d1ae7397e058",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f8dc977_8b153ea0",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2024-10-04T17:01:49Z",
+      "side": 1,
+      "message": "Ah, yes. I was looking at my local clock and also didn\u0027t update day of week properly.",
+      "parentUuid": "1003523f_1813a453",
+      "revId": "117ec83567884c77f331f22dfbe3d1ae7397e058",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
