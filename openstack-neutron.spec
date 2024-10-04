@@ -23,7 +23,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        25.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -483,7 +483,7 @@ install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-p
 install -p -D -m 644 %{SOURCE37} %{buildroot}%{_unitdir}/neutron-ovn-metadata-agent.service
 install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-ovn-agent.service
 install -p -D -m 644 %{SOURCE39} %{buildroot}%{_unitdir}/neutron-periodic-workers.service
-install -p -D -m 644 %{SOURCE39} %{buildroot}%{_unitdir}/neutron-ovn-maintenance-worker.service
+install -p -D -m 644 %{SOURCE40} %{buildroot}%{_unitdir}/neutron-ovn-maintenance-worker.service
 
 # (TODO) - Backwards compatibility for systemd unit networking-ovn-metadata-agent
 
@@ -901,6 +901,9 @@ fi
 %{_unitdir}/neutron-ovn-maintenance-worker.service
 
 %changelog
+* Fri Oct 04 2024 Takashi Kajinami <kajinamit@oss.nttdata.com> 1:25.0.0-2
+- Fixed the wrong content of neutron-ovn-maintenance-worker.service
+
 * Wed Oct 02 2024 RDO <dev@lists.rdoproject.org> 1:25.0.0-1
 - Update to 25.0.0
 
