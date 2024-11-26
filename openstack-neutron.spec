@@ -884,3 +884,4 @@ fi
 
 %changelog
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/neutron/commit/43a8749f586bf40fb82fb86b2ba6ae90d2e397ec
