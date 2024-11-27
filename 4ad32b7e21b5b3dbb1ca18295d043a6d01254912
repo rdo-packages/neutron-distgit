@@ -16,6 +16,24 @@
       "message": "we need to bump httlplib2 to 0.22.0",
       "revId": "4ad32b7e21b5b3dbb1ca18295d043a6d01254912",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b35acdd_47a8743a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2024-11-27T17:29:03Z",
+      "side": 1,
+      "message": "https://bugzilla.redhat.com/show_bug.cgi?id\u003d2180642\nhttps://src.fedoraproject.org/rpms/python-httplib2/pull-request/11",
+      "parentUuid": "c91ab7a9_21962ce4",
+      "revId": "4ad32b7e21b5b3dbb1ca18295d043a6d01254912",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
