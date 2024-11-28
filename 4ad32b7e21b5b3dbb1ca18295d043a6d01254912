@@ -104,6 +104,23 @@
       "message": "That\u0027s fine: the U/S patch was bumping this library due to security issue reported. But if we don\u0027t have the upper version in AppStream, we should avoid specifying it.",
       "revId": "4ad32b7e21b5b3dbb1ca18295d043a6d01254912",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d3e379d_9e478c5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 197
+      },
+      "writtenOn": "2024-11-28T15:39:17Z",
+      "side": 1,
+      "message": "In the repos we can trust to have proper version for security so change looks good (and realizing I only have +1 here 😞)",
+      "revId": "4ad32b7e21b5b3dbb1ca18295d043a6d01254912",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
