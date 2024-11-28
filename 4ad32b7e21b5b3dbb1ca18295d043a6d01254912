@@ -34,6 +34,24 @@
       "parentUuid": "c91ab7a9_21962ce4",
       "revId": "4ad32b7e21b5b3dbb1ca18295d043a6d01254912",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baf49008_c56417f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2024-11-28T08:51:38Z",
+      "side": 1,
+      "message": "Updated in RDO with https://review.rdoproject.org/r/c/deps/python-httplib2/+/55641\nand being promoted in https://review.rdoproject.org/r/c/rdoinfo/+/55640",
+      "parentUuid": "4b35acdd_47a8743a",
+      "revId": "4ad32b7e21b5b3dbb1ca18295d043a6d01254912",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
