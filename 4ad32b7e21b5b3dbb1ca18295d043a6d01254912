@@ -87,6 +87,23 @@
       "message": "recheck",
       "revId": "4ad32b7e21b5b3dbb1ca18295d043a6d01254912",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "193a9341_0859adba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-11-28T15:29:03Z",
+      "side": 1,
+      "message": "That\u0027s fine: the U/S patch was bumping this library due to security issue reported. But if we don\u0027t have the upper version in AppStream, we should avoid specifying it.",
+      "revId": "4ad32b7e21b5b3dbb1ca18295d043a6d01254912",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
