@@ -1,0 +1,9 @@
+Code-Review+2: Bernard Cafarelli <bcafarel@redhat.com>
+Workflow+1: Joel Capitao <jcapitao@redhat.com>
+Code-Review+2: Rodolfo Alonso <ralonsoh@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Thu, 28 Nov 2024 16:32:20 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/neutron-distgit/+/55621
+Project: openstack/neutron-distgit
+Branch: refs/heads/rpm-master
