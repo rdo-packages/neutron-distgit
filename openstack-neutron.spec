@@ -19,6 +19,10 @@ other OpenStack services (e.g., virtual NICs from Nova VMs). The \
 Neutron API supports extensions to provide advanced network \
 capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
+# guard for Red Hat OpenStack Platform supported neutron
+# (Antelope only)
+%global rhosp 0
+
 Name:           openstack-%{service}
 Version:        22.2.1
 Release:        1%{?dist}
@@ -226,6 +230,9 @@ Requires:       python3-decorator >= 4.1.0
 
 Obsoletes:      python3-networking-ovn
 Provides:       python3-networking-ovn = %{epoch}:%{version}-%{release}
+%if 0%{?rhosp}
+Obsoletes:      openstack-neutron-ovn-migration-tool
+%endif
 
 
 %description -n python3-%{service}
@@ -420,6 +427,7 @@ This package contains the agent that implements any functionality not provided
 by the ovn-controller service.
 
 
+%if 0%{?rhosp} == 0
 %package ovn-migration-tool
 Summary:        networking-ovn ML2/OVS to OVN migration tool
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
@@ -430,6 +438,7 @@ Provides:       python3-networking-ovn-migration-tool = %{epoch}:%{version}-%{re
 
 This package provides the necessary tools to update an existing ML2/OVS
 OpenStack to OVN based backend.
+%endif
 
 %package ml2ovn-trace
 Summary:        ML2 OVN trace tool
@@ -817,6 +826,9 @@ fi
 %{_bindir}/neutron-enable-bridge-firewall.sh
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-daemon
+%if 0%{?rhosp}
+%{_bindir}/neutron-ovn-migration-mtu
+%endif
 %dir %{_sysconfdir}/%{service}
 %{_sysconfdir}/%{service}/conf.d/README
 %dir %{_sysconfdir}/%{service}/conf.d
@@ -919,11 +931,13 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovn-agent
 
 
+%if 0%{?rhosp} == 0
 %files ovn-migration-tool
 %license LICENSE
 %{_bindir}/neutron-ovn-migration-mtu
 %{_bindir}/ovn_migration.sh
 %{_datadir}/ansible/neutron-ovn-migration/
+%endif
 
 
 %files ml2ovn-trace
