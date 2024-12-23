@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1b10b6a_5bec19a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-12-23T17:58:50Z",
+      "side": 1,
+      "message": "Fix merged, removing the dependency and checking from master",
+      "revId": "be89823750804a4fc595bcc27073b961833227f7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
