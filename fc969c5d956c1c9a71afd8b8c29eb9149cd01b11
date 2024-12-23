@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "fc969c5d956c1c9a71afd8b8c29eb9149cd01b11",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a0ca32_d0c92c6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2024-12-23T11:20:38Z",
+      "side": 1,
+      "message": "The error is legit: the SQLite version used does not support passing so many variables in a query. In this case, we are passing a list of vni_ranges\u003d1..65536. In the U/S Ubuntu tests, the SQLite version supports these tests.\n\nError:\nsqlalchemy.exc.OperationalError: (sqlite3.OperationalError) too many SQL variables",
+      "revId": "fc969c5d956c1c9a71afd8b8c29eb9149cd01b11",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
