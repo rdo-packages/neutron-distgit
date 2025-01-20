@@ -142,7 +142,6 @@ Summary:        Neutron tests
 Requires:       python3-%{service} = %{epoch}:%{version}-%{release}
 Requires:       python3-ddt >= 1.0.1
 Requires:       python3-fixtures >= 3.0.0
-Requires:       python3-mock >= 2.0
 Requires:       python3-subunit >= 0.0.18
 Requires:       python3-testtools >= 1.4.0
 Requires:       python3-testresources >= 0.2.4
