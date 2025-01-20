@@ -150,7 +150,6 @@ Requires:       python3-testscenarios >= 0.4
 Requires:       python3-oslotest >= 1.10.0
 Requires:       python3-PyMySQL >= 0.6.2
 Requires:       python3-stestr >= 1.0.0
-Requires:       python3-tempest >= 12.1.0
 Requires:       python3-webtest >= 2.0
 
 # pstree is used during functional testing to ensure our internal
