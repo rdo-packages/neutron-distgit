@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# This script is triggered on every ovs/linuxbridge agent start. Its intent is
-# to make sure the firewall for bridged traffic is enabled before we start an
-# agent that may atttempt to set firewall rules on a bridge (a common thing for
-# linuxbridge and ovs/hybrid backend setup).
+# This script is triggered on every ovs agent start. Its intent is to make sure
+# the firewall for bridged traffic is enabled before we start the agent that
+# may atttempt to set firewall rules on a bridge (when iptables_hybrid firewall
+# driver is used).
 
 # before enabling the firewall, load the relevant module
 /usr/sbin/modprobe bridge

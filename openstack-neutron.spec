@@ -34,7 +34,6 @@ Source0:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_
 Source1:        %{service}.logrotate
 Source2:        %{service}-sudoers
 Source10:       neutron-server.service
-Source11:       neutron-linuxbridge-agent.service
 Source12:       neutron-openvswitch-agent.service
 Source15:       neutron-dhcp-agent.service
 Source16:       neutron-l3-agent.service
@@ -48,7 +47,6 @@ Source29:       neutron-rpc-server.service
 
 Source30:       %{service}-dist.conf
 Source31:       conf.README
-Source32:       neutron-linuxbridge-cleanup.service
 Source33:       neutron-enable-bridge-firewall.sh
 Source34:       neutron-l2-agent-sysctl.conf
 # We use the legacy service to load modules because it allows to gracefully
@@ -176,25 +174,6 @@ Requires:       sudo
 %{common_desc}
 
 This package contains Neutron common files.
-
-
-%package linuxbridge
-Summary:        Neutron Linuxbridge agent
-Requires:       ebtables
-Requires:       ipset
-Requires:       iproute
-Requires:       iptables
-# kmod is needed to get access to /usr/sbin/modprobe needed by
-# neutron-enable-bridge-firewall.sh triggered by the service unit file
-Requires:       kmod
-Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
-
-
-%description linuxbridge
-%{common_desc}
-
-This package contains the Neutron agent that implements virtual
-networks using VLAN or VXLAN using Linuxbridge technology.
 
 
 %package macvtap-agent
@@ -429,7 +408,7 @@ for agent in dhcp l3 metadata metering neutron_ovn_metadata
 do
   mv etc/${agent}_agent.ini %{buildroot}%{_sysconfdir}/%{service}/${agent}_agent.ini
 done
-for file in linuxbridge_agent ml2_conf openvswitch_agent sriov_agent ovn_agent
+for file in ml2_conf openvswitch_agent sriov_agent ovn_agent
 do
   mv etc/%{service}/plugins/ml2/${file}.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2/${file}.ini
 done
@@ -454,7 +433,6 @@ install -p -D -m 440 %{SOURCE2} %{buildroot}%{_sysconfdir}/sudoers.d/%{service}
 
 # Install systemd units
 install -p -D -m 644 %{SOURCE10} %{buildroot}%{_unitdir}/neutron-server.service
-install -p -D -m 644 %{SOURCE11} %{buildroot}%{_unitdir}/neutron-linuxbridge-agent.service
 install -p -D -m 644 %{SOURCE12} %{buildroot}%{_unitdir}/neutron-openvswitch-agent.service
 install -p -D -m 644 %{SOURCE15} %{buildroot}%{_unitdir}/neutron-dhcp-agent.service
 install -p -D -m 644 %{SOURCE16} %{buildroot}%{_unitdir}/neutron-l3-agent.service
@@ -465,7 +443,6 @@ install -p -D -m 644 %{SOURCE20} %{buildroot}%{_unitdir}/neutron-metering-agent.
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/neutron-sriov-nic-agent.service
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_unitdir}/neutron-netns-cleanup.service
 install -p -D -m 644 %{SOURCE29} %{buildroot}%{_unitdir}/neutron-rpc-server.service
-install -p -D -m 644 %{SOURCE32} %{buildroot}%{_unitdir}/neutron-linuxbridge-cleanup.service
 install -p -D -m 644 %{SOURCE36} %{buildroot}%{_unitdir}/neutron-destroy-patch-ports.service
 install -p -D -m 644 %{SOURCE37} %{buildroot}%{_unitdir}/neutron-ovn-metadata-agent.service
 install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-ovn-agent.service
@@ -483,9 +460,7 @@ install -p -D -m 755 %{SOURCE33} %{buildroot}%{_bindir}/neutron-enable-bridge-fi
 # NOTE(ihrachys) we effectively duplicate same settings for each affected l2
 # agent. This can be revisited later.
 install -p -D -m 644 %{SOURCE34} %{buildroot}%{_sysctldir}/99-neutron-openvswitch-agent.conf
-install -p -D -m 644 %{SOURCE34} %{buildroot}%{_sysctldir}/99-neutron-linuxbridge-agent.conf
 install -p -D -m 755 %{SOURCE35} %{buildroot}%{_sysconfdir}/sysconfig/modules/neutron-openvswitch-agent.modules
-install -p -D -m 755 %{SOURCE35} %{buildroot}%{_sysconfdir}/sysconfig/modules/neutron-linuxbridge-agent.modules
 
 # Install README file that describes how to configure services with custom configuration files
 install -p -D -m 755 %{SOURCE31} %{buildroot}%{_sysconfdir}/%{service}/conf.d/README
@@ -509,10 +484,10 @@ mkdir -p %{buildroot}%{_datadir}/%{service}/server
 
 # Create configuration directories for all services that can be populated by users with custom *.conf files
 mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/common
-for service in server rpc-server ovs-cleanup netns-cleanup linuxbridge-cleanup macvtap-agent; do
+for service in server rpc-server ovs-cleanup netns-cleanup macvtap-agent; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service
 done
-for service in linuxbridge openvswitch dhcp l3 metadata metering sriov-nic ovn-metadata ovn; do
+for service in openvswitch dhcp l3 metadata metering sriov-nic ovn-metadata ovn; do
     mkdir -p %{buildroot}/%{_sysconfdir}/%{service}/conf.d/%{service}-$service-agent
 done
 
@@ -545,7 +520,6 @@ exit 0
 %systemd_post neutron-server.service
 %systemd_post neutron-netns-cleanup.service
 %systemd_post neutron-ovs-cleanup.service
-%systemd_post neutron-linuxbridge-cleanup.service
 
 
 %preun
@@ -555,8 +529,6 @@ exit 0
 %systemd_preun neutron-server.service
 %systemd_preun neutron-netns-cleanup.service
 %systemd_preun neutron-ovs-cleanup.service
-%systemd_preun neutron-linuxbridge-cleanup.service
-
 
 %postun
 %systemd_postun_with_restart neutron-dhcp-agent.service
@@ -578,18 +550,6 @@ exit 0
 %systemd_postun_with_restart neutron-macvtap-agent.service
 %cleanup_orphan_rootwrap_daemons
 
-
-%post linuxbridge
-%systemd_post neutron-linuxbridge-agent.service
-
-
-%preun linuxbridge
-%systemd_preun neutron-linuxbridge-agent.service
-
-
-%postun linuxbridge
-%systemd_postun_with_restart neutron-linuxbridge-agent.service
-%cleanup_orphan_rootwrap_daemons
 
 %post openvswitch
 %systemd_post neutron-openvswitch-agent.service
@@ -701,7 +661,6 @@ fi
 %{_bindir}/neutron-ipset-cleanup
 %{_bindir}/neutron-keepalived-state-change
 %{_bindir}/neutron-l3-agent
-%{_bindir}/neutron-linuxbridge-cleanup
 %{_bindir}/neutron-metadata-agent
 %{_bindir}/neutron-netns-cleanup
 %{_bindir}/neutron-ovs-cleanup
@@ -725,7 +684,6 @@ fi
 %{_unitdir}/neutron-server.service
 %{_unitdir}/neutron-netns-cleanup.service
 %{_unitdir}/neutron-ovs-cleanup.service
-%{_unitdir}/neutron-linuxbridge-cleanup.service
 %dir %{_datadir}/%{service}/l3_agent
 %dir %{_datadir}/%{service}/server
 %{_datadir}/%{service}/l3_agent/*.conf
@@ -739,7 +697,6 @@ fi
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-server
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-netns-cleanup
 %dir %{_sysconfdir}/%{service}/conf.d/%{service}-ovs-cleanup
-%dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-cleanup
 %dir %{_sysconfdir}/%{service}/kill_scripts
 
 
@@ -757,8 +714,8 @@ fi
 %files common -f %{service}.lang
 %license LICENSE
 %doc README.rst
-# though this script is not exactly needed on all nodes but for ovs and
-# linuxbridge agents only, it's probably good enough to put it here
+# though this script is not exactly needed on all nodes but for ovs agent
+# only, it's probably good enough to put it here
 %{_bindir}/neutron-enable-bridge-firewall.sh
 %{_bindir}/neutron-rootwrap
 %{_bindir}/neutron-rootwrap-daemon
@@ -782,17 +739,6 @@ fi
 %{_datarootdir}/%{service}/rootwrap/rootwrap.filters
 
 
-%files linuxbridge
-%license LICENSE
-%{_bindir}/neutron-linuxbridge-agent
-%{_unitdir}/neutron-linuxbridge-agent.service
-%dir %{_sysconfdir}/%{service}/plugins/ml2
-%config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
-%dir %{_sysconfdir}/%{service}/conf.d/%{service}-linuxbridge-agent
-%{_sysctldir}/99-neutron-linuxbridge-agent.conf
-%{_sysconfdir}/sysconfig/modules/neutron-linuxbridge-agent.modules
-
-
 %files macvtap-agent
 %license LICENSE
 %{_bindir}/neutron-macvtap-agent
@@ -805,7 +751,6 @@ fi
 %doc %{service}/plugins/ml2/README
 %dir %{_sysconfdir}/%{service}/plugins/ml2
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/plugins/ml2/*.ini
-%exclude %{_sysconfdir}/%{service}/plugins/ml2/linuxbridge_agent.ini
 %exclude %{_sysconfdir}/%{service}/plugins/ml2/openvswitch_agent.ini
 
 
@@ -882,4 +827,3 @@ fi
 %{_unitdir}/neutron-ovn-maintenance-worker.service
 
 %changelog
-
