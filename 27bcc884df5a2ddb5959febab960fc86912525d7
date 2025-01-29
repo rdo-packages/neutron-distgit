@@ -18,6 +18,24 @@
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2aafc0a9_12701261",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2025-01-29T14:58:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a9d1fa98_cd4afd5f",
+      "revId": "27bcc884df5a2ddb5959febab960fc86912525d7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76b784e2_7970753f",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-29T14:49:57Z",
       "side": 0,
       "message": "ditto",
+      "revId": "27bcc884df5a2ddb5959febab960fc86912525d7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "942df4fb_c45ffa69",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2025-01-29T14:58:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "76b784e2_7970753f",
       "revId": "27bcc884df5a2ddb5959febab960fc86912525d7",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
