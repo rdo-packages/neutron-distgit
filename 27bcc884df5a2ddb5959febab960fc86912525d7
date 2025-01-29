@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9d1fa98_cd4afd5f",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2025-01-29T14:49:57Z",
+      "side": 0,
+      "message": "Please remove the actual file, too",
+      "revId": "27bcc884df5a2ddb5959febab960fc86912525d7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76b784e2_7970753f",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2025-01-29T14:49:57Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "27bcc884df5a2ddb5959febab960fc86912525d7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}

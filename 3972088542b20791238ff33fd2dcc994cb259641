@@ -16,6 +16,29 @@
       "message": "we can also remove the sources from distgit",
       "revId": "3972088542b20791238ff33fd2dcc994cb259641",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d173789_54f9758f",
+        "filename": "openstack-neutron.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2025-01-29T14:49:57Z",
+      "side": 1,
+      "message": "This should be `ovs agent`.\n\nAlso there is a remaining mention to linuxbridge agent in neutron-enable-bridge-firewall.sh .",
+      "range": {
+        "startLine": 717,
+        "startChar": 64,
+        "endLine": 718,
+        "endChar": 20
+      },
+      "revId": "3972088542b20791238ff33fd2dcc994cb259641",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
