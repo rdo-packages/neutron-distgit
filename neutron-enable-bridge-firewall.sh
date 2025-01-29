@@ -7,11 +7,7 @@
 
 # before enabling the firewall, load the relevant module
 /usr/sbin/modprobe bridge
-
-# on newer kernels (3.18+), sysctl knobs are split into a separate module;
-# attempt to load it, but don't fail if it's missing (f.e. when running against
-# an older kernel version)
-/usr/sbin/modprobe br_netfilter 2>> /dev/null || :
+/usr/sbin/modprobe br_netfilter
 
 # now enable the firewall in case it's disabled (f.e. rhel 7.2 and earlier)
 for proto in ip ip6; do
