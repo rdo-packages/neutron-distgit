@@ -23,7 +23,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 
 Name:           openstack-%{service}
 Version:        24.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        OpenStack Networking Service
 
@@ -115,6 +115,7 @@ Requires:       ipset
 Requires:       iptables
 Requires:       iputils
 Requires:       iproute-tc
+Requires:       python3-oslo-policy >= 4.3.0
 
 
 %{?systemd_ordering}
@@ -839,6 +840,9 @@ fi
 %{_bindir}/ml2ovn-trace
 
 %changelog
+* Thu Feb 13 2025 Tobias Urdin <tobias.urdin@binero.com> 1:24.1.0-2
+- Add requires python3-oslo-policy >= 4.3.0
+
 * Wed Dec 11 2024 RDO <dev@lists.rdoproject.org> 1:24.1.0-1
 - Update to 24.1.0
 
