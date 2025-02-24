@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ada0b504_26849b01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2025-02-24T14:51:54Z",
+      "side": 1,
+      "message": "CI is passing now, the error in [1] seems to be a random one, not related with the mentioned patch.\n\n[1]https://trunk.rdoproject.org/centos9-master/component/network/81/60/8160f2d20ed706600ee618759476c14d38d1ef19_bf26c097/rpmbuild.log",
+      "revId": "7ea8cfaa14ae14f24d36afe608785508b04132ea",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
