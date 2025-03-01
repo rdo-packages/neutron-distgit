@@ -501,9 +501,7 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 %find_lang %{service} --all-name
 
 %check
-# Run tests in sets to avoid failure https://bugs.launchpad.net/neutron/+bug/2024674
-%tox -e %{default_toxenv} -- -- 'neutron.tests.unit.(objects|extensions)'
-%tox -e %{default_toxenv} -- -- --combine --exclude-regex 'neutron.tests.unit.(objects|extensions)'
+%tox -e %{default_toxenv}
 
 %pre common
 getent group %{service} >/dev/null || groupadd -r %{service}
