@@ -33,6 +33,23 @@
       "message": "unblock after merging https://review.rdoproject.org/r/c/rdoinfo/+/56596",
       "revId": "06f43a138e5691dbea99124981f0f3bb1773528e",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62819173_2e2a3f48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 757
+      },
+      "writtenOn": "2025-03-05T10:20:00Z",
+      "side": 1,
+      "message": "recheck",
+      "revId": "06f43a138e5691dbea99124981f0f3bb1773528e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
