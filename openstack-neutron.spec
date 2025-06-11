@@ -123,12 +123,6 @@ Requires:       iproute-tc
 %{common_desc}
 
 
-%package -n python3-%{service}
-Summary:        Neutron Python libraries
-Obsoletes:      python3-networking-ovn
-Provides:       python3-networking-ovn = %{epoch}:%{version}-%{release}
-Obsoletes:      ovn-migration-tool
-
 %description -n python3-%{service}
 %{common_desc}
 
@@ -265,8 +259,6 @@ BuildRequires:  systemd
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
 Requires:       openvswitch >= 2.10.0
 Requires:       haproxy >= 1.5.0
-Obsoletes:      python3-networking-ovn-metadata-agent
-Provides:       python3-networking-ovn-metadata-agent = %{epoch}:%{version}-%{release}
 %{?systemd_requires}
 
 %description ovn-metadata-agent
@@ -413,18 +405,6 @@ do
   mv etc/%{service}/plugins/ml2/${file}.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/ml2/${file}.ini
 done
 
-# (TODO) Backwards compatibility for networking-ovn-metadata-agent.ini
-
-install -d -m 755 %{buildroot}%{_sysconfdir}/neutron/plugins/networking-ovn
-ln -s /etc/neutron/neutron_ovn_metadata_agent.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/networking-ovn/networking-ovn-metadata-agent.ini
-
-# (TODO) Backwards compatibility for ovn.ini
-ln -s /etc/neutron/ovn.ini %{buildroot}%{_sysconfdir}/%{service}/plugins/networking-ovn/networking-ovn.ini
-ln -s /etc/neutron/plugins/ml2/ml2_conf.ini %{buildroot}%{_sysconfdir}/%{service}/ovn.ini
-
-# (TODO) Backwards compatibility for networking-ovn-metadata-agent executable
-ln -s %{_bindir}/neutron-ovn-metadata-agent  %{buildroot}%{_bindir}/networking-ovn-metadata-agent
-
 # Install logrotate
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-%{service}
 
@@ -448,10 +428,6 @@ install -p -D -m 644 %{SOURCE37} %{buildroot}%{_unitdir}/neutron-ovn-metadata-ag
 install -p -D -m 644 %{SOURCE38} %{buildroot}%{_unitdir}/neutron-ovn-agent.service
 install -p -D -m 644 %{SOURCE39} %{buildroot}%{_unitdir}/neutron-periodic-workers.service
 install -p -D -m 644 %{SOURCE40} %{buildroot}%{_unitdir}/neutron-ovn-maintenance-worker.service
-
-# (TODO) - Backwards compatibility for systemd unit networking-ovn-metadata-agent
-
-ln -s %{_unitdir}/neutron-ovn-metadata-agent.service %{buildroot}%{_unitdir}/networking-ovn-metadata-agent.service
 
 # Install helper scripts
 install -p -D -m 755 %{SOURCE33} %{buildroot}%{_bindir}/neutron-enable-bridge-firewall.sh
@@ -673,7 +649,6 @@ fi
 %{_bindir}/neutron-ovn-maintenance-worker
 %{_bindir}/neutron-sanitize-port-binding-profile-allocation
 %{_bindir}/neutron-sanitize-port-mac-addresses
-%{_bindir}/networking-ovn-metadata-agent
 %{_bindir}/neutron-ovn-db-sync-util
 %{_unitdir}/neutron-dhcp-agent.service
 %{_unitdir}/neutron-l3-agent.service
@@ -725,7 +700,6 @@ fi
 %attr(-, root, %{service}) %{_datadir}/%{service}/%{service}-dist.conf
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/%{service}.conf
 %{_sysconfdir}/%{service}/ovn.ini
-%{_sysconfdir}/%{service}/plugins/networking-ovn/networking-ovn.ini
 %config(noreplace) %{_sysconfdir}/%{service}/rootwrap.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/*
 %{_sysconfdir}/sudoers.d/%{service}
@@ -789,13 +763,8 @@ fi
 %files ovn-metadata-agent
 %license LICENSE
 %{_bindir}/neutron-ovn-metadata-agent
-%{_bindir}/networking-ovn-metadata-agent
 %{_unitdir}/neutron-ovn-metadata-agent.service
-%{_unitdir}/networking-ovn-metadata-agent.service
 %config(noreplace) %attr(0640, root, %{service}) %{_sysconfdir}/%{service}/neutron_ovn_metadata_agent.ini
-%dir %{_sysconfdir}/neutron/plugins/networking-ovn
-%{_sysconfdir}/neutron/plugins/networking-ovn/networking-ovn-metadata-agent.ini
-/etc/neutron/plugins/networking-ovn/networking-ovn.ini
 %dir %{_sysconfdir}/neutron/conf.d/neutron-ovn-metadata-agent
 
 
