@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ec4522a_b6b561ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2025-06-17T15:03:22Z",
+      "side": 1,
+      "message": "we need to atleast fix https://github.com/openstack-k8s-operators/tcib/blob/87560df365a9f9fc232653131f4ed8b5296f99b8/container-images/tcib/base/os/neutron-base/neutron-agent-base/neutron-metadata-agent-ovn/neutron-metadata-agent-ovn.yaml#L5 first, t",
+      "revId": "d78fb2c3dbe373eafd22f1bea54020ffd7d87d51",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
