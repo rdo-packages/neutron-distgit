@@ -76,6 +76,7 @@ BuildRequires:  openstack-macros
 BuildRequires:  python3-devel
 BuildRequires:  pyproject-rpm-macros
 BuildRequires:  python3-neutron-lib-tests
+BuildRequires:  python3-babel
 BuildRequires:  systemd
 
 Requires:       openstack-%{service}-common = %{epoch}:%{version}-%{release}
