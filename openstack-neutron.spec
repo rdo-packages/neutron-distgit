@@ -834,3 +834,4 @@ fi
 * Tue Mar 18 2025 RDO <dev@lists.rdoproject.org> 1:26.0.0-0.1.0rc1
 - Update to 26.0.0.0rc1
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/neutron/commit/36e0414369bc51d74b2dcd00e81e2baacb6190d4
