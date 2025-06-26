@@ -917,3 +917,4 @@ fi
 - Update to 25.0.0.0rc1
 
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/neutron/commit/965c4367131f14c0a4893713f70c9e0677c7b5ea
