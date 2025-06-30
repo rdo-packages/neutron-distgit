@@ -825,3 +825,4 @@ fi
 %{_unitdir}/neutron-ovn-maintenance-worker.service
 
 %changelog
+# REMOVEME: error caused by commit https://opendev.org/openstack/neutron/commit/21e028ebd353d3988877582e04e5129addc0a0d9
