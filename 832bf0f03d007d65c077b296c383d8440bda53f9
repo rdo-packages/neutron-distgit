@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "832bf0f03d007d65c077b296c383d8440bda53f9",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f546aed_5df7aa8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 580
+      },
+      "writtenOn": "2025-07-02T12:55:39Z",
+      "side": 1,
+      "message": "It is failing in the RPM build [1]:\n```\nDEBUG: RPM build errors:\nDEBUG:     line 132: It\u0027s not recommended to have unversioned Obsoletes: Obsoletes:      python3-networking-ovn\nDEBUG:     line 134: It\u0027s not recommended to have unversioned Obsoletes: Obsoletes:      ovn-migration-tool\nDEBUG:     line 272: It\u0027s not recommended to have unversioned Obsoletes: Obsoletes:      python3-networking-ovn-metadata-agent\nDEBUG:     source_date_epoch_from_changelog set but %changelog is missing\nDEBUG:     File not found: /builddir/build/BUILDROOT/openstack-neutron-26.1.0-0.20250702081922.0bc902a.el10.x86_64/usr/bin/neutron-server\n```\n\n[1]https://logserver.rdoproject.org/b05/rdoproject.org/b0537565b6a54066a6d67b2796b02f68/buildset/centos10/repos/0b/c9/0bc902aa68332e92e3584d8d5919141cd4452a65_dev/rpmbuild.log.gz",
+      "revId": "832bf0f03d007d65c077b296c383d8440bda53f9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
