@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39c46459_0c5d730a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 534
+      },
+      "writtenOn": "2026-01-05T09:15:10Z",
+      "side": 1,
+      "message": "recheck - package python3-tox-current-env-0.0.16-1.el9.noarch from epel-low-priority is filtered out by exclude filtering",
+      "revId": "0f429d8dd5663aa0d0bd6d63c578931673ee2a15",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
