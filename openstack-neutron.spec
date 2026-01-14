@@ -728,6 +728,7 @@ fi
 %if 0%{?rhosp}
 %{_bindir}/neutron-nova-notify
 %{_bindir}/neutron-sanitize-port-mac-addresses
+%{_bindir}/neutron-reschedule-external-ports
 %endif
 %{_bindir}/networking-ovn-metadata-agent
 %{_bindir}/neutron-ovn-db-sync-util
