@@ -725,6 +725,7 @@ fi
 %{_bindir}/neutron-server
 %{_bindir}/neutron-usage-audit
 %{_bindir}/neutron-ovn-metadata-agent
+%{_bindir}/neutron-reschedule-external-ports
 %if 0%{?rhosp}
 %{_bindir}/neutron-nova-notify
 %{_bindir}/neutron-sanitize-port-mac-addresses
